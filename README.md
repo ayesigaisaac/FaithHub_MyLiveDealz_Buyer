@@ -1,0 +1,37 @@
+# FaithHub MyLiveDealz Buyer
+
+Production-ready TypeScript + Vite + MUI + Tailwind scaffold for the FaithHub app pages provided in the attached page pack.
+
+## Start
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+## Main Routes
+
+- `/` public landing page
+- `/shell-preview` attached multi-role shell preview
+- `/app/user/*` user pages in routed app shell
+- `/app/provider/*` provider pages in routed app shell
+- `/app/admin/*` admin pages in routed app shell
+
+## Design System
+
+- Primary EVzone Green: `#03cd8c`
+- Secondary EVzone Orange: `#f77f00`
+- Neutral Gray: `#a6a6a6`
+- Light Surface: `#f2f2f2`
+
+## Notes
+
+- Only attached FaithHub pages were used as the application screens.
+- Pages are routed through a responsive app shell and code-split with lazy loading.
+- MUI theming and Tailwind utility styling are both included.
