@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -80,10 +80,10 @@ export default function FaithHubSeriesBuilder() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <BookTemplate className="h-5 w-5" />
             </div>
             <div>
@@ -110,8 +110,8 @@ export default function FaithHubSeriesBuilder() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4">
                   <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Builder flow</div>
                   <div className="mt-2 text-xl font-semibold">Create a series like a premium content product</div>
@@ -123,7 +123,7 @@ export default function FaithHubSeriesBuilder() {
                       <button
                         key={step.key}
                         onClick={() => setActiveStep(step.key)}
-                        className={`flex w-full items-center gap-3 rounded-xl border px-4 py-4 text-left transition ${
+                        className={`flex w-full items-center gap-3 rounded-[24px] border px-4 py-4 text-left transition ${
                           active
                             ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white"
                             : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
@@ -144,15 +144,15 @@ export default function FaithHubSeriesBuilder() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Live collaboration</div>
                   <div className="text-sm text-slate-500">Observed Creator-style collaborative editing adapted for faith series workflows.</div>
                 </div>
                 <div className="space-y-3">
                   {collaborators.map((person) => (
-                    <div key={person.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={person.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="text-sm font-semibold text-slate-900">{person.name}</div>
                       <div className="text-xs text-slate-500">{person.role}</div>
                       <div className="mt-1 text-sm text-slate-600">{person.state}</div>
@@ -176,12 +176,12 @@ export default function FaithHubSeriesBuilder() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Builder and publishing flow</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Builder and publishing flow</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Templates, artwork, localization, premium options</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -192,14 +192,14 @@ export default function FaithHubSeriesBuilder() {
                         The Series Builder mirrors strong Creator-style builder flows while adapting them for sermons, teaching arcs, audience segmentation, multilingual deployment, artwork testing, and paid series packaging.
                       </p>
                     </div>
-                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Builder state</div>
                       <div className="mb-3 text-4xl font-semibold text-white">Draft</div>
                       <div className="h-2 rounded-full bg-white/20">
                         <div className="h-2 rounded-full bg-white" style={{ width: "66%" }} />
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Save draft</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Save draft</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -215,8 +215,8 @@ export default function FaithHubSeriesBuilder() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-                <CardContent className="fh-card-content p-5 sm:p-6">
+              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+                <CardContent className="p-5 sm:p-6">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Series basics and audience targets</div>
                     <div className="text-sm text-slate-500">Set the core identity and who the series is meant for.</div>
@@ -239,7 +239,7 @@ export default function FaithHubSeriesBuilder() {
                             onClick={() => toggleAudience(audience)}
                             className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                               selectedAudience.includes(audience)
-                                ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
+                                ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
                                 : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
                             }`}
                           >
@@ -248,7 +248,7 @@ export default function FaithHubSeriesBuilder() {
                         ))}
                       </div>
                     </div>
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <FileText className="h-4 w-4 text-[#03cd8c]" /> Publishing model
                       </div>
@@ -265,14 +265,14 @@ export default function FaithHubSeriesBuilder() {
                 </CardContent>
               </Card>
 
-              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-                <CardContent className="fh-card-content p-5 sm:p-6">
+              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+                <CardContent className="p-5 sm:p-6">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Artwork and episode scaffolding</div>
                     <div className="text-sm text-slate-500">Premium content packaging with creator-style flexibility.</div>
                   </div>
                   <div className="space-y-4">
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Upload className="h-4 w-4 text-[#03cd8c]" /> Series artwork
                       </div>
@@ -290,7 +290,7 @@ export default function FaithHubSeriesBuilder() {
                       </Button>
                     </div>
 
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <LayoutTemplate className="h-4 w-4 text-[#03cd8c]" /> Episode templates
                       </div>
@@ -309,8 +309,8 @@ export default function FaithHubSeriesBuilder() {
             </div>
 
             <div className="grid gap-4 lg:grid-cols-[0.48fr_0.52fr]">
-              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-                <CardContent className="fh-card-content p-5 sm:p-6">
+              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+                <CardContent className="p-5 sm:p-6">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Locales and landing pages</div>
                     <div className="text-sm text-slate-500">Premium localization for multi-faith, multi-language delivery.</div>
@@ -332,7 +332,7 @@ export default function FaithHubSeriesBuilder() {
                     </div>
                     <div className="space-y-3">
                       {localeVariants.map((variant) => (
-                        <div key={variant.locale} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <div key={variant.locale} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                           <div className="mb-1 text-sm font-semibold text-slate-900">{variant.locale}</div>
                           <div className="text-xs text-slate-500">{variant.state}</div>
                           <div className="mt-1 text-sm text-slate-600">Landing page: {variant.landing}</div>
@@ -343,20 +343,20 @@ export default function FaithHubSeriesBuilder() {
                 </CardContent>
               </Card>
 
-              <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-                <CardContent className="fh-card-content p-5 sm:p-6">
+              <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+                <CardContent className="p-5 sm:p-6">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Publication and premium controls</div>
                     <div className="text-sm text-slate-500">Queue edits locally, but require live network to publish.</div>
                   </div>
                   <div className="space-y-3 text-sm text-slate-600">
-                    <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
+                    <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
                       Collaborative edits and artwork changes can queue while offline, then merge when the connection is restored.
                     </div>
-                    <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
+                    <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
                       Publish and localization deployment require live validation, moderation checks, and current entitlement confirmation.
                     </div>
-                    <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                    <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
                       <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                         <CheckCircle2 className="h-4 w-4 text-[#03cd8c]" /> Paid series path
                       </div>
@@ -380,5 +380,3 @@ export default function FaithHubSeriesBuilder() {
     </div>
   );
 }
-
-

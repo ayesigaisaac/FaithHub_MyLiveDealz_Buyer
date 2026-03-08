@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -38,9 +38,9 @@ const liveHealth = [
 ];
 
 const upcomingSessions = [
-  { title: "Mercy in Motion Â· Episode 5", time: "Tonight Â· 7:30 PM", channel: "Main live channel" },
-  { title: "Family Prayer Circle", time: "Tomorrow Â· 6:00 PM", channel: "Family ministry channel" },
-  { title: "Marketplace Day Launch", time: "Saturday Â· 10:00 AM", channel: "Event live relay" },
+  { title: "Mercy in Motion · Episode 5", time: "Tonight · 7:30 PM", channel: "Main live channel" },
+  { title: "Family Prayer Circle", time: "Tomorrow · 6:00 PM", channel: "Family ministry channel" },
+  { title: "Marketplace Day Launch", time: "Saturday · 10:00 AM", channel: "Event live relay" },
 ];
 
 const moderationQueue = [
@@ -68,10 +68,10 @@ export default function FaithHubProviderDashboard() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <BarChart3 className="h-5 w-5" />
             </div>
             <div>
@@ -98,12 +98,12 @@ export default function FaithHubProviderDashboard() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Operational command center</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Operational command center</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">KPIs, live health, donations, moderation</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
@@ -116,15 +116,15 @@ export default function FaithHubProviderDashboard() {
                         This dashboard gives institutions a live operating view of what is happening now, what is coming next, what needs intervention, and where premium analytics can deepen decision-making.
                       </p>
                     </div>
-                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Alert posture</div>
                       <div className="space-y-3">
-                        <div className="rounded-xl border border-white/15 bg-white/10 p-4">
+                        <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
                           <div className="text-xs uppercase tracking-[0.18em] text-white/70">Real-time</div>
                           <div className="mt-1 text-2xl font-semibold text-white">3 active anomalies</div>
                         </div>
                         <div className="grid gap-2 sm:grid-cols-2">
-                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Open alerts</Button>
+                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open alerts</Button>
                           <Button
                             variant="outline"
                             className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -144,8 +144,8 @@ export default function FaithHubProviderDashboard() {
               {kpis.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <Card key={item.label} className="rounded-xl border border-slate-200 bg-white shadow-sm">
-                    <CardContent className="fh-card-content p-5">
+                  <Card key={item.label} className="rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
+                    <CardContent className="p-5">
                       <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                         <Icon className="h-5 w-5" />
                       </div>
@@ -160,8 +160,8 @@ export default function FaithHubProviderDashboard() {
               })}
             </div>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Real-time stream health</div>
@@ -173,7 +173,7 @@ export default function FaithHubProviderDashboard() {
                 </div>
                 <div className="space-y-3">
                   {liveHealth.map((stream) => (
-                    <div key={stream.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={stream.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-base font-semibold text-slate-900">{stream.name}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${stream.health === "Healthy" ? "bg-[#ecfff8] text-[#03cd8c]" : stream.health === "Stable" ? "bg-slate-100 text-slate-700" : "bg-[#fff8ef] text-[#f77f00]"}`}>
@@ -199,8 +199,8 @@ export default function FaithHubProviderDashboard() {
             transition={{ delay: 0.09, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-white sm:text-xl">Upcoming Live Sessionz</div>
@@ -212,7 +212,7 @@ export default function FaithHubProviderDashboard() {
                 </div>
                 <div className="space-y-3">
                   {upcomingSessions.map((session) => (
-                    <div key={session.title} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={session.title} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 text-base font-semibold text-white">{session.title}</div>
                       <div className="text-sm text-white/70">{session.time}</div>
                       <div className="mt-2 text-sm text-white/80">{session.channel}</div>
@@ -222,8 +222,8 @@ export default function FaithHubProviderDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Moderation queue</div>
@@ -233,7 +233,7 @@ export default function FaithHubProviderDashboard() {
                 </div>
                 <div className="space-y-3">
                   {moderationQueue.map((item) => (
-                    <div key={item.item} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.item} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-sm font-semibold text-slate-900">{item.item}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.severity === "Critical" ? "bg-rose-50 text-rose-600" : item.severity === "High" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-slate-100 text-slate-700"}`}>
@@ -247,8 +247,8 @@ export default function FaithHubProviderDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Anomaly alerts</div>
@@ -258,7 +258,7 @@ export default function FaithHubProviderDashboard() {
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
                   {anomalyAlerts.map((alert) => (
-                    <div key={alert} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                    <div key={alert} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                         <AlertTriangle className="h-4 w-4 text-[#f77f00]" /> Anomaly detected
                       </div>
@@ -269,8 +269,8 @@ export default function FaithHubProviderDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Premium analytics pack</div>
@@ -285,12 +285,12 @@ export default function FaithHubProviderDashboard() {
                   </Button>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
                     Advanced institutions can export performance snapshots, donation flows, moderation metrics, and stream health history.
                   </div>
                   <button
                     onClick={() => setBiConnectors((prev) => !prev)}
-                    className={`w-full rounded-xl border p-4 text-left transition ${biConnectors ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"}`}
+                    className={`w-full rounded-[24px] border p-4 text-left transition ${biConnectors ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <Download className="h-4 w-4 text-[#03cd8c]" /> BI connectors
@@ -312,5 +312,3 @@ export default function FaithHubProviderDashboard() {
     </div>
   );
 }
-
-

@@ -2,28 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .fh-card {
-    @apply min-w-0 h-auto rounded-xl border border-slate-200 bg-white shadow-sm;
-    overflow: visible;
-  }
-
-  .fh-card-content {
-    @apply min-w-0 p-4 sm:p-5;
-    overflow: visible;
-  }
-
-  .fh-card-stack {
-    @apply grid gap-4;
-    min-width: 0;
-  }
-
-  .fh-card-like {
-    @apply min-w-0 rounded-xl border border-slate-200 bg-white p-4 shadow-sm;
-    overflow: visible;
-  }
-}
-
 :root {
   color-scheme: light;
   font-family: "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
@@ -81,13 +59,4 @@ h1, h2, h3, h4 {
 
 p, span, small, label {
   color: #334155;
-}
-
-/* Safeguards for card readability and clipping issues. */
-.fh-card *,
-.fh-card-content *,
-.fh-card-like * {
-  min-width: 0;
-  word-wrap: break-word;
-  overflow-wrap: anywhere;
 }

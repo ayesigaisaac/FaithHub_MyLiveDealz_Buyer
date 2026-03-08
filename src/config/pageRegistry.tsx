@@ -1,4 +1,4 @@
-﻿import React, { lazy } from "react";
+import React, { lazy } from "react";
 import { BadgeCheck, Building2, BookOpen, CalendarDays, Clock3, Compass, FileText, HeartHandshake, Home, KeyRound, Layers3, LayoutDashboard, MessageSquare, MonitorPlay, PlayCircle, Radio, Settings2, ShieldCheck, Sparkles, Users, Wallet, Bell, Send } from "lucide-react";
 
 export type RoleKey = "user" | "provider" | "admin";
@@ -106,5 +106,3 @@ export const pageRegistry: PageRegistryItem[] = [
 export const defaultPageForRole: Record<RoleKey, string> = { user: "/app/user/home", provider: "/app/provider/dashboard", admin: "/app/admin/overview" };
 
 export const pagesByRole = pageRegistry.reduce((acc, page) => { (acc[page.role] ||= []).push(page); return acc; }, {} as Record<RoleKey, PageRegistryItem[]>);
-
-

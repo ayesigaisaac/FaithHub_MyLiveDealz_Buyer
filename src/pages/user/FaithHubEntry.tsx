@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -22,10 +22,10 @@ import { Badge } from "@/components/ui/badge";
 const languages = [
   { code: "en-UG", label: "English" },
   { code: "sw-UG", label: "Kiswahili" },
-  { code: "fr-FR", label: "FranÃ§ais" },
-  { code: "ar", label: "Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©" },
-  { code: "hi", label: "à¤¹à¤¿à¤¨à¥à¤¦à¥€" },
-  { code: "pt", label: "PortuguÃªs" },
+  { code: "fr-FR", label: "Français" },
+  { code: "ar", label: "العربية" },
+  { code: "hi", label: "हिन्दी" },
+  { code: "pt", label: "Português" },
 ];
 
 const destinations = [
@@ -57,7 +57,7 @@ function LanguageChip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/25"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25"
           : "border-white/30 bg-white/70 text-slate-700 hover:border-[#03cd8c]/40 hover:bg-white"
       }`}
     >
@@ -94,10 +94,10 @@ export default function FaithHubEntry() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white/85 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/85 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
@@ -124,13 +124,13 @@ export default function FaithHubEntry() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
-            className="relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#24d5a1] to-[#f2f2f2] p-5 shadow-sm sm:p-7"
+            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#24d5a1] to-[#f2f2f2] p-5 shadow-[0_24px_80px_-24px_rgba(3,205,140,0.45)] sm:p-7"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.14),transparent_22%)]" />
             <div className="relative z-10 flex h-full flex-col justify-between gap-8">
               <div className="space-y-5">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge className="rounded-full bg-white px-3 py-1 text-[#03cd8c] hover:bg-white">
+                  <Badge className="rounded-full bg-white/90 px-3 py-1 text-[#03cd8c] hover:bg-white">
                     First-run entry experience
                   </Badge>
                   <Badge className="rounded-full bg-slate-900/85 px-3 py-1 text-white hover:bg-slate-900">
@@ -160,8 +160,8 @@ export default function FaithHubEntry() {
               </div>
 
               <div className="grid gap-4 xl:grid-cols-[1fr_0.95fr]">
-                <Card className="fh-card rounded-xl border-white/65 bg-white/88 shadow-xl shadow-black/5 backdrop-blur">
-                  <CardContent className="fh-card-content p-5 sm:p-6">
+                <Card className="rounded-[28px] border-white/65 bg-white/88 shadow-xl shadow-black/5 backdrop-blur">
+                  <CardContent className="p-5 sm:p-6">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -175,7 +175,7 @@ export default function FaithHubEntry() {
                     </div>
 
                     <div className="space-y-4">
-                      <Button className="h-14 w-full justify-between rounded-2xl bg-[#03cd8c] px-5 text-base shadow-lg shadow-sm/25 hover:bg-[#02b67c]">
+                      <Button className="h-14 w-full justify-between rounded-2xl bg-[#03cd8c] px-5 text-base shadow-lg shadow-[#03cd8c]/25 hover:bg-[#02b67c]">
                         Continue with EVzone account
                         <ArrowRight className="h-5 w-5" />
                       </Button>
@@ -244,8 +244,8 @@ export default function FaithHubEntry() {
                 </Card>
 
                 <div className="flex flex-col gap-4">
-                  <Card className="fh-card rounded-xl border-slate-200 bg-slate-950/90 text-white shadow-xl shadow-black/15">
-                    <CardContent className="fh-card-content p-5 sm:p-6">
+                  <Card className="rounded-[28px] border-white/70 bg-slate-950/90 text-white shadow-xl shadow-black/15">
+                    <CardContent className="p-5 sm:p-6">
                       <div className="mb-4 flex items-start justify-between gap-3">
                         <div>
                           <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -263,7 +263,7 @@ export default function FaithHubEntry() {
                           <div className="mb-1 text-xs uppercase tracking-[0.18em] text-white/50">Followed institutions</div>
                           <div className="text-lg font-semibold text-white">3 already followed</div>
                           <div className="mt-2 text-white/70">
-                            Saint Maryâ€™s Cathedral, Al Massira Community, FaithHub Youth Network.
+                            Saint Mary’s Cathedral, Al Massira Community, FaithHub Youth Network.
                           </div>
                         </div>
 
@@ -276,8 +276,8 @@ export default function FaithHubEntry() {
                     </CardContent>
                   </Card>
 
-                  <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-xl shadow-black/5">
-                    <CardContent className="fh-card-content p-5 sm:p-6">
+                  <Card className="rounded-[28px] border border-white/70 bg-white/90 shadow-xl shadow-black/5">
+                    <CardContent className="p-5 sm:p-6">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
                           <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -325,8 +325,8 @@ export default function FaithHubEntry() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="flex flex-col gap-4"
           >
-            <Card className="fh-card overflow-visible rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-0">
+            <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-white/90 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.35)]">
+              <CardContent className="p-0">
                 <div className="border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4">
                   <div className="flex items-center justify-between gap-3">
                     <div>
@@ -350,7 +350,7 @@ export default function FaithHubEntry() {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.06, duration: 0.35 }}
-                        className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-sm/10"
+                        className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
                       >
                         <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                           <Icon className="h-5 w-5" />
@@ -364,8 +364,8 @@ export default function FaithHubEntry() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-900 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-900 text-white shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">
@@ -406,5 +406,3 @@ export default function FaithHubEntry() {
     </div>
   );
 }
-
-

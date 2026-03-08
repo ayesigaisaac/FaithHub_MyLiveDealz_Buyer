@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -54,17 +54,17 @@ const feedItems = [
     id: 1,
     type: "live",
     title: "Evening Prayer Revival",
-    institution: "St. Maryâ€™s Cathedral",
-    meta: "Live now Â· 3.4k watching",
+    institution: "St. Mary’s Cathedral",
+    meta: "Live now · 3.4k watching",
     badge: "Live",
     accent: "bg-rose-500",
   },
   {
     id: 2,
     type: "series",
-    title: "Walking in Wisdom Â· Episode 4",
+    title: "Walking in Wisdom · Episode 4",
     institution: "FaithHub Global Chapel",
-    meta: "Series update Â· 42 min",
+    meta: "Series update · 42 min",
     badge: "Series",
     accent: "bg-[#03cd8c]",
   },
@@ -73,7 +73,7 @@ const feedItems = [
     type: "event",
     title: "Youth Worship Camp 2026",
     institution: "Kingdom Youth Movement",
-    meta: "Registration open Â· 5 days left",
+    meta: "Registration open · 5 days left",
     badge: "Event",
     accent: "bg-[#f77f00]",
   },
@@ -82,7 +82,7 @@ const feedItems = [
     type: "group",
     title: "Women Fellowship Prayer Circle",
     institution: "Al Noor Community Centre",
-    meta: "Join group Â· Starts 7:00 PM",
+    meta: "Join group · Starts 7:00 PM",
     badge: "Group",
     accent: "bg-violet-500",
   },
@@ -98,7 +98,7 @@ const continueWatching = [
   },
   {
     id: 2,
-    title: "Mercy in Motion Â· Series Episode 2",
+    title: "Mercy in Motion · Series Episode 2",
     institution: "FaithHub Global Chapel",
     progress: 41,
     duration: "39 min",
@@ -110,29 +110,29 @@ const upcomingSessions = [
     id: 1,
     title: "Sunrise Devotion",
     institution: "Light Community Church",
-    time: "Today Â· 6:00 AM",
+    time: "Today · 6:00 AM",
     audience: "General community",
   },
   {
     id: 2,
     title: "Youth Impact Night",
     institution: "Kingdom Youth Movement",
-    time: "Today Â· 8:00 PM",
+    time: "Today · 8:00 PM",
     audience: "Youth Church",
   },
   {
     id: 3,
     title: "Family Quran Reflection",
     institution: "Al Noor Community Centre",
-    time: "Tomorrow Â· 5:30 PM",
+    time: "Tomorrow · 5:30 PM",
     audience: "Family circle",
   },
 ];
 
 const downloadedSermons = [
-  "Faith Over Fear Â· Audio",
-  "Walking in Wisdom Â· Episode 3",
-  "The Call to Serve Â· Notes + Transcript",
+  "Faith Over Fear · Audio",
+  "Walking in Wisdom · Episode 3",
+  "The Call to Serve · Notes + Transcript",
 ];
 
 function SectionHeader({ title, subtitle, action = "See all" }) {
@@ -151,8 +151,8 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
 
 function SkeletonCard() {
   return (
-    <div className="animate-pulse rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <div className="mb-4 h-28 rounded-lg bg-slate-100" />
+    <div className="animate-pulse rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="mb-4 h-28 rounded-[20px] bg-slate-100" />
       <div className="mb-2 h-4 w-2/3 rounded bg-slate-100" />
       <div className="mb-4 h-3 w-1/2 rounded bg-slate-100" />
       <div className="h-3 w-1/3 rounded bg-slate-100" />
@@ -181,10 +181,10 @@ export default function FaithHubHome() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
@@ -214,12 +214,12 @@ export default function FaithHubHome() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_20%)]" />
                 <div className="relative z-10">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Personalized home</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Personalized home</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Fast first paint</Badge>
                     {offlineMode && (
                       <Badge className="rounded-full bg-[#f77f00]/15 text-[#7a4a00] hover:bg-[#f77f00]/15">Offline cache in use</Badge>
@@ -244,9 +244,9 @@ export default function FaithHubHome() {
                         <button
                           key={bucket.key}
                           onClick={() => setActiveBucket(bucket.key)}
-                          className={`rounded-xl border p-4 text-left backdrop-blur transition ${
+                          className={`rounded-[24px] border p-4 text-left backdrop-blur transition ${
                             active
-                              ? "border-slate-200 bg-white/22 text-white shadow-lg"
+                              ? "border-white/60 bg-white/22 text-white shadow-lg"
                               : "border-white/20 bg-white/10 text-white/90 hover:bg-white/16"
                           }`}
                         >
@@ -263,8 +263,8 @@ export default function FaithHubHome() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Continue watching"
                   subtitle="Resume where you left off across replays, series, and study sessions."
@@ -274,11 +274,11 @@ export default function FaithHubHome() {
                   {continueWatching.map((item) => (
                     <div
                       key={item.id}
-                      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-sm/10"
+                      className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
                     >
-                      <div className="mb-4 h-40 rounded-lg bg-gradient-to-br from-slate-100 to-slate-200" />
+                      <div className="mb-4 h-40 rounded-[20px] bg-gradient-to-br from-slate-100 to-slate-200" />
                       <div className="mb-1 text-lg font-semibold text-slate-900">{item.title}</div>
-                      <div className="text-sm text-slate-500">{item.institution} Â· {item.duration}</div>
+                      <div className="text-sm text-slate-500">{item.institution} · {item.duration}</div>
                       <div className="mt-4">
                         <div className="mb-2 flex items-center justify-between text-xs font-medium text-slate-500">
                           <span>Progress</span>
@@ -303,8 +303,8 @@ export default function FaithHubHome() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Your personalized feed"
                   subtitle="Followed institutions, series updates, Live Sessionz, and faith events tailored to your intent."
@@ -347,10 +347,10 @@ export default function FaithHubHome() {
                     {filteredFeed.map((item) => (
                       <div
                         key={item.id}
-                        className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-sm/10"
+                        className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
                       >
                         <div className="mb-4 flex items-start justify-between gap-3">
-                          <div className={`h-28 flex-1 rounded-lg ${dataSaver ? "bg-slate-100" : "bg-gradient-to-br from-slate-100 to-slate-200"}`} />
+                          <div className={`h-28 flex-1 rounded-[20px] ${dataSaver ? "bg-slate-100" : "bg-gradient-to-br from-slate-100 to-slate-200"}`} />
                           <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">{item.badge}</Badge>
                         </div>
                         <div className="mb-1 text-lg font-semibold text-slate-900">{item.title}</div>
@@ -379,8 +379,8 @@ export default function FaithHubHome() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Upcoming Live Sessionz"
                   subtitle="From followed institutions and your selected audience groups."
@@ -388,7 +388,7 @@ export default function FaithHubHome() {
                 />
                 <div className="space-y-3">
                   {upcomingSessions.map((item) => (
-                    <div key={item.id} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={item.id} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 text-base font-semibold text-white">{item.title}</div>
                       <div className="text-sm text-white/70">{item.institution}</div>
                       <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-white/80">
@@ -402,7 +402,7 @@ export default function FaithHubHome() {
                         </span>
                       </div>
                       <div className="mt-4 flex gap-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Set reminder</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Set reminder</Button>
                         <Button variant="outline" className="rounded-2xl border-white/15 bg-transparent text-white hover:bg-white/10">
                           Details
                         </Button>
@@ -413,8 +413,8 @@ export default function FaithHubHome() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Downloaded sermons"
                   subtitle="Available instantly when the network is weak or offline."
@@ -422,14 +422,14 @@ export default function FaithHubHome() {
                 />
                 <div className="space-y-3">
                   {downloadedSermons.map((item) => (
-                    <div key={item} className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item} className="flex items-center justify-between gap-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="flex min-w-0 items-center gap-3">
                         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                           <Download className="h-4 w-4" />
                         </div>
                         <div className="min-w-0">
                           <div className="truncate text-sm font-semibold text-slate-900">{item}</div>
-                          <div className="text-xs text-slate-500">Offline-ready â€¢ Transcript cached</div>
+                          <div className="text-xs text-slate-500">Offline-ready • Transcript cached</div>
                         </div>
                       </div>
                       <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -439,8 +439,8 @@ export default function FaithHubHome() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Sponsored placement</div>
@@ -448,10 +448,10 @@ export default function FaithHubHome() {
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Sponsored</Badge>
                 </div>
-                <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                   <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <Flame className="h-4 w-4 text-[#f77f00]" />
-                    21 Days of Hope Â· Institution Spotlight
+                    21 Days of Hope · Institution Spotlight
                   </div>
                   <div className="text-sm leading-6 text-slate-600">
                     Transparently labeled promoted series placement controlled through admin governance, with institution-safe promotion rules and policy-compliant surfacing.
@@ -472,5 +472,3 @@ export default function FaithHubHome() {
     </div>
   );
 }
-
-

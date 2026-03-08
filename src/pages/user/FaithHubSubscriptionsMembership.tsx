@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -129,9 +129,9 @@ const compareRows = [
 ];
 
 const billingTimeline = [
-  { title: "Active subscription", detail: "Supporter plan renewed successfully.", time: "Today Â· 09:14" },
-  { title: "Entitlement refresh", detail: "Premium series and member queue updated on this device.", time: "Today Â· 09:16" },
-  { title: "Family sharing check", detail: "Awaiting platform support verification for current region/device combination.", time: "Today Â· 09:17" },
+  { title: "Active subscription", detail: "Supporter plan renewed successfully.", time: "Today · 09:14" },
+  { title: "Entitlement refresh", detail: "Premium series and member queue updated on this device.", time: "Today · 09:16" },
+  { title: "Family sharing check", detail: "Awaiting platform support verification for current region/device combination.", time: "Today · 09:17" },
 ];
 
 export default function FaithHubSubscriptionsMembership() {
@@ -158,10 +158,10 @@ export default function FaithHubSubscriptionsMembership() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <Crown className="h-5 w-5" />
             </div>
             <div>
@@ -188,12 +188,12 @@ export default function FaithHubSubscriptionsMembership() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Plan comparison + entitlements</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Plan comparison + entitlements</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Family sharing + enterprise group paths</Badge>
                   </div>
 
@@ -223,15 +223,15 @@ export default function FaithHubSubscriptionsMembership() {
                       </div>
                     </div>
 
-                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Current plan</div>
-                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
                         <div className="mb-1 text-xs uppercase tracking-[0.18em] text-white/70">Active</div>
                         <div className="text-2xl font-semibold text-white">{currentPlanData?.name}</div>
                         <div className="mt-2 text-sm text-white/80">{annualBilling ? "Annual billing" : "Monthly billing"}</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Manage plan</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Manage plan</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -246,8 +246,8 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Available plans</div>
@@ -267,7 +267,7 @@ export default function FaithHubSubscriptionsMembership() {
                     <button
                       key={plan.id}
                       onClick={() => setSelectedPlan(plan.id)}
-                      className={`rounded-xl border p-4 text-left shadow-sm transition ${selectedPlan === plan.id ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-sm/10" : plan.tone}`}
+                      className={`rounded-[24px] border p-4 text-left shadow-sm transition ${selectedPlan === plan.id ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10" : plan.tone}`}
                     >
                       <div className="mb-2 flex items-center gap-2">
                         <div className="text-base font-semibold text-slate-900">{plan.name}</div>
@@ -292,7 +292,7 @@ export default function FaithHubSubscriptionsMembership() {
                   ))}
                 </div>
 
-                <div className="mt-5 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
+                <div className="mt-5 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
                   <div className="mb-2 text-sm font-semibold text-slate-900">Proration preview</div>
                   <div className="text-sm text-slate-600">{prorationLabel}</div>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -305,8 +305,8 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Plan comparison</div>
@@ -316,7 +316,7 @@ export default function FaithHubSubscriptionsMembership() {
                     <Blocks className="mr-1 h-3.5 w-3.5" /> Structured view
                   </Badge>
                 </div>
-                <div className="overflow-visible rounded-xl border border-slate-200">
+                <div className="overflow-hidden rounded-[24px] border border-slate-200">
                   <div className="grid grid-cols-4 bg-slate-900 px-4 py-3 text-sm font-semibold text-white">
                     <div>Feature</div>
                     <div>Free</div>
@@ -342,8 +342,8 @@ export default function FaithHubSubscriptionsMembership() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-white sm:text-xl">Entitlements</div>
@@ -355,7 +355,7 @@ export default function FaithHubSubscriptionsMembership() {
                 </div>
                 <div className="space-y-3">
                   {entitlements.map((item) => (
-                    <div key={item.title} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={item.title} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 flex items-center gap-2">
                         {item.active ? (
                           <CheckCircle2 className="h-4 w-4 text-[#8ef0ca]" />
@@ -371,8 +371,8 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Family and group memberships</div>
@@ -390,7 +390,7 @@ export default function FaithHubSubscriptionsMembership() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setFamilySharing((prev) => !prev)}
-                    className={`w-full rounded-xl border p-4 text-left transition ${
+                    className={`w-full rounded-[24px] border p-4 text-left transition ${
                       familySharing ? "border-[#03cd8c]/20 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"
                     }`}
                   >
@@ -403,7 +403,7 @@ export default function FaithHubSubscriptionsMembership() {
                   </button>
 
                   {groupMembershipPreview ? (
-                    <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                    <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Building2 className="h-4 w-4 text-[#f77f00]" /> Enterprise group memberships
                       </div>
@@ -412,7 +412,7 @@ export default function FaithHubSubscriptionsMembership() {
                       </div>
                     </div>
                   ) : (
-                    <div className="rounded-xl border border-dashed border-[#f77f00]/20 bg-white p-5 text-center text-sm text-slate-600">
+                    <div className="rounded-[24px] border border-dashed border-[#f77f00]/20 bg-white p-5 text-center text-sm text-slate-600">
                       Group membership preview is hidden in this state.
                     </div>
                   )}
@@ -420,8 +420,8 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Billing state and sync history</div>
@@ -434,7 +434,7 @@ export default function FaithHubSubscriptionsMembership() {
 
                 <div className="space-y-3">
                   {billingTimeline.map((item) => (
-                    <div key={item.title} className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
+                    <div key={item.title} className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
                       <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                       <div className="text-sm text-slate-600">{item.detail}</div>
                       <div className="mt-2 text-xs text-slate-500">{item.time}</div>
@@ -442,7 +442,7 @@ export default function FaithHubSubscriptionsMembership() {
                   ))}
                 </div>
 
-                <div className="mt-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <div className="mt-4 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                   <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <Download className="h-4 w-4 text-[#03cd8c]" /> Offline entitlement cache
                   </div>
@@ -458,5 +458,3 @@ export default function FaithHubSubscriptionsMembership() {
     </div>
   );
 }
-
-

@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -47,7 +47,7 @@ function SegmentedTab({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-2xl px-4 py-2 text-sm font-semibold transition ${
         active
-          ? "bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
+          ? "bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
           : "bg-white text-slate-600 hover:bg-slate-50"
       }`}
     >
@@ -60,9 +60,9 @@ function MethodCard({ active, label, helper, icon: Icon, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`rounded-xl border p-4 text-left transition ${
+      className={`rounded-[24px] border p-4 text-left transition ${
         active
-          ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-sm/10"
+          ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10"
           : "border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-slate-50"
       }`}
     >
@@ -108,10 +108,10 @@ export default function FaithHubAuthCenter() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white/85 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/85 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
@@ -137,11 +137,11 @@ export default function FaithHubAuthCenter() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
-            className="relative overflow-visible rounded-xl border border-slate-200 bg-white shadow-sm"
+            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)]"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.1),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_20%)]" />
             <div className="relative z-10 p-5 sm:p-7">
-              <div className="mb-6 flex flex-wrap items-center gap-2 rounded-xl bg-[#f7fbfa] p-2 ring-1 ring-slate-200/80">
+              <div className="mb-6 flex flex-wrap items-center gap-2 rounded-[24px] bg-[#f7fbfa] p-2 ring-1 ring-slate-200/80">
                 {tabs.map((item) => (
                   <SegmentedTab
                     key={item.key}
@@ -172,8 +172,8 @@ export default function FaithHubAuthCenter() {
               </div>
 
               <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
-                <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
-                  <CardContent className="fh-card-content p-5 sm:p-6">
+                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                  <CardContent className="p-5 sm:p-6">
                     <div className="mb-5 flex items-center justify-between gap-3">
                       <div>
                         <div className="text-sm font-semibold text-slate-900">
@@ -225,7 +225,7 @@ export default function FaithHubAuthCenter() {
                       )}
 
                       {(tab === "signin" || tab === "recovery") && !isPasskey && (
-                        <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
+                        <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
                           <div className="mb-3 flex items-center justify-between gap-3">
                             <div>
                               <div className="text-sm font-semibold text-slate-900">One-time passcode</div>
@@ -249,9 +249,9 @@ export default function FaithHubAuthCenter() {
                       )}
 
                       {isPasskey && (
-                        <div className="rounded-xl border border-[#03cd8c]/20 bg-[#ecfff8] p-5">
+                        <div className="rounded-[24px] border border-[#03cd8c]/20 bg-[#ecfff8] p-5">
                           <div className="mb-4 flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
                               <Fingerprint className="h-5 w-5" />
                             </div>
                             <div>
@@ -269,15 +269,15 @@ export default function FaithHubAuthCenter() {
                       )}
 
                       {tab === "recovery" && (
-                        <div className="rounded-xl border border-slate-200 bg-[#fff8ef] p-4">
+                        <div className="rounded-[24px] border border-slate-200 bg-[#fff8ef] p-4">
                           <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                             <Lock className="h-4 w-4 text-[#f77f00]" />
                             Recovery methods available
                           </div>
                           <div className="space-y-2 text-sm text-slate-600">
-                            <div>â€¢ Verified phone or email recovery with OTP and cooldown protection</div>
-                            <div>â€¢ Trusted device confirmation</div>
-                            <div>â€¢ Provider-admin or enterprise SSO recovery for supported organizations</div>
+                            <div>• Verified phone or email recovery with OTP and cooldown protection</div>
+                            <div>• Trusted device confirmation</div>
+                            <div>• Provider-admin or enterprise SSO recovery for supported organizations</div>
                           </div>
                         </div>
                       )}
@@ -334,8 +334,8 @@ export default function FaithHubAuthCenter() {
                 </Card>
 
                 <div className="space-y-4">
-                  <Card className="fh-card rounded-xl border-slate-200 bg-slate-950 text-white shadow-sm">
-                    <CardContent className="fh-card-content p-5 sm:p-6">
+                  <Card className="rounded-[28px] border-slate-200 bg-slate-950 text-white shadow-sm">
+                    <CardContent className="p-5 sm:p-6">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
                           <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">
@@ -359,8 +359,8 @@ export default function FaithHubAuthCenter() {
                     </CardContent>
                   </Card>
 
-                  <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
-                    <CardContent className="fh-card-content p-5 sm:p-6">
+                  <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                    <CardContent className="p-5 sm:p-6">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
                           <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -385,8 +385,8 @@ export default function FaithHubAuthCenter() {
                   </Card>
 
                   {offlineLibraryEnabled && (
-                    <Card className="fh-card rounded-xl border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
-                      <CardContent className="fh-card-content p-5 sm:p-6">
+                    <Card className="rounded-[28px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
+                      <CardContent className="p-5 sm:p-6">
                         <div className="mb-3 flex items-center gap-3">
                           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f77f00]/10 text-[#f77f00]">
                             <WifiOff className="h-5 w-5" />
@@ -413,8 +413,8 @@ export default function FaithHubAuthCenter() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="flex flex-col gap-4"
           >
-            <Card className="fh-card overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#22d39f] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#22d39f] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="mb-5 max-w-xl space-y-3 text-white">
                   <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">Accessible and premium-ready</div>
                   <h2 className="text-3xl font-semibold leading-tight">Authentication that feels calm, clear, and trustworthy.</h2>
@@ -424,7 +424,7 @@ export default function FaithHubAuthCenter() {
                 </div>
 
                 <div className="grid gap-4">
-                  <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur sm:p-5">
+                  <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur sm:p-5">
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <div className="text-sm font-semibold text-white">Step-up security preview</div>
                       <Badge className="rounded-full bg-white/15 text-white hover:bg-white/15">Contextual only</Badge>
@@ -434,10 +434,10 @@ export default function FaithHubAuthCenter() {
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur sm:p-5">
+                  <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur sm:p-5">
                     <div className="mb-3 text-sm font-semibold text-white">Quick actions</div>
                     <div className="grid gap-3 sm:grid-cols-2">
-                      <Button className="h-12 rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Use Face / Touch ID</Button>
+                      <Button className="h-12 rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Use Face / Touch ID</Button>
                       <Button variant="outline" className="h-12 rounded-2xl border-white/30 bg-transparent text-white hover:bg-white/10">
                         Send magic link
                       </Button>
@@ -447,8 +447,8 @@ export default function FaithHubAuthCenter() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/90 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Assistive details</div>
@@ -469,5 +469,3 @@ export default function FaithHubAuthCenter() {
     </div>
   );
 }
-
-

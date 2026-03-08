@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -38,7 +38,7 @@ const kpis = [
 const liveSessions = [
   {
     title: "Evening Prayer Revival",
-    institution: "St. Maryâ€™s Cathedral",
+    institution: "St. Mary’s Cathedral",
     region: "Uganda",
     viewers: "4.2k",
     health: "Healthy",
@@ -128,10 +128,10 @@ export default function FaithHubAdminOverview() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <Layers3 className="h-5 w-5" />
             </div>
             <div>
@@ -157,12 +157,12 @@ export default function FaithHubAdminOverview() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Global command layer</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Global command layer</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">KPIs, live oversight, incidents, anomaly dashboards</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -175,15 +175,15 @@ export default function FaithHubAdminOverview() {
                         This page gives admins a true system-wide view across FaithHub, Live Sessionz, FaithMart, messaging, verification, and moderation. It highlights what needs attention now and where trends are drifting out of normal range.
                       </p>
                     </div>
-                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Global posture</div>
-                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Overall state</div>
                         <div className="mt-1 text-3xl font-semibold text-white">Watch</div>
                         <div className="mt-2 text-sm text-white/80">9 active incidents and 4 anomaly panels need review.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Open incident desk</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open incident desk</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -202,8 +202,8 @@ export default function FaithHubAdminOverview() {
               {kpis.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <Card key={item.label} className="rounded-xl border border-slate-200 bg-white shadow-sm">
-                    <CardContent className="fh-card-content p-5">
+                  <Card key={item.label} className="rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
+                    <CardContent className="p-5">
                       <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                         <Icon className="h-5 w-5" />
                       </div>
@@ -218,8 +218,8 @@ export default function FaithHubAdminOverview() {
               })}
             </div>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Live sessions running now"
                   subtitle="Global visibility into high-signal live sessions and health state."
@@ -227,11 +227,11 @@ export default function FaithHubAdminOverview() {
                 />
                 <div className="space-y-3">
                   {liveSessions.map((session) => (
-                    <div key={session.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={session.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-base font-semibold text-slate-900">{session.title}</div>
-                          <div className="text-sm text-slate-500">{session.institution} Â· {session.region}</div>
+                          <div className="text-sm text-slate-500">{session.institution} · {session.region}</div>
                         </div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${session.health === "Healthy" ? "bg-[#ecfff8] text-[#03cd8c]" : session.health === "Watch" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-rose-50 text-rose-600"}`}>
                           {session.health}
@@ -254,8 +254,8 @@ export default function FaithHubAdminOverview() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Incident alerts"
                   subtitle="The issues that require immediate admin attention."
@@ -263,7 +263,7 @@ export default function FaithHubAdminOverview() {
                 />
                 <div className="space-y-3">
                   {incidents.map((incident) => (
-                    <div key={incident.title} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={incident.title} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-sm font-semibold text-white">{incident.title}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${incident.severity === "Critical" ? "bg-rose-500/20 text-rose-100" : incident.severity === "High" ? "bg-[#f77f00]/20 text-[#fff1d6]" : "bg-white/10 text-white"}`}>
@@ -277,8 +277,8 @@ export default function FaithHubAdminOverview() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Anomaly detection dashboards"
                   subtitle="World-class cross-module drift and irregularity tracking."
@@ -286,7 +286,7 @@ export default function FaithHubAdminOverview() {
                 />
                 <div className="space-y-3">
                   {anomalies.map((item) => (
-                    <div key={item.name} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                    <div key={item.name} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                       <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <AlertTriangle className="h-4 w-4 text-[#f77f00]" /> {item.name}
                       </div>
@@ -298,8 +298,8 @@ export default function FaithHubAdminOverview() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Cross-module status and BI exports</div>
@@ -319,7 +319,7 @@ export default function FaithHubAdminOverview() {
                 </div>
                 <div className="space-y-3">
                   {modules.map((module) => (
-                    <div key={module.name} className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={module.name} className="flex items-center justify-between gap-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="text-sm font-semibold text-slate-900">{module.name}</div>
                       <span className={`rounded-full px-3 py-1 text-xs font-semibold ${module.state === "Nominal" ? "bg-[#ecfff8] text-[#03cd8c]" : module.state === "Busy" || module.state === "Watch" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-rose-50 text-rose-600"}`}>
                         {module.state}
@@ -327,7 +327,7 @@ export default function FaithHubAdminOverview() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 rounded-xl border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
+                <div className="mt-4 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
                   Premium admin analytics can expose cross-module BI exports for institution health, moderation volume, revenue behavior, and live reliability trends.
                 </div>
                 <Button
@@ -359,5 +359,3 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
-
-

@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -50,14 +50,14 @@ const localeTemplates = [
   },
   {
     locale: "Arabic",
-    title: "Ø¬Ù„Ø³Ø© Ø§Ù„Ø¨Ø« ØªØ¨Ø¯Ø£ Ù‚Ø±ÙŠØ¨Ù‹Ø§",
-    body: "Ø§Ø¨Ø¯Ø£ Ø§Ù„Ø¹Ø¯ Ø§Ù„ØªÙ†Ø§Ø²Ù„ÙŠ Ø§Ù„Ø¢Ù† ÙˆØ§Ù†Ø¶Ù… Ø¥Ù„Ù‰ ØºØ±ÙØ© Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø± Ù‚Ø¨Ù„ Ø§Ù„Ø¨Ø« Ø§Ù„Ù…Ø¨Ø§Ø´Ø±.",
+    title: "جلسة البث تبدأ قريبًا",
+    body: "ابدأ العد التنازلي الآن وانضم إلى غرفة الانتظار قبل البث المباشر.",
     status: "Ready",
   },
   {
     locale: "French",
-    title: "Votre diffusion commence bientÃ´t",
-    body: "Rejoignez la salle dâ€™attente dans 20 minutes pour la session en direct.",
+    title: "Votre diffusion commence bientôt",
+    body: "Rejoignez la salle d’attente dans 20 minutes pour la session en direct.",
     status: "Draft",
   },
 ];
@@ -93,7 +93,7 @@ function ToggleChip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -142,10 +142,10 @@ export default function FaithHubAudienceNotifications() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <Bell className="h-5 w-5" />
             </div>
             <div>
@@ -172,12 +172,12 @@ export default function FaithHubAudienceNotifications() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Reminder orchestration</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Reminder orchestration</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Channels, localization, delivery intelligence</Badge>
                   </div>
 
@@ -192,15 +192,15 @@ export default function FaithHubAudienceNotifications() {
                       </p>
                     </div>
 
-                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Notification mode</div>
-                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Selected audience</div>
                         <div className="mt-1 text-2xl font-semibold text-white">{selectedAudience}</div>
                         <div className="mt-2 text-sm text-white/80">{selectedChannels.length} channels active for this plan.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Send test</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Send test</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -215,8 +215,8 @@ export default function FaithHubAudienceNotifications() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Notification plan builder"
                   subtitle="Choose audience, channels, and the message journey for this campaign."
@@ -246,7 +246,7 @@ export default function FaithHubAudienceNotifications() {
                           <button
                             key={channel.key}
                             onClick={() => toggleChannel(channel.key)}
-                            className={`rounded-xl border p-4 text-left transition ${
+                            className={`rounded-[24px] border p-4 text-left transition ${
                               active ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"
                             }`}
                           >
@@ -267,7 +267,7 @@ export default function FaithHubAudienceNotifications() {
                     </div>
                     <div className="space-y-3">
                       {automationSteps.map((step) => (
-                        <div key={step.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                        <div key={step.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                           <div className="mb-1 text-sm font-semibold text-slate-900">{step.title}</div>
                           <div className="text-xs text-slate-500">{step.time}</div>
                           <div className="mt-1 text-sm text-slate-600">{step.note}</div>
@@ -286,8 +286,8 @@ export default function FaithHubAudienceNotifications() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Localized templates"
                   subtitle="Adapt tone and language while keeping the same intent structure."
@@ -310,14 +310,14 @@ export default function FaithHubAudienceNotifications() {
                     ))}
                   </div>
 
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur">
                     <div className="mb-2 flex items-center justify-between gap-2">
                       <div className="text-base font-semibold text-white">{selectedTemplate?.title}</div>
                       <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white">{selectedTemplate?.status}</span>
                     </div>
                     <div className="mb-4 text-sm text-white/75">{selectedTemplate?.body}</div>
                     <div className="grid gap-3 sm:grid-cols-2">
-                      <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">
+                      <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
                         <Languages className="mr-2 h-4 w-4" /> Edit locale
                       </Button>
                       <Button variant="outline" className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15">
@@ -329,14 +329,14 @@ export default function FaithHubAudienceNotifications() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Smart send and delivery dashboard"
                   subtitle="See the best send window and what happened after launch."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.44fr_0.56fr]">
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Sparkles className="h-4 w-4 text-[#03cd8c]" /> Smart send time
                     </div>
@@ -356,7 +356,7 @@ export default function FaithHubAudienceNotifications() {
                     </Button>
                   </div>
 
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <BarChart3 className="h-4 w-4 text-[#03cd8c]" /> Delivery status
                     </div>
@@ -376,8 +376,8 @@ export default function FaithHubAudienceNotifications() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Premium automation</div>
@@ -388,14 +388,14 @@ export default function FaithHubAudienceNotifications() {
                 <div className="space-y-3 text-sm text-slate-600">
                   <button
                     onClick={() => setJourneyAutomation((prev) => !prev)}
-                    className={`w-full rounded-xl border p-4 text-left transition ${journeyAutomation ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-[24px] border p-4 text-left transition ${journeyAutomation ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <PlayCircle className="h-4 w-4 text-[#03cd8c]" /> Journey automation
                     </div>
                     <div>{journeyAutomation ? "Pre-live, live-now, and replay journeys are automated." : "Manual sends only."}</div>
                   </button>
-                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
                     Enterprise messaging programs can apply per-message cost models and deeper delivery automation.
                   </div>
                   <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
@@ -410,5 +410,3 @@ export default function FaithHubAudienceNotifications() {
     </div>
   );
 }
-
-

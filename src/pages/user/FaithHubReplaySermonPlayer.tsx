@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -63,14 +63,14 @@ const transcriptBlocks = [
 ];
 
 const clips = [
-  { title: "Wisdom becomes daily practice", range: "14:42 â€“ 18:10" },
-  { title: "Family application highlight", range: "27:05 â€“ 30:12" },
-  { title: "Closing prayer takeaway", range: "39:18 â€“ 41:02" },
+  { title: "Wisdom becomes daily practice", range: "14:42 – 18:10" },
+  { title: "Family application highlight", range: "27:05 – 30:12" },
+  { title: "Closing prayer takeaway", range: "39:18 – 41:02" },
 ];
 
 const notes = [
   "Key idea: wisdom must move from inspiration into routine.",
-  "Family conversations are one of the strongest places to apply tonightâ€™s message.",
+  "Family conversations are one of the strongest places to apply tonight’s message.",
   "Replay pairs well with the Walking in Wisdom reading plan and episode worksheet.",
 ];
 
@@ -98,10 +98,10 @@ export default function FaithHubReplaySermonPlayer() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <PlayCircle className="h-5 w-5" />
             </div>
             <div>
@@ -128,18 +128,18 @@ export default function FaithHubReplaySermonPlayer() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Replay-first learning</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Replay-first learning</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chapters, transcript, notes, downloads</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Walking in Wisdom Â· Episode Replay</div>
+                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Walking in Wisdom · Episode Replay</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Replay sermons with structure, searchable understanding, and premium learning depth when needed.
                       </h1>
@@ -160,8 +160,8 @@ export default function FaithHubReplaySermonPlayer() {
                       </div>
                     </div>
 
-                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-40 rounded-lg bg-white/20" />
+                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                      <div className="mb-4 h-40 rounded-[22px] bg-white/20" />
                       <div className="mb-3 text-sm font-semibold text-white">Quick controls</div>
                       <div className="space-y-2 text-sm text-white/85">
                         <div className="flex items-center justify-between"><span>Speed</span><span>{playbackSpeed}</span></div>
@@ -175,15 +175,15 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Replay controls"
                   subtitle="Move fluidly between playback, notes, clips, and download actions."
                 />
                 <div className="space-y-4">
-                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="mb-4 h-[360px] rounded-xl bg-gradient-to-br from-slate-100 to-slate-200" />
+                  <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="mb-4 h-[360px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200" />
                     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                       <select
                         value={playbackSpeed}
@@ -243,7 +243,7 @@ export default function FaithHubReplaySermonPlayer() {
                   </div>
 
                   <div className="grid gap-4 lg:grid-cols-[0.42fr_0.58fr]">
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 text-sm font-semibold text-slate-900">Chapters</div>
                       <div className="space-y-3">
                         {chapters.map((item) => (
@@ -255,7 +255,7 @@ export default function FaithHubReplaySermonPlayer() {
                       </div>
                     </div>
 
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center justify-between gap-3">
                         <div className="text-sm font-semibold text-slate-900">Transcript</div>
                         <Button
@@ -307,8 +307,8 @@ export default function FaithHubReplaySermonPlayer() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Searchable understanding"
                   subtitle="Transcript search and highlight notes help replay become study, not just playback."
@@ -316,7 +316,7 @@ export default function FaithHubReplaySermonPlayer() {
                 />
                 <div className="space-y-3">
                   {notes.map((item) => (
-                    <div key={item} className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
+                    <div key={item} className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
                       <div className="mb-2 flex items-center gap-2 font-semibold text-white">
                         <Highlighter className="h-4 w-4 text-[#8ef0ca]" /> Highlight note
                       </div>
@@ -327,8 +327,8 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Premium study layer</div>
@@ -343,7 +343,7 @@ export default function FaithHubReplaySermonPlayer() {
                   </Button>
                 </div>
                 {!premiumUnlocked ? (
-                  <div className="rounded-xl border border-dashed border-[#f77f00]/25 bg-white p-6 text-center">
+                  <div className="rounded-[28px] border border-dashed border-[#f77f00]/25 bg-white p-6 text-center">
                     <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-white">
                       <FileText className="h-6 w-6" />
                     </div>
@@ -358,10 +358,10 @@ export default function FaithHubReplaySermonPlayer() {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                    <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
                       Premium replay video is now available for offline travel and low-connectivity environments.
                     </div>
-                    <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                    <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
                       Study guide includes reflection questions, group prompts, scripture links, and action steps.
                     </div>
                   </div>
@@ -369,8 +369,8 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Clip sharing and cache state"
                   subtitle="Prepare short-form clip moments while keeping downloads organized."
@@ -378,7 +378,7 @@ export default function FaithHubReplaySermonPlayer() {
                 />
                 <div className="space-y-3">
                   {clips.map((item) => (
-                    <div key={item.title} className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.title} className="flex items-center justify-between gap-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="min-w-0 flex-1">
                         <div className="text-sm font-semibold text-slate-900">{item.title}</div>
                         <div className="text-xs text-slate-500">{item.range}</div>
@@ -387,7 +387,7 @@ export default function FaithHubReplaySermonPlayer() {
                     </div>
                   ))}
 
-                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
+                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
                     Cached downloads remain available offline. If sponsor mid-roll is enabled for compliant surfaces, it must stay clearly labeled and non-disruptive to the sermon experience.
                   </div>
                 </div>
@@ -413,5 +413,3 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
-
-

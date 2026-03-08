@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,7 +26,7 @@ import { Badge } from "@/components/ui/badge";
 
 const providers = [
   {
-    name: "St. Maryâ€™s Cathedral",
+    name: "St. Mary’s Cathedral",
     region: "Uganda",
     state: "Pending approval",
     identity: "Verified admin ID",
@@ -101,10 +101,10 @@ export default function FaithHubInstitutionVerificationCompliance() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <BadgeCheck className="h-5 w-5" />
             </div>
             <div>
@@ -130,12 +130,12 @@ export default function FaithHubInstitutionVerificationCompliance() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-7">
+            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Provider approvals and compliance control</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Provider approvals and compliance control</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Badges, disputes, identity, automation</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
@@ -148,15 +148,15 @@ export default function FaithHubInstitutionVerificationCompliance() {
                         This page centralizes provider approval, badge management, staff-role disputes, location checks, and identity workflows. Premium tools add compliance automation and exportable audit packs for formal review environments.
                       </p>
                     </div>
-                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Verification posture</div>
-                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Pending actions</div>
                         <div className="mt-1 text-3xl font-semibold text-white">6</div>
                         <div className="mt-2 text-sm text-white/80">Providers, badges, and disputes currently awaiting review.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Open review queue</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open review queue</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -171,8 +171,8 @@ export default function FaithHubInstitutionVerificationCompliance() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Provider approval queue"
                   subtitle="Approve institutions, manage badges, and identify exceptions quickly."
@@ -187,7 +187,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
                     <button
                       key={item.key}
                       onClick={() => setSelectedFilter(item.key)}
-                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${selectedFilter === item.key ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20" : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
+                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${selectedFilter === item.key ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20" : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
                     >
                       {item.label}
                     </button>
@@ -195,7 +195,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
                 </div>
                 <div className="space-y-3">
                   {visibleProviders.map((provider) => (
-                    <div key={provider.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={provider.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-base font-semibold text-slate-900">{provider.name}</div>
@@ -228,8 +228,8 @@ export default function FaithHubInstitutionVerificationCompliance() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Identity verification workflow"
                   subtitle="Stronger trust checks for admins and sensitive provider actions."
@@ -238,22 +238,22 @@ export default function FaithHubInstitutionVerificationCompliance() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setIdentitySessions((prev) => !prev)}
-                    className={`w-full rounded-xl border p-4 text-left transition ${identitySessions ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-[24px] border p-4 text-left transition ${identitySessions ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <Fingerprint className="h-4 w-4 text-[#8ef0ca]" /> Identity session workflow
                     </div>
                     <div className="text-sm text-white/75">{identitySessions ? "Identity verification sessions are enabled for high-trust provider approval." : "Basic document review only."}</div>
                   </button>
-                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur text-sm text-white/80">
+                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur text-sm text-white/80">
                     Identity workflows can validate administrator identity before approval, badge issuance, payout activation, or sensitive role escalation.
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
+                    <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80">
                       <div className="mb-2 font-semibold text-white">Location confidence</div>
                       Venue address, campus mapping, and operational presence can be checked before final provider activation.
                     </div>
-                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80">
+                    <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80">
                       <div className="mb-2 font-semibold text-white">Role safety</div>
                       High-privilege account claims can be forced through stronger identity confirmation.
                     </div>
@@ -262,8 +262,8 @@ export default function FaithHubInstitutionVerificationCompliance() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Staff role disputes"
                   subtitle="Resolve conflicts over administrative access and role hierarchy."
@@ -271,7 +271,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
                 />
                 <div className="space-y-3">
                   {disputes.map((dispute) => (
-                    <div key={dispute.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={dispute.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-sm font-semibold text-slate-900">{dispute.title}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${dispute.severity === "High" ? "bg-rose-50 text-rose-600" : "bg-[#fff8ef] text-[#f77f00]"}`}>
@@ -289,8 +289,8 @@ export default function FaithHubInstitutionVerificationCompliance() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Compliance automation and audit packs"
                   subtitle="Premium controls for deeper governance and formal review trails."
@@ -299,7 +299,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setComplianceAutomation((prev) => !prev)}
-                    className={`w-full rounded-xl border p-4 text-left transition ${complianceAutomation ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-[24px] border p-4 text-left transition ${complianceAutomation ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <ShieldCheck className="h-4 w-4 text-[#03cd8c]" /> Compliance automation
@@ -308,7 +308,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
                   </button>
                   <button
                     onClick={() => setAuditPacks((prev) => !prev)}
-                    className={`w-full rounded-xl border p-4 text-left transition ${auditPacks ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-[24px] border p-4 text-left transition ${auditPacks ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <FileCheck2 className="h-4 w-4 text-[#03cd8c]" /> Audit packs
@@ -317,7 +317,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
                   </button>
                   <div className="space-y-2">
                     {auditPack.map((item) => (
-                      <div key={item} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                      <div key={item} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
                         {item}
                       </div>
                     ))}
@@ -346,5 +346,3 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
-
-

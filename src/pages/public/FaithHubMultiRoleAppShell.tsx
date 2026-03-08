@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -496,7 +496,7 @@ function TopBar({
   handleRoleSwitch,
 }) {
   return (
-    <div className="sticky top-0 z-30 border-b border-slate-200 bg-[#f2f2f2]/90 backdrop-blur">
+    <div className="sticky top-0 z-30 border-b border-white/70 bg-[#f2f2f2]/90 backdrop-blur">
       <div className="mx-auto flex max-w-[1800px] items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-5">
         <div className="flex items-center gap-2 sm:gap-3">
           <button
@@ -511,8 +511,8 @@ function TopBar({
           >
             {sidebarCollapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}
           </button>
-          <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm sm:px-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+          <div className="flex items-center gap-3 rounded-[24px] border border-white/70 bg-white px-3 py-2 shadow-sm sm:px-4">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <Sparkles className="h-5 w-5" />
             </div>
             <div className="hidden sm:block">
@@ -524,7 +524,7 @@ function TopBar({
 
         <button
           onClick={() => setPaletteOpen(true)}
-          className="hidden min-w-0 flex-1 items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left text-sm text-slate-500 shadow-sm md:flex"
+          className="hidden min-w-0 flex-1 items-center gap-3 rounded-[24px] border border-slate-200 bg-white px-4 py-3 text-left text-sm text-slate-500 shadow-sm md:flex"
         >
           <Search className="h-4 w-4 shrink-0 text-[#03cd8c]" />
           <span className="truncate">Search pages, routes, modules, roles, and workspaces</span>
@@ -536,7 +536,7 @@ function TopBar({
         <div className="flex items-center gap-2 sm:gap-3">
           <RoleToggle role={role} handleRoleSwitch={handleRoleSwitch} compact />
 
-          <div className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm xl:flex">
+          <div className="hidden items-center gap-2 rounded-[24px] border border-slate-200 bg-white px-3 py-2 shadow-sm xl:flex">
             <Globe2 className="h-4 w-4 text-[#03cd8c]" />
             <select
               value={workspace}
@@ -561,7 +561,7 @@ function TopBar({
 
 function RoleToggle({ role, handleRoleSwitch, compact = false }) {
   return (
-    <div className={`flex items-center gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-sm ${compact ? "" : "w-full"}`}>
+    <div className={`flex items-center gap-1 rounded-[24px] border border-slate-200 bg-white p-1 shadow-sm ${compact ? "" : "w-full"}`}>
       {roleOrder.map((item) => {
         const active = role === item;
         const prominent = item === "user" || item === "provider";
@@ -569,7 +569,7 @@ function RoleToggle({ role, handleRoleSwitch, compact = false }) {
           <button
             key={item}
             onClick={() => handleRoleSwitch(item)}
-            className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+            className={`rounded-[18px] px-3 py-2 text-sm font-semibold transition ${
               active
                 ? item === "provider"
                   ? "bg-[#fff8ef] text-[#f77f00]"
@@ -593,9 +593,9 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
   return (
     <aside className={`hidden lg:block ${sidebarCollapsed ? "w-[92px]" : "w-[320px]"}`}>
       <div className="sticky top-[88px] space-y-4">
-        <Card className="fh-card overflow-visible rounded-xl border border-slate-200 bg-white shadow-sm">
-          <CardContent className="fh-card-content p-3">
-            <div className="mb-3 rounded-xl bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-4 text-white">
+        <Card className="overflow-hidden rounded-[32px] border border-white/70 bg-white/92 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.25)]">
+          <CardContent className="p-3">
+            <div className="mb-3 rounded-[24px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-4 text-white">
               <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">{roleData.label} role</div>
               {!sidebarCollapsed && (
                 <>
@@ -622,7 +622,7 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
                         <button
                           key={item.id}
                           onClick={() => goToPage(role, item.id)}
-                          className={`group flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition ${
+                          className={`group flex w-full items-center gap-3 rounded-[24px] border px-3 py-3 text-left transition ${
                             active
                               ? "border-[#03cd8c]/15 bg-[#ecfff8]"
                               : "border-transparent bg-white hover:border-slate-200 hover:bg-[#f8fafc]"
@@ -672,10 +672,10 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
         animate={{ x: 0 }}
         exit={{ x: -320 }}
         transition={{ type: "spring", stiffness: 260, damping: 28 }}
-        className="absolute left-0 top-0 h-full w-[88vw] max-w-[360px] overflow-y-auto border-r border-slate-200 bg-white"
+        className="absolute left-0 top-0 h-full w-[88vw] max-w-[360px] overflow-y-auto border-r border-white/60 bg-white"
       >
         <div className="space-y-4 p-4">
-          <div className="rounded-xl bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-5 text-white">
+          <div className="rounded-[28px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-5 text-white">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">FaithHub AppShell</div>
@@ -700,7 +700,7 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
                   <button
                     key={item.id}
                     onClick={() => goToPage(role, item.id)}
-                    className={`flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left ${active ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`flex w-full items-center gap-3 rounded-[24px] border px-3 py-3 text-left ${active ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${active ? "bg-[#03cd8c] text-white" : "bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200"}`}>
                       <Icon className="h-5 w-5" />
@@ -722,14 +722,14 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
 
 function HeroShellCard({ role, roleData, currentPage, currentSection, handleRoleSwitch, setPaletteOpen }) {
   return (
-    <Card className="fh-card overflow-visible rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-0">
-        <div className="relative overflow-visible bg-gradient-to-br from-[#03cd8c] via-[#21d29d] to-[#ebfcf6] p-5 sm:p-7">
+    <Card className="overflow-hidden rounded-[36px] border border-white/70 bg-white/92 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.28)]">
+      <CardContent className="p-0">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#03cd8c] via-[#21d29d] to-[#ebfcf6] p-5 sm:p-7">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
           <div className="relative z-10 grid gap-5 xl:grid-cols-[0.66fr_0.34fr]">
             <div className="space-y-4 text-white">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge className="rounded-full bg-white px-3 py-1 text-[#03cd8c] hover:bg-white">Multi-role AppShell</Badge>
+                <Badge className="rounded-full bg-white/90 px-3 py-1 text-[#03cd8c] hover:bg-white">Multi-role AppShell</Badge>
                 <Badge className={`rounded-full px-3 py-1 hover:bg-transparent ${getRoleBadge(role)}`}>{roleData.label} lane active</Badge>
               </div>
               <div>
@@ -747,7 +747,7 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
                 <span className="rounded-full bg-white/12 px-3 py-2">Template: {currentPage?.template}</span>
               </div>
               <div className="flex flex-wrap gap-3">
-                <Button className="rounded-2xl bg-white px-5 text-[#03cd8c] hover:bg-white">{roleData.primaryAction}</Button>
+                <Button className="rounded-2xl bg-white px-5 text-[#03cd8c] hover:bg-white/90">{roleData.primaryAction}</Button>
                 <Button variant="outline" className="rounded-2xl border-white/25 bg-white/10 text-white hover:bg-white/15">
                   {roleData.secondaryAction}
                 </Button>
@@ -758,7 +758,7 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-xl border border-white/20 bg-white/12 p-4 text-white backdrop-blur">
+              <div className="rounded-[28px] border border-white/20 bg-white/12 p-4 text-white backdrop-blur">
                 <div className="mb-3 text-sm font-semibold">Quick role switch</div>
                 <RoleToggle role={role} handleRoleSwitch={handleRoleSwitch} />
                 <div className="mt-3 text-xs text-white/75">
@@ -766,7 +766,7 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
                 </div>
               </div>
 
-              <div className="rounded-xl border border-white/20 bg-slate-950/20 p-4 text-white backdrop-blur">
+              <div className="rounded-[28px] border border-white/20 bg-slate-950/20 p-4 text-white backdrop-blur">
                 <div className="mb-2 text-sm font-semibold">Active page</div>
                 <div className="text-2xl font-semibold">{currentPage?.label}</div>
                 <div className="mt-2 text-sm text-white/80">{currentPage?.description}</div>
@@ -789,8 +789,8 @@ function StatsGrid({ stats, role }) {
   return (
     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
       {stats.map((item) => (
-        <Card key={item.label} className="rounded-xl border border-slate-200 bg-white shadow-sm">
-          <CardContent className="fh-card-content p-5">
+        <Card key={item.label} className="rounded-[28px] border border-white/70 bg-white/92 shadow-sm">
+          <CardContent className="p-5">
             <div className={`text-xs font-semibold uppercase tracking-[0.22em] ${getRoleAccent(role)}`}>{item.label}</div>
             <div className="mt-2 text-3xl font-semibold text-slate-900">{item.value}</div>
             <div className="mt-2 text-sm text-slate-500">{item.note}</div>
@@ -806,15 +806,15 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
   const connectedLabel = roleCatalog[connectedRole].label;
 
   return (
-    <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-5 sm:p-6">
+    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+      <CardContent className="p-5 sm:p-6">
         <SectionHeader
           title="Page surface preview"
           subtitle="The shell surrounds every page with structured actions, metadata, and contextual intelligence."
         />
         <div className="grid gap-4 lg:grid-cols-[0.6fr_0.4fr]">
           <div className="space-y-4">
-            <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
+            <div className="rounded-[28px] border border-slate-200 bg-[#f8fafc] p-5">
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">{currentSection?.title}</Badge>
                 <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">{currentPage?.template}</Badge>
@@ -842,7 +842,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
               <div className="mb-3 text-lg font-semibold text-slate-900">Cross-role handoff</div>
               <div className="text-sm leading-7 text-slate-600">
                 This shell supports a clean handoff between roles. A {roleData.label.toLowerCase()} page can surface a linked {connectedLabel.toLowerCase()} destination without collapsing context or breaking workspace identity.
@@ -856,7 +856,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
           </div>
 
           <div className="space-y-4">
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
               <div className="mb-3 text-lg font-semibold text-slate-900">Shell slots</div>
               <div className="space-y-3 text-sm text-slate-600">
                 <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-4">Global search and command palette entry</div>
@@ -866,14 +866,14 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
                 <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-4">Mobile drawer and bottom dock behavior</div>
               </div>
             </div>
-            <div className="rounded-xl border border-[#f77f00]/15 bg-[#fffaf3] p-5 shadow-sm">
+            <div className="rounded-[28px] border border-[#f77f00]/15 bg-[#fffaf3] p-5 shadow-sm">
               <div className="mb-2 text-lg font-semibold text-slate-900">Premium shell standards</div>
               <div className="space-y-2 text-sm text-slate-600">
-                <div>â€¢ Persistent role switch between User and Provider</div>
-                <div>â€¢ Multi-tenant workspace context for Provider and Admin</div>
-                <div>â€¢ Fully responsive nav with mobile-first fallbacks</div>
-                <div>â€¢ Command palette access to all routes</div>
-                <div>â€¢ Premium EVzone visual system with green as primary</div>
+                <div>• Persistent role switch between User and Provider</div>
+                <div>• Multi-tenant workspace context for Provider and Admin</div>
+                <div>• Fully responsive nav with mobile-first fallbacks</div>
+                <div>• Command palette access to all routes</div>
+                <div>• Premium EVzone visual system with green as primary</div>
               </div>
             </div>
           </div>
@@ -885,8 +885,8 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
 
 function RouteInventoryGrid({ roleData, currentPageId, goToPage }) {
   return (
-    <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-5 sm:p-6">
+    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+      <CardContent className="p-5 sm:p-6">
         <SectionHeader
           title="Route inventory"
           subtitle="Every assigned page for the current role is already mapped into the shell.
@@ -894,7 +894,7 @@ function RouteInventoryGrid({ roleData, currentPageId, goToPage }) {
         />
         <div className="grid gap-4 xl:grid-cols-2">
           {roleData.sections.map((section) => (
-            <div key={section.title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div key={section.title} className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
               <div className="mb-3 text-lg font-semibold text-slate-900">{section.title}</div>
               <div className="space-y-2">
                 {section.items.map((item) => {
@@ -931,15 +931,15 @@ function RouteInventoryGrid({ roleData, currentPageId, goToPage }) {
 
 function ShellCapabilitiesCard() {
   return (
-    <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-5 sm:p-6">
+    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+      <CardContent className="p-5 sm:p-6">
         <SectionHeader
           title="Shell capabilities"
           subtitle="The shell is built to scale with the full FaithHub architecture across all roles."
         />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {shellCapabilities.map((item) => (
-            <div key={item.title} className="rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
+            <div key={item.title} className="rounded-[28px] border border-slate-200 bg-[#f8fafc] p-5">
               <div className="mb-2 text-base font-semibold text-slate-900">{item.title}</div>
               <div className="text-sm leading-6 text-slate-600">{item.detail}</div>
             </div>
@@ -952,11 +952,11 @@ function ShellCapabilitiesCard() {
 
 function QuickSwitchCard({ role, handleRoleSwitch }) {
   return (
-    <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-5 sm:p-6">
+    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+      <CardContent className="p-5 sm:p-6">
         <SectionHeader title="Role switch" subtitle="Fast switching between User and Provider with Admin always available." action="Role logic" />
         <RoleToggle role={role} handleRoleSwitch={handleRoleSwitch} />
-        <div className="mt-4 rounded-xl border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
+        <div className="mt-4 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
           User and Provider page states are preserved independently, so switching lanes does not lose your place.
         </div>
       </CardContent>
@@ -966,8 +966,8 @@ function QuickSwitchCard({ role, handleRoleSwitch }) {
 
 function QuickActionsCard({ role, roleData, setPaletteOpen }) {
   return (
-    <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-5 sm:p-6">
+    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+      <CardContent className="p-5 sm:p-6">
         <SectionHeader title="Quick actions" subtitle="High-frequency moves surfaced at shell level for the active role." action="Create" />
         <div className="grid gap-3 sm:grid-cols-2">
           {roleData.quickActions.map((action) => {
@@ -976,7 +976,7 @@ function QuickActionsCard({ role, roleData, setPaletteOpen }) {
               <button
                 key={action.label}
                 onClick={() => setPaletteOpen(true)}
-                className="rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                className="rounded-[24px] border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
               >
                 <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                   <Icon className="h-5 w-5" />
@@ -993,21 +993,21 @@ function QuickActionsCard({ role, roleData, setPaletteOpen }) {
 
 function AlertsCard({ roleData }) {
   return (
-    <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-5 sm:p-6">
+    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+      <CardContent className="p-5 sm:p-6">
         <SectionHeader title="Alerts and activity" subtitle="Contextual signals that stay visible without overwhelming the main page." action="Inbox" />
         <div className="space-y-3">
           {roleData.alerts.map((alert) => (
-            <div key={alert.title} className={`rounded-xl border p-4 ${alert.tone === "warning" ? "border-[#f77f00]/15 bg-[#fffaf3]" : alert.tone === "success" ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-[#f8fafc]"}`}>
+            <div key={alert.title} className={`rounded-[24px] border p-4 ${alert.tone === "warning" ? "border-[#f77f00]/15 bg-[#fffaf3]" : alert.tone === "success" ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-[#f8fafc]"}`}>
               <div className="mb-1 text-sm font-semibold text-slate-900">{alert.title}</div>
               <div className="text-sm text-slate-600">{alert.detail}</div>
             </div>
           ))}
-          <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-2 text-sm font-semibold text-slate-900">Recent activity</div>
             <div className="space-y-2">
               {roleData.activity.map((item) => (
-                <div key={item} className="text-sm text-slate-600">â€¢ {item}</div>
+                <div key={item} className="text-sm text-slate-600">• {item}</div>
               ))}
             </div>
           </div>
@@ -1019,8 +1019,8 @@ function AlertsCard({ roleData }) {
 
 function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
   return (
-    <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-      <CardContent className="fh-card-content p-5 sm:p-6">
+    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+      <CardContent className="p-5 sm:p-6">
         <SectionHeader title="Pinned and recent" subtitle="Fast return paths across roles and contexts." action="Library" />
         <div className="space-y-4">
           <div>
@@ -1034,7 +1034,7 @@ function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
                 >
                   <div>
                     <div className="text-sm font-semibold text-slate-900">{item.label}</div>
-                    <div className="text-xs text-slate-500">{item.roleLabel} Â· {item.route}</div>
+                    <div className="text-xs text-slate-500">{item.roleLabel} · {item.route}</div>
                   </div>
                   <Pin className="h-4 w-4 text-[#f77f00]" />
                 </button>
@@ -1055,7 +1055,7 @@ function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
                   >
                     <div>
                       <div className="text-sm font-semibold text-slate-900">{page.label}</div>
-                      <div className="text-xs text-slate-500">{page.roleLabel} Â· {page.sectionTitle}</div>
+                      <div className="text-xs text-slate-500">{page.roleLabel} · {page.sectionTitle}</div>
                     </div>
                     <Clock3 className="h-4 w-4 text-slate-400" />
                   </button>
@@ -1071,7 +1071,7 @@ function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
 
 function MobileBottomDock() {
   return (
-    <div className="fixed bottom-3 left-1/2 z-20 w-[calc(100%-20px)] max-w-md -translate-x-1/2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm backdrop-blur lg:hidden">
+    <div className="fixed bottom-3 left-1/2 z-20 w-[calc(100%-20px)] max-w-md -translate-x-1/2 rounded-[28px] border border-white/70 bg-white/95 px-3 py-2 shadow-[0_24px_70px_-28px_rgba(15,23,42,0.35)] backdrop-blur lg:hidden">
       <div className="grid grid-cols-5 gap-2">
         {mobileDockItems.map((item) => {
           const Icon = item.icon;
@@ -1095,10 +1095,10 @@ function CommandPalette({ query, setQuery, results, close, goToPage }) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 8, scale: 0.98 }}
         transition={{ duration: 0.18 }}
-        className="w-full max-w-4xl overflow-visible rounded-xl border border-slate-200 bg-white shadow-sm"
+        className="w-full max-w-4xl overflow-hidden rounded-[32px] border border-white/70 bg-white shadow-[0_32px_120px_-40px_rgba(15,23,42,0.45)]"
       >
         <div className="border-b border-slate-100 p-4 sm:p-5">
-          <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] px-4 py-3">
+          <div className="flex items-center gap-3 rounded-[24px] border border-slate-200 bg-[#f8fafc] px-4 py-3">
             <Search className="h-5 w-5 text-[#03cd8c]" />
             <input
               autoFocus
@@ -1123,7 +1123,7 @@ function CommandPalette({ query, setQuery, results, close, goToPage }) {
                 <button
                   key={item.id}
                   onClick={() => goToPage(item.role, item.id)}
-                  className="flex items-start gap-4 rounded-xl border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                  className="flex items-start gap-4 rounded-[24px] border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
                 >
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                     <Icon className="h-5 w-5" />
@@ -1136,7 +1136,7 @@ function CommandPalette({ query, setQuery, results, close, goToPage }) {
                         {item.template}
                       </span>
                     </div>
-                    <div className="text-xs text-slate-500">{item.sectionTitle} Â· {item.route}</div>
+                    <div className="text-xs text-slate-500">{item.sectionTitle} · {item.route}</div>
                     <div className="mt-2 text-sm leading-6 text-slate-600">{item.description}</div>
                   </div>
                   <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-slate-400" />
@@ -1163,5 +1163,3 @@ function SectionHeader({ title, subtitle, action = "Explore" }) {
     </div>
   );
 }
-
-

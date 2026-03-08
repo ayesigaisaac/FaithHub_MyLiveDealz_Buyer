@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -54,7 +54,7 @@ const topics = [
 ];
 
 const groups = [
-  { key: "children", label: "Childrenâ€™s Church", tone: "bg-emerald-50 text-emerald-700 border-emerald-200" },
+  { key: "children", label: "Children’s Church", tone: "bg-emerald-50 text-emerald-700 border-emerald-200" },
   { key: "youth", label: "Youth Church", tone: "bg-cyan-50 text-cyan-700 border-cyan-200" },
   { key: "women", label: "Women Fellowship", tone: "bg-rose-50 text-rose-700 border-rose-200" },
   { key: "men", label: "Men Fellowship", tone: "bg-amber-50 text-amber-700 border-amber-200" },
@@ -66,17 +66,17 @@ const consentHistory = [
   {
     title: "Privacy preferences saved",
     detail: "Visibility restricted to followers only for faith-specific interests.",
-    time: "Today Â· 09:42",
+    time: "Today · 09:42",
   },
   {
     title: "Audience group consent recorded",
     detail: "Youth Church and Family Ministry enrollment approved.",
-    time: "Today Â· 09:39",
+    time: "Today · 09:39",
   },
   {
     title: "Sensitive field review",
     detail: "Denomination set as optional and hidden from public profile.",
-    time: "Today Â· 09:35",
+    time: "Today · 09:35",
   },
 ];
 
@@ -86,7 +86,7 @@ function Pill({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -129,10 +129,10 @@ export default function FaithHubProfilePreferences() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white/85 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/85 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
@@ -158,11 +158,11 @@ export default function FaithHubProfilePreferences() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
-            className="relative overflow-visible rounded-xl border border-slate-200 bg-white shadow-sm"
+            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)]"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.1),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_22%)]" />
             <div className="relative z-10 p-5 sm:p-7">
-              <div className="mb-6 flex flex-col gap-3 rounded-xl bg-gradient-to-r from-[#03cd8c] to-[#20cf9c] p-5 text-white shadow-sm sm:p-6">
+              <div className="mb-6 flex flex-col gap-3 rounded-[28px] bg-gradient-to-r from-[#03cd8c] to-[#20cf9c] p-5 text-white shadow-[0_24px_80px_-36px_rgba(3,205,140,0.5)] sm:p-6">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-2xl space-y-3">
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">FH-U-003</div>
@@ -174,7 +174,7 @@ export default function FaithHubProfilePreferences() {
                     </p>
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Button className="h-11 rounded-2xl bg-white text-[#03cd8c] hover:bg-white">
+                    <Button className="h-11 rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
                       Save changes
                     </Button>
                     <Button
@@ -195,8 +195,8 @@ export default function FaithHubProfilePreferences() {
               </div>
 
               <div className="space-y-4">
-                <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
-                  <CardContent className="fh-card-content p-5 sm:p-6">
+                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                  <CardContent className="p-5 sm:p-6">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -210,10 +210,10 @@ export default function FaithHubProfilePreferences() {
                     </div>
 
                     <div className="grid gap-5 lg:grid-cols-[0.36fr_0.64fr]">
-                      <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-5 text-center">
-                        <div className="relative mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] text-white shadow-lg shadow-sm/20">
+                      <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-5 text-center">
+                        <div className="relative mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] text-white shadow-lg shadow-[#03cd8c]/20">
                           <UserCircle2 className="h-14 w-14" />
-                          <button className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full border-4 border-white bg-[#f77f00] text-white shadow-lg shadow-sm/25">
+                          <button className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full border-4 border-white bg-[#f77f00] text-white shadow-lg shadow-[#f77f00]/25">
                             <Camera className="h-4 w-4" />
                           </button>
                         </div>
@@ -273,8 +273,8 @@ export default function FaithHubProfilePreferences() {
                   </CardContent>
                 </Card>
 
-                <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
-                  <CardContent className="fh-card-content p-5 sm:p-6">
+                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                  <CardContent className="p-5 sm:p-6">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -300,8 +300,8 @@ export default function FaithHubProfilePreferences() {
                   </CardContent>
                 </Card>
 
-                <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
-                  <CardContent className="fh-card-content p-5 sm:p-6">
+                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                  <CardContent className="p-5 sm:p-6">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -319,7 +319,7 @@ export default function FaithHubProfilePreferences() {
                           <button
                             key={group.key}
                             onClick={() => toggleGroup(group.key)}
-                            className={`rounded-xl border p-4 text-left transition ${selected ? group.tone : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
+                            className={`rounded-[24px] border p-4 text-left transition ${selected ? group.tone : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
                           >
                             <div className="mb-2 flex items-center justify-between gap-2">
                               <div className="text-sm font-semibold">{group.label}</div>
@@ -335,8 +335,8 @@ export default function FaithHubProfilePreferences() {
                   </CardContent>
                 </Card>
 
-                <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
-                  <CardContent className="fh-card-content p-5 sm:p-6">
+                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                  <CardContent className="p-5 sm:p-6">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
                         <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -387,7 +387,7 @@ export default function FaithHubProfilePreferences() {
                           </button>
                         </div>
 
-                        <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
+                        <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
                           <div className="mb-3 text-sm font-semibold text-slate-900">Age band</div>
                           <div className="flex flex-wrap gap-2">
                             {["Under 13", "13-17", "18-24", "25-34", "35+"] .map((item) => (
@@ -402,7 +402,7 @@ export default function FaithHubProfilePreferences() {
                         </div>
 
                         {(isMinor || minorSafeDefaults) && (
-                          <div className="rounded-xl border border-[#f77f00]/20 bg-[#fff8ef] p-4">
+                          <div className="rounded-[24px] border border-[#f77f00]/20 bg-[#fff8ef] p-4">
                             <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                               <AlertTriangle className="h-4 w-4 text-[#f77f00]" />
                               Minor-safe defaults
@@ -414,7 +414,7 @@ export default function FaithHubProfilePreferences() {
                         )}
                       </div>
 
-                      <div className="rounded-xl border border-slate-200 bg-white p-4">
+                      <div className="rounded-[24px] border border-slate-200 bg-white p-4">
                         <div className="mb-3 text-sm font-semibold text-slate-900">Guardian and family tools</div>
                         <div className="space-y-3 text-sm text-slate-600">
                           <button
@@ -449,8 +449,8 @@ export default function FaithHubProfilePreferences() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="flex flex-col gap-4"
           >
-            <Card className="fh-card overflow-visible rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">
@@ -461,14 +461,14 @@ export default function FaithHubProfilePreferences() {
                   <Shield className="h-5 w-5 text-[#8ef0ca]" />
                 </div>
 
-                <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+                <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur">
                   <div className="mb-4 flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
                       <UserCircle2 className="h-9 w-9" />
                     </div>
                     <div>
                       <div className="text-lg font-semibold text-white">{displayName}</div>
-                      <div className="text-sm text-white/70">{selectedFaith} Â· {selectedDenomination}</div>
+                      <div className="text-sm text-white/70">{selectedFaith} · {selectedDenomination}</div>
                     </div>
                   </div>
 
@@ -501,8 +501,8 @@ export default function FaithHubProfilePreferences() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
@@ -515,7 +515,7 @@ export default function FaithHubProfilePreferences() {
 
                 <div className="space-y-3">
                   {consentHistory.map((item) => (
-                    <div key={item.title} className="flex gap-3 rounded-xl border border-slate-100 bg-[#f8fafc] p-4">
+                    <div key={item.title} className="flex gap-3 rounded-[24px] border border-slate-100 bg-[#f8fafc] p-4">
                       <div className="mt-1 flex h-9 w-9 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                         <CheckCircle2 className="h-4 w-4" />
                       </div>
@@ -533,8 +533,8 @@ export default function FaithHubProfilePreferences() {
               </CardContent>
             </Card>
 
-            <Card className="fh-card rounded-xl border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-card-content p-5 sm:p-6">
+            <Card className="rounded-[32px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
+              <CardContent className="p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">
@@ -565,5 +565,3 @@ export default function FaithHubProfilePreferences() {
     </div>
   );
 }
-
-
