@@ -560,7 +560,7 @@ export default function FaithHubLandingPageV2() {
                       <group.icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <div className="text-xl font-semibold text-slate-900">{group.title}</div>
+                      <div className="text-xl font-semibold text-[#03cd8c]">{group.title}</div>
                       <div className="mt-1 text-sm text-slate-500">{group.subtitle}</div>
                     </div>
                   </div>
