@@ -9,11 +9,12 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
     return {
       variant: "outlined",
       sx: {
-        borderColor: "#e2e8f0",
+        borderColor: "#cbd5e1",
         color: "#0f172a",
         textTransform: "none",
         boxShadow: "none",
-        '&:hover': { borderColor: 'rgba(3,205,140,0.35)', backgroundColor: '#f7fffb', boxShadow: 'none' },
+        backgroundColor: "#ffffff",
+        '&:hover': { borderColor: "rgba(3,205,140,0.45)", backgroundColor: "#f7fffb", boxShadow: "none" },
       },
     };
   }
@@ -31,9 +32,10 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
     variant: "contained",
     sx: {
       textTransform: "none",
-      boxShadow: "none",
-      backgroundColor: '#03cd8c',
-      '&:hover': { backgroundColor: '#02b67c', boxShadow: 'none' },
+      boxShadow: "0 10px 24px -16px rgba(3, 205, 140, 0.65)",
+      backgroundColor: "#03cd8c",
+      color: "#06281e",
+      '&:hover': { backgroundColor: "#02b67c", boxShadow: "0 10px 24px -16px rgba(3, 205, 140, 0.75)" },
     },
   };
 }
@@ -49,7 +51,16 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
       {...props}
       variant={resolved.variant}
       className={className}
-      sx={{ borderRadius: "16px", minHeight: 44, fontWeight: 600, ...(resolved.sx || {}), ...((sx as any) || {}) } as any}
+      sx={{
+        borderRadius: "14px",
+        minHeight: 42,
+        paddingInline: "14px",
+        fontWeight: 700,
+        fontSize: "0.9rem",
+        letterSpacing: "0.01em",
+        ...(resolved.sx || {}),
+        ...((sx as any) || {}),
+      } as any}
     />
   );
 });
