@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,11 +26,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const agendaItems = [
-  { title: "Arrival and accreditation", time: "Day 1 · 8:30 AM", type: "Check-in" },
-  { title: "Main worship session", time: "Day 1 · 10:00 AM", type: "Main session" },
-  { title: "Breakout teaching rooms", time: "Day 1 · 2:00 PM", type: "Breakout" },
-  { title: "Marketplace and merch zone", time: "Day 1 · 5:00 PM", type: "Commerce" },
-  { title: "Closing prayer and departure", time: "Day 2 · 4:00 PM", type: "Closing" },
+  { title: "Arrival and accreditation", time: "Day 1 Â· 8:30 AM", type: "Check-in" },
+  { title: "Main worship session", time: "Day 1 Â· 10:00 AM", type: "Main session" },
+  { title: "Breakout teaching rooms", time: "Day 1 Â· 2:00 PM", type: "Breakout" },
+  { title: "Marketplace and merch zone", time: "Day 1 Â· 5:00 PM", type: "Commerce" },
+  { title: "Closing prayer and departure", time: "Day 2 Â· 4:00 PM", type: "Closing" },
 ];
 
 const volunteers = [
@@ -71,10 +71,10 @@ export default function FaithHubEventsManager() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <CalendarDays className="h-5 w-5" />
             </div>
             <div>
@@ -100,12 +100,12 @@ export default function FaithHubEventsManager() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Event operations builder</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Event operations builder</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Agenda, volunteers, tickets, check-in</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -118,15 +118,15 @@ export default function FaithHubEventsManager() {
                         Events Manager is built for camps, trips, baptisms, crusades, missions, conferences, and marketplace days. It brings FaithMart ticketing, venue routing, volunteer planning, and offline-ready check-in into a single provider workspace.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Event snapshot</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Linked ticket SKUs</div>
                         <div className="mt-1 text-3xl font-semibold text-white">{linkedTicketCount}</div>
                         <div className="mt-2 text-sm text-white/80">Capacity: {capacity} attendees</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Create event</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Create event</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -142,8 +142,8 @@ export default function FaithHubEventsManager() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.5fr_0.5fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Event basics</div>
                   <div className="space-y-4">
                     <div className="grid gap-3 sm:grid-cols-2">
@@ -189,12 +189,12 @@ export default function FaithHubEventsManager() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4 text-lg font-semibold text-slate-900">FaithMart ticket links</div>
                   <div className="space-y-3">
                     {tickets.map((ticket) => (
-                      <div key={ticket.sku} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={ticket.sku} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{ticket.title}</div>
                         <div className="text-xs text-slate-500">{ticket.sku}</div>
                         <div className="mt-2 flex items-center justify-between gap-3">
@@ -213,8 +213,8 @@ export default function FaithHubEventsManager() {
               </Card>
             </div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Multi-session agenda and volunteers"
                   subtitle="Plan the event flow and operational teams in one place."
@@ -222,7 +222,7 @@ export default function FaithHubEventsManager() {
                 <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
                   <div className="space-y-3">
                     {agendaItems.map((item) => (
-                      <div key={item.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                         <div className="text-xs text-slate-500">{item.time}</div>
                         <div className="mt-1 text-sm text-slate-600">{item.type}</div>
@@ -231,7 +231,7 @@ export default function FaithHubEventsManager() {
                   </div>
                   <div className="space-y-3">
                     {volunteers.map((person) => (
-                      <div key={person.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={person.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{person.name}</div>
                         <div className="text-xs text-slate-500">{person.role}</div>
                         <div className="mt-2 inline-flex rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold text-[#03cd8c]">
@@ -251,8 +251,8 @@ export default function FaithHubEventsManager() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Check-in mode"
                   subtitle="Move attendees through the gate with reliability, even when connectivity is weak."
@@ -261,7 +261,7 @@ export default function FaithHubEventsManager() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setCheckinMode((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${checkinMode ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${checkinMode ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <ClipboardCheck className="h-4 w-4 text-[#8ef0ca]" /> Check-in operations
@@ -270,22 +270,22 @@ export default function FaithHubEventsManager() {
                   </button>
                   <button
                     onClick={() => setOfflineTokenCheckin((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${offlineTokenCheckin ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${offlineTokenCheckin ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <QrCode className="h-4 w-4 text-[#8ef0ca]" /> Offline scanned tokens
                     </div>
                     <div className="text-sm text-white/75">{offlineTokenCheckin ? "Scanned tokens can validate offline and sync later." : "Online-only ticket validation."}</div>
                   </button>
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
                     Offline check-in supports time-limited scanned tokens that can sync to the central ledger after connectivity returns.
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Premium routing and ticket rules"
                   subtitle="Advanced operations for larger or more complex faith events."
@@ -294,7 +294,7 @@ export default function FaithHubEventsManager() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setMultiVenueRouting((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${multiVenueRouting ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${multiVenueRouting ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Route className="h-4 w-4 text-[#03cd8c]" /> Multi-venue routing
@@ -303,7 +303,7 @@ export default function FaithHubEventsManager() {
                   </button>
                   <button
                     onClick={() => setAdvancedTicketRules((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${advancedTicketRules ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${advancedTicketRules ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <BadgeCheck className="h-4 w-4 text-[#03cd8c]" /> Advanced ticket rules
@@ -312,7 +312,7 @@ export default function FaithHubEventsManager() {
                   </button>
                   <div className="space-y-3">
                     {venues.map((venue) => (
-                      <div key={venue.name} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                      <div key={venue.name} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{venue.name}</div>
                         <div className="text-xs text-slate-500">{venue.routing}</div>
                         <div className="mt-2 inline-flex rounded-full bg-[#fff8ef] px-3 py-1 text-xs font-semibold text-[#f77f00]">
@@ -325,18 +325,18 @@ export default function FaithHubEventsManager() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Monetization posture"
                   subtitle="Event revenue can combine tickets, booths, and merch in one ecosystem."
                   action="Revenue"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Ticket fees can be collected through linked FaithMart SKUs while booth access and event merchandise expand revenue options.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Marketplace Days can connect event registration directly to vendor merchandise and booth purchases.
                   </div>
                   <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
@@ -366,3 +366,5 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+
+

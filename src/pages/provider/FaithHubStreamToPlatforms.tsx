@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -103,10 +103,10 @@ export default function FaithHubStreamToPlatforms() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Share2 className="h-5 w-5" />
             </div>
             <div>
@@ -133,8 +133,8 @@ export default function FaithHubStreamToPlatforms() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4">
                   <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Distribution posture</div>
                   <div className="mt-2 text-xl font-semibold">Connect, map, and broadcast outward</div>
@@ -142,7 +142,7 @@ export default function FaithHubStreamToPlatforms() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setScheduledBroadcasts((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${scheduledBroadcasts ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${scheduledBroadcasts ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <Clapperboard className="h-4 w-4 text-[#8ef0ca]" /> Scheduled broadcasts
@@ -151,7 +151,7 @@ export default function FaithHubStreamToPlatforms() {
                   </button>
                   <button
                     onClick={() => setPremiumDistribution((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${premiumDistribution ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${premiumDistribution ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <ShieldCheck className="h-4 w-4 text-[#8ef0ca]" /> Premium distribution pack
@@ -174,15 +174,15 @@ export default function FaithHubStreamToPlatforms() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Per-destination profiles</div>
                   <div className="text-sm text-slate-500">Tune delivery quality based on platform behavior.</div>
                 </div>
                 <div className="space-y-3">
                   {bitrateProfiles.map((profile) => (
-                    <div key={profile.name} className={`rounded-[24px] border p-4 ${selectedProfile === profile.name ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}>
+                    <div key={profile.name} className={`rounded-xl border p-4 ${selectedProfile === profile.name ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}>
                       <div className="text-sm font-semibold text-slate-900">{profile.name}</div>
                       <div className="mt-1 text-sm text-slate-600">{profile.detail}</div>
                     </div>
@@ -198,12 +198,12 @@ export default function FaithHubStreamToPlatforms() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Destination management</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Destination management</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Credentials, broadcasts, RTMP targets, clipping</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -216,14 +216,14 @@ export default function FaithHubStreamToPlatforms() {
                         Connect platforms, store destination credentials, assign RTMP targets, create scheduled broadcasts, and turn premium clipping packages into a repeatable provider workflow.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Connected destinations</div>
                       <div className="mb-3 text-4xl font-semibold text-white">{connectedCount}</div>
                       <div className="h-2 rounded-full bg-white/20">
                         <div className="h-2 rounded-full bg-white" style={{ width: `${(connectedCount / platforms.length) * 100}%` }} />
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" disabled={offlineMode}>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white" disabled={offlineMode}>
                           Connect new
                         </Button>
                         <Button
@@ -240,8 +240,8 @@ export default function FaithHubStreamToPlatforms() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Connected platforms</div>
@@ -253,7 +253,7 @@ export default function FaithHubStreamToPlatforms() {
                 </div>
                 <div className="space-y-3">
                   {platforms.map((platform) => (
-                    <div key={platform.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={platform.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-base font-semibold text-slate-900">{platform.name}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${platform.connected ? "bg-[#ecfff8] text-[#03cd8c]" : "bg-slate-100 text-slate-700"}`}>
@@ -272,14 +272,14 @@ export default function FaithHubStreamToPlatforms() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Scheduled broadcast creation</div>
                   <div className="space-y-3 text-sm text-slate-600">
-                    <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                       Pre-create destination broadcasts so titles, privacy, thumbnails, and timing align before going live.
                     </div>
-                    <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                       Store per-platform broadcast references and reuse them for repeat series episodes or recurring events.
                     </div>
                     <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
@@ -289,13 +289,13 @@ export default function FaithHubStreamToPlatforms() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Premium cross-posting packages</div>
                   <div className="space-y-3">
                     <button
                       onClick={() => setAutoClipping((prev) => !prev)}
-                      className={`w-full rounded-[24px] border p-4 text-left transition ${autoClipping ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                      className={`w-full rounded-xl border p-4 text-left transition ${autoClipping ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Scissors className="h-4 w-4 text-[#03cd8c]" /> Automated clipping
@@ -304,7 +304,7 @@ export default function FaithHubStreamToPlatforms() {
                     </button>
                     <button
                       onClick={() => setCrossPosting((prev) => !prev)}
-                      className={`w-full rounded-[24px] border p-4 text-left transition ${crossPosting ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                      className={`w-full rounded-xl border p-4 text-left transition ${crossPosting ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <UploadCloud className="h-4 w-4 text-[#03cd8c]" /> Cross-posting package
@@ -313,7 +313,7 @@ export default function FaithHubStreamToPlatforms() {
                     </button>
                     <div className="space-y-2">
                       {clipPackages.map((item) => (
-                        <div key={item} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                        <div key={item} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
                           {item}
                         </div>
                       ))}
@@ -328,3 +328,5 @@ export default function FaithHubStreamToPlatforms() {
     </div>
   );
 }
+
+

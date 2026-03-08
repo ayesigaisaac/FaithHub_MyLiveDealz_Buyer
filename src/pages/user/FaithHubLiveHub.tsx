@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const filters = {
-  institutions: ["All Institutions", "St. Mary’s Cathedral", "FaithHub Global Chapel", "Al Noor Community Centre", "Kingdom Youth Movement"],
+  institutions: ["All Institutions", "St. Maryâ€™s Cathedral", "FaithHub Global Chapel", "Al Noor Community Centre", "Kingdom Youth Movement"],
   series: ["All Series", "Walking in Wisdom", "Mercy in Motion", "Women of Faith", "Raising Kingdom Leaders"],
   audiences: ["All Audiences", "General Community", "Youth Church", "Women Fellowship", "Family Ministry"],
 };
@@ -35,7 +35,7 @@ const liveNow = [
   {
     id: 1,
     title: "Evening Prayer Revival",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Maryâ€™s Cathedral",
     series: "Walking in Wisdom",
     audience: "General Community",
     viewers: "3.4k watching",
@@ -65,17 +65,17 @@ const upcoming = [
     institution: "Kingdom Youth Movement",
     series: "Raising Kingdom Leaders",
     audience: "Youth Church",
-    time: "Today · 8:00 PM",
+    time: "Today Â· 8:00 PM",
     waitingRoom: true,
     ticketed: false,
   },
   {
     id: 2,
-    title: "Mercy in Motion · Episode 5",
+    title: "Mercy in Motion Â· Episode 5",
     institution: "FaithHub Global Chapel",
     series: "Mercy in Motion",
     audience: "Family Ministry",
-    time: "Tomorrow · 7:30 PM",
+    time: "Tomorrow Â· 7:30 PM",
     waitingRoom: true,
     ticketed: true,
   },
@@ -85,7 +85,7 @@ const upcoming = [
     institution: "Al Noor Community Centre",
     series: "Quiet Strength",
     audience: "Family Ministry",
-    time: "Tomorrow · 5:30 PM",
+    time: "Tomorrow Â· 5:30 PM",
     waitingRoom: false,
     ticketed: false,
   },
@@ -95,7 +95,7 @@ const replays = [
   {
     id: 1,
     title: "Guarding the Heart Replay",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Maryâ€™s Cathedral",
     series: "Walking in Wisdom",
     audience: "General Community",
     duration: "43 min",
@@ -127,7 +127,7 @@ function FilterChip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -181,10 +181,10 @@ export default function FaithHubLiveHub() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Radio className="h-5 w-5" />
             </div>
             <div>
@@ -211,12 +211,12 @@ export default function FaithHubLiveHub() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Now Live, Upcoming, Replays</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Now Live, Upcoming, Replays</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Series-aware live discovery</Badge>
                   </div>
 
@@ -261,8 +261,8 @@ export default function FaithHubLiveHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Filters"
                   subtitle="Refine by institution, series, and audience group."
@@ -299,16 +299,16 @@ export default function FaithHubLiveHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Now Live"
                   subtitle="Join current live sessions with quality context and access cues."
                 />
                 <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-2">
                   {filteredLiveNow.map((item) => (
-                    <div key={item.id} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10">
-                      <div className="mb-4 h-40 rounded-[20px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                    <div key={item.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-sm/10">
+                      <div className="mb-4 h-40 rounded-lg bg-gradient-to-br from-slate-100 to-slate-200" />
                       <div className="mb-2 flex flex-wrap items-center gap-2">
                         <div className="text-lg font-semibold text-slate-900">{item.title}</div>
                         <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-600">
@@ -320,7 +320,7 @@ export default function FaithHubLiveHub() {
                           </span>
                         )}
                       </div>
-                      <div className="text-sm text-slate-500">{item.institution} · {item.series}</div>
+                      <div className="text-sm text-slate-500">{item.institution} Â· {item.series}</div>
                       <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-600">
                         <span className="rounded-full bg-slate-50 px-3 py-1 ring-1 ring-slate-200">{item.audience}</span>
                         <span className="inline-flex items-center gap-1 rounded-full bg-[#ecfff8] px-3 py-1 font-medium text-[#03cd8c]">
@@ -355,8 +355,8 @@ export default function FaithHubLiveHub() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Upcoming"
                   subtitle="Plan ahead and enter waiting rooms before session start."
@@ -364,9 +364,9 @@ export default function FaithHubLiveHub() {
                 />
                 <div className="space-y-3">
                   {filteredUpcoming.map((item) => (
-                    <div key={item.id} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={item.id} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 text-base font-semibold text-white">{item.title}</div>
-                      <div className="text-sm text-white/70">{item.institution} · {item.series}</div>
+                      <div className="text-sm text-white/70">{item.institution} Â· {item.series}</div>
                       <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-white/85">
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
                           <CalendarDays className="h-4 w-4 text-[#8ef0ca]" />
@@ -379,9 +379,9 @@ export default function FaithHubLiveHub() {
                       </div>
                       <div className="mt-4 flex gap-2">
                         {item.waitingRoom ? (
-                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Join waiting room</Button>
+                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Join waiting room</Button>
                         ) : (
-                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Set reminder</Button>
+                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Set reminder</Button>
                         )}
                         {item.ticketed && (
                           <Button variant="outline" className="rounded-2xl border-white/15 bg-transparent text-white hover:bg-white/10">
@@ -396,8 +396,8 @@ export default function FaithHubLiveHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Replays"
                   subtitle="Resume cached replays when live is over or connectivity is poor."
@@ -405,15 +405,15 @@ export default function FaithHubLiveHub() {
                 />
                 <div className="space-y-3">
                   {filteredReplays.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between gap-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.id} className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="flex min-w-0 items-center gap-3">
                         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                           {item.cached ? <Download className="h-4 w-4" /> : <PlayCircle className="h-4 w-4" />}
                         </div>
                         <div className="min-w-0">
                           <div className="truncate text-sm font-semibold text-slate-900">{item.title}</div>
-                          <div className="text-xs text-slate-500">{item.institution} · {item.duration}</div>
-                          <div className="mt-1 text-xs text-slate-600">{item.series} · {item.audience}</div>
+                          <div className="text-xs text-slate-500">{item.institution} Â· {item.duration}</div>
+                          <div className="mt-1 text-xs text-slate-600">{item.series} Â· {item.audience}</div>
                         </div>
                       </div>
                       <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -423,8 +423,8 @@ export default function FaithHubLiveHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Monetization</div>
@@ -433,10 +433,10 @@ export default function FaithHubLiveHub() {
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Policy-aware</Badge>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Limited-capacity interactive sessions can offer priority access for supporters or verified ticket holders.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Session discovery can surface ticketed and subscription-backed live experiences without hiding standard free access.
                   </div>
                 </div>
@@ -448,3 +448,5 @@ export default function FaithHubLiveHub() {
     </div>
   );
 }
+
+

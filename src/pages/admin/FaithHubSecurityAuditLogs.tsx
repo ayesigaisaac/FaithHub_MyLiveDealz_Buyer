@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -28,9 +28,9 @@ const auditEvents = [
     id: "AUD-10912",
     actor: "Admin Naomi",
     action: "Changed provider verification status",
-    target: "St. Mary’s Cathedral",
+    target: "St. Maryâ€™s Cathedral",
     module: "Verification",
-    time: "Today · 09:14",
+    time: "Today Â· 09:14",
     risk: "Normal",
   },
   {
@@ -39,7 +39,7 @@ const auditEvents = [
     action: "Rotated live stream key",
     target: "Evening Prayer Revival",
     module: "Live Ops",
-    time: "Today · 08:52",
+    time: "Today Â· 08:52",
     risk: "Sensitive",
   },
   {
@@ -48,7 +48,7 @@ const auditEvents = [
     action: "Updated global notification template",
     target: "Replay available template",
     module: "Channels",
-    time: "Today · 08:21",
+    time: "Today Â· 08:21",
     risk: "Normal",
   },
   {
@@ -57,7 +57,7 @@ const auditEvents = [
     action: "Applied user ban in live room",
     target: "Youth Impact Night",
     module: "Moderation",
-    time: "Yesterday · 22:14",
+    time: "Yesterday Â· 22:14",
     risk: "Sensitive",
   },
   {
@@ -66,7 +66,7 @@ const auditEvents = [
     action: "Immutable archive checkpoint completed",
     target: "Audit ledger",
     module: "Security",
-    time: "Yesterday · 18:00",
+    time: "Yesterday Â· 18:00",
     risk: "Normal",
   },
 ];
@@ -109,10 +109,10 @@ export default function FaithHubSecurityAuditLogs() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <History className="h-5 w-5" />
             </div>
             <div>
@@ -138,12 +138,12 @@ export default function FaithHubSecurityAuditLogs() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Security governance and evidence trail</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Security governance and evidence trail</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Audit logs, immutable records, exports, SIEM integration</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -156,15 +156,15 @@ export default function FaithHubSecurityAuditLogs() {
                         This page covers core security visibility across role changes, privileged operations, moderation actions, finance mutations, and system-generated checkpoints. Premium layers add immutable logs and SIEM integrations.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Audit posture</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Critical actions logged</div>
                         <div className="mt-1 text-3xl font-semibold text-white">{auditEvents.length}</div>
                         <div className="mt-2 text-sm text-white/80">Immutable chain {immutableLogs ? "enabled" : "disabled"} in preview.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open audit explorer</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Open audit explorer</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -179,8 +179,8 @@ export default function FaithHubSecurityAuditLogs() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Admin audit trail"
                   subtitle="Filter high-trust actions across modules and users."
@@ -190,7 +190,7 @@ export default function FaithHubSecurityAuditLogs() {
                     <button
                       key={item}
                       onClick={() => setModuleFilter(item)}
-                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${moduleFilter === item ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20" : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
+                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${moduleFilter === item ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20" : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
                     >
                       {item}
                     </button>
@@ -198,17 +198,17 @@ export default function FaithHubSecurityAuditLogs() {
                 </div>
                 <div className="space-y-3">
                   {visibleEvents.map((event) => (
-                    <div key={event.id} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={event.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-sm font-semibold text-slate-900">{event.action}</div>
-                          <div className="text-xs text-slate-500">{event.id} · {event.module}</div>
+                          <div className="text-xs text-slate-500">{event.id} Â· {event.module}</div>
                         </div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${event.risk === "Sensitive" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-[#ecfff8] text-[#03cd8c]"}`}>
                           {event.risk}
                         </span>
                       </div>
-                      <div className="text-sm text-slate-600">{event.actor} → {event.target}</div>
+                      <div className="text-sm text-slate-600">{event.actor} â†’ {event.target}</div>
                       <div className="mt-2 text-xs text-slate-500">{event.time}</div>
                     </div>
                   ))}
@@ -223,8 +223,8 @@ export default function FaithHubSecurityAuditLogs() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Critical action coverage"
                   subtitle="Protect the events that matter most in a multi-role admin system."
@@ -232,7 +232,7 @@ export default function FaithHubSecurityAuditLogs() {
                 />
                 <div className="space-y-3">
                   {criticalActions.map((item) => (
-                    <div key={item} className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
+                    <div key={item} className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
                       {item}
                     </div>
                   ))}
@@ -240,8 +240,8 @@ export default function FaithHubSecurityAuditLogs() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Immutable logs and exports"
                   subtitle="World-class record durability for high-trust environments."
@@ -250,7 +250,7 @@ export default function FaithHubSecurityAuditLogs() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setImmutableLogs((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${immutableLogs ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${immutableLogs ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <FileLock2 className="h-4 w-4 text-[#03cd8c]" /> Immutable logging
@@ -258,7 +258,7 @@ export default function FaithHubSecurityAuditLogs() {
                     <div className="text-sm text-slate-600">{immutableLogs ? "Critical log records are protected in a tamper-resistant trail." : "Standard editable log storage only."}</div>
                   </button>
                   {exportOptions.map((item) => (
-                    <div key={item.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                       <div className="text-sm text-slate-600">{item.note}</div>
                     </div>
@@ -270,8 +270,8 @@ export default function FaithHubSecurityAuditLogs() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="SIEM integration"
                   subtitle="Premium external security event forwarding and enterprise visibility."
@@ -280,7 +280,7 @@ export default function FaithHubSecurityAuditLogs() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setSiemIntegration((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${siemIntegration ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${siemIntegration ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <TerminalSquare className="h-4 w-4 text-[#03cd8c]" /> SIEM connector
@@ -289,13 +289,13 @@ export default function FaithHubSecurityAuditLogs() {
                   </button>
                   <div className="space-y-3">
                     {siemSignals.map((item) => (
-                      <div key={item.title} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                      <div key={item.title} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                         <div className="text-sm text-slate-600">{item.note}</div>
                       </div>
                     ))}
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
                     SIEM export can help enterprise operators centralize admin activity, suspicious behavior, and high-risk events beyond the app itself.
                   </div>
                 </div>
@@ -321,3 +321,5 @@ function SectionHeader({ title, subtitle, action = "Manage" }) {
     </div>
   );
 }
+
+

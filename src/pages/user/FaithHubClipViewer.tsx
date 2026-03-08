@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -58,10 +58,10 @@ export default function FaithHubClipViewer() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Clapperboard className="h-5 w-5" />
             </div>
             <div>
@@ -90,12 +90,12 @@ export default function FaithHubClipViewer() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Short-form clip experience</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Short-form clip experience</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Share, report, return to replay</Badge>
                   </div>
 
@@ -122,8 +122,8 @@ export default function FaithHubClipViewer() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-40 rounded-[22px] bg-white/20" />
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                      <div className="mb-4 h-40 rounded-lg bg-white/20" />
                       <div className="mb-3 text-sm font-semibold text-white">Clip state</div>
                       <div className="space-y-2 text-sm text-white/85">
                         <div className="flex items-center justify-between"><span>Caption burn-in</span><span>{captionBurnIn ? "On" : "Off"}</span></div>
@@ -136,15 +136,15 @@ export default function FaithHubClipViewer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Watch and share"
                   subtitle="The clip should stand on its own, then invite the viewer deeper into the experience."
                 />
                 <div className="space-y-4">
-                  <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="mb-4 h-[360px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="mb-4 h-[360px] rounded-xl bg-gradient-to-br from-slate-100 to-slate-200" />
                     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                       <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
                         <Share2 className="mr-2 h-4 w-4" /> Share clip
@@ -166,7 +166,7 @@ export default function FaithHubClipViewer() {
                   </div>
 
                   <div className="grid gap-4 lg:grid-cols-[0.5fr_0.5fr]">
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 text-sm font-semibold text-slate-900">Share targets</div>
                       <div className="grid gap-2 sm:grid-cols-2">
                         {shareTargets.map((item) => (
@@ -177,7 +177,7 @@ export default function FaithHubClipViewer() {
                       </div>
                     </div>
 
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 text-sm font-semibold text-slate-900">Caption burn-in for social shares</div>
                       <div className="space-y-3">
                         <button
@@ -216,8 +216,8 @@ export default function FaithHubClipViewer() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Referral paths"
                   subtitle="Every clip should point back into the deeper faith journey."
@@ -225,10 +225,10 @@ export default function FaithHubClipViewer() {
                 />
                 <div className="space-y-3">
                   {referralCards.map((item) => (
-                    <div key={item.title} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={item.title} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 text-base font-semibold text-white">{item.title}</div>
                       <div className="text-sm text-white/70">{item.subtitle}</div>
-                      <Button className="mt-4 rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
+                      <Button className="mt-4 rounded-2xl bg-white text-[#03cd8c] hover:bg-white">
                         Open CTA
                       </Button>
                     </div>
@@ -237,8 +237,8 @@ export default function FaithHubClipViewer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Premium institution controls</div>
@@ -247,13 +247,13 @@ export default function FaithHubClipViewer() {
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Premium creator layer</Badge>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Verified institutions can receive premium watermark controls for cleaner exports or stronger branded attribution depending on channel strategy.
                   </div>
                   <button
                     onClick={() => setWatermarkControl((prev) => !prev)}
                     disabled={!verifiedInstitutionMode}
-                    className={`w-full rounded-[24px] border px-4 py-4 text-left transition ${watermarkControl ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"} ${!verifiedInstitutionMode ? "opacity-60" : ""}`}
+                    className={`w-full rounded-xl border px-4 py-4 text-left transition ${watermarkControl ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"} ${!verifiedInstitutionMode ? "opacity-60" : ""}`}
                   >
                     <div className="mb-1 flex items-center gap-2 font-semibold text-slate-900">
                       <Tag className="h-4 w-4 text-[#03cd8c]" /> Watermark control
@@ -264,21 +264,21 @@ export default function FaithHubClipViewer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Offline state"
                   subtitle="Clip metadata can cache locally even when playback itself needs download support."
                   action="Downloads"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Titles, series context, share targets, and report options remain visible while offline.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Actual playback requires the clip to have been downloaded or cached previously.
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <ImagePlus className="h-4 w-4 text-[#03cd8c]" /> Social-safe metadata package
                     </div>
@@ -315,3 +315,5 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+
+

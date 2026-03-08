@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -77,17 +77,17 @@ const optInTimeline = [
   {
     event: "WhatsApp consent captured",
     detail: "Naomi Campbell opted in through QR scan at live waiting room entry.",
-    time: "Today · 09:21",
+    time: "Today Â· 09:21",
   },
   {
     event: "Template eligibility window checked",
     detail: "Miriam A. moved to template-required state after service window expired.",
-    time: "Today · 09:08",
+    time: "Today Â· 09:08",
   },
   {
     event: "Family line preference updated",
     detail: "David Otema switched from SMS to Email + Push for family notifications.",
-    time: "Yesterday · 18:42",
+    time: "Yesterday Â· 18:42",
   },
 ];
 
@@ -125,7 +125,7 @@ function FilterChip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -174,10 +174,10 @@ export default function FaithHubChannelsContactManager() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Users className="h-5 w-5" />
             </div>
             <div>
@@ -203,12 +203,12 @@ export default function FaithHubChannelsContactManager() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Contacts, segments, channels, consent</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Contacts, segments, channels, consent</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Template readiness and sender governance</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -221,15 +221,15 @@ export default function FaithHubChannelsContactManager() {
                         This page gives providers a unified contact view with channel preference awareness, consent audit trails, messaging readiness, and premium multi-brand or sender-pool controls for scaled communications.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Contact posture</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Visible contacts</div>
                         <div className="mt-1 text-3xl font-semibold text-white">{visibleContacts.length}</div>
                         <div className="mt-2 text-sm text-white/80">Segment filtered for {selectedSegment}.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Add contact</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Add contact</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -244,8 +244,8 @@ export default function FaithHubChannelsContactManager() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Contacts and segments"
                   subtitle="Search, filter, and understand opt-in posture before messaging."
@@ -279,11 +279,11 @@ export default function FaithHubChannelsContactManager() {
 
                   <div className="space-y-3">
                     {visibleContacts.map((contact) => (
-                      <div key={contact.id} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={contact.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                           <div>
                             <div className="text-base font-semibold text-slate-900">{contact.name}</div>
-                            <div className="text-sm text-slate-500">{contact.segment} · {contact.brandLine}</div>
+                            <div className="text-sm text-slate-500">{contact.segment} Â· {contact.brandLine}</div>
                           </div>
                           <span className={`rounded-full px-3 py-1 text-xs font-semibold ${contact.status === "Opted in" ? "bg-[#ecfff8] text-[#03cd8c]" : contact.status === "Template-required" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-slate-100 text-slate-700"}`}>
                             {contact.status}
@@ -307,8 +307,8 @@ export default function FaithHubChannelsContactManager() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Consent audit trail"
                   subtitle="Trace how and when users granted contact permissions."
@@ -316,7 +316,7 @@ export default function FaithHubChannelsContactManager() {
                 />
                 <div className="space-y-3">
                   {optInTimeline.map((item) => (
-                    <div key={item.event} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={item.event} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 text-sm font-semibold text-white">{item.event}</div>
                       <div className="text-sm text-white/75">{item.detail}</div>
                       <div className="mt-2 text-xs text-white/55">{item.time}</div>
@@ -326,8 +326,8 @@ export default function FaithHubChannelsContactManager() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Template management"
                   subtitle="Use approved templates when direct free-form messaging is not available."
@@ -345,7 +345,7 @@ export default function FaithHubChannelsContactManager() {
                   {templateManagerOpen ? (
                     <div className="space-y-3">
                       {messageTemplates.map((template) => (
-                        <div key={template.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                        <div key={template.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                           <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                             <div>
                               <div className="text-sm font-semibold text-slate-900">{template.name}</div>
@@ -360,12 +360,12 @@ export default function FaithHubChannelsContactManager() {
                       ))}
                     </div>
                   ) : (
-                    <div className="rounded-[24px] border border-dashed border-slate-200 bg-[#f8fafc] p-6 text-center text-sm text-slate-600">
+                    <div className="rounded-xl border border-dashed border-slate-200 bg-[#f8fafc] p-6 text-center text-sm text-slate-600">
                       Template management preview is hidden in this state.
                     </div>
                   )}
 
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
                     When direct message windows are closed, approved templates should take over for compliant outreach, reminders, and replay notifications.
                   </div>
                 </div>
@@ -373,13 +373,13 @@ export default function FaithHubChannelsContactManager() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.48fr_0.52fr]">
-              <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Premium messaging infrastructure</div>
                   <div className="space-y-3">
                     <button
                       onClick={() => setMultiBrandLines((prev) => !prev)}
-                      className={`w-full rounded-[24px] border p-4 text-left transition ${multiBrandLines ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                      className={`w-full rounded-xl border p-4 text-left transition ${multiBrandLines ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <SplitSquareVertical className="h-4 w-4 text-[#03cd8c]" /> Multi-brand lines
@@ -388,7 +388,7 @@ export default function FaithHubChannelsContactManager() {
                     </button>
                     <button
                       onClick={() => setSenderPoolsEnabled((prev) => !prev)}
-                      className={`w-full rounded-[24px] border p-4 text-left transition ${senderPoolsEnabled ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                      className={`w-full rounded-xl border p-4 text-left transition ${senderPoolsEnabled ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Phone className="h-4 w-4 text-[#03cd8c]" /> Dedicated sender pools
@@ -399,12 +399,12 @@ export default function FaithHubChannelsContactManager() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Messaging lines and sender pools</div>
                   <div className="space-y-3">
                     {senderPools.map((item) => (
-                      <div key={item.line} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={item.line} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                         <div className="mb-1 flex items-center justify-between gap-2">
                           <div className="text-sm font-semibold text-slate-900">{item.line}</div>
                           <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.state === "Active" ? "bg-[#ecfff8] text-[#03cd8c]" : item.state === "Premium" ? "bg-slate-900 text-white" : "bg-[#fff8ef] text-[#f77f00]"}`}>
@@ -424,3 +424,5 @@ export default function FaithHubChannelsContactManager() {
     </div>
   );
 }
+
+

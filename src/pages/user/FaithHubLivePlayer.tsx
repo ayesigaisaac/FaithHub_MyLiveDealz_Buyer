@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -90,10 +90,10 @@ export default function FaithHubLivePlayer() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <PlayCircle className="h-5 w-5" />
             </div>
             <div>
@@ -120,18 +120,18 @@ export default function FaithHubLivePlayer() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Live playback experience</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Live playback experience</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chat, captions, translation, clips</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Youth Impact Night · Live now</div>
+                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Youth Impact Night Â· Live now</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         A full live faith experience with playback control, translation, interaction, moderation, clips, and premium engagement lanes.
                       </h1>
@@ -155,8 +155,8 @@ export default function FaithHubLivePlayer() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-40 rounded-[22px] bg-white/20" />
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
+                      <div className="mb-4 h-40 rounded-lg bg-white/20" />
                       <div className="mb-3 text-sm font-semibold text-white">Quick playback state</div>
                       <div className="space-y-2 text-sm text-white/85">
                         <div className="flex items-center justify-between"><span>Quality</span><span>{quality}</span></div>
@@ -170,16 +170,16 @@ export default function FaithHubLivePlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Player and controls"
                   subtitle="Core playback, accessibility, reporting, and giving actions."
                 />
 
                 <div className="space-y-4">
-                  <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="mb-4 h-[360px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="mb-4 h-[360px] rounded-xl bg-gradient-to-br from-slate-100 to-slate-200" />
                     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                       <select
                         value={quality}
@@ -246,7 +246,7 @@ export default function FaithHubLivePlayer() {
                   </div>
 
                   <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <MessageSquare className="h-4 w-4 text-[#03cd8c]" /> Live chat
                       </div>
@@ -267,7 +267,7 @@ export default function FaithHubLivePlayer() {
                       </div>
                     </div>
 
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <BadgeCheck className="h-4 w-4 text-[#03cd8c]" /> Member-only Q&A queue
                       </div>
@@ -308,8 +308,8 @@ export default function FaithHubLivePlayer() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="AI highlights and takeaways"
                   subtitle="Subscriber-grade summary intelligence during live or replay playback."
@@ -318,7 +318,7 @@ export default function FaithHubLivePlayer() {
                 <div className="space-y-3">
                   {aiPanelOpen ? (
                     aiHighlights.map((item) => (
-                      <div key={item} className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
+                      <div key={item} className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
                         <div className="mb-2 flex items-center gap-2 font-semibold text-white">
                           <Sparkles className="h-4 w-4 text-[#8ef0ca]" /> AI highlight
                         </div>
@@ -326,12 +326,12 @@ export default function FaithHubLivePlayer() {
                       </div>
                     ))
                   ) : (
-                    <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/75 backdrop-blur">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/75 backdrop-blur">
                       AI highlights are collapsed. Open them again for live or post-session takeaways.
                     </div>
                   )}
                   <Button
-                    className="w-full rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90"
+                    className="w-full rounded-2xl bg-white text-[#03cd8c] hover:bg-white"
                     onClick={() => setAiPanelOpen((prev) => !prev)}
                   >
                     {aiPanelOpen ? "Hide AI highlights" : "Show AI highlights"}
@@ -340,8 +340,8 @@ export default function FaithHubLivePlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Premium engagement</div>
@@ -350,28 +350,28 @@ export default function FaithHubLivePlayer() {
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Monetized live layer</Badge>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Paid membership badges can visually identify supporters and subscribers in chat without disrupting the main stream experience.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Ticket validation and member-only Q&A lanes help support more structured premium or event-based live experiences.
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Auto-retry and fallback"
                   subtitle="The live player should keep serving the user even when the connection weakens."
                   action="Diagnostics"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     If the connection drops, the player should auto-retry, reduce bitrate, and preserve the current state where possible.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Users should be able to switch into audio-only mode at any time without leaving the session.
                   </div>
                   <div className="grid gap-3 sm:grid-cols-3">
@@ -406,3 +406,5 @@ export default function FaithHubLivePlayer() {
     </div>
   );
 }
+
+

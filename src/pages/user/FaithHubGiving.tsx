@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -27,7 +27,7 @@ const funds = [
   {
     id: 1,
     title: "General Giving",
-    description: "Support the institution’s ongoing mission, operations, and weekly services.",
+    description: "Support the institutionâ€™s ongoing mission, operations, and weekly services.",
     raised: "$24,500",
     goal: "$40,000",
     progress: 61,
@@ -42,7 +42,7 @@ const funds = [
   },
   {
     id: 3,
-    title: "Children’s Ministry",
+    title: "Childrenâ€™s Ministry",
     description: "Equip learning materials, safe spaces, and youth support activities.",
     raised: "$8,700",
     goal: "$15,000",
@@ -53,7 +53,7 @@ const funds = [
 const donorWall = [
   { name: "Grace N.", amount: "$50", note: "Praying with the missions team." },
   { name: "Anonymous", amount: "$25", note: "Supporting youth growth." },
-  { name: "Household of Peace", amount: "$100", note: "For the children’s ministry." },
+  { name: "Household of Peace", amount: "$100", note: "For the childrenâ€™s ministry." },
 ];
 
 const supporterPerks = [
@@ -86,10 +86,10 @@ export default function FaithHubGiving() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <HeartHandshake className="h-5 w-5" />
             </div>
             <div>
@@ -118,12 +118,12 @@ export default function FaithHubGiving() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Giving + receipts + supporter tiers</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Giving + receipts + supporter tiers</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">One-time, recurring, round-up, donor wall</Badge>
                   </div>
 
@@ -153,15 +153,15 @@ export default function FaithHubGiving() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Payment readiness</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="mb-2 text-xs uppercase tracking-[0.18em] text-white/70">State</div>
                         <div className="text-2xl font-semibold text-white">{queueLabel}</div>
                         <div className="mt-3 text-sm text-white/80">Offline mode stores donation intent only and never captures payment until online.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Continue giving</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Continue giving</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -176,8 +176,8 @@ export default function FaithHubGiving() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Donation funds"
                   subtitle="Choose the exact cause or institution fund you want to support."
@@ -187,15 +187,15 @@ export default function FaithHubGiving() {
                     <button
                       key={fund.id}
                       onClick={() => setSelectedFund(fund)}
-                      className={`rounded-[24px] border p-4 text-left transition ${
+                      className={`rounded-xl border p-4 text-left transition ${
                         selectedFund.id === fund.id
-                          ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10"
+                          ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-sm/10"
                           : "border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
                       }`}
                     >
                       <div className="mb-2 text-base font-semibold text-slate-900">{fund.title}</div>
                       <div className="text-sm leading-6 text-slate-600">{fund.description}</div>
-                      <div className="mt-4 text-sm text-slate-500">{fund.raised} raised · {fund.goal} goal</div>
+                      <div className="mt-4 text-sm text-slate-500">{fund.raised} raised Â· {fund.goal} goal</div>
                       <div className="mt-2 h-2 rounded-full bg-white/70 ring-1 ring-slate-200">
                         <div className="h-2 rounded-full bg-[#03cd8c]" style={{ width: `${fund.progress}%` }} />
                       </div>
@@ -205,14 +205,14 @@ export default function FaithHubGiving() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Give now"
                   subtitle="One-time or recurring giving with a simple, confidence-building flow."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Selected fund</div>
                     <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-4">
                       <div className="text-base font-semibold text-slate-900">{selectedFund.title}</div>
@@ -238,7 +238,7 @@ export default function FaithHubGiving() {
                               onClick={() => setFrequency(item)}
                               className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                                 frequency === item
-                                  ? 'border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20'
+                                  ? 'border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20'
                                   : 'border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]'
                               }`}
                             >
@@ -250,7 +250,7 @@ export default function FaithHubGiving() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Receipts and prayer note</div>
                     <div className="space-y-4">
                       <label className="block space-y-2">
@@ -309,8 +309,8 @@ export default function FaithHubGiving() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Donor wall and receipts"
                   subtitle="Public encouragement only when the giver opts in."
@@ -318,7 +318,7 @@ export default function FaithHubGiving() {
                 />
                 <div className="space-y-3">
                   {donorWall.map((entry) => (
-                    <div key={`${entry.name}-${entry.amount}`} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={`${entry.name}-${entry.amount}`} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 flex items-center justify-between gap-3">
                         <div className="text-sm font-semibold text-white">{entry.name}</div>
                         <div className="text-sm font-semibold text-white">{entry.amount}</div>
@@ -343,8 +343,8 @@ export default function FaithHubGiving() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Supporter subscription tier</div>
@@ -362,7 +362,7 @@ export default function FaithHubGiving() {
                 <div className="space-y-3">
                   {supporterTier ? (
                     supporterPerks.map((perk) => (
-                      <div key={perk} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm text-sm text-slate-600">
+                      <div key={perk} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm text-sm text-slate-600">
                         <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                           <Star className="h-4 w-4 text-[#f77f00]" /> Supporter perk
                         </div>
@@ -370,7 +370,7 @@ export default function FaithHubGiving() {
                       </div>
                     ))
                   ) : (
-                    <div className="rounded-[24px] border border-dashed border-[#f77f00]/20 bg-white p-6 text-center text-sm text-slate-600">
+                    <div className="rounded-xl border border-dashed border-[#f77f00]/20 bg-white p-6 text-center text-sm text-slate-600">
                       Supporter perks are hidden in this preview state.
                     </div>
                   )}
@@ -381,25 +381,25 @@ export default function FaithHubGiving() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Offline and payment behavior"
                   subtitle="Giving intent may queue, but payments must wait for connectivity."
                   action="Wallet"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Users can select a fund, choose amount and frequency, and queue their giving intent while offline.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Payment capture is never attempted offline. The page resumes securely when the network returns.
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <ShieldCheck className="h-4 w-4 text-[#03cd8c]" /> Safe intent handling
                     </div>
-                    <div>Offline mode stores the donor’s choices and prayer note, but card or wallet authorization waits until the device reconnects.</div>
+                    <div>Offline mode stores the donorâ€™s choices and prayer note, but card or wallet authorization waits until the device reconnects.</div>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
@@ -432,3 +432,5 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+
+

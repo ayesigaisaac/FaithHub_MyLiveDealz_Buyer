@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -160,10 +160,10 @@ export default function FaithHubContentPolicyTaxonomy() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Tags className="h-5 w-5" />
             </div>
             <div>
@@ -189,12 +189,12 @@ export default function FaithHubContentPolicyTaxonomy() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Global policy governance</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Global policy governance</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Taxonomy, localized strings, country overrides, simulation</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -207,15 +207,15 @@ export default function FaithHubContentPolicyTaxonomy() {
                         Admins can define core taxonomy structures, prohibited content notices, localized policy strings, and regional override behavior. Premium simulation tools help test policy outcomes before rollout.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Policy status</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Locale</div>
                         <div className="mt-1 text-2xl font-semibold text-white">{selectedLocale}</div>
                         <div className="mt-2 text-sm text-white/80">Override region: {selectedCountry}</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Edit policy</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Edit policy</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -230,8 +230,8 @@ export default function FaithHubContentPolicyTaxonomy() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Taxonomy registry"
                   subtitle="Manage labels, families, segments, and moderation routing tags."
@@ -247,7 +247,7 @@ export default function FaithHubContentPolicyTaxonomy() {
                 </div>
                 <div className="grid gap-4 lg:grid-cols-2">
                   {filteredGroups.map((group) => (
-                    <div key={group.group} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={group.group} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 text-sm font-semibold text-slate-900">{group.group}</div>
                       <div className="flex flex-wrap gap-2">
                         {group.items.length > 0 ? group.items.map((item) => (
@@ -262,15 +262,15 @@ export default function FaithHubContentPolicyTaxonomy() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Prohibited content notices"
                   subtitle="Global policy notices for what cannot be uploaded, streamed, or promoted."
                 />
                 <div className="space-y-3">
                   {prohibitedNotices.map((item) => (
-                    <div key={item.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-sm font-semibold text-slate-900">{item.title}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.severity === "Critical" ? "bg-rose-50 text-rose-600" : "bg-[#fff8ef] text-[#f77f00]"}`}>
@@ -291,8 +291,8 @@ export default function FaithHubContentPolicyTaxonomy() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Localized policy strings"
                   subtitle="Localize how policy is explained without changing the enforcement core."
@@ -303,7 +303,7 @@ export default function FaithHubContentPolicyTaxonomy() {
                     <button
                       key={item.locale}
                       onClick={() => setSelectedLocale(item.locale)}
-                      className={`w-full rounded-[24px] border p-4 text-left transition ${selectedLocale === item.locale ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"}`}
+                      className={`w-full rounded-xl border p-4 text-left transition ${selectedLocale === item.locale ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"}`}
                     >
                       <div className="mb-1 text-sm font-semibold">{item.locale}</div>
                       <div className="text-xs text-white/55">{item.status}</div>
@@ -314,8 +314,8 @@ export default function FaithHubContentPolicyTaxonomy() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Per-country overrides"
                   subtitle="Allow regional notice differences where operations require them."
@@ -326,7 +326,7 @@ export default function FaithHubContentPolicyTaxonomy() {
                     <button
                       key={item.country}
                       onClick={() => setSelectedCountry(item.country)}
-                      className={`w-full rounded-[24px] border p-4 text-left transition ${selectedCountry === item.country ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"}`}
+                      className={`w-full rounded-xl border p-4 text-left transition ${selectedCountry === item.country ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"}`}
                     >
                       <div className="mb-1 flex items-center justify-between gap-2">
                         <div className="text-sm font-semibold text-slate-900">{item.country}</div>
@@ -341,8 +341,8 @@ export default function FaithHubContentPolicyTaxonomy() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Policy simulation and testing"
                   subtitle="Premium validation before global rollout."
@@ -351,7 +351,7 @@ export default function FaithHubContentPolicyTaxonomy() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setSimulationMode((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${simulationMode ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${simulationMode ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <TestTube2 className="h-4 w-4 text-[#03cd8c]" /> Policy simulation
@@ -360,13 +360,13 @@ export default function FaithHubContentPolicyTaxonomy() {
                   </button>
                   <div className="space-y-3">
                     {simulations.map((item) => (
-                      <div key={item.title} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                      <div key={item.title} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                         <div className="text-sm text-slate-600">{item.note}</div>
                       </div>
                     ))}
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
                     Simulation helps admins preview moderation paths, strings, and taxonomy routing before content policy changes affect live systems.
                   </div>
                 </div>
@@ -378,3 +378,5 @@ export default function FaithHubContentPolicyTaxonomy() {
     </div>
   );
 }
+
+

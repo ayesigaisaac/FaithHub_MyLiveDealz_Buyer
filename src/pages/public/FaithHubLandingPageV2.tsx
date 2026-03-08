@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -315,10 +315,10 @@ export default function FaithHubLandingPageV2() {
 
   return (
     <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-white/70 bg-[#f2f2f2]/90 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-[#f2f2f2]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <button onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
@@ -367,7 +367,7 @@ export default function FaithHubLandingPageV2() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.18 }}
-              className="border-t border-white/70 bg-white/95 px-4 py-4 shadow-sm sm:hidden"
+              className="border-t border-slate-200 bg-white px-4 py-4 shadow-sm sm:hidden"
             >
               <div className="space-y-2">
                 {navItems.map((item) => (
@@ -398,7 +398,7 @@ export default function FaithHubLandingPageV2() {
       </header>
 
       <main>
-        <section id="overview" className="relative overflow-hidden">
+        <section id="overview" className="relative overflow-visible">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)]" />
           <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[0.58fr_0.42fr] lg:px-8 lg:py-16">
             <motion.div
@@ -439,8 +439,8 @@ export default function FaithHubLandingPageV2() {
 
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {stats.map((item) => (
-                  <Card key={item.label} className="rounded-[28px] border-white/70 bg-white/90 shadow-sm">
-                    <CardContent className="p-5">
+                  <Card key={item.label} className="rounded-xl border-slate-200 bg-white shadow-sm">
+                    <CardContent className="fh-card-content p-5">
                       <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">{item.label}</div>
                       <div className="mt-2 text-3xl font-semibold text-slate-900">{item.value}</div>
                       <div className="mt-1 text-sm text-slate-500">{item.note}</div>
@@ -456,8 +456,8 @@ export default function FaithHubLandingPageV2() {
               transition={{ delay: 0.08, duration: 0.45 }}
               className="relative z-10"
             >
-              <Card className="overflow-hidden rounded-[36px] border-white/70 bg-white/92 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.32)]">
-                <CardContent className="p-0">
+              <Card className="fh-card overflow-visible rounded-xl border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-0">
                   <div className="bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] p-5 text-white sm:p-6">
                     <div className="mb-5 flex items-center justify-between gap-3">
                       <div>
@@ -474,7 +474,7 @@ export default function FaithHubLandingPageV2() {
                         <button
                           key={item.role}
                           onClick={() => setActiveRole(item.role)}
-                          className={`rounded-[24px] border p-4 text-left transition ${
+                          className={`rounded-xl border p-4 text-left transition ${
                             activeRole === item.role
                               ? "border-white/35 bg-white/18"
                               : "border-white/15 bg-white/10 hover:bg-white/14"
@@ -505,7 +505,7 @@ export default function FaithHubLandingPageV2() {
 
                     <div className="space-y-3">
                       {currentRole?.bullets.map((item) => (
-                        <div key={item} className="flex items-start gap-3 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                        <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                           <div className="text-sm text-slate-700">{item}</div>
                         </div>
@@ -521,8 +521,8 @@ export default function FaithHubLandingPageV2() {
         <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {topHighlights.map((item) => (
-              <Card key={item.title} className="rounded-[32px] border-white/70 bg-white/92 shadow-sm">
-                <CardContent className="p-6">
+              <Card key={item.title} className="rounded-xl border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-6">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                     <item.icon className="h-5 w-5" />
                   </div>
@@ -548,8 +548,8 @@ export default function FaithHubLandingPageV2() {
 
           <div className="grid gap-4 xl:grid-cols-2">
             {featureGroups.map((group) => (
-              <Card key={group.title} className="rounded-[32px] border-white/70 bg-white/92 shadow-sm">
-                <CardContent className="p-6 sm:p-7">
+              <Card key={group.title} className="rounded-xl border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-6 sm:p-7">
                   <div className="mb-5 flex items-start gap-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <group.icon className="h-5 w-5" />
@@ -561,7 +561,7 @@ export default function FaithHubLandingPageV2() {
                   </div>
                   <div className="space-y-3">
                     {group.items.map((item) => (
-                      <div key={item} className="flex items-start gap-3 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                      <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                         <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                         <div className="text-sm leading-7 text-slate-700">{item}</div>
                       </div>
@@ -588,8 +588,8 @@ export default function FaithHubLandingPageV2() {
 
             <div className="grid gap-4 xl:grid-cols-2">
               {roleCards.map((item) => (
-                <Card key={item.role} className="rounded-[32px] border-white/70 bg-white/92 shadow-sm">
-                  <CardContent className="p-6 sm:p-7">
+                <Card key={item.role} className="rounded-xl border-slate-200 bg-white shadow-sm">
+                  <CardContent className="fh-card-content p-6 sm:p-7">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                         <item.icon className="h-5 w-5" />
@@ -602,7 +602,7 @@ export default function FaithHubLandingPageV2() {
                     <div className="mt-3 text-sm leading-7 text-slate-600">{item.description}</div>
                     <div className="mt-5 space-y-3">
                       {item.bullets.map((bullet) => (
-                        <div key={bullet} className="flex items-start gap-3 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                        <div key={bullet} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                           <div className="text-sm text-slate-700">{bullet}</div>
                         </div>
@@ -617,8 +617,8 @@ export default function FaithHubLandingPageV2() {
 
         <section id="live" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
-            <Card className="overflow-hidden rounded-[36px] border-white/70 bg-slate-950 text-white shadow-sm">
-              <CardContent className="p-6 sm:p-7">
+            <Card className="fh-card overflow-visible rounded-xl border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-6 sm:p-7">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/20 text-[#8ef0ca]">
                     <Radio className="h-5 w-5" />
@@ -630,7 +630,7 @@ export default function FaithHubLandingPageV2() {
                 </div>
                 <div className="space-y-3">
                   {liveDetails.map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-[24px] border border-white/10 bg-white/5 p-4">
+                    <div key={item} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#8ef0ca]" />
                       <div className="text-sm leading-7 text-white/80">{item}</div>
                     </div>
@@ -647,8 +647,8 @@ export default function FaithHubLandingPageV2() {
               </CardContent>
             </Card>
 
-            <Card id="faithmart" className="rounded-[36px] border-white/70 bg-white/92 shadow-sm">
-              <CardContent className="p-6 sm:p-7">
+            <Card id="faithmart" className="rounded-xl border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-6 sm:p-7">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                     <ShoppingBag className="h-5 w-5" />
@@ -660,7 +660,7 @@ export default function FaithHubLandingPageV2() {
                 </div>
                 <div className="space-y-3">
                   {faithMartDetails.map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                       <div className="text-sm leading-7 text-slate-700">{item}</div>
                     </div>
@@ -681,12 +681,12 @@ export default function FaithHubLandingPageV2() {
 
         <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="grid gap-6 xl:grid-cols-[0.48fr_0.52fr]">
-            <Card className="rounded-[36px] border-white/70 bg-white/92 shadow-sm">
-              <CardContent className="p-6 sm:p-7">
+            <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-6 sm:p-7">
                 <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Experience journey</div>
                 <div className="space-y-4">
                   {timelineSteps.map((step, index) => (
-                    <div key={step.title} className="flex gap-4 rounded-[28px] border border-slate-200 bg-[#f8fafc] p-5">
+                    <div key={step.title} className="flex gap-4 rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
                       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#03cd8c] text-sm font-semibold text-white">
                         {index + 1}
                       </div>
@@ -700,8 +700,8 @@ export default function FaithHubLandingPageV2() {
               </CardContent>
             </Card>
 
-            <Card className="overflow-hidden rounded-[36px] border-white/70 bg-white/92 shadow-sm">
-              <CardContent className="p-0">
+            <Card className="fh-card overflow-visible rounded-xl border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-0">
                 <div className="bg-gradient-to-br from-slate-950 to-slate-900 p-6 text-white sm:p-7">
                   <div className="mb-4 flex items-center justify-between gap-3">
                     <div>
@@ -727,8 +727,8 @@ export default function FaithHubLandingPageV2() {
                     ))}
                   </div>
 
-                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur">
-                    <div className="mb-4 h-56 rounded-[24px] bg-gradient-to-br from-white/15 to-white/5" />
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
+                    <div className="mb-4 h-56 rounded-xl bg-gradient-to-br from-white/15 to-white/5" />
                     <div className="text-xl font-semibold">{currentDevice?.title}</div>
                     <div className="mt-2 text-sm leading-7 text-white/80">{currentDevice?.text}</div>
                   </div>
@@ -741,8 +741,8 @@ export default function FaithHubLandingPageV2() {
         <section id="trust" className="bg-white/50 py-10 sm:py-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
-              <Card className="rounded-[36px] border-white/70 bg-white/92 shadow-sm">
-                <CardContent className="p-6 sm:p-7">
+              <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-6 sm:p-7">
                   <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Trust and safety</div>
                   <div className="text-4xl font-semibold text-slate-900 sm:text-5xl">
                     FaithHub is designed to be trusted by users, institutions, and platform operators.
@@ -759,7 +759,7 @@ export default function FaithHubLandingPageV2() {
                   </div>
                   <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     {trustTiles.map((item) => (
-                      <div key={item.label} className="flex items-center gap-3 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                      <div key={item.label} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                           <item.icon className="h-5 w-5" />
                         </div>
@@ -770,18 +770,18 @@ export default function FaithHubLandingPageV2() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[36px] border-white/70 bg-white/92 shadow-sm">
-                <CardContent className="p-6 sm:p-7">
+              <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-6 sm:p-7">
                   <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">What people will feel</div>
                   <div className="space-y-4">
                     {testimonials.map((item) => (
-                      <div key={item.quote} className="rounded-[28px] border border-slate-200 bg-[#f8fafc] p-5">
+                      <div key={item.quote} className="rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
                         <div className="mb-4 flex gap-1 text-[#f77f00]">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <Star key={star} className="h-4 w-4 fill-[#f77f00] text-[#f77f00]" />
                           ))}
                         </div>
-                        <div className="text-sm leading-7 text-slate-700">“{item.quote}”</div>
+                        <div className="text-sm leading-7 text-slate-700">â€œ{item.quote}â€</div>
                         <div className="mt-4 text-sm font-semibold text-slate-900">{item.name}</div>
                         <div className="text-xs text-slate-500">{item.title}</div>
                       </div>
@@ -795,15 +795,15 @@ export default function FaithHubLandingPageV2() {
 
         <section id="faq" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
-            <Card className="rounded-[36px] border-white/70 bg-white/92 shadow-sm">
-              <CardContent className="p-6 sm:p-7">
+            <Card className="fh-card rounded-xl border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-6 sm:p-7">
                 <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Frequently asked questions</div>
                 <div className="space-y-3">
                   {faq.map((item, index) => (
                     <button
                       key={item.q}
                       onClick={() => setFaqOpen(index === faqOpen ? -1 : index)}
-                      className="w-full rounded-[28px] border border-slate-200 bg-[#f8fafc] p-5 text-left"
+                      className="w-full rounded-xl border border-slate-200 bg-[#f8fafc] p-5 text-left"
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div className="text-lg font-semibold text-slate-900">{item.q}</div>
@@ -818,8 +818,8 @@ export default function FaithHubLandingPageV2() {
               </CardContent>
             </Card>
 
-            <Card id="contact" className="overflow-hidden rounded-[36px] border-white/70 bg-gradient-to-br from-slate-950 to-slate-900 text-white shadow-sm">
-              <CardContent className="p-6 sm:p-7">
+            <Card id="contact" className="overflow-visible rounded-xl border-slate-200 bg-gradient-to-br from-slate-950 to-slate-900 text-white shadow-sm">
+              <CardContent className="fh-card-content p-6 sm:p-7">
                 <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Take the next step</div>
                 <div className="text-4xl font-semibold sm:text-5xl">
                   Bring FaithHub to life with a real strategy, not just a template.
@@ -830,14 +830,14 @@ export default function FaithHubLandingPageV2() {
                 </div>
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/20 text-[#8ef0ca]">
                       <Compass className="h-5 w-5" />
                     </div>
                     <div className="text-lg font-semibold">Platform Walkthrough</div>
                     <div className="mt-2 text-sm text-white/75">See how the full FaithHub ecosystem fits together across users and providers.</div>
                   </div>
-                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur">
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/20 text-[#8ef0ca]">
                       <Zap className="h-5 w-5" />
                     </div>
@@ -861,11 +861,11 @@ export default function FaithHubLandingPageV2() {
         </section>
       </main>
 
-      <footer className="border-t border-white/70 bg-white/70">
+      <footer className="border-t border-slate-200 bg-white/70">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8">
           <div>
             <button onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
                 <Sparkles className="h-5 w-5" />
               </div>
               <div>
@@ -915,7 +915,7 @@ export default function FaithHubLandingPageV2() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="w-full max-w-3xl overflow-hidden rounded-[36px] border border-white/70 bg-white shadow-[0_30px_90px_-40px_rgba(15,23,42,0.42)]"
+              className="w-full max-w-3xl overflow-visible rounded-xl border border-slate-200 bg-white shadow-sm"
             >
               <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4 sm:px-6">
                 <div>
@@ -993,7 +993,7 @@ export default function FaithHubLandingPageV2() {
                           <option>Giving and Membership</option>
                         </select>
                       </label>
-                      <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
+                      <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
                         This form is wired for demo capture in the preview and can later be connected to your preferred backend or CRM flow.
                       </div>
                     </div>
@@ -1020,7 +1020,7 @@ export default function FaithHubLandingPageV2() {
                     </div>
                   </form>
                 ) : (
-                  <div className="rounded-[28px] border border-[#03cd8c]/15 bg-[#ecfff8] p-6 text-center">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-6 text-center">
                     <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#03cd8c] text-white">
                       <CheckCircle2 className="h-6 w-6" />
                     </div>
@@ -1046,3 +1046,5 @@ export default function FaithHubLandingPageV2() {
     </div>
   );
 }
+
+

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -73,10 +73,10 @@ export default function FaithHubPostLivePublishing() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <PlayCircle className="h-5 w-5" />
             </div>
             <div>
@@ -102,12 +102,12 @@ export default function FaithHubPostLivePublishing() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Replay and clip publishing</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Replay and clip publishing</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chapters, transcripts, highlights, reposts</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -120,15 +120,15 @@ export default function FaithHubPostLivePublishing() {
                         Post-live Publishing gives providers a polished flow for replay visibility, note and resource attachment, episode linking, auto-chapters, transcript search, and premium editing tools for clips and repost schedules.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Replay state</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Visibility</div>
                         <div className="mt-1 text-2xl font-semibold text-white">{replayVisibility}</div>
                         <div className="mt-2 text-sm text-white/80">Linked to episode: {publishToEpisode ? "Yes" : "No"}</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Publish replay</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Publish replay</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -143,14 +143,14 @@ export default function FaithHubPostLivePublishing() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Replay visibility and assets"
                   subtitle="Set visibility, attach resources, and connect the replay into the right content lane."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.46fr_0.54fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Visibility and linking</div>
                     <div className="space-y-4">
                       <label className="block space-y-2">
@@ -167,7 +167,7 @@ export default function FaithHubPostLivePublishing() {
                       </label>
                       <button
                         onClick={() => setPublishToEpisode((prev) => !prev)}
-                        className={`w-full rounded-[24px] border p-4 text-left transition ${publishToEpisode ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                        className={`w-full rounded-xl border p-4 text-left transition ${publishToEpisode ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                       >
                         <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                           <Link2 className="h-4 w-4 text-[#03cd8c]" /> Add replay to series episode
@@ -177,7 +177,7 @@ export default function FaithHubPostLivePublishing() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Assets and resources</div>
                     <div className="space-y-3">
                       {replayAssets.map((asset) => (
@@ -207,8 +207,8 @@ export default function FaithHubPostLivePublishing() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Chapters and transcript intelligence"
                   subtitle="Speed up replay usability with search and structure."
@@ -218,7 +218,7 @@ export default function FaithHubPostLivePublishing() {
                   <div className="grid gap-3 sm:grid-cols-3">
                     <button
                       onClick={() => setAutoChapters((prev) => !prev)}
-                      className={`rounded-[24px] border p-4 text-left transition ${autoChapters ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                      className={`rounded-xl border p-4 text-left transition ${autoChapters ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                         <Captions className="h-4 w-4 text-[#8ef0ca]" /> Auto-chapters
@@ -227,7 +227,7 @@ export default function FaithHubPostLivePublishing() {
                     </button>
                     <button
                       onClick={() => setTranscriptSearch((prev) => !prev)}
-                      className={`rounded-[24px] border p-4 text-left transition ${transcriptSearch ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                      className={`rounded-xl border p-4 text-left transition ${transcriptSearch ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                         <Search className="h-4 w-4 text-[#8ef0ca]" /> Transcript search
@@ -236,7 +236,7 @@ export default function FaithHubPostLivePublishing() {
                     </button>
                     <button
                       onClick={() => setHighlightGenerator((prev) => !prev)}
-                      className={`rounded-[24px] border p-4 text-left transition ${highlightGenerator ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                      className={`rounded-xl border p-4 text-left transition ${highlightGenerator ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                     >
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                         <Highlighter className="h-4 w-4 text-[#8ef0ca]" /> Highlights
@@ -245,7 +245,7 @@ export default function FaithHubPostLivePublishing() {
                     </button>
                   </div>
 
-                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-3 text-sm font-semibold text-white">Auto-generated chapters</div>
                     <div className="space-y-3">
                       {chapters.map((chapter) => (
@@ -257,7 +257,7 @@ export default function FaithHubPostLivePublishing() {
                     </div>
                   </div>
 
-                  <div className="rounded-[28px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-3 text-sm font-semibold text-white">Transcript search</div>
                     <div className="relative">
                       <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" />
@@ -269,15 +269,15 @@ export default function FaithHubPostLivePublishing() {
                       />
                     </div>
                     <div className="mt-3 rounded-2xl border border-white/10 bg-slate-950/20 p-4 text-sm text-white/80">
-                      Search term “{transcriptQuery}” appears in 6 transcript moments and 2 chapter labels.
+                      Search term â€œ{transcriptQuery}â€ appears in 6 transcript moments and 2 chapter labels.
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Clip publishing"
                   subtitle="Move moments from replay into clips, shelves, and repost flows."
@@ -285,7 +285,7 @@ export default function FaithHubPostLivePublishing() {
                 />
                 <div className="space-y-3">
                   {clipJobs.map((job) => (
-                    <div key={job.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={job.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-1 text-sm font-semibold text-slate-900">{job.title}</div>
                       <div className="text-xs text-slate-500">{job.destination}</div>
                       <div className="mt-2 inline-flex rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold text-[#03cd8c]">
@@ -297,8 +297,8 @@ export default function FaithHubPostLivePublishing() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Premium replay tools</div>
@@ -309,7 +309,7 @@ export default function FaithHubPostLivePublishing() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setAdvancedClipEditor((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${advancedClipEditor ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${advancedClipEditor ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Scissors className="h-4 w-4 text-[#03cd8c]" /> Advanced clip editor
@@ -318,7 +318,7 @@ export default function FaithHubPostLivePublishing() {
                   </button>
                   <button
                     onClick={() => setScheduledReposts((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${scheduledReposts ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${scheduledReposts ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Layers3 className="h-4 w-4 text-[#03cd8c]" /> Scheduled reposting
@@ -327,7 +327,7 @@ export default function FaithHubPostLivePublishing() {
                   </button>
                   <div className="space-y-2">
                     {highlights.map((item) => (
-                      <div key={item} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                      <div key={item} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
                         {item}
                       </div>
                     ))}
@@ -359,3 +359,5 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+
+

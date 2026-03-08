@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -29,7 +29,7 @@ const seriesItems = [
   {
     id: 1,
     title: "Walking in Wisdom",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Maryâ€™s Cathedral",
     topic: "Wisdom",
     language: "English",
     audience: "General Community",
@@ -39,7 +39,7 @@ const seriesItems = [
     readingPlan: true,
     premium: false,
     sponsored: false,
-    updated: "Episode 5 tonight · 7:30 PM",
+    updated: "Episode 5 tonight Â· 7:30 PM",
   },
   {
     id: 2,
@@ -54,7 +54,7 @@ const seriesItems = [
     readingPlan: true,
     premium: true,
     sponsored: false,
-    updated: "Replay available · Episode 3",
+    updated: "Replay available Â· Episode 3",
   },
   {
     id: 3,
@@ -119,10 +119,10 @@ const seriesItems = [
 ];
 
 const downloadedAssets = [
-  "Walking in Wisdom · Trailer",
-  "Mercy in Motion · Study Notes",
-  "Faith That Builds · Episode 6 audio",
-  "Raising Kingdom Leaders · Reading Plan",
+  "Walking in Wisdom Â· Trailer",
+  "Mercy in Motion Â· Study Notes",
+  "Faith That Builds Â· Episode 6 audio",
+  "Raising Kingdom Leaders Â· Reading Plan",
 ];
 
 function Chip({ active, label, onClick }) {
@@ -131,7 +131,7 @@ function Chip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -181,10 +181,10 @@ export default function FaithHubSeriesLibrary() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <BookMarked className="h-5 w-5" />
             </div>
             <div>
@@ -211,12 +211,12 @@ export default function FaithHubSeriesLibrary() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">All followed institutions</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">All followed institutions</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Series-first discovery</Badge>
                   </div>
 
@@ -261,8 +261,8 @@ export default function FaithHubSeriesLibrary() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Filters"
                   subtitle="Tune series discovery by topic, language, and audience groups."
@@ -307,8 +307,8 @@ export default function FaithHubSeriesLibrary() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Series results"
                   subtitle="Trailers, reading plans, progress, premium access, and sponsor labels all in one clean library."
@@ -318,9 +318,9 @@ export default function FaithHubSeriesLibrary() {
                   {filteredSeries.map((item) => (
                     <div
                       key={item.id}
-                      className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
+                      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-sm/10"
                     >
-                      <div className="mb-4 h-40 rounded-[20px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                      <div className="mb-4 h-40 rounded-lg bg-gradient-to-br from-slate-100 to-slate-200" />
                       <div className="mb-2 flex flex-wrap items-center gap-2">
                         <div className="text-lg font-semibold text-slate-900">{item.title}</div>
                         {item.premium && (
@@ -384,23 +384,23 @@ export default function FaithHubSeriesLibrary() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Smart reminder intelligence"
                   subtitle="Remind the user when the next relevant episode is likely to matter most."
                   action="Adjust"
                 />
                 <div className="space-y-3 text-sm text-white/80">
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
-                    <div className="mb-2 text-base font-semibold text-white">Tonight’s likely best match</div>
-                    <div>Walking in Wisdom · Episode 5 fits your current progress and your recent Wednesday viewing behavior.</div>
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div className="mb-2 text-base font-semibold text-white">Tonightâ€™s likely best match</div>
+                    <div>Walking in Wisdom Â· Episode 5 fits your current progress and your recent Wednesday viewing behavior.</div>
                   </div>
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 text-base font-semibold text-white">Reading plan sync</div>
                     <div>Mercy in Motion has a study guide checkpoint tomorrow morning and a replay download available for low-data mode.</div>
                   </div>
-                  <Button className="w-full rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
+                  <Button className="w-full rounded-2xl bg-white text-[#03cd8c] hover:bg-white">
                     <CalendarDays className="mr-2 h-4 w-4" />
                     Schedule reminders
                   </Button>
@@ -408,8 +408,8 @@ export default function FaithHubSeriesLibrary() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Downloaded series assets"
                   subtitle="Keep learning even when the connection is weak."
@@ -417,14 +417,14 @@ export default function FaithHubSeriesLibrary() {
                 />
                 <div className="space-y-3">
                   {downloadedAssets.map((item) => (
-                    <div key={item} className="flex items-center justify-between gap-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item} className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="flex min-w-0 items-center gap-3">
                         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                           <Download className="h-4 w-4" />
                         </div>
                         <div className="min-w-0">
                           <div className="truncate text-sm font-semibold text-slate-900">{item}</div>
-                          <div className="text-xs text-slate-500">Offline ready · Cached successfully</div>
+                          <div className="text-xs text-slate-500">Offline ready Â· Cached successfully</div>
                         </div>
                       </div>
                       <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -434,8 +434,8 @@ export default function FaithHubSeriesLibrary() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Monetization</div>
@@ -444,10 +444,10 @@ export default function FaithHubSeriesLibrary() {
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Transparent labels</Badge>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Premium series can unlock deeper series access, study paths, and exclusive attachments through compliant subscription products.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Sponsored series placement remains clearly labeled so institutions can gain visibility without confusing organic discovery.
                   </div>
                 </div>
@@ -463,3 +463,5 @@ export default function FaithHubSeriesLibrary() {
 function LockIcon() {
   return <span className="inline-block h-3.5 w-3.5 rounded-full bg-white/20" />;
 }
+
+

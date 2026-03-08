@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -46,7 +46,7 @@ const rules = [
 ];
 
 const preChatMessages = [
-  { name: "Naomi", badge: "Member", text: "Ready for tonight’s session. Really excited for the teaching." },
+  { name: "Naomi", badge: "Member", text: "Ready for tonightâ€™s session. Really excited for the teaching." },
   { name: "David", badge: "Supporter", text: "Audio check is good here. Waiting room looks great." },
   { name: "Aisha", badge: "Moderator", text: "Prayer requests are open before the stream starts." },
 ];
@@ -77,10 +77,10 @@ export default function FaithHubLiveWaitingRoom() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <TimerReset className="h-5 w-5" />
             </div>
             <div>
@@ -107,12 +107,12 @@ export default function FaithHubLiveWaitingRoom() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Session starts soon</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Session starts soon</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Waiting room + audience prep</Badge>
                   </div>
 
@@ -142,7 +142,7 @@ export default function FaithHubLiveWaitingRoom() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Countdown</div>
                       <div className="grid grid-cols-3 gap-3 text-center">
                         {[
@@ -157,7 +157,7 @@ export default function FaithHubLiveWaitingRoom() {
                         ))}
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Enter session</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Enter session</Button>
                         <Button variant="outline" className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15">
                           <Share2 className="mr-2 h-4 w-4" /> Share link
                         </Button>
@@ -168,14 +168,14 @@ export default function FaithHubLiveWaitingRoom() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Agenda and session rules"
                   subtitle="Users know what comes next and how to participate safely."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.48fr_0.52fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Session agenda</div>
                     <div className="space-y-3">
                       {agenda.map((item) => (
@@ -187,7 +187,7 @@ export default function FaithHubLiveWaitingRoom() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Session rules</div>
                     <div className="space-y-3">
                       {rules.map((item) => (
@@ -202,8 +202,8 @@ export default function FaithHubLiveWaitingRoom() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Pre-chat, polls, and prayer requests"
                   subtitle="Give the audience meaningful interaction before the session opens."
@@ -211,7 +211,7 @@ export default function FaithHubLiveWaitingRoom() {
                 <div className="grid gap-4 xl:grid-cols-[0.52fr_0.48fr]">
                   <div className="space-y-3">
                     {preChatMessages.map((message) => (
-                      <div key={`${message.name}-${message.text}`} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={`${message.name}-${message.text}`} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                         <div className="mb-2 flex items-center gap-2">
                           <div className="text-sm font-semibold text-slate-900">{message.name}</div>
                           <span className="rounded-full bg-[#ecfff8] px-2.5 py-1 text-xs font-semibold text-[#03cd8c]">{message.badge}</span>
@@ -222,7 +222,7 @@ export default function FaithHubLiveWaitingRoom() {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <BarChart3 className="h-4 w-4 text-[#03cd8c]" />
                         Live poll before start
@@ -242,7 +242,7 @@ export default function FaithHubLiveWaitingRoom() {
                       </div>
                     </div>
 
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <MessageSquare className="h-4 w-4 text-[#03cd8c]" />
                         Prayer request before live begins
@@ -269,8 +269,8 @@ export default function FaithHubLiveWaitingRoom() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Language, captions, and connection"
                   subtitle="Tune accessibility and bandwidth before playback starts."
@@ -278,7 +278,7 @@ export default function FaithHubLiveWaitingRoom() {
                 />
 
                 <div className="space-y-4">
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white">
                       <Languages className="h-4 w-4 text-[#8ef0ca]" /> Language and captions
                     </div>
@@ -311,7 +311,7 @@ export default function FaithHubLiveWaitingRoom() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white">
                       <AudioLines className="h-4 w-4 text-[#8ef0ca]" /> Bandwidth test
                     </div>
@@ -338,7 +338,7 @@ export default function FaithHubLiveWaitingRoom() {
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
+                    <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">
                       <RefreshCw className="mr-2 h-4 w-4" /> Run bandwidth test
                     </Button>
                     <Button
@@ -353,8 +353,8 @@ export default function FaithHubLiveWaitingRoom() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Supporter layer</div>
@@ -372,19 +372,19 @@ export default function FaithHubLiveWaitingRoom() {
                 <div className="space-y-3 text-sm text-slate-600">
                   {supporterMode ? (
                     <>
-                      <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                      <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
                         Supporters can access an early-access waiting room chat lane before the full audience opens.
                       </div>
-                      <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                      <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
                         Priority moderation responses and enhanced interaction options can be surfaced here for supporter tiers.
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                      <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                         Prompt supporters with a tasteful upgrade path for early-access chat and special interactive participation.
                       </div>
-                      <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                      <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                         Donation prompts can appear without blocking the standard waiting room journey.
                       </div>
                     </>
@@ -401,21 +401,21 @@ export default function FaithHubLiveWaitingRoom() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Offline and reconnect behavior"
                   subtitle="Keep users calm if the network fails before the stream begins."
                   action="Connection help"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     If the stream cannot load, the waiting room can suggest reconnect, lower-bandwidth mode, or audio-only access where supported.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Session schedule, rules, and prayer request forms remain visible even when full playback is not yet available.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-[#fff8ef] p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-[#fff8ef] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <AlertTriangle className="h-4 w-4 text-[#f77f00]" /> Reconnect state
                     </div>
@@ -444,3 +444,5 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+
+

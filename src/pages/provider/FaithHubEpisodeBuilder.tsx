@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -41,8 +41,8 @@ const resources = [
 ];
 
 const liveLinks = [
-  { title: "Guarding the Heart Live Session", state: "Scheduled", time: "Tonight · 7:30 PM" },
-  { title: "Q&A Catch-up Session", state: "Planned", time: "Tomorrow · 6:00 PM" },
+  { title: "Guarding the Heart Live Session", state: "Scheduled", time: "Tonight Â· 7:30 PM" },
+  { title: "Q&A Catch-up Session", state: "Planned", time: "Tomorrow Â· 6:00 PM" },
 ];
 
 const aiOutline = [
@@ -81,10 +81,10 @@ export default function FaithHubEpisodeBuilder() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <FileText className="h-5 w-5" />
             </div>
             <div>
@@ -111,8 +111,8 @@ export default function FaithHubEpisodeBuilder() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4">
                   <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Builder flow</div>
                   <div className="mt-2 text-xl font-semibold">Episode construction with resource and live linking</div>
@@ -124,7 +124,7 @@ export default function FaithHubEpisodeBuilder() {
                       <button
                         key={step.key}
                         onClick={() => setActiveStep(step.key)}
-                        className={`flex w-full items-center gap-3 rounded-[24px] border px-4 py-4 text-left transition ${
+                        className={`flex w-full items-center gap-3 rounded-xl border px-4 py-4 text-left transition ${
                           active
                             ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white"
                             : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"
@@ -145,13 +145,13 @@ export default function FaithHubEpisodeBuilder() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Episode checklist</div>
                   <div className="text-sm text-slate-500">World-class completeness before publication.</div>
                 </div>
-                <div className="mb-4 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                <div className="mb-4 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                   <div className="mb-2 text-sm font-semibold text-slate-900">Completion</div>
                   <div className="text-3xl font-semibold text-slate-900">{completion}%</div>
                   <div className="mt-3 h-2 rounded-full bg-slate-100">
@@ -163,7 +163,7 @@ export default function FaithHubEpisodeBuilder() {
                     <button
                       key={key}
                       onClick={() => toggleCheck(key as any)}
-                      className={`flex w-full items-center gap-3 rounded-[24px] border px-4 py-4 text-left transition ${
+                      className={`flex w-full items-center gap-3 rounded-xl border px-4 py-4 text-left transition ${
                         value ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"
                       }`}
                     >
@@ -182,12 +182,12 @@ export default function FaithHubEpisodeBuilder() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Episode setup and publishing</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Episode setup and publishing</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">AI suggestions, resources, gating, live links</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -198,14 +198,14 @@ export default function FaithHubEpisodeBuilder() {
                         Build a polished episode with core content, resource attachments, linked live sessions, checklist validation, optional AI structuring, and premium attachment gating.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Draft state</div>
                       <div className="mb-3 text-4xl font-semibold text-white">Draft</div>
                       <div className="h-2 rounded-full bg-white/20">
                         <div className="h-2 rounded-full bg-white" style={{ width: "68%" }} />
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">
                           <Save className="mr-2 h-4 w-4" /> Save
                         </Button>
                         <Button
@@ -223,8 +223,8 @@ export default function FaithHubEpisodeBuilder() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Episode content</div>
                     <div className="text-sm text-slate-500">Create the teaching unit and attach support materials.</div>
@@ -238,7 +238,7 @@ export default function FaithHubEpisodeBuilder() {
                       <span className="text-sm font-medium text-slate-700">Summary</span>
                       <textarea className="w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 py-3 text-sm outline-none focus:border-[#03cd8c]" rows={5} defaultValue="An episode focused on wisdom, discernment, and protecting inner life through practical spiritual habits." />
                     </label>
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Upload className="h-4 w-4 text-[#03cd8c]" /> Resources and attachments
                       </div>
@@ -261,8 +261,8 @@ export default function FaithHubEpisodeBuilder() {
               </Card>
 
               <div className="space-y-4">
-                <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                  <CardContent className="fh-card-content p-5 sm:p-6">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div>
                         <div className="text-lg font-semibold text-slate-900">Planned Live Sessionz</div>
@@ -272,7 +272,7 @@ export default function FaithHubEpisodeBuilder() {
                     </div>
                     <div className="space-y-3">
                       {liveLinks.map((item) => (
-                        <div key={item.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                        <div key={item.title} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                           <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                           <div className="text-xs text-slate-500">{item.state}</div>
                           <div className="mt-1 text-sm text-slate-600">{item.time}</div>
@@ -285,8 +285,8 @@ export default function FaithHubEpisodeBuilder() {
                   </CardContent>
                 </Card>
 
-                <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                  <CardContent className="fh-card-content p-5 sm:p-6">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div>
                         <div className="text-lg font-semibold text-slate-900">AI outline suggestions</div>
@@ -303,7 +303,7 @@ export default function FaithHubEpisodeBuilder() {
                     {aiSuggestions ? (
                       <div className="space-y-3">
                         {aiOutline.map((item) => (
-                          <div key={item} className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                          <div key={item} className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                             <div className="flex items-start gap-3">
                               <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                               <div className="text-sm text-slate-700">{item}</div>
@@ -312,7 +312,7 @@ export default function FaithHubEpisodeBuilder() {
                         ))}
                       </div>
                     ) : (
-                      <div className="rounded-[24px] border border-dashed border-slate-200 bg-[#f8fafc] p-6 text-center text-sm text-slate-600">
+                      <div className="rounded-xl border border-dashed border-slate-200 bg-[#f8fafc] p-6 text-center text-sm text-slate-600">
                         AI outline suggestions are hidden in this state.
                       </div>
                     )}
@@ -321,8 +321,8 @@ export default function FaithHubEpisodeBuilder() {
               </div>
             </div>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Premium attachments gating</div>
@@ -337,10 +337,10 @@ export default function FaithHubEpisodeBuilder() {
                   </Button>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Premium resources can include study guides, leader packs, advanced notes, or classroom-style follow-up material.
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <Lock className="h-4 w-4 text-[#03cd8c]" /> Gating mode
                     </div>
@@ -363,3 +363,5 @@ export default function FaithHubEpisodeBuilder() {
     </div>
   );
 }
+
+

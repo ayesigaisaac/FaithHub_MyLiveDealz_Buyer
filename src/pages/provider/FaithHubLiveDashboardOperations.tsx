@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -108,7 +108,7 @@ export default function FaithHubLiveDashboardOperations() {
   const [slaMonitoring, setSlaMonitoring] = useState(true);
   const [multiRoute, setMultiRoute] = useState(true);
 
-  const streamKey = useMemo(() => "fh_live_prod_•••••••••••••_9K7A", []);
+  const streamKey = useMemo(() => "fh_live_prod_â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢_9K7A", []);
 
   const copyKey = async () => {
     try {
@@ -127,10 +127,10 @@ export default function FaithHubLiveDashboardOperations() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <MonitorUp className="h-5 w-5" />
             </div>
             <div>
@@ -157,12 +157,12 @@ export default function FaithHubLiveDashboardOperations() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Operations command</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Operations command</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Ingest, viewers, health, moderation</Badge>
                   </div>
 
@@ -189,16 +189,16 @@ export default function FaithHubLiveDashboardOperations() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Session posture</div>
                       <div className="space-y-3">
-                        <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                        <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                           <div className="text-xs uppercase tracking-[0.18em] text-white/70">Session</div>
                           <div className="mt-1 text-2xl font-semibold text-white">Evening Prayer Revival</div>
                           <div className="mt-2 text-sm text-white/80">Status: {primaryHealthy ? "Live and stable" : "Attention required"}</div>
                         </div>
                         <div className="grid gap-2 sm:grid-cols-2">
-                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" disabled={offlineReadOnly}>
+                          <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white" disabled={offlineReadOnly}>
                             Open controls
                           </Button>
                           <Button
@@ -220,8 +220,8 @@ export default function FaithHubLiveDashboardOperations() {
               {kpis.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <Card key={item.label} className="rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
-                    <CardContent className="p-5">
+                  <Card key={item.label} className="rounded-xl border border-slate-200 bg-white shadow-sm">
+                    <CardContent className="fh-card-content p-5">
                       <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                         <Icon className="h-5 w-5" />
                       </div>
@@ -236,8 +236,8 @@ export default function FaithHubLiveDashboardOperations() {
               })}
             </div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Ingest and encoder health</div>
@@ -250,7 +250,7 @@ export default function FaithHubLiveDashboardOperations() {
 
                 <div className="space-y-3">
                   {ingestRows.map((row) => (
-                    <div key={row.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={row.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-base font-semibold text-slate-900">{row.name}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${row.status === "Healthy" ? "bg-[#ecfff8] text-[#03cd8c]" : row.status === "Connected" ? "bg-slate-100 text-slate-700" : "bg-[#fff8ef] text-[#f77f00]"}`}>
@@ -269,7 +269,7 @@ export default function FaithHubLiveDashboardOperations() {
 
                 <div className="mt-5 grid gap-3 md:grid-cols-3">
                   {presets.map((preset) => (
-                    <div key={preset.name} className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div key={preset.name} className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                       <div className="mb-2 text-sm font-semibold text-slate-900">{preset.name}</div>
                       <div className="text-sm leading-6 text-slate-600">{preset.detail}</div>
                     </div>
@@ -285,8 +285,8 @@ export default function FaithHubLiveDashboardOperations() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-white sm:text-xl">Stream key and ingest guidance</div>
@@ -298,7 +298,7 @@ export default function FaithHubLiveDashboardOperations() {
                 </div>
 
                 <div className="space-y-3">
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-white">
                       <KeyRound className="h-4 w-4 text-[#8ef0ca]" /> Stream key
                     </div>
@@ -306,7 +306,7 @@ export default function FaithHubLiveDashboardOperations() {
                       {streamKey}
                     </div>
                     <div className="mt-3 flex gap-2">
-                      <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" onClick={copyKey} disabled={offlineReadOnly}>
+                      <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white" onClick={copyKey} disabled={offlineReadOnly}>
                         <Copy className="mr-2 h-4 w-4" /> {copied ? "Copied" : "Copy key"}
                       </Button>
                       <Button variant="outline" className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15">
@@ -315,20 +315,20 @@ export default function FaithHubLiveDashboardOperations() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 text-sm font-semibold text-white">Ingest guidance</div>
                     <div className="space-y-2 text-sm text-white/80">
-                      <div>• Use RTMPS for standard studio compatibility and a simpler managed path.</div>
-                      <div>• Use SRT when contribution reliability and network resilience are the priority.</div>
-                      <div>• Keep backup ingest warm for enterprise-grade continuity and fast failover.</div>
+                      <div>â€¢ Use RTMPS for standard studio compatibility and a simpler managed path.</div>
+                      <div>â€¢ Use SRT when contribution reliability and network resilience are the priority.</div>
+                      <div>â€¢ Keep backup ingest warm for enterprise-grade continuity and fast failover.</div>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Automatic health alerts</div>
@@ -338,7 +338,7 @@ export default function FaithHubLiveDashboardOperations() {
                 </div>
                 <div className="space-y-3">
                   {alerts.map((alert) => (
-                    <div key={alert.title} className={`rounded-[24px] border p-4 ${alert.tone === "warning" ? "border-[#f77f00]/15 bg-[#fffaf3]" : "border-slate-200 bg-[#f8fafc]"}`}>
+                    <div key={alert.title} className={`rounded-xl border p-4 ${alert.tone === "warning" ? "border-[#f77f00]/15 bg-[#fffaf3]" : "border-slate-200 bg-[#f8fafc]"}`}>
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         {alert.tone === "warning" ? <AlertTriangle className="h-4 w-4 text-[#f77f00]" /> : <CheckCircle2 className="h-4 w-4 text-[#03cd8c]" />}
                         {alert.title}
@@ -350,8 +350,8 @@ export default function FaithHubLiveDashboardOperations() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Enterprise reliability add-on</div>
@@ -362,7 +362,7 @@ export default function FaithHubLiveDashboardOperations() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setMultiRoute((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${multiRoute ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${multiRoute ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Router className="h-4 w-4 text-[#03cd8c]" /> Multi-stream routing
@@ -371,7 +371,7 @@ export default function FaithHubLiveDashboardOperations() {
                   </button>
                   <button
                     onClick={() => setRedundancyArmed((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${redundancyArmed ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${redundancyArmed ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <RefreshCcw className="h-4 w-4 text-[#03cd8c]" /> Primary/backup redundancy
@@ -380,7 +380,7 @@ export default function FaithHubLiveDashboardOperations() {
                   </button>
                   <button
                     onClick={() => setSlaMonitoring((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${slaMonitoring ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${slaMonitoring ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <LifeBuoy className="h-4 w-4 text-[#03cd8c]" /> SLA monitoring
@@ -391,12 +391,12 @@ export default function FaithHubLiveDashboardOperations() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 text-lg font-semibold text-slate-900">Chat and moderation pulse</div>
                 <div className="space-y-3">
                   {modQueue.map((item) => (
-                    <div key={item.item} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.item} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-1 text-sm font-semibold text-slate-900">{item.item}</div>
                       <div className="text-xs text-slate-500">{item.area}</div>
                       <div className="mt-2 inline-flex rounded-full bg-[#fff8ef] px-3 py-1 text-xs font-semibold text-[#f77f00]">
@@ -413,3 +413,5 @@ export default function FaithHubLiveDashboardOperations() {
     </div>
   );
 }
+
+

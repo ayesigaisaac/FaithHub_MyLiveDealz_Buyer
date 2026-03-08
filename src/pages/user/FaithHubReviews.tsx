@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -55,7 +55,7 @@ const reviews = [
   },
   {
     id: 3,
-    title: "St. Mary’s Cathedral",
+    title: "St. Maryâ€™s Cathedral",
     type: "Institution",
     reviewer: "Anonymous",
     verified: false,
@@ -147,10 +147,10 @@ export default function FaithHubReviews() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <MessageSquareText className="h-5 w-5" />
             </div>
             <div>
@@ -179,12 +179,12 @@ export default function FaithHubReviews() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Trust-centered feedback</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Trust-centered feedback</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Structured reviews + moderation</Badge>
                   </div>
 
@@ -214,7 +214,7 @@ export default function FaithHubReviews() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Filtering tools</div>
                       <div className="space-y-3">
                         <div className="relative">
@@ -255,14 +255,14 @@ export default function FaithHubReviews() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Write a review"
                   subtitle="Rate with more context than a single star count."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.42fr_0.58fr]">
-                  <div className="space-y-4 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div>
                       <div className="mb-2 text-sm font-semibold text-slate-900">Overall rating</div>
                       <StarRow value={rating} onChange={setRating} />
@@ -281,7 +281,7 @@ export default function FaithHubReviews() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Review text</div>
                     <textarea
                       value={draft}
@@ -304,15 +304,15 @@ export default function FaithHubReviews() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Community reviews"
                   subtitle="Helpful public feedback with reporting and trust indicators."
                 />
                 <div className="space-y-3">
                   {filteredReviews.map((review) => (
-                    <div key={review.id} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={review.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="flex flex-wrap items-center gap-2">
@@ -361,27 +361,27 @@ export default function FaithHubReviews() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Trust and moderation"
                   subtitle="Keep review quality high without damaging authentic feedback."
                   action="Policy"
                 />
                 <div className="space-y-3 text-sm text-white/80">
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-white">
                       <ShieldCheck className="h-4 w-4 text-[#8ef0ca]" /> Anti-brigading posture
                     </div>
                     <div>Velocity checks, reviewer eligibility signals, and rate controls help reduce coordinated review attacks while preserving real community feedback.</div>
                   </div>
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-white">
                       <BadgeCheck className="h-4 w-4 text-[#8ef0ca]" /> Verified-member credibility
                     </div>
                     <div>Reviews from verified members can show a badge, helping readers weigh context without hiding non-member reviews.</div>
                   </div>
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-white">
                       <AlertTriangle className="h-4 w-4 text-[#f77f00]" /> Abuse reporting
                     </div>
@@ -391,8 +391,8 @@ export default function FaithHubReviews() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Structured review dimensions</div>
@@ -401,25 +401,25 @@ export default function FaithHubReviews() {
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Trust-first design</Badge>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">Audio quality gives feedback on streaming clarity and listening comfort.</div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">Clarity tracks whether the teaching or presentation was understandable and well-structured.</div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">Safety evaluates moderation, respectful engagement, and the confidence users felt in the space.</div>
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">Audio quality gives feedback on streaming clarity and listening comfort.</div>
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">Clarity tracks whether the teaching or presentation was understandable and well-structured.</div>
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">Safety evaluates moderation, respectful engagement, and the confidence users felt in the space.</div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Offline review draft"
                   subtitle="Protect user effort if the connection drops while writing."
                   action="Drafts"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Reviews written offline should save as drafts locally, then prompt the user to submit once the network returns.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     This prevents lost feedback while keeping moderation and publication checks server-side.
                   </div>
                   <Button
@@ -438,3 +438,5 @@ export default function FaithHubReviews() {
     </div>
   );
 }
+
+

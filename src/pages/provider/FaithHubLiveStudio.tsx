@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -75,10 +75,10 @@ export default function FaithHubLiveStudio() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <MonitorPlay className="h-5 w-5" />
             </div>
             <div>
@@ -104,12 +104,12 @@ export default function FaithHubLiveStudio() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Studio control room</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Studio control room</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Host controls, scenes, overlays, interactivity</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
@@ -122,15 +122,15 @@ export default function FaithHubLiveStudio() {
                         Live Studio gives providers the real control room: camera, microphone, screen share, overlays, captions, translation, CTA placement, and premium production tooling like branded scenes and producer roles.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Interactive mode</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Latency profile</div>
                         <div className="mt-1 text-3xl font-semibold text-white">{interactiveMode ? "Real-time" : "Standard"}</div>
                         <div className="mt-2 text-sm text-white/80">{interactiveMode ? "Low-latency interactive mode active for faster audience response." : "Standard studio latency mode active."}</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" disabled={offlineMode}>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white" disabled={offlineMode}>
                           Go live
                         </Button>
                         <Button
@@ -148,25 +148,25 @@ export default function FaithHubLiveStudio() {
             </Card>
 
             {offlineMode ? (
-              <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+              <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+                <CardContent className="fh-card-content p-5 sm:p-6">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Offline studio checklist</div>
                   <div className="space-y-3">
                     {checklist.map((item) => (
-                      <div key={item} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                      <div key={item} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
                         {item}
                       </div>
                     ))}
                   </div>
-                  <div className="mt-4 rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                  <div className="mt-4 rounded-xl border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
                     Studio hosting controls are unavailable offline. Providers can still review readiness, scenes, and role setup before reconnecting.
                   </div>
                 </CardContent>
               </Card>
             ) : (
               <>
-                <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                  <CardContent className="fh-card-content p-5 sm:p-6">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div>
                         <div className="text-lg font-semibold text-slate-900 sm:text-xl">Program preview and device controls</div>
@@ -174,7 +174,7 @@ export default function FaithHubLiveStudio() {
                       </div>
                       <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">Live control</Badge>
                     </div>
-                    <div className="mb-4 h-[340px] rounded-[28px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                    <div className="mb-4 h-[340px] rounded-xl bg-gradient-to-br from-slate-100 to-slate-200" />
                     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
                       <button
                         onClick={() => setCameraOn((prev) => !prev)}
@@ -209,12 +209,12 @@ export default function FaithHubLiveStudio() {
                 </Card>
 
                 <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-                  <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                    <CardContent className="p-5 sm:p-6">
+                  <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                    <CardContent className="fh-card-content p-5 sm:p-6">
                       <div className="mb-4 text-lg font-semibold text-slate-900">Co-hosts and producer roles</div>
                       <div className="space-y-3">
                         {cohosts.map((person) => (
-                          <div key={person.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                          <div key={person.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                             <div className="mb-1 text-sm font-semibold text-slate-900">{person.name}</div>
                             <div className="text-xs text-slate-500">{person.role}</div>
                             <div className="mt-1 text-sm text-slate-600">{person.state}</div>
@@ -231,14 +231,14 @@ export default function FaithHubLiveStudio() {
                     </CardContent>
                   </Card>
 
-                  <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                    <CardContent className="p-5 sm:p-6">
+                  <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+                    <CardContent className="fh-card-content p-5 sm:p-6">
                       <div className="mb-4 text-lg font-semibold text-slate-900">Overlays and CTA slots</div>
                       <div className="space-y-3">
                         {overlays.map((item) => (
                           <button
                             key={item.name}
-                            className={`flex w-full items-center justify-between gap-3 rounded-[24px] border px-4 py-4 text-left transition ${item.active ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                            className={`flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-4 text-left transition ${item.active ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                           >
                             <div className="text-sm font-semibold text-slate-900">{item.name}</div>
                             <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.active ? "bg-[#03cd8c] text-white" : "bg-slate-100 text-slate-700"}`}>
@@ -260,13 +260,13 @@ export default function FaithHubLiveStudio() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 text-lg font-semibold text-white">Captions, translation, and response profile</div>
                 <div className="space-y-3">
                   <button
                     onClick={() => setCaptionsOn((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${captionsOn ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${captionsOn ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <Captions className="h-4 w-4 text-[#8ef0ca]" /> Live captions
@@ -275,26 +275,26 @@ export default function FaithHubLiveStudio() {
                   </button>
                   <button
                     onClick={() => setTranslationOn((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${translationOn ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${translationOn ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <Languages className="h-4 w-4 text-[#8ef0ca]" /> Live translation
                     </div>
                     <div className="text-sm text-white/75">{translationOn ? "Translation overlays are active for supported languages." : "Translation is disabled."}</div>
                   </button>
-                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
                     Interactive real-time mode is designed for tighter response windows and conversation-led live sessions, supporting a more immediate audience feel.
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 text-lg font-semibold text-slate-900">Scenes and production layout</div>
                 <div className="space-y-3">
                   {scenes.map((scene) => (
-                    <div key={scene.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={scene.name} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-1 text-sm font-semibold text-slate-900">{scene.name}</div>
                       <div className="text-sm text-slate-600">{scene.type}</div>
                     </div>
@@ -306,8 +306,8 @@ export default function FaithHubLiveStudio() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Premium studio pack</div>
@@ -318,7 +318,7 @@ export default function FaithHubLiveStudio() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setBrandedScenes((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${brandedScenes ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${brandedScenes ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Clapperboard className="h-4 w-4 text-[#03cd8c]" /> Branded scenes
@@ -327,7 +327,7 @@ export default function FaithHubLiveStudio() {
                   </button>
                   <button
                     onClick={() => setMultitrack((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${multitrack ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${multitrack ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <PlayCircle className="h-4 w-4 text-[#03cd8c]" /> Multitrack recording
@@ -336,7 +336,7 @@ export default function FaithHubLiveStudio() {
                   </button>
                   <button
                     onClick={() => setCloudMixer((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${cloudMixer ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${cloudMixer ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Settings2 className="h-4 w-4 text-[#03cd8c]" /> Cloud mixer
@@ -352,3 +352,5 @@ export default function FaithHubLiveStudio() {
     </div>
   );
 }
+
+

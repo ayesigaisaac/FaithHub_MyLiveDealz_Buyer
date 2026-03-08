@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -24,7 +24,7 @@ import { Badge } from "@/components/ui/badge";
 const institutions = [
   {
     id: 1,
-    name: "St. Mary’s Cathedral",
+    name: "St. Maryâ€™s Cathedral",
     faith: "Christianity",
     denomination: "Catholic",
     language: "English",
@@ -32,7 +32,7 @@ const institutions = [
     verified: true,
     sponsored: false,
     nearNow: true,
-    serviceTime: "Service live now · 6:00 PM",
+    serviceTime: "Service live now Â· 6:00 PM",
     x: "22%",
     y: "35%",
     location: "Kampala Central",
@@ -62,7 +62,7 @@ const institutions = [
     verified: true,
     sponsored: true,
     nearNow: false,
-    serviceTime: "Series starts tomorrow · 7:30 PM",
+    serviceTime: "Series starts tomorrow Â· 7:30 PM",
     x: "48%",
     y: "66%",
     location: "Ntinda",
@@ -77,7 +77,7 @@ const institutions = [
     verified: false,
     sponsored: false,
     nearNow: false,
-    serviceTime: "Sabbath gathering · Friday 6:15 PM",
+    serviceTime: "Sabbath gathering Â· Friday 6:15 PM",
     x: "74%",
     y: "24%",
     location: "Kololo",
@@ -92,7 +92,7 @@ const institutions = [
     verified: true,
     sponsored: false,
     nearNow: true,
-    serviceTime: "Youth worship tonight · 8:00 PM",
+    serviceTime: "Youth worship tonight Â· 8:00 PM",
     x: "32%",
     y: "58%",
     location: "Muyenga",
@@ -112,7 +112,7 @@ function FilterChip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -169,10 +169,10 @@ export default function DiscoverInstitutions() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Globe2 className="h-5 w-5" />
             </div>
             <div>
@@ -201,12 +201,12 @@ export default function DiscoverInstitutions() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#ebfcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#ebfcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Find the right institution fast</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Find the right institution fast</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">List + map discovery</Badge>
                   </div>
 
@@ -251,8 +251,8 @@ export default function DiscoverInstitutions() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Filters</div>
@@ -304,8 +304,8 @@ export default function DiscoverInstitutions() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title={view === "list" ? "Institution results" : "Map discovery"}
                   subtitle={view === "list" ? "Verified institutions, service activity, language, and distance cues." : "Visualize nearby institutions and switch back to the detailed list anytime."}
@@ -317,7 +317,7 @@ export default function DiscoverInstitutions() {
                     {filteredInstitutions.map((item) => (
                       <div
                         key={item.id}
-                        className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
+                        className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-sm/10"
                       >
                         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                           <div className="min-w-0 flex-1">
@@ -338,11 +338,11 @@ export default function DiscoverInstitutions() {
                             </div>
                             <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
                               <span>{item.faith}</span>
-                              <span>•</span>
+                              <span>â€¢</span>
                               <span>{item.denomination}</span>
-                              <span>•</span>
+                              <span>â€¢</span>
                               <span>{item.language}</span>
-                              <span>•</span>
+                              <span>â€¢</span>
                               <span>{item.distance} km away</span>
                             </div>
                             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600">
@@ -368,8 +368,8 @@ export default function DiscoverInstitutions() {
                     ))}
                   </div>
                 ) : (
-                  <div className="rounded-[28px] border border-slate-200 bg-[#f8fafc] p-4 sm:p-5">
-                    <div className="relative h-[520px] overflow-hidden rounded-[24px] border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4 sm:p-5">
+                    <div className="relative h-[520px] overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100">
                       <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:38px_38px]" />
                       <div className="absolute left-6 top-6 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
                         Kampala and nearby areas
@@ -386,7 +386,7 @@ export default function DiscoverInstitutions() {
                             </div>
                             <div className="absolute left-1/2 top-14 hidden w-56 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl group-hover:block">
                               <div className="mb-1 text-sm font-semibold text-slate-900">{item.name}</div>
-                              <div className="text-xs text-slate-500">{item.location} · {item.distance} km</div>
+                              <div className="text-xs text-slate-500">{item.location} Â· {item.distance} km</div>
                               <div className="mt-2 text-xs text-slate-600">{item.serviceTime}</div>
                             </div>
                           </div>
@@ -405,8 +405,8 @@ export default function DiscoverInstitutions() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Near me now"
                   subtitle="Institutions with active or soon-starting services nearby."
@@ -414,7 +414,7 @@ export default function DiscoverInstitutions() {
                 />
                 <div className="space-y-3">
                   {nearbyNow.map((item) => (
-                    <div key={item.id} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                    <div key={item.id} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-2 flex items-center justify-between gap-3">
                         <div className="text-base font-semibold text-white">{item.name}</div>
                         {item.verified && (
@@ -424,13 +424,13 @@ export default function DiscoverInstitutions() {
                           </span>
                         )}
                       </div>
-                      <div className="text-sm text-white/70">{item.location} · {item.distance} km away</div>
+                      <div className="text-sm text-white/70">{item.location} Â· {item.distance} km away</div>
                       <div className="mt-3 flex items-center gap-2 text-sm text-white/85">
                         <Clock3 className="h-4 w-4 text-[#8ef0ca]" />
                         {item.serviceTime}
                       </div>
                       <div className="mt-4 flex gap-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Open</Button>
                         <Button variant="outline" className="rounded-2xl border-white/15 bg-transparent text-white hover:bg-white/10">
                           Directions
                         </Button>
@@ -441,8 +441,8 @@ export default function DiscoverInstitutions() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Sponsored placement</div>
@@ -450,7 +450,7 @@ export default function DiscoverInstitutions() {
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Sponsored</Badge>
                 </div>
-                <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                   <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <Sparkles className="h-4 w-4 text-[#f77f00]" />
                     FaithHub Global Chapel
@@ -469,27 +469,27 @@ export default function DiscoverInstitutions() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Geo and discovery controls"
                   subtitle="Location-aware without losing clarity or consent."
                   action="Manage"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="flex items-start gap-3 rounded-[24px] border border-slate-100 bg-[#f8fafc] p-4">
+                  <div className="flex items-start gap-3 rounded-xl border border-slate-100 bg-[#f8fafc] p-4">
                     <Navigation className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                     <div>
                       Use geocoding and map search to surface nearby institutions, service schedules, and venue context with clear permission boundaries.
                     </div>
                   </div>
-                  <div className="flex items-start gap-3 rounded-[24px] border border-slate-100 bg-[#f8fafc] p-4">
+                  <div className="flex items-start gap-3 rounded-xl border border-slate-100 bg-[#f8fafc] p-4">
                     <SlidersHorizontal className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                     <div>
                       Cache the last known nearby results so users can still discover institutions even with weak connectivity.
                     </div>
                   </div>
-                  <button className="flex w-full items-center justify-between rounded-[24px] border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-slate-900 transition hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]">
+                  <button className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-slate-900 transition hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]">
                     Open advanced filter drawer
                     <ChevronRight className="h-4 w-4 text-slate-500" />
                   </button>
@@ -502,3 +502,5 @@ export default function DiscoverInstitutions() {
     </div>
   );
 }
+
+

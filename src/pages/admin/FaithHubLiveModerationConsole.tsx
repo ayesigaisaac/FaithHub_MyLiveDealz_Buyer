@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -30,7 +30,7 @@ import { Badge } from "@/components/ui/badge";
 const liveRooms = [
   {
     name: "Evening Prayer Revival",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Maryâ€™s Cathedral",
     reports: 14,
     status: "Watch",
     viewers: "4.2k",
@@ -147,10 +147,10 @@ export default function FaithHubLiveModerationConsole() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <ShieldAlert className="h-5 w-5" />
             </div>
             <div>
@@ -176,12 +176,12 @@ export default function FaithHubLiveModerationConsole() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Global live moderation</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Global live moderation</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chat, takedowns, bans, reports, media safety</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -194,15 +194,15 @@ export default function FaithHubLiveModerationConsole() {
                         Admins can monitor active rooms, process reports, apply chat moderation, trigger stream takedowns, review automated media flags, and escalate complex incidents into dedicated human moderation lanes.
                       </p>
                     </div>
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                    <div className="rounded-xl border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Current room focus</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
+                      <div className="rounded-xl border border-white/15 bg-white/10 p-4">
                         <div className="text-xs uppercase tracking-[0.18em] text-white/70">Room</div>
                         <div className="mt-1 text-2xl font-semibold text-white">{selectedRoom}</div>
                         <div className="mt-2 text-sm text-white/80">{filteredQueue.length} queue items match current filter.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open room</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white">Open room</Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -217,8 +217,8 @@ export default function FaithHubLiveModerationConsole() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Active live rooms"
                   subtitle="Understand where moderation pressure is rising before it becomes an incident."
@@ -229,7 +229,7 @@ export default function FaithHubLiveModerationConsole() {
                     <button
                       key={room.name}
                       onClick={() => setSelectedRoom(room.name)}
-                      className={`w-full rounded-[24px] border p-4 text-left shadow-sm transition ${selectedRoom === room.name ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"}`}
+                      className={`w-full rounded-xl border p-4 text-left shadow-sm transition ${selectedRoom === room.name ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"}`}
                     >
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
@@ -250,8 +250,8 @@ export default function FaithHubLiveModerationConsole() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Report queue and controls"
                   subtitle="Moderate live chat and session safety from a single response surface."
@@ -279,11 +279,11 @@ export default function FaithHubLiveModerationConsole() {
                 </div>
                 <div className="space-y-3">
                   {filteredQueue.map((item) => (
-                    <div key={`${item.item}-${item.room}`} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={`${item.item}-${item.room}`} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-sm font-semibold text-slate-900">{item.item}</div>
-                          <div className="text-xs text-slate-500">{item.room} · {item.source}</div>
+                          <div className="text-xs text-slate-500">{item.room} Â· {item.source}</div>
                         </div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.severity === "Critical" ? "bg-rose-50 text-rose-600" : item.severity === "High" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-slate-100 text-slate-700"}`}>
                           {item.severity}
@@ -313,8 +313,8 @@ export default function FaithHubLiveModerationConsole() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Automated media moderation"
                   subtitle="Screen thumbnails, clips, and user-generated uploads before they spread."
@@ -323,7 +323,7 @@ export default function FaithHubLiveModerationConsole() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setMediaModeration((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${mediaModeration ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${mediaModeration ? "border-[#03cd8c]/30 bg-[#03cd8c]/15 text-white" : "border-white/10 bg-white/5 text-white/80"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold">
                       <ScanEye className="h-4 w-4 text-[#8ef0ca]" /> Media safety screening
@@ -331,13 +331,13 @@ export default function FaithHubLiveModerationConsole() {
                     <div className="text-sm text-white/75">{mediaModeration ? "Image and video moderation assistance is enabled." : "Media screening is disabled in preview."}</div>
                   </button>
                   <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur text-sm text-white/80">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur text-sm text-white/80">
                       <div className="mb-2 flex items-center gap-2 font-semibold text-white">
                         <Camera className="h-4 w-4 text-[#8ef0ca]" /> Image screening
                       </div>
                       Review thumbnails, posters, and uploaded stills for moderation labels or unsafe visual patterns.
                     </div>
-                    <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur text-sm text-white/80">
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur text-sm text-white/80">
                       <div className="mb-2 flex items-center gap-2 font-semibold text-white">
                         <VideoOff className="h-4 w-4 text-[#8ef0ca]" /> Video screening
                       </div>
@@ -346,7 +346,7 @@ export default function FaithHubLiveModerationConsole() {
                   </div>
                   <div className="space-y-3">
                     {mediaSignals.map((signal) => (
-                      <div key={signal.title} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
+                      <div key={signal.title} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                         <div className="mb-1 text-sm font-semibold text-white">{signal.title}</div>
                         <div className="text-xs text-white/55">{signal.source}</div>
                         <div className="mt-2 text-sm text-white/75">{signal.detail}</div>
@@ -357,8 +357,8 @@ export default function FaithHubLiveModerationConsole() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Escalation and human moderation"
                   subtitle="Premium trust and safety depth for high-risk or high-scale live environments."
@@ -367,7 +367,7 @@ export default function FaithHubLiveModerationConsole() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setHumanEscalations((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${humanEscalations ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`w-full rounded-xl border p-4 text-left transition ${humanEscalations ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Gavel className="h-4 w-4 text-[#03cd8c]" /> 24/7 escalation routing
@@ -376,7 +376,7 @@ export default function FaithHubLiveModerationConsole() {
                   </button>
                   <div className="space-y-2">
                     {escalationSteps.map((step) => (
-                      <div key={step} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                      <div key={step} className="rounded-xl border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
                         {step}
                       </div>
                     ))}
@@ -388,18 +388,18 @@ export default function FaithHubLiveModerationConsole() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Offline posture"
                   subtitle="Keep admins informed even when live controls cannot be executed."
                   action="Status"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     When offline, admins can review the last known queue state, active rooms, and flagged media summaries, but no enforcement actions should be permitted.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     This avoids inconsistent moderation outcomes while still preserving operational awareness.
                   </div>
                   <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" disabled={offlineReadOnly}>
@@ -428,3 +428,5 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+
+

@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+﻿import React, { Suspense } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
@@ -11,9 +11,9 @@ import FaithHubMultiRoleAppShell from "@/pages/public/FaithHubMultiRoleAppShell"
 
 function RouteFallback() {
   return (
-    <div className="flex min-h-[40vh] items-center justify-center rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
+    <div className="flex min-h-[40vh] items-center justify-center rounded-xl border border-slate-200 bg-white p-8 shadow-sm">
       <div className="text-center">
-        <div className="text-lg font-semibold text-slate-900">Loading FaithHub page…</div>
+        <div className="text-lg font-semibold text-slate-900">Loading FaithHub pageâ€¦</div>
         <div className="mt-2 text-sm text-slate-500">Preparing the selected route.</div>
       </div>
     </div>
@@ -55,3 +55,5 @@ export default function AppRouter() {
     </ThemeProvider>
   );
 }
+
+

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -67,12 +67,12 @@ const events = [
     title: "Baptism Sunday",
     type: "Baptism",
     audience: "General Community",
-    venue: "St. Mary’s Cathedral Grounds",
+    venue: "St. Maryâ€™s Cathedral Grounds",
     area: "Kampala Central",
     start: "01 Sep",
     end: "01 Sep",
     time: "9:00 AM",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Maryâ€™s Cathedral",
     memberOnly: false,
     ticketed: false,
     rsvp: "Interested",
@@ -149,7 +149,7 @@ function FilterChip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-sm/20"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -200,10 +200,10 @@ export default function FaithHubEventsHub() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-sm/20">
               <Tent className="h-5 w-5" />
             </div>
             <div>
@@ -215,7 +215,7 @@ export default function FaithHubEventsHub() {
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
               {offlineMode ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
-              {offlineMode ? "Cached events · RSVP queued" : "Live calendar + map"}
+              {offlineMode ? "Cached events Â· RSVP queued" : "Live calendar + map"}
             </div>
             <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
               <Bell className="h-5 w-5" />
@@ -230,12 +230,12 @@ export default function FaithHubEventsHub() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+            <Card className="fh-card relative overflow-visible rounded-xl border border-slate-200 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-7">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Camps, trips, baptisms, missions, marketplace days</Badge>
+                    <Badge className="rounded-full bg-white text-[#03cd8c] hover:bg-white">Camps, trips, baptisms, missions, marketplace days</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Map + calendar + RSVP</Badge>
                   </div>
 
@@ -280,8 +280,8 @@ export default function FaithHubEventsHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Filters"
                   subtitle="Narrow the hub by event type and audience group."
@@ -317,8 +317,8 @@ export default function FaithHubEventsHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="Events list"
                   subtitle="Responsive cards with RSVP state, access level, and FaithMart readiness."
@@ -327,7 +327,7 @@ export default function FaithHubEventsHub() {
                   {filteredEvents.map((event) => (
                     <div
                       key={event.id}
-                      className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
+                      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-sm/10"
                     >
                       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="min-w-0 flex-1">
@@ -382,8 +382,8 @@ export default function FaithHubEventsHub() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-slate-950 text-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title={mapMode ? "Event map" : "Event calendar"}
                   subtitle={mapMode ? "Visualize where gatherings are happening." : "Key dates across the current month."}
@@ -391,7 +391,7 @@ export default function FaithHubEventsHub() {
                 />
 
                 {mapMode ? (
-                  <div className="relative h-[520px] overflow-hidden rounded-[28px] border border-white/10 bg-white/10 backdrop-blur">
+                  <div className="relative h-[520px] overflow-visible rounded-xl border border-white/10 bg-white/10 backdrop-blur">
                     <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] [background-size:40px_40px]" />
                     <div className="absolute left-5 top-5 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
                       Kampala region and surrounding venues
@@ -409,14 +409,14 @@ export default function FaithHubEventsHub() {
                           <div className="absolute left-1/2 top-14 hidden w-56 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl group-hover:block">
                             <div className="mb-1 text-sm font-semibold text-slate-900">{event.title}</div>
                             <div className="text-xs text-slate-500">{event.venue}</div>
-                            <div className="mt-2 text-xs text-slate-600">{event.start} · {event.time}</div>
+                            <div className="mt-2 text-xs text-slate-600">{event.start} Â· {event.time}</div>
                           </div>
                         </div>
                       </button>
                     ))}
                   </div>
                 ) : (
-                  <div className="rounded-[28px] border border-white/10 bg-white/10 p-4 backdrop-blur">
+                  <div className="rounded-xl border border-white/10 bg-white/10 p-4 backdrop-blur">
                     <div className="mb-4 grid grid-cols-7 gap-2 text-center text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
                       {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
                         <div key={day}>{day}</div>
@@ -446,21 +446,21 @@ export default function FaithHubEventsHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-slate-200 bg-white shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <SectionHeader
                   title="RSVP and calendar behavior"
                   subtitle="RSVPs can queue offline while calendar actions stay visible."
                   action="Manage"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Users can respond as Going, Interested, or Not Going, and queued RSVP changes can sync automatically once connectivity returns.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
                     Add-to-calendar actions can generate event objects compatible with standard calendar apps and calendar syncing workflows.
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                  <div className="rounded-xl border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <CheckCircle2 className="h-4 w-4 text-[#03cd8c]" /> Queue state
                     </div>
@@ -470,8 +470,8 @@ export default function FaithHubEventsHub() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+            <Card className="fh-card rounded-xl border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <CardContent className="fh-card-content p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Monetization</div>
@@ -480,10 +480,10 @@ export default function FaithHubEventsHub() {
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">FaithMart linked</Badge>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Ticketed events can route into FaithMart for participant passes, camp packages, and vendor booth reservations.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="rounded-xl border border-[#f77f00]/15 bg-white p-4">
                     Member-only events can remain visible but clearly marked, with access unlocked through membership or institution approval.
                   </div>
                   <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
@@ -498,3 +498,5 @@ export default function FaithHubEventsHub() {
     </div>
   );
 }
+
+
