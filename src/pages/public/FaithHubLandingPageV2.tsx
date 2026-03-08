@@ -617,7 +617,7 @@ export default function FaithHubLandingPageV2() {
 
         <section id="live" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
-            <Card className="overflow-hidden rounded-3xl border-slate-200 bg-slate-950 text-white shadow-sm">
+            <Card className="overflow-visible rounded-3xl border-slate-200 bg-slate-950 text-white shadow-sm">
               <CardContent className="p-6 sm:p-7">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/20 text-[#8ef0ca]">
@@ -632,7 +632,7 @@ export default function FaithHubLandingPageV2() {
                   {liveDetails.map((item) => (
                     <div key={item} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#8ef0ca]" />
-                      <div className="text-sm leading-7 text-white/80">{item}</div>
+                      <div className="min-w-0 break-words whitespace-normal text-sm leading-7 text-white/80">{item}</div>
                     </div>
                   ))}
                 </div>
