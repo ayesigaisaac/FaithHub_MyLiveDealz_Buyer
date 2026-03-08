@@ -744,7 +744,7 @@ export default function FaithHubLandingPageV2() {
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
                 <CardContent className="p-6 sm:p-7">
                   <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Trust and safety</div>
-                  <div className="text-4xl font-semibold text-slate-900 sm:text-5xl">
+                  <div className="text-4xl font-semibold text-[#03cd8c] sm:text-5xl">
                     FaithHub is designed to be trusted by users, institutions, and platform operators.
                   </div>
                   <div className="mt-4 space-y-4 text-sm leading-7 text-slate-600">
@@ -763,7 +763,7 @@ export default function FaithHubLandingPageV2() {
                         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                           <item.icon className="h-5 w-5" />
                         </div>
-                        <div className="text-sm font-semibold text-slate-900">{item.label}</div>
+                        <div className="text-sm font-semibold text-[#03cd8c]">{item.label}</div>
                       </div>
                     ))}
                   </div>
@@ -782,7 +782,7 @@ export default function FaithHubLandingPageV2() {
                           ))}
                         </div>
                         <div className="text-sm leading-7 text-slate-700">{item.quote}</div>
-                        <div className="mt-4 text-sm font-semibold text-slate-900">{item.name}</div>
+                        <div className="mt-4 text-sm font-semibold text-[#03cd8c]">{item.name}</div>
                         <div className="text-xs text-slate-500">{item.title}</div>
                       </div>
                     ))}
