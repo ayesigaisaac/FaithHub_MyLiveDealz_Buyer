@@ -689,15 +689,15 @@ export default function FaithHubLandingPageV2() {
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-6 sm:p-7">
                 <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Experience journey</div>
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {timelineSteps.map((step, index) => (
-                    <div key={step.title} className="flex gap-4 rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#03cd8c] text-sm font-semibold text-white">
+                    <div key={step.title} className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#03cd8c] text-base font-semibold text-white">
                         {index + 1}
                       </div>
-                      <div>
-                        <div className="text-lg font-semibold text-slate-900">{step.title}</div>
-                        <div className="mt-2 text-sm leading-7 text-slate-600">{step.text}</div>
+                      <div className="min-w-0">
+                        <div className="text-2xl font-semibold leading-tight text-slate-900">{step.title}</div>
+                        <div className="mt-3 text-base leading-8 text-slate-600">{step.text}</div>
                       </div>
                     </div>
                   ))}
