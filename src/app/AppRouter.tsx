@@ -1,8 +1,9 @@
-﻿import React, { Suspense } from "react";
+import React, { Suspense, useMemo } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { evzoneTheme } from "@/theme/evzoneTheme";
+import { useColorMode } from "@/theme/color-mode";
 import { ScrollToTop } from "@/components/system/ScrollToTop";
 import { pageRegistry } from "@/config/pageRegistry";
 import AppShellLayout from "@/components/layout/AppShellLayout";
@@ -21,8 +22,11 @@ function RouteFallback() {
 }
 
 export default function AppRouter() {
+  const { mode } = useColorMode();
+  const muiTheme = useMemo(() => evzoneTheme(mode), [mode]);
+
   return (
-    <ThemeProvider theme={evzoneTheme}>
+    <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <BrowserRouter>
         <ScrollToTop />
@@ -32,21 +36,51 @@ export default function AppRouter() {
           <Route path="/app-shell" element={<Navigate to="/app/user/home" replace />} />
           <Route path="/app" element={<Navigate to="/app/user/home" replace />} />
           <Route path="/app/user" element={<AppShellLayout />}>
-            {pageRegistry.filter((page) => page.role === 'user').map((page) => {
+            {pageRegistry.filter((page) => page.role === "user").map((page) => {
               const Component = page.element;
-              return <Route key={page.id} path={page.path.replace('/app/user/', '')} element={<Suspense fallback={<RouteFallback />}><Component /></Suspense>} />;
+              return (
+                <Route
+                  key={page.id}
+                  path={page.path.replace("/app/user/", "")}
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <Component />
+                    </Suspense>
+                  }
+                />
+              );
             })}
           </Route>
           <Route path="/app/provider" element={<AppShellLayout />}>
-            {pageRegistry.filter((page) => page.role === 'provider').map((page) => {
+            {pageRegistry.filter((page) => page.role === "provider").map((page) => {
               const Component = page.element;
-              return <Route key={page.id} path={page.path.replace('/app/provider/', '')} element={<Suspense fallback={<RouteFallback />}><Component /></Suspense>} />;
+              return (
+                <Route
+                  key={page.id}
+                  path={page.path.replace("/app/provider/", "")}
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <Component />
+                    </Suspense>
+                  }
+                />
+              );
             })}
           </Route>
           <Route path="/app/admin" element={<AppShellLayout />}>
-            {pageRegistry.filter((page) => page.role === 'admin').map((page) => {
+            {pageRegistry.filter((page) => page.role === "admin").map((page) => {
               const Component = page.element;
-              return <Route key={page.id} path={page.path.replace('/app/admin/', '')} element={<Suspense fallback={<RouteFallback />}><Component /></Suspense>} />;
+              return (
+                <Route
+                  key={page.id}
+                  path={page.path.replace("/app/admin/", "")}
+                  element={
+                    <Suspense fallback={<RouteFallback />}>
+                      <Component />
+                    </Suspense>
+                  }
+                />
+              );
             })}
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -55,4 +89,3 @@ export default function AppRouter() {
     </ThemeProvider>
   );
 }
-

@@ -4,6 +4,7 @@ import Drawer from "@mui/material/Drawer";
 import { Bell, Menu, PanelLeftClose, PanelLeftOpen, Search, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ColorModeToggle } from "@/theme/color-mode-toggle";
 import { defaultPageForRole, pagesByRole, pageRegistry, type RoleKey } from "@/config/pageRegistry";
 
 function getCurrentRole(pathname: string): RoleKey {
@@ -23,7 +24,7 @@ export default function AppShellLayout() {
   const currentPage = pageRegistry.find((page) => page.path === location.pathname);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
       <div className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-[1800px] items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-5">
           <div className="flex items-center gap-2 sm:gap-3">
@@ -42,6 +43,7 @@ export default function AppShellLayout() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
+            <ColorModeToggle className="hidden sm:inline-flex" />
             <RoleSwitcher role={role} onChange={(nextRole) => navigate(defaultPageForRole[nextRole])} />
             <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm"><Bell className="h-5 w-5" /></button>
           </div>

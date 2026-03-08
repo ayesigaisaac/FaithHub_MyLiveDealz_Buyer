@@ -5,11 +5,20 @@
 :root {
   color-scheme: light;
   font-family: "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --faithhub-page-bg: #f2f2f2;
-  --faithhub-surface-bg: #ffffff;
-  --faithhub-readable: #0f172a;
-  background: var(--faithhub-page-bg);
-  color: #0f172a;
+  --bg: #f2f2f2;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --accent: #03cd8c;
+  --accent-soft: rgba(3, 205, 140, 0.12);
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* Legacy vars used throughout the codebase. */
+  --faithhub-page-bg: var(--bg);
+  --faithhub-surface-bg: var(--surface);
+  --faithhub-readable: var(--text-primary);
 }
 
 html, body, #root {
@@ -18,8 +27,8 @@ html, body, #root {
 
 body {
   margin: 0;
-  background: var(--faithhub-page-bg);
-  color: var(--faithhub-readable);
+  background: var(--bg);
+  color: var(--text-primary);
   line-height: 1.5;
   letter-spacing: 0.01em;
   text-rendering: optimizeLegibility;
@@ -54,10 +63,47 @@ button, input, select, textarea { font: inherit; }
 /* Improve baseline readability in dense dashboard blocks. */
 h1, h2, h3, h4 {
   letter-spacing: -0.02em;
-  color: #0f172a;
+  color: var(--text-primary);
 }
 
 p, span, small, label {
-  color: #334155;
+  color: var(--text-secondary);
 }
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0f19;
+  --surface: #111827;
+  --card: #161b26;
+  --border: #1f2937;
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --accent: #34d399;
+  --accent-soft: rgba(52, 211, 153, 0.16);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Dark-mode mapping for existing Tailwind utility usage across pages. */
+[data-theme="dark"] [class*="bg-[#f2f2f2]"] { background-color: var(--bg) !important; }
+[data-theme="dark"] [class*="bg-white"] { background-color: var(--card) !important; }
+[data-theme="dark"] [class*="bg-slate-50"],
+[data-theme="dark"] [class*="bg-[#f8fafc]"] { background-color: var(--surface) !important; }
+[data-theme="dark"] [class*="bg-[#ecfff8]"] { background-color: var(--accent-soft) !important; }
+
+[data-theme="dark"] [class*="border-slate-"],
+[data-theme="dark"] [class*="border-[#03cd8c]"] { border-color: var(--border) !important; }
+[data-theme="dark"] [class*="ring-slate-"] { --tw-ring-color: var(--border) !important; }
+
+[data-theme="dark"] [class*="text-slate-900"],
+[data-theme="dark"] [class*="text-slate-800"],
+[data-theme="dark"] [class*="text-slate-700"] { color: var(--text-primary) !important; }
+[data-theme="dark"] [class*="text-slate-600"],
+[data-theme="dark"] [class*="text-slate-500"],
+[data-theme="dark"] [class*="text-slate-400"] { color: var(--text-secondary) !important; }
+
+[data-theme="dark"] [class*="text-[#03cd8c]"] { color: var(--accent) !important; }
+
+/* Preserve Tailwind opacity variants like bg-[#03cd8c]/10 so icons remain visible. */
+[data-theme="dark"] [class*="bg-[#03cd8c]/"] { background-color: var(--accent-soft) !important; }
+[data-theme="dark"] [class~="bg-[#03cd8c]"] { background-color: var(--accent) !important; }
 

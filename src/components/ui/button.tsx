@@ -9,12 +9,12 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
     return {
       variant: "outlined",
       sx: {
-        borderColor: "#cbd5e1",
-        color: "#0f172a",
+        borderColor: "var(--border)",
+        color: "var(--text-primary)",
         textTransform: "none",
         boxShadow: "none",
-        backgroundColor: "#ffffff",
-        '&:hover': { borderColor: "rgba(3,205,140,0.45)", backgroundColor: "#f7fffb", boxShadow: "none" },
+        backgroundColor: "transparent",
+        "&:hover": { borderColor: "var(--accent)", backgroundColor: "var(--accent-soft)", boxShadow: "none" },
       },
     };
   }
@@ -23,8 +23,8 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
       variant: "text",
       sx: {
         textTransform: "none",
-        color: "#03cd8c",
-        '&:hover': { backgroundColor: 'rgba(3,205,140,0.10)' },
+        color: "var(--text-secondary)",
+        "&:hover": { backgroundColor: "var(--accent-soft)", color: "var(--text-primary)" },
       },
     };
   }
@@ -32,10 +32,10 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
     variant: "contained",
     sx: {
       textTransform: "none",
-      boxShadow: "0 10px 24px -16px rgba(3, 205, 140, 0.65)",
-      backgroundColor: "#03cd8c",
-      color: "#06281e",
-      '&:hover': { backgroundColor: "#02b67c", boxShadow: "0 10px 24px -16px rgba(3, 205, 140, 0.75)" },
+      boxShadow: "var(--shadow-soft)",
+      backgroundColor: "var(--accent)",
+      color: "#ffffff",
+      "&:hover": { backgroundColor: "var(--accent)", filter: "brightness(1.06)", boxShadow: "var(--shadow-soft)" },
     },
   };
 }

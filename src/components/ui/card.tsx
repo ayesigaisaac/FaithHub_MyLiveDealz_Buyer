@@ -1,9 +1,9 @@
 ﻿import React from "react";
 import MuiCard, { CardProps as MuiCardProps } from "@mui/material/Card";
-import MuiCardContent, { CardContentProps as MuiCardContentProps } from "@mui/material/CardContent";
+
 
 export interface CardProps extends MuiCardProps {}
-export interface CardContentProps extends MuiCardContentProps {}
+export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card({ className, sx, ...props }, ref) {
   return (
@@ -13,9 +13,12 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card({ 
       className={className}
       sx={{
         borderRadius: "22px",
-        border: "1px solid rgba(148, 163, 184, 0.25)",
-        backgroundColor: "#ffffff",
-        boxShadow: "0 10px 30px -24px rgba(15, 23, 42, 0.45)",
+        border: "1px solid var(--border)",
+        backgroundColor: "var(--card)",
+        boxShadow: "var(--shadow-soft)",
+        color: "var(--text-primary)",
+        transition: "transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease, border-color 200ms ease",
+        "&:hover": { transform: "translateY(-2px)" },
         ...(sx || {}),
       }}
       {...props}
@@ -23,7 +26,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card({ 
   );
 });
 
-export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(function CardContent({ className, sx, ...props }, ref) {
-  return <MuiCardContent ref={ref} className={className} sx={{ padding: 0, "&:last-child": { paddingBottom: 0 }, ...(sx || {}) }} {...props} />;
+export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(function CardContent({ className, ...props }, ref) {
+  return <div ref={ref} className={className} {...props} />;
 });
 

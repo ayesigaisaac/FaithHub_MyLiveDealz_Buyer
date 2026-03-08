@@ -34,6 +34,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ColorModeToggle } from "@/theme/color-mode-toggle";
 
 const navItems = [
   { label: "Overview", id: "overview" },
@@ -293,10 +294,10 @@ export default function FaithHubLandingPageV2() {
   const [activeRole, setActiveRole] = useState("User");
   const [activeDevice, setActiveDevice] = useState("desktop");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [demoOpen, setDemoOpen] = useState(false);
+  const [walkthroughOpen, setWalkthroughOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState(0);
-  const [demoSubmitted, setDemoSubmitted] = useState(false);
-  const [demoForm, setDemoForm] = useState({
+  const [walkthroughSubmitted, setWalkthroughSubmitted] = useState(false);
+  const [walkthroughForm, setWalkthroughForm] = useState({
     name: "",
     institution: "",
     email: "",
@@ -308,14 +309,14 @@ export default function FaithHubLandingPageV2() {
   const currentRole = useMemo(() => roleCards.find((item) => item.role === activeRole), [activeRole]);
   const currentDevice = useMemo(() => deviceTabs.find((item) => item.key === activeDevice), [activeDevice]);
 
-  const submitDemo = (e) => {
+  const submitWalkthroughRequest = (e) => {
     e.preventDefault();
-    setDemoSubmitted(true);
+    setWalkthroughSubmitted(true);
   };
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-[#f2f2f2]/90 backdrop-blur">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <button onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25">
@@ -343,12 +344,13 @@ export default function FaithHubLandingPageV2() {
           </nav>
 
           <div className="hidden items-center gap-2 sm:flex">
+            <ColorModeToggle />
             <Button
               variant="outline"
               className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
-              onClick={() => setDemoOpen(true)}
+              onClick={() => setWalkthroughOpen(true)}
             >
-              Request Demo
+              Request Walkthrough
             </Button>
             <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
               Start Building
@@ -386,9 +388,12 @@ export default function FaithHubLandingPageV2() {
                     <ChevronRight className="h-4 w-4 text-slate-400" />
                   </button>
                 ))}
+                <div className="pt-2">
+                  <ColorModeToggle className="w-full justify-between" />
+                </div>
                 <div className="grid grid-cols-2 gap-2 pt-2">
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white" onClick={() => { setDemoOpen(true); setMobileNavOpen(false); }}>
-                    Request Demo
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white" onClick={() => { setWalkthroughOpen(true); setMobileNavOpen(false); }}>
+                    Request Walkthrough
                   </Button>
                   <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { scrollToId("contact"); setMobileNavOpen(false); }}>
                     Start Building
@@ -410,11 +415,13 @@ export default function FaithHubLandingPageV2() {
               transition={{ duration: 0.45 }}
               className="relative z-10 space-y-6"
             >
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge className="rounded-full bg-[#ecfff8] px-3 py-1 text-[#03cd8c] hover:bg-[#ecfff8]">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <Badge className="gap-2 border-[var(--border)] bg-[var(--accent-soft)] px-4 py-1.5 text-[11px] font-semibold tracking-[0.18em] text-[var(--accent)] shadow-[var(--shadow-soft)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                   A new digital faith infrastructure
                 </Badge>
-                <Badge className="rounded-full bg-slate-900 px-3 py-1 text-white hover:bg-slate-900">
+                <Badge className="gap-2 border-[var(--border)] bg-[var(--text-primary)] px-4 py-1.5 text-[11px] font-semibold tracking-[0.18em] text-[var(--bg)] shadow-[var(--shadow-soft)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                   Multi-faith, live-first, commerce-enabled
                 </Badge>
               </div>
@@ -529,13 +536,13 @@ export default function FaithHubLandingPageV2() {
         <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {topHighlights.map((item) => (
-              <Card key={item.title} className="rounded-2xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="p-6">
+              <Card key={item.title} className="h-full rounded-2xl border-slate-200 bg-white shadow-sm">
+                <CardContent className="flex h-full flex-col p-6">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                     <item.icon className="h-5 w-5" />
                   </div>
-                  <div className="text-lg font-semibold text-slate-900">{item.title}</div>
-                  <div className="mt-2 text-sm leading-7 text-slate-600">{item.text}</div>
+                  <div className="text-balance text-lg font-semibold leading-snug text-slate-900">{item.title}</div>
+                  <div className="mt-2 text-pretty text-sm leading-7 text-slate-600">{item.text}</div>
                 </CardContent>
               </Card>
             ))}
@@ -844,8 +851,8 @@ export default function FaithHubLandingPageV2() {
                   Bring FaithHub to life with a real strategy, not just a template.
                 </div>
                 <div className="mt-4 max-w-[52ch] text-base leading-8 text-slate-600">
-                  Use this section as the public conversion area for demos, partnerships, technical walkthroughs,
-                  implementation planning, or early institutional onboarding.
+                  Use this section as the public conversion area for partnerships, technical walkthroughs, implementation
+                  planning, or early institutional onboarding.
                 </div>
 
                 <div className="mt-7 grid gap-4 sm:grid-cols-2">
@@ -866,8 +873,8 @@ export default function FaithHubLandingPageV2() {
                 </div>
 
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => setDemoOpen(true)}>
-                    Request a Demo
+                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => setWalkthroughOpen(true)}>
+                    Request a Walkthrough
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                   <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("overview")}>
@@ -930,7 +937,7 @@ export default function FaithHubLandingPageV2() {
       </footer>
 
       <AnimatePresence>
-        {demoOpen && (
+        {walkthroughOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, y: 14, scale: 0.98 }}
@@ -941,23 +948,23 @@ export default function FaithHubLandingPageV2() {
             >
               <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4 sm:px-6">
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">Request a demo</div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">Request a walkthrough</div>
                   <div className="mt-1 text-2xl font-semibold text-slate-900">Tell us how you want to explore FaithHub</div>
                 </div>
-                <button onClick={() => { setDemoOpen(false); setDemoSubmitted(false); }} className="rounded-2xl border border-slate-200 bg-white p-3 text-slate-600">
+                <button onClick={() => { setWalkthroughOpen(false); setWalkthroughSubmitted(false); }} className="rounded-2xl border border-slate-200 bg-white p-3 text-slate-600">
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
               <div className="p-5 sm:p-6">
-                {!demoSubmitted ? (
-                  <form onSubmit={submitDemo} className="space-y-4">
+                {!walkthroughSubmitted ? (
+                  <form onSubmit={submitWalkthroughRequest} className="space-y-4">
                     <div className="grid gap-4 sm:grid-cols-2">
                       <label className="block space-y-2">
                         <span className="text-sm font-medium text-slate-700">Full name</span>
                         <input
-                          value={demoForm.name}
-                          onChange={(e) => setDemoForm({ ...demoForm, name: e.target.value })}
+                          value={walkthroughForm.name}
+                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, name: e.target.value })}
                           className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
                           placeholder="Your name"
                         />
@@ -965,8 +972,8 @@ export default function FaithHubLandingPageV2() {
                       <label className="block space-y-2">
                         <span className="text-sm font-medium text-slate-700">Institution or organization</span>
                         <input
-                          value={demoForm.institution}
-                          onChange={(e) => setDemoForm({ ...demoForm, institution: e.target.value })}
+                          value={walkthroughForm.institution}
+                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, institution: e.target.value })}
                           className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
                           placeholder="Organization name"
                         />
@@ -978,8 +985,8 @@ export default function FaithHubLandingPageV2() {
                         <span className="text-sm font-medium text-slate-700">Email address</span>
                         <input
                           type="email"
-                          value={demoForm.email}
-                          onChange={(e) => setDemoForm({ ...demoForm, email: e.target.value })}
+                          value={walkthroughForm.email}
+                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, email: e.target.value })}
                           className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
                           placeholder="name@example.com"
                         />
@@ -987,8 +994,8 @@ export default function FaithHubLandingPageV2() {
                       <label className="block space-y-2">
                         <span className="text-sm font-medium text-slate-700">Primary role</span>
                         <select
-                          value={demoForm.role}
-                          onChange={(e) => setDemoForm({ ...demoForm, role: e.target.value })}
+                          value={walkthroughForm.role}
+                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, role: e.target.value })}
                           className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
                         >
                           <option>Institution Leader</option>
@@ -1004,8 +1011,8 @@ export default function FaithHubLandingPageV2() {
                       <label className="block space-y-2">
                         <span className="text-sm font-medium text-slate-700">What do you want to see?</span>
                         <select
-                          value={demoForm.interest}
-                          onChange={(e) => setDemoForm({ ...demoForm, interest: e.target.value })}
+                          value={walkthroughForm.interest}
+                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, interest: e.target.value })}
                           className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
                         >
                           <option>Full Platform Walkthrough</option>
@@ -1016,15 +1023,15 @@ export default function FaithHubLandingPageV2() {
                         </select>
                       </label>
                       <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
-                        This form is wired for demo capture in the preview and can later be connected to your preferred backend or CRM flow.
+                        This form is wired for request capture in the preview and can later be connected to your preferred backend, email, or CRM flow.
                       </div>
                     </div>
 
                     <label className="block space-y-2">
                       <span className="text-sm font-medium text-slate-700">Notes</span>
                       <textarea
-                        value={demoForm.message}
-                        onChange={(e) => setDemoForm({ ...demoForm, message: e.target.value })}
+                        value={walkthroughForm.message}
+                        onChange={(e) => setWalkthroughForm({ ...walkthroughForm, message: e.target.value })}
                         rows={5}
                         className="w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 py-3 text-sm outline-none focus:border-[#03cd8c]"
                         placeholder="Tell us what you want to focus on"
@@ -1033,10 +1040,10 @@ export default function FaithHubLandingPageV2() {
 
                     <div className="flex flex-wrap gap-3">
                       <Button type="submit" className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
-                        Submit Demo Request
+                        Send Request
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
-                      <Button type="button" variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => setDemoOpen(false)}>
+                      <Button type="button" variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => setWalkthroughOpen(false)}>
                         Cancel
                       </Button>
                     </div>
@@ -1046,15 +1053,15 @@ export default function FaithHubLandingPageV2() {
                     <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#03cd8c] text-white">
                       <CheckCircle2 className="h-6 w-6" />
                     </div>
-                    <div className="text-2xl font-semibold text-slate-900">Demo request captured</div>
+                    <div className="text-2xl font-semibold text-slate-900">Request captured</div>
                     <div className="mt-2 text-sm leading-7 text-slate-600">
                       Your request has been captured in this landing-page preview flow. This can now be wired into the real FaithHub website backend, CRM, or messaging process.
                     </div>
                     <div className="mt-5 flex justify-center gap-3">
-                      <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { setDemoOpen(false); setDemoSubmitted(false); }}>
+                      <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { setWalkthroughOpen(false); setWalkthroughSubmitted(false); }}>
                         Close
                       </Button>
-                      <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => setDemoSubmitted(false)}>
+                      <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => setWalkthroughSubmitted(false)}>
                         Edit Request
                       </Button>
                     </div>
