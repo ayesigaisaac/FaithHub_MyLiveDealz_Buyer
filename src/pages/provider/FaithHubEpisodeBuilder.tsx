@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -41,8 +41,8 @@ const resources = [
 ];
 
 const liveLinks = [
-  { title: "Guarding the Heart Live Session", state: "Scheduled", time: "Tonight · 7:30 PM" },
-  { title: "Q&A Catch-up Session", state: "Planned", time: "Tomorrow · 6:00 PM" },
+  { title: "Guarding the Heart Live Session", state: "Scheduled", time: "Tonight  7:30 PM" },
+  { title: "Q&A Catch-up Session", state: "Planned", time: "Tomorrow  6:00 PM" },
 ];
 
 const aiOutline = [
@@ -363,3 +363,4 @@ export default function FaithHubEpisodeBuilder() {
     </div>
   );
 }
+

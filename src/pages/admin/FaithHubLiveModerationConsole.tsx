@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -30,7 +30,7 @@ import { Badge } from "@/components/ui/badge";
 const liveRooms = [
   {
     name: "Evening Prayer Revival",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Marys Cathedral",
     reports: 14,
     status: "Watch",
     viewers: "4.2k",
@@ -283,7 +283,7 @@ export default function FaithHubLiveModerationConsole() {
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-sm font-semibold text-slate-900">{item.item}</div>
-                          <div className="text-xs text-slate-500">{item.room} · {item.source}</div>
+                          <div className="text-xs text-slate-500">{item.room}  {item.source}</div>
                         </div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.severity === "Critical" ? "bg-rose-50 text-rose-600" : item.severity === "High" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-slate-100 text-slate-700"}`}>
                           {item.severity}
@@ -428,3 +428,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

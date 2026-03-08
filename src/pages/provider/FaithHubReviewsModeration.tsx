@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -61,7 +61,7 @@ const reviews = [
   },
   {
     id: 4,
-    title: "St. Mary’s Cathedral",
+    title: "St. Marys Cathedral",
     source: "Institution",
     author: "Anonymous",
     rating: 3,
@@ -401,3 +401,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

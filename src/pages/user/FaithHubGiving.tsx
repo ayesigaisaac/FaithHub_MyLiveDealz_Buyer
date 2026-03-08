@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -27,7 +27,7 @@ const funds = [
   {
     id: 1,
     title: "General Giving",
-    description: "Support the institution’s ongoing mission, operations, and weekly services.",
+    description: "Support the institutions ongoing mission, operations, and weekly services.",
     raised: "$24,500",
     goal: "$40,000",
     progress: 61,
@@ -42,7 +42,7 @@ const funds = [
   },
   {
     id: 3,
-    title: "Children’s Ministry",
+    title: "Childrens Ministry",
     description: "Equip learning materials, safe spaces, and youth support activities.",
     raised: "$8,700",
     goal: "$15,000",
@@ -53,7 +53,7 @@ const funds = [
 const donorWall = [
   { name: "Grace N.", amount: "$50", note: "Praying with the missions team." },
   { name: "Anonymous", amount: "$25", note: "Supporting youth growth." },
-  { name: "Household of Peace", amount: "$100", note: "For the children’s ministry." },
+  { name: "Household of Peace", amount: "$100", note: "For the childrens ministry." },
 ];
 
 const supporterPerks = [
@@ -195,7 +195,7 @@ export default function FaithHubGiving() {
                     >
                       <div className="mb-2 text-base font-semibold text-slate-900">{fund.title}</div>
                       <div className="text-sm leading-6 text-slate-600">{fund.description}</div>
-                      <div className="mt-4 text-sm text-slate-500">{fund.raised} raised · {fund.goal} goal</div>
+                      <div className="mt-4 text-sm text-slate-500">{fund.raised} raised  {fund.goal} goal</div>
                       <div className="mt-2 h-2 rounded-full bg-white/70 ring-1 ring-slate-200">
                         <div className="h-2 rounded-full bg-[#03cd8c]" style={{ width: `${fund.progress}%` }} />
                       </div>
@@ -399,7 +399,7 @@ export default function FaithHubGiving() {
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <ShieldCheck className="h-4 w-4 text-[#03cd8c]" /> Safe intent handling
                     </div>
-                    <div>Offline mode stores the donor’s choices and prayer note, but card or wallet authorization waits until the device reconnects.</div>
+                    <div>Offline mode stores the donors choices and prayer note, but card or wallet authorization waits until the device reconnects.</div>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
@@ -432,3 +432,4 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+

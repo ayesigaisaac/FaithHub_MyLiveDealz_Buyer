@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -23,20 +23,20 @@ import { Badge } from "@/components/ui/badge";
 
 const relatedSessions = [
   {
-    title: "Guarding the Heart · Live replay",
+    title: "Guarding the Heart  Live replay",
     status: "Replay available",
     time: "43 min",
     type: "Past",
   },
   {
     title: "Wisdom for the Next Season",
-    status: "Starts tonight · 7:30 PM",
+    status: "Starts tonight  7:30 PM",
     time: "Upcoming Live Sessionz",
     type: "Upcoming",
   },
   {
     title: "Series Q&A Reflection",
-    status: "Community catch-up · Tomorrow 6:00 PM",
+    status: "Community catch-up  Tomorrow 6:00 PM",
     time: "Upcoming discussion",
     type: "Upcoming",
   },
@@ -355,3 +355,4 @@ export default function FaithHubEpisodeDetail() {
     </div>
   );
 }
+

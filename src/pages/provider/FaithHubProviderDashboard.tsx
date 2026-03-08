@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -38,9 +38,9 @@ const liveHealth = [
 ];
 
 const upcomingSessions = [
-  { title: "Mercy in Motion · Episode 5", time: "Tonight · 7:30 PM", channel: "Main live channel" },
-  { title: "Family Prayer Circle", time: "Tomorrow · 6:00 PM", channel: "Family ministry channel" },
-  { title: "Marketplace Day Launch", time: "Saturday · 10:00 AM", channel: "Event live relay" },
+  { title: "Mercy in Motion  Episode 5", time: "Tonight  7:30 PM", channel: "Main live channel" },
+  { title: "Family Prayer Circle", time: "Tomorrow  6:00 PM", channel: "Family ministry channel" },
+  { title: "Marketplace Day Launch", time: "Saturday  10:00 AM", channel: "Event live relay" },
 ];
 
 const moderationQueue = [
@@ -312,3 +312,4 @@ export default function FaithHubProviderDashboard() {
     </div>
   );
 }
+

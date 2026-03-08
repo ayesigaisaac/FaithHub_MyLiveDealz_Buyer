@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -38,7 +38,7 @@ const kpis = [
 const liveSessions = [
   {
     title: "Evening Prayer Revival",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Marys Cathedral",
     region: "Uganda",
     viewers: "4.2k",
     health: "Healthy",
@@ -231,7 +231,7 @@ export default function FaithHubAdminOverview() {
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-base font-semibold text-slate-900">{session.title}</div>
-                          <div className="text-sm text-slate-500">{session.institution} · {session.region}</div>
+                          <div className="text-sm text-slate-500">{session.institution}  {session.region}</div>
                         </div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${session.health === "Healthy" ? "bg-[#ecfff8] text-[#03cd8c]" : session.health === "Watch" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-rose-50 text-rose-600"}`}>
                           {session.health}
@@ -359,3 +359,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

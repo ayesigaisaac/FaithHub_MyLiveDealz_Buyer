@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -43,7 +43,7 @@ const funds = [
     state: "Active",
   },
   {
-    title: "Children’s Ministry",
+    title: "Childrens Ministry",
     target: "$15,000",
     recurring: false,
     privacy: "Named donors only on consent",
@@ -256,7 +256,7 @@ export default function FaithHubDonationsFunds() {
               <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Payout scheduling"
-                  subtitle="Define how money leaves the platform into the institution’s payout flow."
+                  subtitle="Define how money leaves the platform into the institutions payout flow."
                   action="Finance"
                 />
                 <div className="space-y-3">
@@ -360,3 +360,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

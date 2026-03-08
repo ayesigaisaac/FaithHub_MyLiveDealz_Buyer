@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -131,7 +131,7 @@ export default function FaithHubLivePlayer() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Youth Impact Night · Live now</div>
+                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Youth Impact Night  Live now</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         A full live faith experience with playback control, translation, interaction, moderation, clips, and premium engagement lanes.
                       </h1>
@@ -406,3 +406,4 @@ export default function FaithHubLivePlayer() {
     </div>
   );
 }
+

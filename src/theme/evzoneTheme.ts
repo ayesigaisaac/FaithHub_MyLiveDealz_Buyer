@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+﻿import { createTheme } from "@mui/material/styles";
 
 export const evzoneTheme = createTheme({
   palette: {
@@ -18,3 +18,4 @@ export const evzoneTheme = createTheme({
     },
   },
 });
+

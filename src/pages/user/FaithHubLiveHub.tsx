@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const filters = {
-  institutions: ["All Institutions", "St. Mary’s Cathedral", "FaithHub Global Chapel", "Al Noor Community Centre", "Kingdom Youth Movement"],
+  institutions: ["All Institutions", "St. Marys Cathedral", "FaithHub Global Chapel", "Al Noor Community Centre", "Kingdom Youth Movement"],
   series: ["All Series", "Walking in Wisdom", "Mercy in Motion", "Women of Faith", "Raising Kingdom Leaders"],
   audiences: ["All Audiences", "General Community", "Youth Church", "Women Fellowship", "Family Ministry"],
 };
@@ -35,7 +35,7 @@ const liveNow = [
   {
     id: 1,
     title: "Evening Prayer Revival",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Marys Cathedral",
     series: "Walking in Wisdom",
     audience: "General Community",
     viewers: "3.4k watching",
@@ -65,17 +65,17 @@ const upcoming = [
     institution: "Kingdom Youth Movement",
     series: "Raising Kingdom Leaders",
     audience: "Youth Church",
-    time: "Today · 8:00 PM",
+    time: "Today  8:00 PM",
     waitingRoom: true,
     ticketed: false,
   },
   {
     id: 2,
-    title: "Mercy in Motion · Episode 5",
+    title: "Mercy in Motion  Episode 5",
     institution: "FaithHub Global Chapel",
     series: "Mercy in Motion",
     audience: "Family Ministry",
-    time: "Tomorrow · 7:30 PM",
+    time: "Tomorrow  7:30 PM",
     waitingRoom: true,
     ticketed: true,
   },
@@ -85,7 +85,7 @@ const upcoming = [
     institution: "Al Noor Community Centre",
     series: "Quiet Strength",
     audience: "Family Ministry",
-    time: "Tomorrow · 5:30 PM",
+    time: "Tomorrow  5:30 PM",
     waitingRoom: false,
     ticketed: false,
   },
@@ -95,7 +95,7 @@ const replays = [
   {
     id: 1,
     title: "Guarding the Heart Replay",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Marys Cathedral",
     series: "Walking in Wisdom",
     audience: "General Community",
     duration: "43 min",
@@ -320,7 +320,7 @@ export default function FaithHubLiveHub() {
                           </span>
                         )}
                       </div>
-                      <div className="text-sm text-slate-500">{item.institution} · {item.series}</div>
+                      <div className="text-sm text-slate-500">{item.institution}  {item.series}</div>
                       <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-600">
                         <span className="rounded-full bg-slate-50 px-3 py-1 ring-1 ring-slate-200">{item.audience}</span>
                         <span className="inline-flex items-center gap-1 rounded-full bg-[#ecfff8] px-3 py-1 font-medium text-[#03cd8c]">
@@ -366,7 +366,7 @@ export default function FaithHubLiveHub() {
                   {filteredUpcoming.map((item) => (
                     <div key={item.id} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                       <div className="mb-1 text-base font-semibold text-white">{item.title}</div>
-                      <div className="text-sm text-white/70">{item.institution} · {item.series}</div>
+                      <div className="text-sm text-white/70">{item.institution}  {item.series}</div>
                       <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-white/85">
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
                           <CalendarDays className="h-4 w-4 text-[#8ef0ca]" />
@@ -412,8 +412,8 @@ export default function FaithHubLiveHub() {
                         </div>
                         <div className="min-w-0">
                           <div className="truncate text-sm font-semibold text-slate-900">{item.title}</div>
-                          <div className="text-xs text-slate-500">{item.institution} · {item.duration}</div>
-                          <div className="mt-1 text-xs text-slate-600">{item.series} · {item.audience}</div>
+                          <div className="text-xs text-slate-500">{item.institution}  {item.duration}</div>
+                          <div className="mt-1 text-xs text-slate-600">{item.series}  {item.audience}</div>
                         </div>
                       </div>
                       <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -448,3 +448,4 @@ export default function FaithHubLiveHub() {
     </div>
   );
 }
+

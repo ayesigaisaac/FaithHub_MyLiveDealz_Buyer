@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -30,7 +30,7 @@ const episodes = [
   { id: 2, title: "Wisdom in Daily Decisions", status: "Completed", length: "41 min", progress: 100, replay: true },
   { id: 3, title: "Discernment in Community", status: "Completed", length: "39 min", progress: 100, replay: true },
   { id: 4, title: "Guarding the Heart", status: "In progress", length: "45 min", progress: 62, replay: true },
-  { id: 5, title: "Wisdom for the Next Season", status: "Upcoming Live Sessionz", length: "Starts tonight · 7:30 PM", progress: 0, replay: false },
+  { id: 5, title: "Wisdom for the Next Season", status: "Upcoming Live Sessionz", length: "Starts tonight  7:30 PM", progress: 0, replay: false },
   { id: 6, title: "Living What We Learned", status: "Locked until release", length: "Next week", progress: 0, replay: false },
 ];
 
@@ -186,7 +186,7 @@ export default function FaithHubSeriesDetail() {
                       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="min-w-0 flex-1">
                           <div className="mb-1 text-base font-semibold text-slate-900">{episode.title}</div>
-                          <div className="text-sm text-slate-500">{episode.status} · {episode.length}</div>
+                          <div className="text-sm text-slate-500">{episode.status}  {episode.length}</div>
                           <div className="mt-3">
                             <div className="mb-2 flex items-center justify-between text-xs font-medium text-slate-500">
                               <span>Progress</span>
@@ -260,7 +260,7 @@ export default function FaithHubSeriesDetail() {
                 <div className="rounded-[28px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                   <div className="mb-4 h-48 rounded-[24px] bg-gradient-to-br from-white/20 to-white/10" />
                   <div className="mb-3 text-lg font-semibold text-white">Walking in Wisdom</div>
-                  <div className="text-sm text-white/70">5 of 8 episodes complete · Next live episode tonight</div>
+                  <div className="text-sm text-white/70">5 of 8 episodes complete  Next live episode tonight</div>
                   <div className="mt-4 grid gap-2 sm:grid-cols-2">
                     {shareOptions.map((item) => (
                       <div key={item} className="rounded-2xl border border-white/10 bg-slate-950/20 px-3 py-2 text-sm text-white/85">
@@ -366,3 +366,4 @@ export default function FaithHubSeriesDetail() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -28,9 +28,9 @@ const auditEvents = [
     id: "AUD-10912",
     actor: "Admin Naomi",
     action: "Changed provider verification status",
-    target: "St. Mary’s Cathedral",
+    target: "St. Marys Cathedral",
     module: "Verification",
-    time: "Today · 09:14",
+    time: "Today  09:14",
     risk: "Normal",
   },
   {
@@ -39,7 +39,7 @@ const auditEvents = [
     action: "Rotated live stream key",
     target: "Evening Prayer Revival",
     module: "Live Ops",
-    time: "Today · 08:52",
+    time: "Today  08:52",
     risk: "Sensitive",
   },
   {
@@ -48,7 +48,7 @@ const auditEvents = [
     action: "Updated global notification template",
     target: "Replay available template",
     module: "Channels",
-    time: "Today · 08:21",
+    time: "Today  08:21",
     risk: "Normal",
   },
   {
@@ -57,7 +57,7 @@ const auditEvents = [
     action: "Applied user ban in live room",
     target: "Youth Impact Night",
     module: "Moderation",
-    time: "Yesterday · 22:14",
+    time: "Yesterday  22:14",
     risk: "Sensitive",
   },
   {
@@ -66,7 +66,7 @@ const auditEvents = [
     action: "Immutable archive checkpoint completed",
     target: "Audit ledger",
     module: "Security",
-    time: "Yesterday · 18:00",
+    time: "Yesterday  18:00",
     risk: "Normal",
   },
 ];
@@ -202,13 +202,13 @@ export default function FaithHubSecurityAuditLogs() {
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-sm font-semibold text-slate-900">{event.action}</div>
-                          <div className="text-xs text-slate-500">{event.id} · {event.module}</div>
+                          <div className="text-xs text-slate-500">{event.id}  {event.module}</div>
                         </div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${event.risk === "Sensitive" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-[#ecfff8] text-[#03cd8c]"}`}>
                           {event.risk}
                         </span>
                       </div>
-                      <div className="text-sm text-slate-600">{event.actor} → {event.target}</div>
+                      <div className="text-sm text-slate-600">{event.actor}  {event.target}</div>
                       <div className="mt-2 text-xs text-slate-500">{event.time}</div>
                     </div>
                   ))}
@@ -321,3 +321,4 @@ function SectionHeader({ title, subtitle, action = "Manage" }) {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -238,11 +238,11 @@ export default function FaithHubProviderOnboarding() {
                     <div className="grid gap-3 sm:grid-cols-2">
                       <label className="block space-y-2">
                         <span className="text-sm font-medium text-slate-700">Institution name</span>
-                        <input className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]" defaultValue="St. Mary’s Cathedral" />
+                        <input className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]" defaultValue="St. Marys Cathedral" />
                       </label>
                       <label className="block space-y-2">
                         <span className="text-sm font-medium text-slate-700">Legal name</span>
-                        <input className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]" defaultValue="St. Mary’s Cathedral Ministries Ltd." />
+                        <input className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]" defaultValue="St. Marys Cathedral Ministries Ltd." />
                       </label>
                     </div>
                     <div className="grid gap-3 sm:grid-cols-2">
@@ -370,3 +370,4 @@ export default function FaithHubProviderOnboarding() {
     </div>
   );
 }
+

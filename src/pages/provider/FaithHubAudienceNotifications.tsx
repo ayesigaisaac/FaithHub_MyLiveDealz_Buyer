@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -50,14 +50,14 @@ const localeTemplates = [
   },
   {
     locale: "Arabic",
-    title: "جلسة البث تبدأ قريبًا",
-    body: "ابدأ العد التنازلي الآن وانضم إلى غرفة الانتظار قبل البث المباشر.",
+    title: "   ",
+    body: "          .",
     status: "Ready",
   },
   {
     locale: "French",
-    title: "Votre diffusion commence bientôt",
-    body: "Rejoignez la salle d’attente dans 20 minutes pour la session en direct.",
+    title: "Votre diffusion commence bientt",
+    body: "Rejoignez la salle dattente dans 20 minutes pour la session en direct.",
     status: "Draft",
   },
 ];
@@ -410,3 +410,4 @@ export default function FaithHubAudienceNotifications() {
     </div>
   );
 }
+

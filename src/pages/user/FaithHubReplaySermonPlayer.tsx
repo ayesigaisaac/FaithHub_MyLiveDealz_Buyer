@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -63,14 +63,14 @@ const transcriptBlocks = [
 ];
 
 const clips = [
-  { title: "Wisdom becomes daily practice", range: "14:42 – 18:10" },
-  { title: "Family application highlight", range: "27:05 – 30:12" },
-  { title: "Closing prayer takeaway", range: "39:18 – 41:02" },
+  { title: "Wisdom becomes daily practice", range: "14:42  18:10" },
+  { title: "Family application highlight", range: "27:05  30:12" },
+  { title: "Closing prayer takeaway", range: "39:18  41:02" },
 ];
 
 const notes = [
   "Key idea: wisdom must move from inspiration into routine.",
-  "Family conversations are one of the strongest places to apply tonight’s message.",
+  "Family conversations are one of the strongest places to apply tonights message.",
   "Replay pairs well with the Walking in Wisdom reading plan and episode worksheet.",
 ];
 
@@ -139,7 +139,7 @@ export default function FaithHubReplaySermonPlayer() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Walking in Wisdom · Episode Replay</div>
+                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Walking in Wisdom  Episode Replay</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Replay sermons with structure, searchable understanding, and premium learning depth when needed.
                       </h1>
@@ -413,3 +413,4 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+

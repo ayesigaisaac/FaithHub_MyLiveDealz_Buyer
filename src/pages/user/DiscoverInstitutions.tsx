@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -24,7 +24,7 @@ import { Badge } from "@/components/ui/badge";
 const institutions = [
   {
     id: 1,
-    name: "St. Mary’s Cathedral",
+    name: "St. Marys Cathedral",
     faith: "Christianity",
     denomination: "Catholic",
     language: "English",
@@ -32,7 +32,7 @@ const institutions = [
     verified: true,
     sponsored: false,
     nearNow: true,
-    serviceTime: "Service live now · 6:00 PM",
+    serviceTime: "Service live now  6:00 PM",
     x: "22%",
     y: "35%",
     location: "Kampala Central",
@@ -62,7 +62,7 @@ const institutions = [
     verified: true,
     sponsored: true,
     nearNow: false,
-    serviceTime: "Series starts tomorrow · 7:30 PM",
+    serviceTime: "Series starts tomorrow  7:30 PM",
     x: "48%",
     y: "66%",
     location: "Ntinda",
@@ -77,7 +77,7 @@ const institutions = [
     verified: false,
     sponsored: false,
     nearNow: false,
-    serviceTime: "Sabbath gathering · Friday 6:15 PM",
+    serviceTime: "Sabbath gathering  Friday 6:15 PM",
     x: "74%",
     y: "24%",
     location: "Kololo",
@@ -92,7 +92,7 @@ const institutions = [
     verified: true,
     sponsored: false,
     nearNow: true,
-    serviceTime: "Youth worship tonight · 8:00 PM",
+    serviceTime: "Youth worship tonight  8:00 PM",
     x: "32%",
     y: "58%",
     location: "Muyenga",
@@ -338,11 +338,11 @@ export default function DiscoverInstitutions() {
                             </div>
                             <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
                               <span>{item.faith}</span>
-                              <span>•</span>
+                              <span></span>
                               <span>{item.denomination}</span>
-                              <span>•</span>
+                              <span></span>
                               <span>{item.language}</span>
-                              <span>•</span>
+                              <span></span>
                               <span>{item.distance} km away</span>
                             </div>
                             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600">
@@ -386,7 +386,7 @@ export default function DiscoverInstitutions() {
                             </div>
                             <div className="absolute left-1/2 top-14 hidden w-56 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl group-hover:block">
                               <div className="mb-1 text-sm font-semibold text-slate-900">{item.name}</div>
-                              <div className="text-xs text-slate-500">{item.location} · {item.distance} km</div>
+                              <div className="text-xs text-slate-500">{item.location}  {item.distance} km</div>
                               <div className="mt-2 text-xs text-slate-600">{item.serviceTime}</div>
                             </div>
                           </div>
@@ -424,7 +424,7 @@ export default function DiscoverInstitutions() {
                           </span>
                         )}
                       </div>
-                      <div className="text-sm text-white/70">{item.location} · {item.distance} km away</div>
+                      <div className="text-sm text-white/70">{item.location}  {item.distance} km away</div>
                       <div className="mt-3 flex items-center gap-2 text-sm text-white/85">
                         <Clock3 className="h-4 w-4 text-[#8ef0ca]" />
                         {item.serviceTime}
@@ -502,3 +502,4 @@ export default function DiscoverInstitutions() {
     </div>
   );
 }
+

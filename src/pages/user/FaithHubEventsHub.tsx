@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -67,12 +67,12 @@ const events = [
     title: "Baptism Sunday",
     type: "Baptism",
     audience: "General Community",
-    venue: "St. Mary’s Cathedral Grounds",
+    venue: "St. Marys Cathedral Grounds",
     area: "Kampala Central",
     start: "01 Sep",
     end: "01 Sep",
     time: "9:00 AM",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Marys Cathedral",
     memberOnly: false,
     ticketed: false,
     rsvp: "Interested",
@@ -215,7 +215,7 @@ export default function FaithHubEventsHub() {
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
               {offlineMode ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
-              {offlineMode ? "Cached events · RSVP queued" : "Live calendar + map"}
+              {offlineMode ? "Cached events  RSVP queued" : "Live calendar + map"}
             </div>
             <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
               <Bell className="h-5 w-5" />
@@ -409,7 +409,7 @@ export default function FaithHubEventsHub() {
                           <div className="absolute left-1/2 top-14 hidden w-56 -translate-x-1/2 rounded-2xl border border-slate-200 bg-white p-3 text-left shadow-xl group-hover:block">
                             <div className="mb-1 text-sm font-semibold text-slate-900">{event.title}</div>
                             <div className="text-xs text-slate-500">{event.venue}</div>
-                            <div className="mt-2 text-xs text-slate-600">{event.start} · {event.time}</div>
+                            <div className="mt-2 text-xs text-slate-600">{event.start}  {event.time}</div>
                           </div>
                         </div>
                       </button>
@@ -498,3 +498,4 @@ export default function FaithHubEventsHub() {
     </div>
   );
 }
+

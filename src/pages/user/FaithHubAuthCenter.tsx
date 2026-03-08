@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -275,9 +275,9 @@ export default function FaithHubAuthCenter() {
                             Recovery methods available
                           </div>
                           <div className="space-y-2 text-sm text-slate-600">
-                            <div>• Verified phone or email recovery with OTP and cooldown protection</div>
-                            <div>• Trusted device confirmation</div>
-                            <div>• Provider-admin or enterprise SSO recovery for supported organizations</div>
+                            <div> Verified phone or email recovery with OTP and cooldown protection</div>
+                            <div> Trusted device confirmation</div>
+                            <div> Provider-admin or enterprise SSO recovery for supported organizations</div>
                           </div>
                         </div>
                       )}
@@ -469,3 +469,4 @@ export default function FaithHubAuthCenter() {
     </div>
   );
 }
+

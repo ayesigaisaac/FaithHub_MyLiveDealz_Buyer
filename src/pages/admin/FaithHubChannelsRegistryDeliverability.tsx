@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -240,7 +240,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div>
                           <div className="text-sm font-semibold text-white">{template.name}</div>
-                          <div className="text-xs text-white/55">{template.channel} · {template.locale}</div>
+                          <div className="text-xs text-white/55">{template.channel}  {template.locale}</div>
                         </div>
                         <div className="flex gap-2">
                           <span className={`rounded-full px-3 py-1 text-xs font-semibold ${template.status === "Approved" || template.status === "Active" ? "bg-[#03cd8c]/20 text-[#d9fff0]" : "bg-[#f77f00]/20 text-[#fff1d6]"}`}>
@@ -334,3 +334,4 @@ function SectionHeader({ title, subtitle, action = "Manage" }) {
     </div>
   );
 }
+

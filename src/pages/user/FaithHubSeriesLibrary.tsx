@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -29,7 +29,7 @@ const seriesItems = [
   {
     id: 1,
     title: "Walking in Wisdom",
-    institution: "St. Mary’s Cathedral",
+    institution: "St. Marys Cathedral",
     topic: "Wisdom",
     language: "English",
     audience: "General Community",
@@ -39,7 +39,7 @@ const seriesItems = [
     readingPlan: true,
     premium: false,
     sponsored: false,
-    updated: "Episode 5 tonight · 7:30 PM",
+    updated: "Episode 5 tonight  7:30 PM",
   },
   {
     id: 2,
@@ -54,7 +54,7 @@ const seriesItems = [
     readingPlan: true,
     premium: true,
     sponsored: false,
-    updated: "Replay available · Episode 3",
+    updated: "Replay available  Episode 3",
   },
   {
     id: 3,
@@ -119,10 +119,10 @@ const seriesItems = [
 ];
 
 const downloadedAssets = [
-  "Walking in Wisdom · Trailer",
-  "Mercy in Motion · Study Notes",
-  "Faith That Builds · Episode 6 audio",
-  "Raising Kingdom Leaders · Reading Plan",
+  "Walking in Wisdom  Trailer",
+  "Mercy in Motion  Study Notes",
+  "Faith That Builds  Episode 6 audio",
+  "Raising Kingdom Leaders  Reading Plan",
 ];
 
 function Chip({ active, label, onClick }) {
@@ -393,8 +393,8 @@ export default function FaithHubSeriesLibrary() {
                 />
                 <div className="space-y-3 text-sm text-white/80">
                   <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
-                    <div className="mb-2 text-base font-semibold text-white">Tonight’s likely best match</div>
-                    <div>Walking in Wisdom · Episode 5 fits your current progress and your recent Wednesday viewing behavior.</div>
+                    <div className="mb-2 text-base font-semibold text-white">Tonights likely best match</div>
+                    <div>Walking in Wisdom  Episode 5 fits your current progress and your recent Wednesday viewing behavior.</div>
                   </div>
                   <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 text-base font-semibold text-white">Reading plan sync</div>
@@ -424,7 +424,7 @@ export default function FaithHubSeriesLibrary() {
                         </div>
                         <div className="min-w-0">
                           <div className="truncate text-sm font-semibold text-slate-900">{item}</div>
-                          <div className="text-xs text-slate-500">Offline ready · Cached successfully</div>
+                          <div className="text-xs text-slate-500">Offline ready  Cached successfully</div>
                         </div>
                       </div>
                       <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -463,3 +463,4 @@ export default function FaithHubSeriesLibrary() {
 function LockIcon() {
   return <span className="inline-block h-3.5 w-3.5 rounded-full bg-white/20" />;
 }
+

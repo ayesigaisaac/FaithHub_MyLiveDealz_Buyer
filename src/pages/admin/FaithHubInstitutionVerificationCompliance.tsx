@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,7 +26,7 @@ import { Badge } from "@/components/ui/badge";
 
 const providers = [
   {
-    name: "St. Mary’s Cathedral",
+    name: "St. Marys Cathedral",
     region: "Uganda",
     state: "Pending approval",
     identity: "Verified admin ID",
@@ -346,3 +346,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

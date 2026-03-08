@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -77,17 +77,17 @@ const optInTimeline = [
   {
     event: "WhatsApp consent captured",
     detail: "Naomi Campbell opted in through QR scan at live waiting room entry.",
-    time: "Today · 09:21",
+    time: "Today  09:21",
   },
   {
     event: "Template eligibility window checked",
     detail: "Miriam A. moved to template-required state after service window expired.",
-    time: "Today · 09:08",
+    time: "Today  09:08",
   },
   {
     event: "Family line preference updated",
     detail: "David Otema switched from SMS to Email + Push for family notifications.",
-    time: "Yesterday · 18:42",
+    time: "Yesterday  18:42",
   },
 ];
 
@@ -283,7 +283,7 @@ export default function FaithHubChannelsContactManager() {
                         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                           <div>
                             <div className="text-base font-semibold text-slate-900">{contact.name}</div>
-                            <div className="text-sm text-slate-500">{contact.segment} · {contact.brandLine}</div>
+                            <div className="text-sm text-slate-500">{contact.segment}  {contact.brandLine}</div>
                           </div>
                           <span className={`rounded-full px-3 py-1 text-xs font-semibold ${contact.status === "Opted in" ? "bg-[#ecfff8] text-[#03cd8c]" : contact.status === "Template-required" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-slate-100 text-slate-700"}`}>
                             {contact.status}
@@ -424,3 +424,4 @@ export default function FaithHubChannelsContactManager() {
     </div>
   );
 }
+

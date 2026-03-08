@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -869,11 +869,11 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
             <div className="rounded-[28px] border border-[#f77f00]/15 bg-[#fffaf3] p-5 shadow-sm">
               <div className="mb-2 text-lg font-semibold text-slate-900">Premium shell standards</div>
               <div className="space-y-2 text-sm text-slate-600">
-                <div>• Persistent role switch between User and Provider</div>
-                <div>• Multi-tenant workspace context for Provider and Admin</div>
-                <div>• Fully responsive nav with mobile-first fallbacks</div>
-                <div>• Command palette access to all routes</div>
-                <div>• Premium EVzone visual system with green as primary</div>
+                <div> Persistent role switch between User and Provider</div>
+                <div> Multi-tenant workspace context for Provider and Admin</div>
+                <div> Fully responsive nav with mobile-first fallbacks</div>
+                <div> Command palette access to all routes</div>
+                <div> Premium EVzone visual system with green as primary</div>
               </div>
             </div>
           </div>
@@ -1007,7 +1007,7 @@ function AlertsCard({ roleData }) {
             <div className="mb-2 text-sm font-semibold text-slate-900">Recent activity</div>
             <div className="space-y-2">
               {roleData.activity.map((item) => (
-                <div key={item} className="text-sm text-slate-600">• {item}</div>
+                <div key={item} className="text-sm text-slate-600"> {item}</div>
               ))}
             </div>
           </div>
@@ -1034,7 +1034,7 @@ function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
                 >
                   <div>
                     <div className="text-sm font-semibold text-slate-900">{item.label}</div>
-                    <div className="text-xs text-slate-500">{item.roleLabel} · {item.route}</div>
+                    <div className="text-xs text-slate-500">{item.roleLabel}  {item.route}</div>
                   </div>
                   <Pin className="h-4 w-4 text-[#f77f00]" />
                 </button>
@@ -1055,7 +1055,7 @@ function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
                   >
                     <div>
                       <div className="text-sm font-semibold text-slate-900">{page.label}</div>
-                      <div className="text-xs text-slate-500">{page.roleLabel} · {page.sectionTitle}</div>
+                      <div className="text-xs text-slate-500">{page.roleLabel}  {page.sectionTitle}</div>
                     </div>
                     <Clock3 className="h-4 w-4 text-slate-400" />
                   </button>
@@ -1136,7 +1136,7 @@ function CommandPalette({ query, setQuery, results, close, goToPage }) {
                         {item.template}
                       </span>
                     </div>
-                    <div className="text-xs text-slate-500">{item.sectionTitle} · {item.route}</div>
+                    <div className="text-xs text-slate-500">{item.sectionTitle}  {item.route}</div>
                     <div className="mt-2 text-sm leading-6 text-slate-600">{item.description}</div>
                   </div>
                   <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-slate-400" />
@@ -1163,3 +1163,4 @@ function SectionHeader({ title, subtitle, action = "Explore" }) {
     </div>
   );
 }
+

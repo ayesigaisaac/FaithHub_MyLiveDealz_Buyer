@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,11 +26,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const agendaItems = [
-  { title: "Arrival and accreditation", time: "Day 1 · 8:30 AM", type: "Check-in" },
-  { title: "Main worship session", time: "Day 1 · 10:00 AM", type: "Main session" },
-  { title: "Breakout teaching rooms", time: "Day 1 · 2:00 PM", type: "Breakout" },
-  { title: "Marketplace and merch zone", time: "Day 1 · 5:00 PM", type: "Commerce" },
-  { title: "Closing prayer and departure", time: "Day 2 · 4:00 PM", type: "Closing" },
+  { title: "Arrival and accreditation", time: "Day 1  8:30 AM", type: "Check-in" },
+  { title: "Main worship session", time: "Day 1  10:00 AM", type: "Main session" },
+  { title: "Breakout teaching rooms", time: "Day 1  2:00 PM", type: "Breakout" },
+  { title: "Marketplace and merch zone", time: "Day 1  5:00 PM", type: "Commerce" },
+  { title: "Closing prayer and departure", time: "Day 2  4:00 PM", type: "Closing" },
 ];
 
 const volunteers = [
@@ -366,3 +366,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

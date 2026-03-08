@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Button } from "@/components/ui/button";
 
 interface State { hasError: boolean; error?: Error; }
@@ -21,3 +21,4 @@ export class ErrorBoundary extends React.Component<React.PropsWithChildren, Stat
     return this.props.children;
   }
 }
+

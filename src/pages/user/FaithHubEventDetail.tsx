@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,11 +26,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const schedule = [
-  { time: "Day 1 · 9:00 AM", title: "Arrival, accreditation, orientation" },
-  { time: "Day 1 · 2:00 PM", title: "Opening worship and keynote" },
-  { time: "Day 2 · 10:00 AM", title: "Prayer circles and breakout sessions" },
-  { time: "Day 2 · 4:30 PM", title: "Marketplace showcase and networking" },
-  { time: "Day 3 · 8:00 AM", title: "Closing charge and departure" },
+  { time: "Day 1  9:00 AM", title: "Arrival, accreditation, orientation" },
+  { time: "Day 1  2:00 PM", title: "Opening worship and keynote" },
+  { time: "Day 2  10:00 AM", title: "Prayer circles and breakout sessions" },
+  { time: "Day 2  4:30 PM", title: "Marketplace showcase and networking" },
+  { time: "Day 3  8:00 AM", title: "Closing charge and departure" },
 ];
 
 const speakers = [
@@ -126,7 +126,7 @@ export default function FaithHubEventDetail() {
                       <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
                           <CalendarDays className="h-4 w-4" />
-                          12–15 Aug
+                          1215 Aug
                         </span>
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
                           <MapPin className="h-4 w-4" />
@@ -381,3 +381,4 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+

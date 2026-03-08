@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -217,7 +217,7 @@ export default function FaithHubPaymentsDonationsDisputes() {
                           {item.risk}
                         </span>
                       </div>
-                      <div className="text-xs text-white/55">{item.type} · {item.entity}</div>
+                      <div className="text-xs text-white/55">{item.type}  {item.entity}</div>
                       <div className="mt-2 text-sm text-white/75">{item.note}</div>
                     </button>
                   ))}
@@ -303,3 +303,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

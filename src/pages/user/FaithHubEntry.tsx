@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -22,10 +22,10 @@ import { Badge } from "@/components/ui/badge";
 const languages = [
   { code: "en-UG", label: "English" },
   { code: "sw-UG", label: "Kiswahili" },
-  { code: "fr-FR", label: "Français" },
-  { code: "ar", label: "العربية" },
-  { code: "hi", label: "हिन्दी" },
-  { code: "pt", label: "Português" },
+  { code: "fr-FR", label: "Franais" },
+  { code: "ar", label: "" },
+  { code: "hi", label: "" },
+  { code: "pt", label: "Portugus" },
 ];
 
 const destinations = [
@@ -263,7 +263,7 @@ export default function FaithHubEntry() {
                           <div className="mb-1 text-xs uppercase tracking-[0.18em] text-white/50">Followed institutions</div>
                           <div className="text-lg font-semibold text-white">3 already followed</div>
                           <div className="mt-2 text-white/70">
-                            Saint Mary’s Cathedral, Al Massira Community, FaithHub Youth Network.
+                            Saint Marys Cathedral, Al Massira Community, FaithHub Youth Network.
                           </div>
                         </div>
 
@@ -406,3 +406,4 @@ export default function FaithHubEntry() {
     </div>
   );
 }
+

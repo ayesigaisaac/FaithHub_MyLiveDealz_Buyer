@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -55,7 +55,7 @@ const reviews = [
   },
   {
     id: 3,
-    title: "St. Mary’s Cathedral",
+    title: "St. Marys Cathedral",
     type: "Institution",
     reviewer: "Anonymous",
     verified: false,
@@ -438,3 +438,4 @@ export default function FaithHubReviews() {
     </div>
   );
 }
+

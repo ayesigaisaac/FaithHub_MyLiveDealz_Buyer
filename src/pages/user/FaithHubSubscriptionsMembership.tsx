@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -129,9 +129,9 @@ const compareRows = [
 ];
 
 const billingTimeline = [
-  { title: "Active subscription", detail: "Supporter plan renewed successfully.", time: "Today · 09:14" },
-  { title: "Entitlement refresh", detail: "Premium series and member queue updated on this device.", time: "Today · 09:16" },
-  { title: "Family sharing check", detail: "Awaiting platform support verification for current region/device combination.", time: "Today · 09:17" },
+  { title: "Active subscription", detail: "Supporter plan renewed successfully.", time: "Today  09:14" },
+  { title: "Entitlement refresh", detail: "Premium series and member queue updated on this device.", time: "Today  09:16" },
+  { title: "Family sharing check", detail: "Awaiting platform support verification for current region/device combination.", time: "Today  09:17" },
 ];
 
 export default function FaithHubSubscriptionsMembership() {
@@ -458,3 +458,4 @@ export default function FaithHubSubscriptionsMembership() {
     </div>
   );
 }
+

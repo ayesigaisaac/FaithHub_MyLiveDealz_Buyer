@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -46,7 +46,7 @@ const rules = [
 ];
 
 const preChatMessages = [
-  { name: "Naomi", badge: "Member", text: "Ready for tonight’s session. Really excited for the teaching." },
+  { name: "Naomi", badge: "Member", text: "Ready for tonights session. Really excited for the teaching." },
   { name: "David", badge: "Supporter", text: "Audio check is good here. Waiting room looks great." },
   { name: "Aisha", badge: "Moderator", text: "Prayer requests are open before the stream starts." },
 ];
@@ -444,3 +444,4 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+

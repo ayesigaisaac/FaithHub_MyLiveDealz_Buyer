@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -315,3 +315,4 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+

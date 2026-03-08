@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -32,9 +32,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const serviceSchedule = [
-  { day: "Sunday", time: "8:00 AM · Main Service", note: "Wheelchair seating and quiet area available" },
-  { day: "Wednesday", time: "6:30 PM · Midweek Teaching", note: "Live Sessionz + in-person hybrid" },
-  { day: "Friday", time: "7:30 PM · Youth Fellowship", note: "Youth and family participation" },
+  { day: "Sunday", time: "8:00 AM  Main Service", note: "Wheelchair seating and quiet area available" },
+  { day: "Wednesday", time: "6:30 PM  Midweek Teaching", note: "Live Sessionz + in-person hybrid" },
+  { day: "Friday", time: "7:30 PM  Youth Fellowship", note: "Youth and family participation" },
 ];
 
 const leaders = [
@@ -44,15 +44,15 @@ const leaders = [
 ];
 
 const events = [
-  { title: "Youth Worship Camp", date: "12–15 Aug", type: "Camp", price: "FaithMart ticket" },
+  { title: "Youth Worship Camp", date: "1215 Aug", type: "Camp", price: "FaithMart ticket" },
   { title: "Marketplace Day", date: "20 Aug", type: "Marketplace", price: "Vendor booths + merch" },
   { title: "Baptism Sunday", date: "01 Sep", type: "Baptism", price: "Free registration" },
 ];
 
 const series = [
-  { title: "Walking in Wisdom", meta: "8 episodes · Episode 4 live tonight" },
-  { title: "Mercy in Motion", meta: "6 episodes · Replay available" },
-  { title: "Faith That Builds", meta: "New series · Starts next week" },
+  { title: "Walking in Wisdom", meta: "8 episodes  Episode 4 live tonight" },
+  { title: "Mercy in Motion", meta: "6 episodes  Replay available" },
+  { title: "Faith That Builds", meta: "New series  Starts next week" },
 ];
 
 const channels = [
@@ -65,7 +65,7 @@ const channels = [
 const donationFunds = [
   { title: "General Giving", amount: "$24,500 raised", goal: "$40,000 goal", width: "61%" },
   { title: "Mission Outreach", amount: "$12,900 raised", goal: "$20,000 goal", width: "64%" },
-  { title: "Children’s Ministry", amount: "$8,700 raised", goal: "$15,000 goal", width: "58%" },
+  { title: "Childrens Ministry", amount: "$8,700 raised", goal: "$15,000 goal", width: "58%" },
 ];
 
 function TabButton({ active, label, onClick }) {
@@ -155,7 +155,7 @@ export default function InstitutionProfile() {
                   <div className="mb-6 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                     <div className="max-w-3xl space-y-3">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">St. Mary’s Cathedral</h1>
+                        <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">St. Marys Cathedral</h1>
                         <span className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-semibold text-white">
                           <ShieldCheck className="h-3.5 w-3.5" />
                           Verified
@@ -171,7 +171,7 @@ export default function InstitutionProfile() {
                         </span>
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
                           <Clock3 className="h-4 w-4" />
-                          Sunday 8:00 AM · Wednesday 6:30 PM
+                          Sunday 8:00 AM  Wednesday 6:30 PM
                         </span>
                         <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
                           <Users className="h-4 w-4" />
@@ -272,10 +272,10 @@ export default function InstitutionProfile() {
                         Venue accessibility information
                       </div>
                       <div className="space-y-2 text-sm text-slate-600">
-                        <div>• Step-free entrance and dedicated seating</div>
-                        <div>• Quiet room for families and children</div>
-                        <div>• Accessible washrooms and usher support</div>
-                        <div>• Audio support and transcript availability for some sessions</div>
+                        <div> Step-free entrance and dedicated seating</div>
+                        <div> Quiet room for families and children</div>
+                        <div> Accessible washrooms and usher support</div>
+                        <div> Audio support and transcript availability for some sessions</div>
                       </div>
                     </div>
                   </div>
@@ -330,7 +330,7 @@ export default function InstitutionProfile() {
                           <div className="flex items-start justify-between gap-3">
                             <div>
                               <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                              <div className="text-sm text-slate-500">{item.date} · {item.type}</div>
+                              <div className="text-sm text-slate-500">{item.date}  {item.type}</div>
                               <div className="mt-1 text-sm text-slate-600">{item.price}</div>
                             </div>
                             <Ticket className="h-4 w-4 text-[#f77f00]" />
@@ -423,7 +423,7 @@ export default function InstitutionProfile() {
                   {donationFunds.map((item) => (
                     <div key={item.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
                       <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
-                      <div className="text-sm text-slate-500">{item.amount} · {item.goal}</div>
+                      <div className="text-sm text-slate-500">{item.amount}  {item.goal}</div>
                       <div className="mt-3 h-2 rounded-full bg-slate-100">
                         <div className="h-2 rounded-full bg-[#03cd8c]" style={{ width: item.width }} />
                       </div>
@@ -507,3 +507,4 @@ export default function InstitutionProfile() {
     </div>
   );
 }
+

@@ -781,7 +781,7 @@ export default function FaithHubLandingPageV2() {
                             <Star key={star} className="h-4 w-4 fill-[#f77f00] text-[#f77f00]" />
                           ))}
                         </div>
-                        <div className="text-sm leading-7 text-slate-700">â€œ{item.quote}â€</div>
+                        <div className="text-sm leading-7 text-slate-700">{item.quote}</div>
                         <div className="mt-4 text-sm font-semibold text-slate-900">{item.name}</div>
                         <div className="text-xs text-slate-500">{item.title}</div>
                       </div>
@@ -1046,4 +1046,5 @@ export default function FaithHubLandingPageV2() {
     </div>
   );
 }
+
 

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -54,7 +54,7 @@ const topics = [
 ];
 
 const groups = [
-  { key: "children", label: "Children’s Church", tone: "bg-emerald-50 text-emerald-700 border-emerald-200" },
+  { key: "children", label: "Childrens Church", tone: "bg-emerald-50 text-emerald-700 border-emerald-200" },
   { key: "youth", label: "Youth Church", tone: "bg-cyan-50 text-cyan-700 border-cyan-200" },
   { key: "women", label: "Women Fellowship", tone: "bg-rose-50 text-rose-700 border-rose-200" },
   { key: "men", label: "Men Fellowship", tone: "bg-amber-50 text-amber-700 border-amber-200" },
@@ -66,17 +66,17 @@ const consentHistory = [
   {
     title: "Privacy preferences saved",
     detail: "Visibility restricted to followers only for faith-specific interests.",
-    time: "Today · 09:42",
+    time: "Today  09:42",
   },
   {
     title: "Audience group consent recorded",
     detail: "Youth Church and Family Ministry enrollment approved.",
-    time: "Today · 09:39",
+    time: "Today  09:39",
   },
   {
     title: "Sensitive field review",
     detail: "Denomination set as optional and hidden from public profile.",
-    time: "Today · 09:35",
+    time: "Today  09:35",
   },
 ];
 
@@ -468,7 +468,7 @@ export default function FaithHubProfilePreferences() {
                     </div>
                     <div>
                       <div className="text-lg font-semibold text-white">{displayName}</div>
-                      <div className="text-sm text-white/70">{selectedFaith} · {selectedDenomination}</div>
+                      <div className="text-sm text-white/70">{selectedFaith}  {selectedDenomination}</div>
                     </div>
                   </div>
 
@@ -565,3 +565,4 @@ export default function FaithHubProfilePreferences() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -71,7 +71,7 @@ const chatMessages = [
     id: 4,
     author: "Guest 204",
     role: "Guest",
-    message: "I’m joining from a weak connection but the audio-only option is working well.",
+    message: "Im joining from a weak connection but the audio-only option is working well.",
     time: "7:45 PM",
     priority: false,
     flagged: false,
@@ -135,7 +135,7 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
 }
 
 export default function FaithHubLiveChatQA() {
-  const [message, setMessage] = useState("I’d like to know whether the reading plan will include family discussion prompts.");
+  const [message, setMessage] = useState("Id like to know whether the reading plan will include family discussion prompts.");
   const [search, setSearch] = useState("");
   const [offlineMode, setOfflineMode] = useState(false);
   const [anonymousToModerators, setAnonymousToModerators] = useState(true);
@@ -460,3 +460,4 @@ export default function FaithHubLiveChatQA() {
     </div>
   );
 }
+

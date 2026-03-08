@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -269,7 +269,7 @@ export default function FaithHubPostLivePublishing() {
                       />
                     </div>
                     <div className="mt-3 rounded-2xl border border-white/10 bg-slate-950/20 p-4 text-sm text-white/80">
-                      Search term “{transcriptQuery}” appears in 6 transcript moments and 2 chapter labels.
+                      Search term {transcriptQuery} appears in 6 transcript moments and 2 chapter labels.
                     </div>
                   </div>
                 </div>
@@ -359,3 +359,4 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+

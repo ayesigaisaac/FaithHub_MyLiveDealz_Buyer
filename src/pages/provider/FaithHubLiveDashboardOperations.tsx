@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -108,7 +108,7 @@ export default function FaithHubLiveDashboardOperations() {
   const [slaMonitoring, setSlaMonitoring] = useState(true);
   const [multiRoute, setMultiRoute] = useState(true);
 
-  const streamKey = useMemo(() => "fh_live_prod_•••••••••••••_9K7A", []);
+  const streamKey = useMemo(() => "fh_live_prod__9K7A", []);
 
   const copyKey = async () => {
     try {
@@ -318,9 +318,9 @@ export default function FaithHubLiveDashboardOperations() {
                   <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                     <div className="mb-2 text-sm font-semibold text-white">Ingest guidance</div>
                     <div className="space-y-2 text-sm text-white/80">
-                      <div>• Use RTMPS for standard studio compatibility and a simpler managed path.</div>
-                      <div>• Use SRT when contribution reliability and network resilience are the priority.</div>
-                      <div>• Keep backup ingest warm for enterprise-grade continuity and fast failover.</div>
+                      <div> Use RTMPS for standard studio compatibility and a simpler managed path.</div>
+                      <div> Use SRT when contribution reliability and network resilience are the priority.</div>
+                      <div> Keep backup ingest warm for enterprise-grade continuity and fast failover.</div>
                     </div>
                   </div>
                 </div>
@@ -413,3 +413,4 @@ export default function FaithHubLiveDashboardOperations() {
     </div>
   );
 }
+

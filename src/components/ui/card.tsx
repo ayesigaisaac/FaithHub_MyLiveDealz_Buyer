@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import MuiCard, { CardProps as MuiCardProps } from "@mui/material/Card";
 import MuiCardContent, { CardContentProps as MuiCardContentProps } from "@mui/material/CardContent";
 
@@ -26,3 +26,4 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card({ 
 export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(function CardContent({ className, sx, ...props }, ref) {
   return <MuiCardContent ref={ref} className={className} sx={{ padding: 0, "&:last-child": { paddingBottom: 0 }, ...(sx || {}) }} {...props} />;
 });
+

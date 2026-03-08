@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -54,17 +54,17 @@ const feedItems = [
     id: 1,
     type: "live",
     title: "Evening Prayer Revival",
-    institution: "St. Mary’s Cathedral",
-    meta: "Live now · 3.4k watching",
+    institution: "St. Marys Cathedral",
+    meta: "Live now  3.4k watching",
     badge: "Live",
     accent: "bg-rose-500",
   },
   {
     id: 2,
     type: "series",
-    title: "Walking in Wisdom · Episode 4",
+    title: "Walking in Wisdom  Episode 4",
     institution: "FaithHub Global Chapel",
-    meta: "Series update · 42 min",
+    meta: "Series update  42 min",
     badge: "Series",
     accent: "bg-[#03cd8c]",
   },
@@ -73,7 +73,7 @@ const feedItems = [
     type: "event",
     title: "Youth Worship Camp 2026",
     institution: "Kingdom Youth Movement",
-    meta: "Registration open · 5 days left",
+    meta: "Registration open  5 days left",
     badge: "Event",
     accent: "bg-[#f77f00]",
   },
@@ -82,7 +82,7 @@ const feedItems = [
     type: "group",
     title: "Women Fellowship Prayer Circle",
     institution: "Al Noor Community Centre",
-    meta: "Join group · Starts 7:00 PM",
+    meta: "Join group  Starts 7:00 PM",
     badge: "Group",
     accent: "bg-violet-500",
   },
@@ -98,7 +98,7 @@ const continueWatching = [
   },
   {
     id: 2,
-    title: "Mercy in Motion · Series Episode 2",
+    title: "Mercy in Motion  Series Episode 2",
     institution: "FaithHub Global Chapel",
     progress: 41,
     duration: "39 min",
@@ -110,29 +110,29 @@ const upcomingSessions = [
     id: 1,
     title: "Sunrise Devotion",
     institution: "Light Community Church",
-    time: "Today · 6:00 AM",
+    time: "Today  6:00 AM",
     audience: "General community",
   },
   {
     id: 2,
     title: "Youth Impact Night",
     institution: "Kingdom Youth Movement",
-    time: "Today · 8:00 PM",
+    time: "Today  8:00 PM",
     audience: "Youth Church",
   },
   {
     id: 3,
     title: "Family Quran Reflection",
     institution: "Al Noor Community Centre",
-    time: "Tomorrow · 5:30 PM",
+    time: "Tomorrow  5:30 PM",
     audience: "Family circle",
   },
 ];
 
 const downloadedSermons = [
-  "Faith Over Fear · Audio",
-  "Walking in Wisdom · Episode 3",
-  "The Call to Serve · Notes + Transcript",
+  "Faith Over Fear  Audio",
+  "Walking in Wisdom  Episode 3",
+  "The Call to Serve  Notes + Transcript",
 ];
 
 function SectionHeader({ title, subtitle, action = "See all" }) {
@@ -278,7 +278,7 @@ export default function FaithHubHome() {
                     >
                       <div className="mb-4 h-40 rounded-[20px] bg-gradient-to-br from-slate-100 to-slate-200" />
                       <div className="mb-1 text-lg font-semibold text-slate-900">{item.title}</div>
-                      <div className="text-sm text-slate-500">{item.institution} · {item.duration}</div>
+                      <div className="text-sm text-slate-500">{item.institution}  {item.duration}</div>
                       <div className="mt-4">
                         <div className="mb-2 flex items-center justify-between text-xs font-medium text-slate-500">
                           <span>Progress</span>
@@ -429,7 +429,7 @@ export default function FaithHubHome() {
                         </div>
                         <div className="min-w-0">
                           <div className="truncate text-sm font-semibold text-slate-900">{item}</div>
-                          <div className="text-xs text-slate-500">Offline-ready • Transcript cached</div>
+                          <div className="text-xs text-slate-500">Offline-ready  Transcript cached</div>
                         </div>
                       </div>
                       <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -451,7 +451,7 @@ export default function FaithHubHome() {
                 <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
                   <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <Flame className="h-4 w-4 text-[#f77f00]" />
-                    21 Days of Hope · Institution Spotlight
+                    21 Days of Hope  Institution Spotlight
                   </div>
                   <div className="text-sm leading-6 text-slate-600">
                     Transparently labeled promoted series placement controlled through admin governance, with institution-safe promotion rules and policy-compliant surfacing.
@@ -472,3 +472,4 @@ export default function FaithHubHome() {
     </div>
   );
 }
+
