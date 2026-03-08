@@ -818,31 +818,31 @@ export default function FaithHubLandingPageV2() {
               </CardContent>
             </Card>
 
-            <Card id="contact" className="overflow-hidden rounded-3xl border-slate-200 bg-slate-950 text-white shadow-sm">
+            <Card id="contact" className="overflow-hidden rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
               <CardContent className="p-6 sm:p-7">
-                <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Take the next step</div>
+                <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Take the next step</div>
                 <div className="text-4xl font-semibold sm:text-5xl">
                   Bring FaithHub to life with a real strategy, not just a template.
                 </div>
-                <div className="mt-4 text-sm leading-8 text-white/80 sm:text-base">
+                <div className="mt-4 text-sm leading-8 text-slate-600 sm:text-base">
                   Use this section as the public conversion area for demos, partnerships, technical walkthroughs,
                   implementation planning, or early institutional onboarding.
                 </div>
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                    <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/20 text-[#8ef0ca]">
+                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
+                    <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <Compass className="h-5 w-5" />
                     </div>
                     <div className="text-lg font-semibold">Platform Walkthrough</div>
-                    <div className="mt-2 text-sm text-white/75">See how the full FaithHub ecosystem fits together across users and providers.</div>
+                    <div className="mt-2 text-sm text-slate-600">See how the full FaithHub ecosystem fits together across users and providers.</div>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                    <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/20 text-[#8ef0ca]">
+                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
+                    <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <Zap className="h-5 w-5" />
                     </div>
                     <div className="text-lg font-semibold">Implementation Strategy</div>
-                    <div className="mt-2 text-sm text-white/75">Plan onboarding, launch sequencing, role setup, and product rollout around real operational needs.</div>
+                    <div className="mt-2 text-sm text-slate-600">Plan onboarding, launch sequencing, role setup, and product rollout around real operational needs.</div>
                   </div>
                 </div>
 
@@ -851,7 +851,7 @@ export default function FaithHubLandingPageV2() {
                     Request a Demo
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                  <Button variant="outline" className="rounded-2xl border-white/20 bg-white/10 px-5 py-6 text-base text-white hover:bg-white/15" onClick={() => scrollToId("overview")}>
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("overview")}>
                     Back to Top
                   </Button>
                 </div>
