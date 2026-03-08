@@ -799,10 +799,10 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="faq" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-          <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
+        <section id="faq" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+          <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-              <CardContent className="p-6 sm:p-7">
+              <CardContent className="p-6 sm:p-8">
                 <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Frequently asked questions</div>
                 <div className="space-y-3">
                   {faq.map((item, index) => (
@@ -812,7 +812,7 @@ export default function FaithHubLandingPageV2() {
                       className="w-full rounded-2xl border border-slate-200 bg-[#f8fafc] p-5 text-left"
                     >
                       <div className="flex items-center justify-between gap-3">
-                        <div className="text-lg font-semibold text-slate-900">{item.q}</div>
+                        <div className="text-xl font-semibold leading-tight text-slate-900">{item.q}</div>
                         <ChevronDown className={`h-5 w-5 shrink-0 text-slate-400 transition ${faqOpen === index ? "rotate-180" : ""}`} />
                       </div>
                       {faqOpen === index ? (
@@ -825,34 +825,34 @@ export default function FaithHubLandingPageV2() {
             </Card>
 
             <Card id="contact" className="overflow-hidden rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
-              <CardContent className="p-6 sm:p-7">
+              <CardContent className="p-6 sm:p-8">
                 <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Take the next step</div>
-                <div className="text-4xl font-semibold sm:text-5xl">
+                <div className="max-w-[18ch] text-4xl font-semibold leading-[1.05] sm:text-5xl">
                   Bring FaithHub to life with a real strategy, not just a template.
                 </div>
-                <div className="mt-4 text-sm leading-8 text-slate-600 sm:text-base">
+                <div className="mt-4 max-w-[52ch] text-base leading-8 text-slate-600">
                   Use this section as the public conversion area for demos, partnerships, technical walkthroughs,
                   implementation planning, or early institutional onboarding.
                 </div>
 
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
+                <div className="mt-7 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <Compass className="h-5 w-5" />
                     </div>
                     <div className="text-lg font-semibold">Platform Walkthrough</div>
-                    <div className="mt-2 text-sm text-slate-600">See how the full FaithHub ecosystem fits together across users and providers.</div>
+                    <div className="mt-2 text-base leading-7 text-slate-600">See how the full FaithHub ecosystem fits together across users and providers.</div>
                   </div>
-                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
+                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <Zap className="h-5 w-5" />
                     </div>
                     <div className="text-lg font-semibold">Implementation Strategy</div>
-                    <div className="mt-2 text-sm text-slate-600">Plan onboarding, launch sequencing, role setup, and product rollout around real operational needs.</div>
+                    <div className="mt-2 text-base leading-7 text-slate-600">Plan onboarding, launch sequencing, role setup, and product rollout around real operational needs.</div>
                   </div>
                 </div>
 
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-7 flex flex-wrap gap-3">
                   <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => setDemoOpen(true)}>
                     Request a Demo
                     <ArrowRight className="ml-2 h-4 w-4" />
