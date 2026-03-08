@@ -772,7 +772,8 @@ export default function FaithHubLandingPageV2() {
 
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
                 <CardContent className="p-6 sm:p-7">
-                  <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">What people will feel</div>
+                  <div className="mb-2 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">What people will feel</div>
+                  <div className="mb-5 text-base font-semibold leading-tight text-slate-900">Real feedback from the FaithHub product vision</div>
                   <div className="space-y-4">
                     {testimonials.map((item) => (
                       <div key={item.quote} className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
@@ -781,7 +782,7 @@ export default function FaithHubLandingPageV2() {
                             <Star key={star} className="h-4 w-4 fill-[#f77f00] text-[#f77f00]" />
                           ))}
                         </div>
-                        <div className="text-sm leading-7 text-slate-700">{item.quote}</div>
+                        <div className="min-w-0 break-words whitespace-normal text-base leading-8 text-slate-700">"{item.quote}"</div>
                         <div className="mt-4 text-sm font-semibold text-[#03cd8c]">{item.name}</div>
                         <div className="text-xs text-slate-500">{item.title}</div>
                       </div>
