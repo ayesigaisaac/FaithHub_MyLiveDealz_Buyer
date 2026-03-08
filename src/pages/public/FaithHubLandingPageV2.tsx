@@ -617,22 +617,22 @@ export default function FaithHubLandingPageV2() {
 
         <section id="live" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
-            <Card className="overflow-visible rounded-3xl border-slate-200 bg-slate-950 text-white shadow-sm">
+            <Card className="overflow-visible rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
               <CardContent className="p-6 sm:p-7">
                 <div className="mb-5 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/20 text-[#8ef0ca]">
-                    <Radio className="h-5 w-5" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
+                      <Radio className="h-5 w-5" />
+                    </div>
+                    <div>
+                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Live Sessionz</div>
+                      <div className="mt-1 text-3xl font-semibold">A premium live faith infrastructure</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Live Sessionz</div>
-                    <div className="mt-1 text-3xl font-semibold">A premium live faith infrastructure</div>
-                  </div>
-                </div>
-                <div className="space-y-3">
+                  <div className="space-y-3">
                   {liveDetails.map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/5 p-4">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#8ef0ca]" />
-                      <div className="min-w-0 break-words whitespace-normal text-sm leading-7 text-white/80">{item}</div>
+                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
+                      <div className="min-w-0 break-words whitespace-normal text-sm leading-7 text-slate-700">{item}</div>
                     </div>
                   ))}
                 </div>
@@ -640,7 +640,7 @@ export default function FaithHubLandingPageV2() {
                   <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
                     Request Live Walkthrough
                   </Button>
-                  <Button variant="outline" className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15" onClick={() => scrollToId("trust")}>
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("trust")}>
                     See Trust Controls
                   </Button>
                 </div>
