@@ -318,12 +318,15 @@ export default function FaithHubLandingPageV2() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[#f2f2f2]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <button onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25">
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
-              <div className="text-lg font-semibold">FaithHub</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="inline-flex items-center gap-2 text-2xl font-extrabold leading-none text-slate-900">
+                FaithHub
+                <span className="h-2.5 w-2.5 rounded-full bg-[#03cd8c]" />
+              </div>
             </div>
           </button>
 
@@ -463,13 +466,13 @@ export default function FaithHubLandingPageV2() {
             >
               <Card className="overflow-hidden rounded-3xl border-slate-200 bg-white shadow-[0_30px_90px_-40px_rgba(15,23,42,0.32)]">
                 <CardContent className="p-0">
-                  <div className="bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] p-5 text-white sm:p-6">
+                  <div className="border-b border-[#03cd8c]/20 bg-[#ecfff8] p-6 text-slate-900 sm:p-7">
                     <div className="mb-5 flex items-center justify-between gap-3">
                       <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">FaithHub Snapshot</div>
-                        <div className="mt-2 text-2xl font-semibold">A platform for users and institutions</div>
+                        <div className="text-sm font-semibold uppercase tracking-[0.14em] text-[#03cd8c]">FaithHub Snapshot</div>
+                        <div className="mt-2 text-3xl font-semibold leading-tight text-[#03cd8c]">A platform for users and institutions</div>
                       </div>
-                      <div className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white">
+                      <div className="rounded-full border border-[#03cd8c]/25 bg-white px-3 py-1 text-xs font-semibold text-[#03cd8c]">
                         Website Landing Experience
                       </div>
                     </div>
@@ -481,15 +484,15 @@ export default function FaithHubLandingPageV2() {
                           onClick={() => setActiveRole(item.role)}
                           className={`rounded-xl border p-4 text-left transition ${
                             activeRole === item.role
-                              ? "border-white/35 bg-white/18"
-                              : "border-white/15 bg-white/10 hover:bg-white/14"
+                              ? "border-[#03cd8c]/35 bg-white shadow-sm"
+                              : "border-[#03cd8c]/20 bg-white hover:border-[#03cd8c]/35"
                           }`}
                         >
-                          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/15">
+                          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                             <item.icon className="h-5 w-5" />
                           </div>
-                          <div className="text-base font-semibold">{item.role}</div>
-                          <div className="mt-1 text-sm text-white/80">{item.title}</div>
+                          <div className="text-base font-semibold text-slate-900">{item.role}</div>
+                          <div className="mt-1 text-sm text-slate-600">{item.title}</div>
                         </button>
                       ))}
                     </div>
@@ -539,36 +542,36 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="platform" className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+        <section id="platform" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="mb-6 max-w-3xl">
-            <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">How the ecosystem works</div>
-            <h2 className="mt-2 text-4xl font-semibold text-slate-900 sm:text-5xl">
+            <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">How the ecosystem works</div>
+            <h2 className="mt-2 text-5xl font-semibold text-slate-900 sm:text-6xl leading-tight">
               FaithHub is structured around a complete digital faith lifecycle.
             </h2>
-            <p className="mt-3 text-base leading-8 text-slate-600">
+            <p className="mt-4 text-lg leading-9 text-slate-600">
               Every major pillar of digital faith is covered, from content and live participation to events,
               commerce, fundraising, trust, and institutional administration.
             </p>
           </div>
 
-          <div className="grid gap-4 xl:grid-cols-2">
+          <div className="grid gap-5 xl:grid-cols-2">
             {featureGroups.map((group) => (
               <Card key={group.title} className="rounded-2xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="p-6 sm:p-7">
+                <CardContent className="p-7 sm:p-8">
                   <div className="mb-5 flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                      <group.icon className="h-5 w-5" />
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
+                      <group.icon className="h-6 w-6" />
                     </div>
                     <div>
-                      <div className="text-xl font-semibold text-[#03cd8c]">{group.title}</div>
-                      <div className="mt-1 text-sm text-slate-500">{group.subtitle}</div>
+                      <div className="text-3xl font-semibold leading-tight text-[#03cd8c]">{group.title}</div>
+                      <div className="mt-1 text-lg text-slate-500">{group.subtitle}</div>
                     </div>
                   </div>
                   <div className="space-y-3">
                     {group.items.map((item) => (
-                      <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
-                        <div className="text-sm leading-7 text-slate-700">{item}</div>
+                      <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" />
+                        <div className="text-lg leading-8 text-slate-700">{item}</div>
                       </div>
                     ))}
                   </div>
@@ -582,10 +585,10 @@ export default function FaithHubLandingPageV2() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-6 max-w-3xl">
               <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Role architecture</div>
-              <h2 className="mt-2 text-4xl font-semibold text-slate-900 sm:text-5xl">
+              <h2 className="mt-2 text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
                 One platform. Two public-facing experiences.
               </h2>
-              <p className="mt-3 text-base leading-8 text-slate-600">
+              <p className="mt-4 text-lg leading-9 text-slate-600">
                 FaithHub publicly presents a user experience and a provider experience, while stronger governance
                 and operational control remain embedded in the platform backbone.
               </p>
@@ -603,8 +606,8 @@ export default function FaithHubLandingPageV2() {
                         {item.role}
                       </span>
                     </div>
-                    <div className="text-2xl font-semibold text-slate-900">{item.title}</div>
-                    <div className="mt-3 text-sm leading-7 text-slate-600">{item.description}</div>
+                    <div className="text-4xl font-semibold leading-tight text-[#03cd8c]">{item.title}</div>
+                    <div className="mt-3 text-lg leading-8 text-slate-600">{item.description}</div>
                     <div className="mt-5 space-y-3">
                       {item.bullets.map((bullet) => (
                         <div key={bullet} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
@@ -624,28 +627,28 @@ export default function FaithHubLandingPageV2() {
           <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
             <Card className="overflow-visible rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
               <CardContent className="p-6 sm:p-7">
-                <div className="mb-5 flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                      <Radio className="h-5 w-5" />
+                <div className="mb-6 flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
+                      <Radio className="h-6 w-6" />
                     </div>
                     <div>
-                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Live Sessionz</div>
-                      <div className="mt-1 text-3xl font-semibold">A premium live faith infrastructure</div>
+                    <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">Live Sessionz</div>
+                      <div className="mt-1 text-4xl font-semibold leading-tight">A premium live faith infrastructure</div>
                     </div>
                   </div>
                   <div className="space-y-3">
                   {liveDetails.map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
-                      <div className="min-w-0 break-words whitespace-normal text-sm leading-7 text-slate-700">{item}</div>
+                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" />
+                      <div className="min-w-0 break-words whitespace-normal text-lg leading-8 text-slate-700">{item}</div>
                     </div>
                   ))}
                 </div>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
+                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
                     Request Live Walkthrough
                   </Button>
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("trust")}>
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("trust")}>
                     See Trust Controls
                   </Button>
                 </div>
@@ -654,28 +657,28 @@ export default function FaithHubLandingPageV2() {
 
             <Card id="faithmart" className="rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-6 sm:p-7">
-                <div className="mb-5 flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                    <ShoppingBag className="h-5 w-5" />
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
+                    <ShoppingBag className="h-6 w-6" />
                   </div>
                   <div>
-                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">FaithMart</div>
-                    <div className="mt-1 text-3xl font-semibold text-slate-900">Commerce that actually belongs inside the experience</div>
+                    <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">FaithMart</div>
+                    <div className="mt-1 text-4xl font-semibold leading-tight text-slate-900">Commerce that actually belongs inside the experience</div>
                   </div>
                 </div>
                 <div className="space-y-3">
                   {faithMartDetails.map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
-                      <div className="text-sm leading-7 text-slate-700">{item}</div>
+                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
+                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" />
+                      <div className="text-lg leading-8 text-slate-700">{item}</div>
                     </div>
                   ))}
                 </div>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
+                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
                     Discuss FaithMart Setup
                   </Button>
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("platform")}>
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("platform")}>
                     Explore Platform Pillars
                   </Button>
                 </div>
@@ -687,8 +690,10 @@ export default function FaithHubLandingPageV2() {
         <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="grid gap-6 xl:grid-cols-[0.48fr_0.52fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-              <CardContent className="p-6 sm:p-7">
-                <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Experience journey</div>
+              <CardContent className="p-7 sm:p-8">
+                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                  Experience journey
+                </div>
                 <div className="space-y-5">
                   {timelineSteps.map((step, index) => (
                     <div key={step.title} className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
@@ -747,9 +752,11 @@ export default function FaithHubLandingPageV2() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="p-6 sm:p-7">
-                  <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Trust and safety</div>
-                  <div className="text-4xl font-semibold text-[#03cd8c] sm:text-5xl">
+                <CardContent className="p-7 sm:p-8">
+                  <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                    Trust and safety
+                  </div>
+                  <div className="text-4xl font-semibold text-slate-900 sm:text-5xl">
                     FaithHub is designed to be trusted by users, institutions, and platform operators.
                   </div>
                   <div className="mt-4 space-y-4 text-sm leading-7 text-slate-600">
@@ -776,8 +783,10 @@ export default function FaithHubLandingPageV2() {
               </Card>
 
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="p-6 sm:p-7">
-                  <div className="mb-2 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">What people will feel</div>
+                <CardContent className="p-7 sm:p-8">
+                  <div className="mb-3 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                    What people will feel
+                  </div>
                   <div className="mb-5 text-base font-semibold leading-tight text-slate-900">Real feedback from the FaithHub product vision</div>
                   <div className="space-y-4">
                     {testimonials.map((item) => (
@@ -803,7 +812,9 @@ export default function FaithHubLandingPageV2() {
           <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-6 sm:p-8">
-                <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Frequently asked questions</div>
+                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                  Frequently asked questions
+                </div>
                 <div className="space-y-3">
                   {faq.map((item, index) => (
                     <button
@@ -826,8 +837,10 @@ export default function FaithHubLandingPageV2() {
 
             <Card id="contact" className="overflow-hidden rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
               <CardContent className="p-6 sm:p-8">
-                <div className="mb-5 text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Take the next step</div>
-                <div className="max-w-[18ch] text-4xl font-semibold leading-[1.05] sm:text-5xl">
+                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                  Take the next step
+                </div>
+                <div className="max-w-[20ch] text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-[2.75rem]">
                   Bring FaithHub to life with a real strategy, not just a template.
                 </div>
                 <div className="mt-4 max-w-[52ch] text-base leading-8 text-slate-600">
@@ -871,12 +884,15 @@ export default function FaithHubLandingPageV2() {
         <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8">
           <div>
             <button onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25">
                 <Sparkles className="h-5 w-5" />
               </div>
               <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
-                <div className="text-lg font-semibold text-slate-900">FaithHub</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
+                <div className="inline-flex items-center gap-2 text-2xl font-extrabold leading-none text-slate-900">
+                  FaithHub
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#03cd8c]" />
+                </div>
               </div>
             </button>
             <div className="mt-4 max-w-lg text-sm leading-7 text-slate-600">
