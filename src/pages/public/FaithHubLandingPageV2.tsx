@@ -173,10 +173,10 @@ const faithMartDetails = [
 ];
 
 const stats = [
-  { label: "Public-facing roles", value: "2", note: "User and Provider" },
-  { label: "Page ecosystem", value: "50+", note: "Structured across the project architecture" },
-  { label: "Core pillars", value: "6", note: "Live, Series, Events, Messaging, Commerce, Trust" },
-  { label: "Device readiness", value: "100%", note: "Desktop, tablet, and mobile responsive" },
+  { label: "Public-facing roles", value: "2", note: "User and Provider", icon: Users },
+  { label: "Page ecosystem", value: "50+", note: "Structured across the project architecture", icon: BookOpen },
+  { label: "Core pillars", value: "6", note: "Live, Series, Events, Messaging, Commerce, Trust", icon: Layers3 },
+  { label: "Device readiness", value: "100%", note: "Desktop, tablet, and mobile responsive", icon: MonitorSmartphone },
 ];
 
 const trustTiles = [
@@ -441,9 +441,14 @@ export default function FaithHubLandingPageV2() {
                 {stats.map((item) => (
                   <Card key={item.label} className="rounded-2xl border-slate-200 bg-white shadow-sm">
                     <CardContent className="p-5">
-                      <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">{item.label}</div>
-                      <div className="mt-2 text-3xl font-semibold text-slate-900">{item.value}</div>
-                      <div className="mt-1 text-sm text-slate-500">{item.note}</div>
+                      <div className="flex h-full min-h-[170px] flex-col gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#03cd8c]">
+                          <item.icon className="h-4 w-4" />
+                        </div>
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">{item.label}</div>
+                        <div className="text-4xl font-semibold leading-none text-slate-900">{item.value}</div>
+                        <div className="min-w-0 text-sm leading-6 text-slate-600">{item.note}</div>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
