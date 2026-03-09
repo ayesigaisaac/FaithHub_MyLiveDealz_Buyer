@@ -1,5 +1,5 @@
 ﻿// @ts-nocheck
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
@@ -305,20 +305,71 @@ export default function FaithHubLandingPageV2() {
     interest: "Full Platform Walkthrough",
     message: "",
   });
+  const walkthroughFirstFieldRef = useRef<HTMLInputElement | null>(null);
+  const lastActiveElementRef = useRef<HTMLElement | null>(null);
 
   const currentRole = useMemo(() => roleCards.find((item) => item.role === activeRole), [activeRole]);
   const currentDevice = useMemo(() => deviceTabs.find((item) => item.key === activeDevice), [activeDevice]);
+
+  const closeWalkthrough = () => {
+    setWalkthroughOpen(false);
+    setWalkthroughSubmitted(false);
+  };
+
+  const openWalkthrough = (opts?: { interest?: string; message?: string }) => {
+    setWalkthroughSubmitted(false);
+    if (opts?.interest || opts?.message) {
+      setWalkthroughForm((prev) => ({
+        ...prev,
+        ...(opts?.interest ? { interest: opts.interest } : {}),
+        ...(opts?.message && !prev.message ? { message: opts.message } : {}),
+      }));
+    }
+    setWalkthroughOpen(true);
+  };
 
   const submitWalkthroughRequest = (e) => {
     e.preventDefault();
     setWalkthroughSubmitted(true);
   };
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      if (walkthroughOpen) {
+        closeWalkthrough();
+        return;
+      }
+      if (mobileNavOpen) {
+        setMobileNavOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mobileNavOpen, walkthroughOpen]);
+
+  useEffect(() => {
+    if (!walkthroughOpen) return;
+
+    lastActiveElementRef.current = document.activeElement as HTMLElement | null;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const t = window.setTimeout(() => walkthroughFirstFieldRef.current?.focus(), 0);
+
+    return () => {
+      window.clearTimeout(t);
+      document.body.style.overflow = prevOverflow;
+      lastActiveElementRef.current?.focus?.();
+    };
+  }, [walkthroughOpen]);
+
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <button onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
+          <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25">
               <Sparkles className="h-5 w-5" />
             </div>
@@ -334,6 +385,7 @@ export default function FaithHubLandingPageV2() {
           <nav className="hidden items-center gap-2 lg:flex">
             {navItems.map((item) => (
               <button
+                type="button"
                 key={item.id}
                 onClick={() => scrollToId(item.id)}
                 className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-[#03cd8c]"
@@ -348,7 +400,7 @@ export default function FaithHubLandingPageV2() {
             <Button
               variant="outline"
               className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
-              onClick={() => setWalkthroughOpen(true)}
+              onClick={() => openWalkthrough()}
             >
               Request Walkthrough
             </Button>
@@ -358,7 +410,11 @@ export default function FaithHubLandingPageV2() {
           </div>
 
           <button
+            type="button"
             onClick={() => setMobileNavOpen((prev) => !prev)}
+            aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileNavOpen}
+            aria-controls="faithhub-mobile-nav"
             className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 sm:hidden"
           >
             {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -372,11 +428,13 @@ export default function FaithHubLandingPageV2() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.18 }}
+              id="faithhub-mobile-nav"
               className="border-t border-slate-200 bg-white px-4 py-4 shadow-sm sm:hidden"
             >
               <div className="space-y-2">
                 {navItems.map((item) => (
                   <button
+                    type="button"
                     key={item.id}
                     onClick={() => {
                       scrollToId(item.id);
@@ -392,7 +450,7 @@ export default function FaithHubLandingPageV2() {
                   <ColorModeToggle className="w-full justify-between" />
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-2">
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white" onClick={() => { setWalkthroughOpen(true); setMobileNavOpen(false); }}>
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white" onClick={() => { openWalkthrough(); setMobileNavOpen(false); }}>
                     Request Walkthrough
                   </Button>
                   <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { scrollToId("contact"); setMobileNavOpen(false); }}>
@@ -406,7 +464,7 @@ export default function FaithHubLandingPageV2() {
       </header>
 
       <main>
-        <section id="overview" className="relative overflow-visible">
+        <section id="overview" className="relative overflow-visible scroll-mt-24">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)]" />
           <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[0.58fr_0.42fr] lg:px-8 lg:py-16">
             <motion.div
@@ -487,6 +545,7 @@ export default function FaithHubLandingPageV2() {
                     <div className="grid gap-3 sm:grid-cols-2">
                       {roleCards.map((item) => (
                         <button
+                          type="button"
                           key={item.role}
                           onClick={() => setActiveRole(item.role)}
                           className={`rounded-xl border p-4 text-left transition ${
@@ -549,7 +608,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="platform" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <section id="platform" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="mb-6 max-w-3xl">
             <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">How the ecosystem works</div>
             <h2 className="mt-2 text-5xl font-semibold text-slate-900 sm:text-6xl leading-tight">
@@ -588,7 +647,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="experiences" className="bg-white/50 py-10 sm:py-14">
+        <section id="experiences" className="bg-white/50 scroll-mt-24 py-10 sm:py-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-6 max-w-3xl">
               <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Role architecture</div>
@@ -630,7 +689,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="live" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <section id="live" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
             <Card className="overflow-visible rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
               <CardContent className="p-6 sm:p-7">
@@ -662,7 +721,7 @@ export default function FaithHubLandingPageV2() {
               </CardContent>
             </Card>
 
-            <Card id="faithmart" className="rounded-3xl border-slate-200 bg-white shadow-sm">
+            <Card id="faithmart" className="scroll-mt-24 rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-6 sm:p-7">
                 <div className="mb-6 flex items-center gap-4">
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
@@ -731,6 +790,7 @@ export default function FaithHubLandingPageV2() {
                   <div className="mb-5 flex flex-wrap gap-2">
                     {deviceTabs.map((item) => (
                       <button
+                        type="button"
                         key={item.key}
                         onClick={() => setActiveDevice(item.key)}
                         className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
@@ -755,7 +815,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="trust" className="bg-white/50 py-10 sm:py-14">
+        <section id="trust" className="bg-white/50 scroll-mt-24 py-10 sm:py-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
@@ -815,7 +875,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="faq" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <section id="faq" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-6 sm:p-8">
@@ -825,6 +885,7 @@ export default function FaithHubLandingPageV2() {
                 <div className="space-y-3">
                   {faq.map((item, index) => (
                     <button
+                      type="button"
                       key={item.q}
                       onClick={() => setFaqOpen(index === faqOpen ? -1 : index)}
                       className="w-full rounded-2xl border border-slate-200 bg-[#f8fafc] p-5 text-left"
@@ -842,7 +903,7 @@ export default function FaithHubLandingPageV2() {
               </CardContent>
             </Card>
 
-            <Card id="contact" className="overflow-hidden rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
+            <Card id="contact" className="scroll-mt-24 overflow-hidden rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
               <CardContent className="p-6 sm:p-8">
                 <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
                   Take the next step
@@ -856,24 +917,32 @@ export default function FaithHubLandingPageV2() {
                 </div>
 
                 <div className="mt-7 grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
+                  <button
+                    type="button"
+                    onClick={() => openWalkthrough({ interest: "Full Platform Walkthrough" })}
+                    className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 text-left transition hover:border-[#03cd8c]/30 hover:bg-[#f7fffb]"
+                  >
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <Compass className="h-5 w-5" />
                     </div>
                     <div className="text-lg font-semibold">Platform Walkthrough</div>
                     <div className="mt-2 text-base leading-7 text-slate-600">See how the full FaithHub ecosystem fits together across users and providers.</div>
-                  </div>
-                  <div className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openWalkthrough({ interest: "Full Platform Walkthrough", message: "I want an implementation strategy: onboarding, launch sequencing, roles, and rollout plan." })}
+                    className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 text-left transition hover:border-[#03cd8c]/30 hover:bg-[#f7fffb]"
+                  >
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <Zap className="h-5 w-5" />
                     </div>
                     <div className="text-lg font-semibold">Implementation Strategy</div>
                     <div className="mt-2 text-base leading-7 text-slate-600">Plan onboarding, launch sequencing, role setup, and product rollout around real operational needs.</div>
-                  </div>
+                  </button>
                 </div>
 
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => setWalkthroughOpen(true)}>
+                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => openWalkthrough()}>
                     Request a Walkthrough
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -890,7 +959,7 @@ export default function FaithHubLandingPageV2() {
       <footer className="border-t border-slate-200 bg-white/70">
         <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8">
           <div>
-            <button onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
+            <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25">
                 <Sparkles className="h-5 w-5" />
               </div>
@@ -911,25 +980,25 @@ export default function FaithHubLandingPageV2() {
             <div>
               <div className="text-sm font-semibold text-slate-900">Explore</div>
               <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <button onClick={() => scrollToId("experiences")} className="block hover:text-[#03cd8c]">User Experience</button>
-                <button onClick={() => scrollToId("experiences")} className="block hover:text-[#03cd8c]">Provider Workspace</button>
-                <button onClick={() => scrollToId("platform")} className="block hover:text-[#03cd8c]">Platform Architecture</button>
+                <button type="button" onClick={() => scrollToId("experiences")} className="block hover:text-[#03cd8c]">User Experience</button>
+                <button type="button" onClick={() => scrollToId("experiences")} className="block hover:text-[#03cd8c]">Provider Workspace</button>
+                <button type="button" onClick={() => scrollToId("platform")} className="block hover:text-[#03cd8c]">Platform Architecture</button>
               </div>
             </div>
             <div>
               <div className="text-sm font-semibold text-slate-900">Core Systems</div>
               <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <button onClick={() => scrollToId("live")} className="block hover:text-[#03cd8c]">Live Sessionz</button>
-                <button onClick={() => scrollToId("platform")} className="block hover:text-[#03cd8c]">Series & Teachings</button>
-                <button onClick={() => scrollToId("faithmart")} className="block hover:text-[#03cd8c]">FaithMart</button>
+                <button type="button" onClick={() => scrollToId("live")} className="block hover:text-[#03cd8c]">Live Sessionz</button>
+                <button type="button" onClick={() => scrollToId("platform")} className="block hover:text-[#03cd8c]">Series & Teachings</button>
+                <button type="button" onClick={() => scrollToId("faithmart")} className="block hover:text-[#03cd8c]">FaithMart</button>
               </div>
             </div>
             <div>
               <div className="text-sm font-semibold text-slate-900">Trust & Support</div>
               <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <button onClick={() => scrollToId("trust")} className="block hover:text-[#03cd8c]">Trust & Safety</button>
-                <button onClick={() => scrollToId("faq")} className="block hover:text-[#03cd8c]">FAQ</button>
-                <button onClick={() => scrollToId("contact")} className="block hover:text-[#03cd8c]">Contact</button>
+                <button type="button" onClick={() => scrollToId("trust")} className="block hover:text-[#03cd8c]">Trust & Safety</button>
+                <button type="button" onClick={() => scrollToId("faq")} className="block hover:text-[#03cd8c]">FAQ</button>
+                <button type="button" onClick={() => scrollToId("contact")} className="block hover:text-[#03cd8c]">Contact</button>
               </div>
             </div>
           </div>
@@ -938,20 +1007,30 @@ export default function FaithHubLandingPageV2() {
 
       <AnimatePresence>
         {walkthroughOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 backdrop-blur-sm">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 backdrop-blur-sm"
+            onClick={closeWalkthrough}
+            role="presentation"
+          >
             <motion.div
               initial={{ opacity: 0, y: 14, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.98 }}
               transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="faithhub-walkthrough-title"
               className="w-full max-w-3xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_30px_90px_-40px_rgba(15,23,42,0.42)]"
             >
               <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4 sm:px-6">
                 <div>
                   <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">Request a walkthrough</div>
-                  <div className="mt-1 text-2xl font-semibold text-slate-900">Tell us how you want to explore FaithHub</div>
+                  <div id="faithhub-walkthrough-title" className="mt-1 text-2xl font-semibold text-slate-900">
+                    Tell us how you want to explore FaithHub
+                  </div>
                 </div>
-                <button onClick={() => { setWalkthroughOpen(false); setWalkthroughSubmitted(false); }} className="rounded-2xl border border-slate-200 bg-white p-3 text-slate-600">
+                <button type="button" onClick={closeWalkthrough} className="rounded-2xl border border-slate-200 bg-white p-3 text-slate-600">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -963,6 +1042,7 @@ export default function FaithHubLandingPageV2() {
                       <label className="block space-y-2">
                         <span className="text-sm font-medium text-slate-700">Full name</span>
                         <input
+                          ref={walkthroughFirstFieldRef}
                           value={walkthroughForm.name}
                           onChange={(e) => setWalkthroughForm({ ...walkthroughForm, name: e.target.value })}
                           className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
@@ -1043,7 +1123,7 @@ export default function FaithHubLandingPageV2() {
                         Send Request
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
-                      <Button type="button" variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => setWalkthroughOpen(false)}>
+                      <Button type="button" variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={closeWalkthrough}>
                         Cancel
                       </Button>
                     </div>
@@ -1058,7 +1138,7 @@ export default function FaithHubLandingPageV2() {
                       Your request has been captured in this landing-page preview flow. This can now be wired into the real FaithHub website backend, CRM, or messaging process.
                     </div>
                     <div className="mt-5 flex justify-center gap-3">
-                      <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { setWalkthroughOpen(false); setWalkthroughSubmitted(false); }}>
+                      <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={closeWalkthrough}>
                         Close
                       </Button>
                       <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => setWalkthroughSubmitted(false)}>
