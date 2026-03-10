@@ -12,10 +12,12 @@ import {
   ChevronRight,
   Compass,
   Globe2,
+  HelpCircle,
   HeartHandshake,
   Landmark,
   Layers3,
   Lock,
+  Mail,
   Menu,
   MessageSquare,
   MonitorSmartphone,
@@ -24,7 +26,6 @@ import {
   Search,
   ShieldCheck,
   ShoppingBag,
-  Sparkles,
   Star,
   Users,
   Wallet,
@@ -35,15 +36,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
+import faithhubMark from "@/assets/faithhub-mark.svg";
 
 const navItems = [
-  { label: "Overview", id: "overview" },
-  { label: "Experiences", id: "experiences" },
-  { label: "Live Sessionz", id: "live" },
-  { label: "FaithMart", id: "faithmart" },
-  { label: "Trust & Safety", id: "trust" },
-  { label: "FAQ", id: "faq" },
-  { label: "Contact", id: "contact" },
+  { label: "Overview", id: "overview", icon: Compass },
+  { label: "Experiences", id: "experiences", icon: Users },
+  { label: "Live Sessionz", id: "live", icon: Radio },
+  { label: "FaithMart", id: "faithmart", icon: ShoppingBag },
+  { label: "Trust & Safety", id: "trust", icon: ShieldCheck },
+  { label: "FAQ", id: "faq", icon: HelpCircle },
+  { label: "Contact", id: "contact", icon: Mail },
 ];
 
 const roleCards = [
@@ -370,8 +372,8 @@ export default function FaithHubLandingPageV2() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25">
-              <Sparkles className="h-5 w-5" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
+              <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
             </div>
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
@@ -388,8 +390,9 @@ export default function FaithHubLandingPageV2() {
                 type="button"
                 key={item.id}
                 onClick={() => scrollToId(item.id)}
-                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-[#03cd8c]"
+                className="group inline-flex items-center gap-2 rounded-full border border-transparent bg-transparent px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-white hover:text-[#03cd8c] hover:shadow-sm"
               >
+                <item.icon className="h-4 w-4 text-slate-400 transition group-hover:text-[#03cd8c]" />
                 {item.label}
               </button>
             ))}
@@ -442,7 +445,10 @@ export default function FaithHubLandingPageV2() {
                     }}
                     className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 py-3 text-left text-sm font-medium text-slate-700"
                   >
-                    {item.label}
+                    <span className="inline-flex items-center gap-3">
+                      <item.icon className="h-4 w-4 text-[#03cd8c]" />
+                      {item.label}
+                    </span>
                     <ChevronRight className="h-4 w-4 text-slate-400" />
                   </button>
                 ))}
@@ -474,14 +480,14 @@ export default function FaithHubLandingPageV2() {
               className="relative z-10 space-y-6"
             >
               <div className="flex flex-wrap items-center gap-2.5">
-                <Badge className="gap-2 border-[var(--border)] bg-[var(--accent-soft)] px-4 py-1.5 text-[11px] font-semibold tracking-[0.18em] text-[var(--accent)] shadow-[var(--shadow-soft)]">
+                <div className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-4 py-1.5 text-[12px] font-semibold tracking-[0.14em] text-[var(--accent)] shadow-[var(--shadow-soft)]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
                   A new digital faith infrastructure
-                </Badge>
-                <Badge className="gap-2 border-[var(--border)] bg-[var(--text-primary)] px-4 py-1.5 text-[11px] font-semibold tracking-[0.18em] text-[var(--bg)] shadow-[var(--shadow-soft)]">
+                </div>
+                <div className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-slate-900/95 px-4 py-1.5 text-[12px] font-semibold tracking-[0.14em] text-white shadow-[var(--shadow-soft)]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                  Multi-faith, live-first, commerce-enabled
-                </Badge>
+                  <span className="text-white">Multi-faith, live-first, commerce-enabled</span>
+                </div>
               </div>
 
               <div className="space-y-4">
@@ -778,22 +784,22 @@ export default function FaithHubLandingPageV2() {
 
             <Card className="overflow-hidden rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-0">
-                <div className="bg-slate-950 p-6 text-white sm:p-7">
+                <div className="bg-slate-950 p-5 text-white sm:p-7">
                   <div className="mb-4 flex items-center justify-between gap-3">
                     <div>
                       <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Built for every device</div>
-                      <div className="mt-2 text-3xl font-semibold">Responsive across desktop, tablet, and mobile</div>
+                      <div className="mt-2 text-2xl font-semibold leading-tight sm:text-3xl">Responsive across desktop, tablet, and mobile</div>
                     </div>
                     <MonitorSmartphone className="h-7 w-7 text-[#8ef0ca]" />
                   </div>
 
-                  <div className="mb-5 flex flex-wrap gap-2">
+                  <div className="mb-5 flex w-full flex-nowrap gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
                     {deviceTabs.map((item) => (
                       <button
                         type="button"
                         key={item.key}
                         onClick={() => setActiveDevice(item.key)}
-                        className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                        className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
                           activeDevice === item.key
                             ? "bg-white text-slate-900"
                             : "bg-white/10 text-white hover:bg-white/15"
@@ -805,7 +811,7 @@ export default function FaithHubLandingPageV2() {
                   </div>
 
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                    <div className="mb-4 h-56 rounded-xl bg-white/10" />
+                    <div className="mb-4 aspect-video w-full rounded-xl bg-white/10" />
                     <div className="text-xl font-semibold">{currentDevice?.title}</div>
                     <div className="mt-2 text-sm leading-7 text-white/80">{currentDevice?.text}</div>
                   </div>
@@ -960,8 +966,8 @@ export default function FaithHubLandingPageV2() {
         <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8">
           <div>
             <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25">
-                <Sparkles className="h-5 w-5" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
+                <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
               </div>
               <div>
                 <div className="text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
