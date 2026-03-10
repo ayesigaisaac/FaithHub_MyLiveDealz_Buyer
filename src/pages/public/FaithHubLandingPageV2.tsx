@@ -370,7 +370,7 @@ export default function FaithHubLandingPageV2() {
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
           <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
               <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
@@ -472,7 +472,7 @@ export default function FaithHubLandingPageV2() {
       <main>
         <section id="overview" className="relative overflow-visible scroll-mt-24">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)]" />
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[0.58fr_0.42fr] lg:px-8 lg:py-16">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[0.58fr_0.42fr] lg:px-8 lg:py-16 2xl:max-w-[110rem] 2xl:grid-cols-[0.6fr_0.4fr] 2xl:gap-14 2xl:px-10 2xl:py-20">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -491,10 +491,10 @@ export default function FaithHubLandingPageV2() {
               </div>
 
               <div className="space-y-4">
-                <h1 className="max-w-4xl text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl xl:text-7xl">
+                <h1 className="max-w-4xl text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl xl:text-7xl 2xl:max-w-5xl 2xl:text-8xl">
                   FaithHub is designed to become the most complete digital faith platform in the world.
                 </h1>
-                <p className="max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
+                <p className="max-w-3xl text-base leading-8 text-slate-600 sm:text-lg 2xl:max-w-4xl">
                   FaithHub brings worship, teachings, Live Sessionz, events, giving, memberships, messaging,
                   marketplace experiences, trust systems, provider operations, and platform-grade governance into one
                   premium ecosystem inside the EVzone Super App.
@@ -598,7 +598,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+        <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10 2xl:max-w-[110rem] 2xl:px-10">
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {topHighlights.map((item) => (
               <Card key={item.title} className="h-full rounded-2xl border-slate-200 bg-white shadow-sm">
@@ -614,7 +614,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="platform" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <section id="platform" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-[110rem] 2xl:px-10">
           <div className="mb-6 max-w-3xl">
             <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">How the ecosystem works</div>
             <h2 className="mt-2 text-5xl font-semibold text-slate-900 sm:text-6xl leading-tight">
@@ -654,7 +654,7 @@ export default function FaithHubLandingPageV2() {
         </section>
 
         <section id="experiences" className="bg-white/50 scroll-mt-24 py-10 sm:py-14">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
             <div className="mb-6 max-w-3xl">
               <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Role architecture</div>
               <h2 className="mt-2 text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
@@ -695,7 +695,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="live" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <section id="live" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-[110rem] 2xl:px-10">
           <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
             <Card className="overflow-visible rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
               <CardContent className="p-6 sm:p-7">
@@ -759,7 +759,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-[110rem] 2xl:px-10">
           <div className="grid gap-6 xl:grid-cols-[0.48fr_0.52fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-7 sm:p-8">
@@ -822,7 +822,7 @@ export default function FaithHubLandingPageV2() {
         </section>
 
         <section id="trust" className="bg-white/50 scroll-mt-24 py-10 sm:py-14">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
             <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
                 <CardContent className="p-7 sm:p-8">
@@ -881,7 +881,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="faq" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <section id="faq" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8 lg:py-16 2xl:max-w-[110rem] 2xl:px-10">
           <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-6 sm:p-8">
@@ -963,7 +963,7 @@ export default function FaithHubLandingPageV2() {
       </main>
 
       <footer className="border-t border-slate-200 bg-white/70">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
           <div>
             <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
