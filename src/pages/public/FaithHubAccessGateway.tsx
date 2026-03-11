@@ -2,7 +2,8 @@ import React from "react";
 import { ArrowRight, ExternalLink, Landmark, Lock, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import faithhubMark from "@/assets/faithhub-mark.svg";
+
+const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
 const accessCards = [
   {
@@ -34,13 +35,7 @@ export default function FaithHubAccessGateway() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link to="/" className="flex min-w-0 items-center gap-3 text-left">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
-              <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
-            </div>
-            <div className="min-w-0">
-              <div className="truncate text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
-              <div className="truncate text-2xl font-extrabold leading-none">FaithHub</div>
-            </div>
+            <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
           </Link>
           <Link
             to="/"

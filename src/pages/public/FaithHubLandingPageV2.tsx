@@ -37,7 +37,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
-import faithhubMark from "@/assets/faithhub-mark.svg";
+
+const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
 const navItems = [
   { label: "Overview", id: "overview", icon: Compass },
@@ -374,16 +375,7 @@ export default function FaithHubLandingPageV2() {
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
           <button type="button" onClick={() => scrollToId("overview")} className="flex min-w-0 items-center gap-3 text-left">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
-              <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
-            </div>
-            <div className="min-w-0">
-              <div className="truncate text-xs font-semibold uppercase tracking-[0.2em] text-[#03cd8c] sm:tracking-[0.26em]">EVzone Super App</div>
-              <div className="inline-flex max-w-full items-center gap-2 truncate text-xl font-extrabold leading-none text-slate-900 sm:text-2xl">
-                FaithHub
-                <span className="h-2.5 w-2.5 rounded-full bg-[#03cd8c]" />
-              </div>
-            </div>
+            <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
           </button>
 
           <nav className="hidden items-center gap-1 xl:flex">
@@ -1009,16 +1001,7 @@ export default function FaithHubLandingPageV2() {
         <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
           <div>
             <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
-                <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
-              </div>
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
-                <div className="inline-flex items-center gap-2 text-2xl font-extrabold leading-none text-slate-900">
-                  FaithHub
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#03cd8c]" />
-                </div>
-              </div>
+              <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
             </button>
             <div className="mt-4 max-w-lg text-sm leading-7 text-slate-600">
               A world-class digital faith ecosystem for communities and institutions, powered by the wider EVzone vision.

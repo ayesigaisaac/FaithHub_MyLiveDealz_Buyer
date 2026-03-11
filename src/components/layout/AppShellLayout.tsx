@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
 import { defaultPageForRole, pagesByRole, pageRegistry, type RoleKey } from "@/config/pageRegistry";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
-import faithhubMark from "@/assets/faithhub-mark.svg";
+
+const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
 function getCurrentRole(pathname: string): RoleKey {
   if (pathname.startsWith('/app/provider')) return 'provider';
@@ -63,11 +64,8 @@ export default function AppShellLayout() {
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <button type="button" onClick={() => setMobileOpen(true)} className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:hidden"><Menu className="h-5 w-5" /></button>
             <button type="button" onClick={() => setSidebarCollapsed((prev) => !prev)} className="hidden h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:flex">{sidebarCollapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}</button>
-            <button type="button" onClick={() => navigate('/')} className="flex min-w-0 items-center gap-3 rounded-[20px] border border-slate-200 bg-white px-3 py-2 shadow-sm sm:px-4">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
-                <img src={faithhubMark} alt="FaithHub" className="h-8 w-8" />
-              </div>
-              <div className="hidden min-w-0 sm:block"><div className="truncate text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div><div className="truncate text-base font-semibold text-slate-900">FaithHub</div></div>
+            <button type="button" onClick={() => navigate('/')} className="flex min-w-0 items-center rounded-[20px] border border-slate-200 bg-white px-3 py-2 shadow-sm sm:px-4">
+              <img src={faithmartLogoLandscape} alt="FaithMart" className="h-10 w-auto max-w-[11rem] object-contain sm:h-11 sm:max-w-[12rem]" />
             </button>
           </div>
 
