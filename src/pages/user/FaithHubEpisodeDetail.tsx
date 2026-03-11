@@ -64,14 +64,18 @@ const chapters = [
   { title: "Closing prayer", time: "34:05" },
 ];
 
-function SectionHeader({ title, subtitle, action = "See all" }) {
+function SectionHeader({ title, subtitle, action = "See all", tone = "default" }) {
+  const inverse = tone === "inverse";
   return (
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
-        <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
+        <div className={`text-lg font-semibold sm:text-xl ${inverse ? "text-white" : "text-slate-900"}`}>{title}</div>
+        <div className={`text-sm ${inverse ? "text-white/70" : "text-slate-500"}`}>{subtitle}</div>
       </div>
-      <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button
+        variant="ghost"
+        className={`rounded-full ${inverse ? "text-[#8ef0ca] hover:bg-white/10 hover:text-white" : "text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]"}`}
+      >
         {action}
       </Button>
     </div>
@@ -259,6 +263,7 @@ export default function FaithHubEpisodeDetail() {
                   title="AI chaptering"
                   subtitle="Optional smart structure for quick episode navigation."
                   action="Tune"
+                  tone="inverse"
                 />
                 <div className="space-y-3">
                   {chapters.map((item) => (

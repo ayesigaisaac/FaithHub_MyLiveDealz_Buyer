@@ -45,34 +45,8 @@ img, svg, video, canvas, iframe { max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button, input, select, textarea { font: inherit; }
 
-/* Remove AI-looking gradients and keep surfaces readable across all pages. */
-[class*="bg-gradient"],
-[class*="bg-gradient-to-"] {
-  background-image: none !important;
-  background-color: var(--faithhub-surface-bg) !important;
-}
-
-/* Hide decorative gradient overlays/pattern layers that sit on top of content. */
-[class*="bg-[radial-gradient"],
-[class*="bg-[linear-gradient"],
-[class*="[background-image:linear-gradient"] {
-  display: none !important;
-}
-
-/* Ensure text remains visible after gradient removal. */
-[class*="bg-gradient"] [class*="text-white"],
-[class*="bg-gradient-to-"] [class*="text-white"] {
-  color: var(--faithhub-readable) !important;
-}
-
-/* Improve baseline readability in dense dashboard blocks. */
 h1, h2, h3, h4 {
   letter-spacing: -0.02em;
-  color: var(--text-primary);
-}
-
-p, span, small, label {
-  color: var(--text-secondary);
 }
 
 [data-theme="dark"] {
