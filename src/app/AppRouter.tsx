@@ -9,6 +9,7 @@ import { defaultPageForRole, pageRegistry } from "@/config/pageRegistry";
 import AppShellLayout from "@/components/layout/AppShellLayout";
 import FaithHubLandingPageV2 from "@/pages/public/FaithHubLandingPageV2";
 import FaithHubMultiRoleAppShell from "@/pages/public/FaithHubMultiRoleAppShell";
+import FaithHubAccessGateway from "@/pages/public/FaithHubAccessGateway";
 
 function RouteFallback() {
   return (
@@ -32,7 +33,11 @@ export default function AppRouter() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<FaithHubLandingPageV2 />} />
+          <Route path="/access" element={<FaithHubAccessGateway />} />
           <Route path="/shell-preview" element={<FaithHubMultiRoleAppShell />} />
+          <Route path="/user" element={<Navigate to={defaultPageForRole.user} replace />} />
+          <Route path="/provider" element={<Navigate to={defaultPageForRole.provider} replace />} />
+          <Route path="/admin" element={<Navigate to={defaultPageForRole.admin} replace />} />
           <Route path="/app-shell" element={<Navigate to={defaultPageForRole.user} replace />} />
           <Route path="/app" element={<Navigate to={defaultPageForRole.user} replace />} />
           <Route path="/app/user" element={<AppShellLayout />}>

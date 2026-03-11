@@ -1,6 +1,7 @@
 ﻿// @ts-nocheck
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   BadgeCheck,
@@ -293,6 +294,7 @@ function SectionHeader({ title, subtitle, action, onAction }) {
 }
 
 export default function FaithHubLandingPageV2() {
+  const navigate = useNavigate();
   const [activeRole, setActiveRole] = useState("User");
   const [activeDevice, setActiveDevice] = useState("desktop");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -403,11 +405,18 @@ export default function FaithHubLandingPageV2() {
             <Button
               variant="outline"
               className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+              onClick={() => navigate("/user")}
+            >
+              Enter FaithHub
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
               onClick={() => openWalkthrough()}
             >
               Request Walkthrough
             </Button>
-            <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
+            <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
               Start Building
             </Button>
           </div>
@@ -456,13 +465,16 @@ export default function FaithHubLandingPageV2() {
                   <ColorModeToggle className="w-full justify-between" />
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-2">
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white" onClick={() => { openWalkthrough(); setMobileNavOpen(false); }}>
-                    Request Walkthrough
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white" onClick={() => { navigate("/user"); setMobileNavOpen(false); }}>
+                    Enter FaithHub
                   </Button>
-                  <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { scrollToId("contact"); setMobileNavOpen(false); }}>
+                  <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { navigate("/provider"); setMobileNavOpen(false); }}>
                     Start Building
                   </Button>
                 </div>
+                <Button variant="outline" className="w-full rounded-2xl border-slate-200 bg-white" onClick={() => { openWalkthrough(); setMobileNavOpen(false); }}>
+                  Request Walkthrough
+                </Button>
               </div>
             </motion.div>
           )}
@@ -502,12 +514,12 @@ export default function FaithHubLandingPageV2() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => scrollToId("platform") }>
-                  Explore the Platform
+                <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => navigate("/user") }>
+                  Enter FaithHub
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("experiences")}>
-                  View Role Architecture
+                <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => navigate("/provider")}>
+                  Start Building
                 </Button>
               </div>
 
@@ -590,6 +602,22 @@ export default function FaithHubLandingPageV2() {
                           <div className="text-sm text-slate-700">{item}</div>
                         </div>
                       ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-3">
+                      <Button
+                        className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]"
+                        onClick={() => navigate(currentRole?.role === "Provider" ? "/provider" : "/user")}
+                      >
+                        {currentRole?.role === "Provider" ? "Open Provider Workspace" : "Open User Experience"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                        onClick={() => scrollToId("experiences")}
+                      >
+                        Compare Roles
+                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -687,6 +715,21 @@ export default function FaithHubLandingPageV2() {
                           <div className="text-sm text-slate-700">{bullet}</div>
                         </div>
                       ))}
+                    </div>
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      <Button
+                        className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]"
+                        onClick={() => navigate(item.role === "Provider" ? "/provider" : "/user")}
+                      >
+                        {item.role === "Provider" ? "Open Provider Workspace" : "Enter FaithHub"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                        onClick={() => openWalkthrough({ interest: item.role === "Provider" ? "Provider Workspace" : "Full Platform Walkthrough" })}
+                      >
+                        Request Walkthrough
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
