@@ -30,6 +30,7 @@ const FaithHubSeriesBuilder = lazy(() => import("@/pages/provider/FaithHubSeries
 const FaithHubEpisodeBuilder = lazy(() => import("@/pages/provider/FaithHubEpisodeBuilder"));
 const FaithHubPostLivePublishing = lazy(() => import("@/pages/provider/FaithHubPostLivePublishing"));
 const FaithHubLiveBuilderSeriesAware = lazy(() => import("@/pages/provider/FaithHubLiveBuilderSeriesAware"));
+const FaithHubLiveSchedule = lazy(() => import("@/pages/provider/FaithHubLiveSchedule"));
 const FaithHubLiveDashboardOperations = lazy(() => import("@/pages/provider/FaithHubLiveDashboardOperations"));
 const FaithHubLiveStudio = lazy(() => import("@/pages/provider/FaithHubLiveStudio"));
 const FaithHubStreamToPlatforms = lazy(() => import("@/pages/provider/FaithHubStreamToPlatforms"));
@@ -86,6 +87,7 @@ export const pageRegistry: PageRegistryItem[] = [
   { id: "p-episode-builder", role: "provider", section: "Content Studio", label: "Episode Builder", path: "/app/provider/episode-builder", template: "T3", description: "Build episodes, resources, and live links.", icon: FileText, element: FaithHubEpisodeBuilder },
   { id: "p-post-live", role: "provider", section: "Content Studio", label: "Post-live Publishing", path: "/app/provider/post-live", template: "T3", description: "Replay publishing, clips, and transcript flows.", icon: FileText, element: FaithHubPostLivePublishing },
   { id: "p-live-builder", role: "provider", section: "Live Operations", label: "Live Builder", path: "/app/provider/live-builder", template: "T3", description: "Schedule and configure live sessions.", icon: Radio, element: FaithHubLiveBuilderSeriesAware },
+  { id: "p-live-schedule", role: "provider", section: "Live Operations", label: "Live Schedule", path: "/app/provider/live-schedule", template: "T4", description: "Calendar scheduling, staffing, and readiness workflows.", icon: CalendarDays, element: FaithHubLiveSchedule },
   { id: "p-live-ops", role: "provider", section: "Live Operations", label: "Live Dashboard", path: "/app/provider/live-ops", template: "T6", description: "Ingest health, stream key, and operations metrics.", icon: MonitorPlay, element: FaithHubLiveDashboardOperations },
   { id: "p-live-studio", role: "provider", section: "Live Operations", label: "Live Studio", path: "/app/provider/live-studio", template: "T6", description: "Host controls, scenes, captions, and co-host management.", icon: MonitorPlay, element: FaithHubLiveStudio },
   { id: "p-stream-platforms", role: "provider", section: "Live Operations", label: "Stream-to-Platforms", path: "/app/provider/stream-to-platforms", template: "T3", description: "Destinations, broadcasts, and simulcast configuration.", icon: Send, element: FaithHubStreamToPlatforms },

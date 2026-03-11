@@ -5,7 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { evzoneTheme } from "@/theme/evzoneTheme";
 import { useColorMode } from "@/theme/color-mode";
 import { ScrollToTop } from "@/components/system/ScrollToTop";
-import { pageRegistry } from "@/config/pageRegistry";
+import { defaultPageForRole, pageRegistry } from "@/config/pageRegistry";
 import AppShellLayout from "@/components/layout/AppShellLayout";
 import FaithHubLandingPageV2 from "@/pages/public/FaithHubLandingPageV2";
 import FaithHubMultiRoleAppShell from "@/pages/public/FaithHubMultiRoleAppShell";
@@ -33,9 +33,10 @@ export default function AppRouter() {
         <Routes>
           <Route path="/" element={<FaithHubLandingPageV2 />} />
           <Route path="/shell-preview" element={<FaithHubMultiRoleAppShell />} />
-          <Route path="/app-shell" element={<Navigate to="/app/user/home" replace />} />
-          <Route path="/app" element={<Navigate to="/app/user/home" replace />} />
+          <Route path="/app-shell" element={<Navigate to={defaultPageForRole.user} replace />} />
+          <Route path="/app" element={<Navigate to={defaultPageForRole.user} replace />} />
           <Route path="/app/user" element={<AppShellLayout />}>
+            <Route index element={<Navigate to={defaultPageForRole.user} replace />} />
             {pageRegistry.filter((page) => page.role === "user").map((page) => {
               const Component = page.element;
               return (
@@ -50,8 +51,10 @@ export default function AppRouter() {
                 />
               );
             })}
+            <Route path="*" element={<Navigate to={defaultPageForRole.user} replace />} />
           </Route>
           <Route path="/app/provider" element={<AppShellLayout />}>
+            <Route index element={<Navigate to={defaultPageForRole.provider} replace />} />
             {pageRegistry.filter((page) => page.role === "provider").map((page) => {
               const Component = page.element;
               return (
@@ -66,8 +69,10 @@ export default function AppRouter() {
                 />
               );
             })}
+            <Route path="*" element={<Navigate to={defaultPageForRole.provider} replace />} />
           </Route>
           <Route path="/app/admin" element={<AppShellLayout />}>
+            <Route index element={<Navigate to={defaultPageForRole.admin} replace />} />
             {pageRegistry.filter((page) => page.role === "admin").map((page) => {
               const Component = page.element;
               return (
@@ -82,6 +87,7 @@ export default function AppRouter() {
                 />
               );
             })}
+            <Route path="*" element={<Navigate to={defaultPageForRole.admin} replace />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

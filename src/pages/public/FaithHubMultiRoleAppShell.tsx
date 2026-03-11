@@ -1,6 +1,7 @@
 ﻿// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Activity,
   ArrowUpRight,
@@ -39,6 +40,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { defaultPageForRole, pageRegistry } from "@/config/pageRegistry";
 
 const roleCatalog = {
   user: {
@@ -319,6 +321,7 @@ function getRoleBadge(role) {
 }
 
 export default function FaithHubMultiRoleAppShell() {
+  const navigate = useNavigate();
   const [role, setRole] = useState("user");
   const [workspace, setWorkspace] = useState(workspaceOptions.user[0]);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -337,6 +340,7 @@ export default function FaithHubMultiRoleAppShell() {
   const currentPageId = activePages[role];
   const currentPage = roleData.sections.flatMap((section) => section.items).find((item) => item.id === currentPageId);
   const currentSection = roleData.sections.find((section) => section.items.some((item) => item.id === currentPageId));
+  const routeById = useMemo(() => Object.fromEntries(pageRegistry.map((page) => [page.id, page.path])), []);
 
   const paletteResults = useMemo(() => {
     const term = paletteQuery.trim().toLowerCase();
@@ -374,6 +378,14 @@ export default function FaithHubMultiRoleAppShell() {
       const next = [pageId, ...prev.filter((item) => item !== pageId)];
       return next.slice(0, 8);
     });
+
+    const resolvedRoute = routeById[pageId];
+    if (resolvedRoute) {
+      navigate(resolvedRoute);
+      return;
+    }
+
+    // If a page isn't wired in the real router yet, keep the shell-preview behaviour.
   };
 
   const togglePin = (pageId) => {

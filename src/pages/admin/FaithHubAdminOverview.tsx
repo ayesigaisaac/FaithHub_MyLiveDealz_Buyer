@@ -1,6 +1,7 @@
 ﻿// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   Activity,
   AlertTriangle,
@@ -116,7 +117,31 @@ const modules = [
   { name: "Reviews & Moderation", state: "Elevated" },
 ];
 
+const adminActionLinks = [
+  {
+    title: "Moderation Console",
+    detail: "Review live reports, takedowns, bans, and urgent trust cases.",
+    path: "/app/admin/live-moderation",
+  },
+  {
+    title: "Verification Queue",
+    detail: "Open provider approvals and institution compliance decisions.",
+    path: "/app/admin/verification",
+  },
+  {
+    title: "Provider Operations",
+    detail: "Jump into provider live operations with admin oversight enabled.",
+    path: "/app/provider/live-ops?admin=1",
+  },
+  {
+    title: "User Experience",
+    detail: "Inspect the user home experience without losing admin access.",
+    path: "/app/user/home?admin=1",
+  },
+];
+
 export default function FaithHubAdminOverview() {
+  const navigate = useNavigate();
   const [offlineReadOnly, setOfflineReadOnly] = useState(false);
   const [biExports, setBiExports] = useState(true);
   const [moduleFilter, setModuleFilter] = useState("All modules");
@@ -183,7 +208,9 @@ export default function FaithHubAdminOverview() {
                         <div className="mt-2 text-sm text-white/80">9 active incidents and 4 anomaly panels need review.</div>
                       </div>
                       <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open incident desk</Button>
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" onClick={() => navigate("/app/admin/live-moderation")}>
+                          Open incident desk
+                        </Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
@@ -224,6 +251,7 @@ export default function FaithHubAdminOverview() {
                   title="Live sessions running now"
                   subtitle="Global visibility into high-signal live sessions and health state."
                   action="Open live ops"
+                  onAction={() => navigate("/app/provider/live-ops?admin=1")}
                 />
                 <div className="space-y-3">
                   {liveSessions.map((session) => (
@@ -242,6 +270,30 @@ export default function FaithHubAdminOverview() {
                         {session.viewers} viewers right now
                       </div>
                     </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <CardContent className="p-5 sm:p-6">
+                <SectionHeader
+                  title="Admin jump points"
+                  subtitle="Cross-role entry points that keep admin oversight active."
+                  action="Open security"
+                  onAction={() => navigate("/app/admin/security")}
+                />
+                <div className="grid gap-3 md:grid-cols-2">
+                  {adminActionLinks.map((item) => (
+                    <button
+                      key={item.title}
+                      type="button"
+                      onClick={() => navigate(item.path)}
+                      className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-left transition hover:border-[#03cd8c]/35 hover:bg-white"
+                    >
+                      <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                      <div className="mt-2 text-sm leading-6 text-slate-600">{item.detail}</div>
+                    </button>
                   ))}
                 </div>
               </CardContent>
@@ -346,14 +398,14 @@ export default function FaithHubAdminOverview() {
 }
 
 
-function SectionHeader({ title, subtitle, action = "View all" }) {
+function SectionHeader({ title, subtitle, action = "View all", onAction }: { title: string; subtitle: string; action?: string; onAction?: () => void }) {
   return (
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
         <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
-      <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button type="button" variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]" onClick={onAction}>
         {action}
       </Button>
     </div>
