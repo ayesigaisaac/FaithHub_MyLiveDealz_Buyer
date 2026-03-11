@@ -1,5 +1,5 @@
 ﻿// @ts-nocheck
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
@@ -31,7 +31,6 @@ import {
   Users,
   Wallet,
   X,
-  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -299,76 +298,10 @@ export default function FaithHubLandingPageV2() {
   const [activeRole, setActiveRole] = useState("User");
   const [activeDevice, setActiveDevice] = useState("desktop");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [walkthroughOpen, setWalkthroughOpen] = useState(false);
   const [faqOpen, setFaqOpen] = useState(0);
-  const [walkthroughSubmitted, setWalkthroughSubmitted] = useState(false);
-  const [walkthroughForm, setWalkthroughForm] = useState({
-    name: "",
-    institution: "",
-    email: "",
-    role: "Institution Leader",
-    interest: "Full Platform Walkthrough",
-    message: "",
-  });
-  const walkthroughFirstFieldRef = useRef<HTMLInputElement | null>(null);
-  const lastActiveElementRef = useRef<HTMLElement | null>(null);
 
   const currentRole = useMemo(() => roleCards.find((item) => item.role === activeRole), [activeRole]);
   const currentDevice = useMemo(() => deviceTabs.find((item) => item.key === activeDevice), [activeDevice]);
-
-  const closeWalkthrough = () => {
-    setWalkthroughOpen(false);
-    setWalkthroughSubmitted(false);
-  };
-
-  const openWalkthrough = (opts?: { interest?: string; message?: string }) => {
-    setWalkthroughSubmitted(false);
-    if (opts?.interest || opts?.message) {
-      setWalkthroughForm((prev) => ({
-        ...prev,
-        ...(opts?.interest ? { interest: opts.interest } : {}),
-        ...(opts?.message && !prev.message ? { message: opts.message } : {}),
-      }));
-    }
-    setWalkthroughOpen(true);
-  };
-
-  const submitWalkthroughRequest = (e) => {
-    e.preventDefault();
-    setWalkthroughSubmitted(true);
-  };
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      if (walkthroughOpen) {
-        closeWalkthrough();
-        return;
-      }
-      if (mobileNavOpen) {
-        setMobileNavOpen(false);
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [mobileNavOpen, walkthroughOpen]);
-
-  useEffect(() => {
-    if (!walkthroughOpen) return;
-
-    lastActiveElementRef.current = document.activeElement as HTMLElement | null;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const t = window.setTimeout(() => walkthroughFirstFieldRef.current?.focus(), 0);
-
-    return () => {
-      window.clearTimeout(t);
-      document.body.style.overflow = prevOverflow;
-      lastActiveElementRef.current?.focus?.();
-    };
-  }, [walkthroughOpen]);
 
   return (
     <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
@@ -400,13 +333,6 @@ export default function FaithHubLandingPageV2() {
               onClick={() => navigate("/user")}
             >
               Enter FaithHub
-            </Button>
-            <Button
-              variant="outline"
-              className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
-              onClick={() => openWalkthrough()}
-            >
-              Request Walkthrough
             </Button>
             <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
               Start Building
@@ -464,9 +390,6 @@ export default function FaithHubLandingPageV2() {
                     Start Building
                   </Button>
                 </div>
-                <Button variant="outline" className="w-full rounded-2xl border-slate-200 bg-white" onClick={() => { openWalkthrough(); setMobileNavOpen(false); }}>
-                  Request Walkthrough
-                </Button>
               </div>
             </motion.div>
           )}
@@ -715,13 +638,6 @@ export default function FaithHubLandingPageV2() {
                       >
                         {item.role === "Provider" ? "Open Provider Workspace" : "Enter FaithHub"}
                       </Button>
-                      <Button
-                        variant="outline"
-                        className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
-                        onClick={() => openWalkthrough({ interest: item.role === "Provider" ? "Provider Workspace" : "Full Platform Walkthrough" })}
-                      >
-                        Request Walkthrough
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -752,8 +668,8 @@ export default function FaithHubLandingPageV2() {
                   ))}
                 </div>
                 <div className="mt-5 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
-                    Request Live Walkthrough
+                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
+                    Start Building
                   </Button>
                   <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("trust")}>
                     See Trust Controls
@@ -950,45 +866,43 @@ export default function FaithHubLandingPageV2() {
                   Take the next step
                 </div>
                 <div className="max-w-[20ch] text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-[2.5rem]">
-                  Bring FaithHub to life with a real strategy, not just a template.
+                  Open the right workspace and move straight into the product.
                 </div>
                 <div className="mt-4 max-w-[52ch] text-base leading-8 text-slate-600">
-                  Use this section as the public conversion area for partnerships, technical walkthroughs, implementation
-                  planning, or early institutional onboarding.
+                  Keep the public experience focused on real entry points: the user journey and the provider workspace.
                 </div>
 
                 <div className="mt-7 grid gap-4 sm:grid-cols-2">
                   <button
                     type="button"
-                    onClick={() => openWalkthrough({ interest: "Full Platform Walkthrough" })}
+                    onClick={() => navigate("/user")}
                     className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 text-left transition hover:border-[#03cd8c]/30 hover:bg-[#f7fffb]"
                   >
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                       <Compass className="h-5 w-5" />
                     </div>
-                    <div className="text-lg font-semibold">Platform Walkthrough</div>
-                    <div className="mt-2 text-base leading-7 text-slate-600">See how the full FaithHub ecosystem fits together across users and providers.</div>
+                    <div className="text-lg font-semibold">Enter FaithHub</div>
+                    <div className="mt-2 text-base leading-7 text-slate-600">Open the user experience for discovery, live sessions, giving, events, and community engagement.</div>
                   </button>
                   <button
                     type="button"
-                    onClick={() => openWalkthrough({ interest: "Full Platform Walkthrough", message: "I want an implementation strategy: onboarding, launch sequencing, roles, and rollout plan." })}
+                    onClick={() => navigate("/provider")}
                     className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 text-left transition hover:border-[#03cd8c]/30 hover:bg-[#f7fffb]"
                   >
                     <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                      <Zap className="h-5 w-5" />
+                      <Landmark className="h-5 w-5" />
                     </div>
-                    <div className="text-lg font-semibold">Implementation Strategy</div>
-                    <div className="mt-2 text-base leading-7 text-slate-600">Plan onboarding, launch sequencing, role setup, and product rollout around real operational needs.</div>
+                    <div className="text-lg font-semibold">Start Building</div>
+                    <div className="mt-2 text-base leading-7 text-slate-600">Open the provider workspace for dashboards, live operations, publishing, messaging, and institution tools.</div>
                   </button>
                 </div>
 
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => openWalkthrough()}>
-                    Request a Walkthrough
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => navigate("/user")}>
+                    Enter FaithHub
                   </Button>
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("overview")}>
-                    Back to Top
+                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => navigate("/provider")}>
+                    Start Building
                   </Button>
                 </div>
               </CardContent>
@@ -1037,153 +951,6 @@ export default function FaithHubLandingPageV2() {
         </div>
       </footer>
 
-      <AnimatePresence>
-        {walkthroughOpen && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 backdrop-blur-sm"
-            onClick={closeWalkthrough}
-            role="presentation"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 14, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              onClick={(e) => e.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="faithhub-walkthrough-title"
-              className="w-full max-w-3xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_30px_90px_-40px_rgba(15,23,42,0.42)]"
-            >
-              <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4 sm:px-6">
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">Request a walkthrough</div>
-                  <div id="faithhub-walkthrough-title" className="mt-1 text-2xl font-semibold text-slate-900">
-                    Tell us how you want to explore FaithHub
-                  </div>
-                </div>
-                <button type="button" onClick={closeWalkthrough} className="rounded-2xl border border-slate-200 bg-white p-3 text-slate-600">
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-
-              <div className="p-5 sm:p-6">
-                {!walkthroughSubmitted ? (
-                  <form onSubmit={submitWalkthroughRequest} className="space-y-4">
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <label className="block space-y-2">
-                        <span className="text-sm font-medium text-slate-700">Full name</span>
-                        <input
-                          ref={walkthroughFirstFieldRef}
-                          value={walkthroughForm.name}
-                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, name: e.target.value })}
-                          className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
-                          placeholder="Your name"
-                        />
-                      </label>
-                      <label className="block space-y-2">
-                        <span className="text-sm font-medium text-slate-700">Institution or organization</span>
-                        <input
-                          value={walkthroughForm.institution}
-                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, institution: e.target.value })}
-                          className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
-                          placeholder="Organization name"
-                        />
-                      </label>
-                    </div>
-
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <label className="block space-y-2">
-                        <span className="text-sm font-medium text-slate-700">Email address</span>
-                        <input
-                          type="email"
-                          value={walkthroughForm.email}
-                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, email: e.target.value })}
-                          className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
-                          placeholder="name@example.com"
-                        />
-                      </label>
-                      <label className="block space-y-2">
-                        <span className="text-sm font-medium text-slate-700">Primary role</span>
-                        <select
-                          value={walkthroughForm.role}
-                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, role: e.target.value })}
-                          className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
-                        >
-                          <option>Institution Leader</option>
-                          <option>Operations Team</option>
-                          <option>Digital Ministry Team</option>
-                          <option>Technology Partner</option>
-                          <option>Faith Community Organizer</option>
-                        </select>
-                      </label>
-                    </div>
-
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      <label className="block space-y-2">
-                        <span className="text-sm font-medium text-slate-700">What do you want to see?</span>
-                        <select
-                          value={walkthroughForm.interest}
-                          onChange={(e) => setWalkthroughForm({ ...walkthroughForm, interest: e.target.value })}
-                          className="h-12 w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 text-sm outline-none focus:border-[#03cd8c]"
-                        >
-                          <option>Full Platform Walkthrough</option>
-                          <option>Live Sessionz Infrastructure</option>
-                          <option>Provider Workspace</option>
-                          <option>Events and FaithMart</option>
-                          <option>Giving and Membership</option>
-                        </select>
-                      </label>
-                      <div className="rounded-xl border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
-                        This form is wired for request capture in the preview and can later be connected to your preferred backend, email, or CRM flow.
-                      </div>
-                    </div>
-
-                    <label className="block space-y-2">
-                      <span className="text-sm font-medium text-slate-700">Notes</span>
-                      <textarea
-                        value={walkthroughForm.message}
-                        onChange={(e) => setWalkthroughForm({ ...walkthroughForm, message: e.target.value })}
-                        rows={5}
-                        className="w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 py-3 text-sm outline-none focus:border-[#03cd8c]"
-                        placeholder="Tell us what you want to focus on"
-                      />
-                    </label>
-
-                    <div className="flex flex-wrap gap-3">
-                      <Button type="submit" className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
-                        Send Request
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                      <Button type="button" variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={closeWalkthrough}>
-                        Cancel
-                      </Button>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="rounded-2xl border border-[#03cd8c]/15 bg-[#ecfff8] p-6 text-center">
-                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#03cd8c] text-white">
-                      <CheckCircle2 className="h-6 w-6" />
-                    </div>
-                    <div className="text-2xl font-semibold text-slate-900">Request captured</div>
-                    <div className="mt-2 text-sm leading-7 text-slate-600">
-                      Your request has been captured in this landing-page preview flow. This can now be wired into the real FaithHub website backend, CRM, or messaging process.
-                    </div>
-                    <div className="mt-5 flex justify-center gap-3">
-                      <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={closeWalkthrough}>
-                        Close
-                      </Button>
-                      <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => setWalkthroughSubmitted(false)}>
-                        Edit Request
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

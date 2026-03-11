@@ -135,14 +135,18 @@ const downloadedSermons = [
   "The Call to Serve  Notes + Transcript",
 ];
 
-function SectionHeader({ title, subtitle, action = "See all" }) {
+function SectionHeader({ title, subtitle, action = "See all", tone = "default" }) {
+  const inverse = tone === "inverse";
   return (
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
-        <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
+        <div className={`text-lg font-semibold sm:text-xl ${inverse ? "text-white" : "text-slate-900"}`}>{title}</div>
+        <div className={`text-sm ${inverse ? "text-white/70" : "text-slate-500"}`}>{subtitle}</div>
       </div>
-      <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button
+        variant="ghost"
+        className={`rounded-full ${inverse ? "text-[#8ef0ca] hover:bg-white/10 hover:text-white" : "text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]"}`}
+      >
         {action}
       </Button>
     </div>
@@ -214,29 +218,29 @@ export default function FaithHubHome() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="relative overflow-hidden rounded-[32px] border border-[#03cd8c]/15 bg-[linear-gradient(180deg,#ffffff_0%,#fbfffd_60%,#f3fff9_100%)] shadow-[0_24px_80px_-36px_rgba(3,205,140,0.22)]">
               <CardContent className="p-5 sm:p-7">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_20%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.08),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(3,205,140,0.05),transparent_20%)]" />
                 <div className="relative z-10">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Personalized home</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Fast first paint</Badge>
+                    <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">Fast first paint</Badge>
                     {offlineMode && (
                       <Badge className="rounded-full bg-[#f77f00]/15 text-[#7a4a00] hover:bg-[#f77f00]/15">Offline cache in use</Badge>
                     )}
                   </div>
 
-                  <div className="max-w-3xl space-y-3 text-white">
-                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">A smarter start every time</div>
-                    <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-                      Watch, catch up, give, and join the right faith communities from one intelligent home.
+                  <div className="max-w-3xl space-y-4">
+                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">A smarter start every time</div>
+                    <h1 className="max-w-[14ch] text-4xl font-semibold leading-[1.04] text-slate-900 sm:text-5xl xl:text-6xl">
+                      Watch, catch up, give, and join the right faith communities from one clear home.
                     </h1>
-                    <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
-                      Personalized around followed institutions, series episodes, upcoming Live Sessionz, events, and your saved progress. The experience remains fast on slow networks and helpful even offline.
+                    <p className="max-w-2xl text-base leading-8 text-slate-600">
+                      Personalized around followed institutions, series progress, upcoming live sessions, events, and your saved moments. Everything here should feel easy to read, easy to scan, and easy to act on.
                     </p>
                   </div>
 
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                  <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                     {buckets.map((bucket) => {
                       const Icon = bucket.icon;
                       const active = activeBucket === bucket.key;
@@ -246,15 +250,15 @@ export default function FaithHubHome() {
                           onClick={() => setActiveBucket(bucket.key)}
                           className={`rounded-[24px] border p-4 text-left backdrop-blur transition ${
                             active
-                              ? "border-white/60 bg-white/22 text-white shadow-lg"
-                              : "border-white/20 bg-white/10 text-white/90 hover:bg-white/16"
+                              ? "border-[#03cd8c]/30 bg-[#ecfff8] text-slate-900 shadow-lg shadow-[#03cd8c]/10"
+                              : "border-slate-200 bg-white text-slate-900 hover:border-[#03cd8c]/20 hover:bg-[#f8fffb]"
                           }`}
                         >
-                          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20">
+                          <div className={`mb-3 flex h-11 w-11 items-center justify-center rounded-2xl ${active ? "bg-[#03cd8c] text-white" : "bg-[#ecfff8] text-[#03cd8c]"}`}>
                             <Icon className="h-5 w-5" />
                           </div>
                           <div className="text-base font-semibold">{bucket.title}</div>
-                          <div className="mt-1 text-sm leading-6 text-white/80">{bucket.subtitle}</div>
+                          <div className={`mt-1 text-sm leading-6 ${active ? "text-slate-700" : "text-slate-500"}`}>{bucket.subtitle}</div>
                         </button>
                       );
                     })}
@@ -379,7 +383,7 @@ export default function FaithHubHome() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="rounded-[32px] border border-[#03cd8c]/15 bg-[linear-gradient(180deg,#ffffff_0%,#f7fffb_100%)] text-slate-900 shadow-[0_24px_80px_-34px_rgba(15,23,42,0.12)]">
               <CardContent className="p-5 sm:p-6">
                 <SectionHeader
                   title="Upcoming Live Sessionz"
@@ -388,22 +392,22 @@ export default function FaithHubHome() {
                 />
                 <div className="space-y-3">
                   {upcomingSessions.map((item) => (
-                    <div key={item.id} className="rounded-[24px] border border-white/10 bg-white/5 p-4 backdrop-blur">
-                      <div className="mb-1 text-base font-semibold text-white">{item.title}</div>
-                      <div className="text-sm text-white/70">{item.institution}</div>
-                      <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-white/80">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
-                          <CalendarDays className="h-4 w-4 text-[#8ef0ca]" />
+                    <div key={item.id} className="rounded-[24px] border border-slate-200 bg-white p-4">
+                      <div className="mb-1 text-base font-semibold text-slate-900">{item.title}</div>
+                      <div className="text-sm text-slate-500">{item.institution}</div>
+                      <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600">
+                        <span className="inline-flex items-center gap-2 rounded-full bg-[#f8fffb] px-3 py-1 ring-1 ring-[#03cd8c]/10">
+                          <CalendarDays className="h-4 w-4 text-[#03cd8c]" />
                           {item.time}
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1">
-                          <Users className="h-4 w-4 text-[#8ef0ca]" />
+                        <span className="inline-flex items-center gap-2 rounded-full bg-[#f8fffb] px-3 py-1 ring-1 ring-[#03cd8c]/10">
+                          <Users className="h-4 w-4 text-[#03cd8c]" />
                           {item.audience}
                         </span>
                       </div>
                       <div className="mt-4 flex gap-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Set reminder</Button>
-                        <Button variant="outline" className="rounded-2xl border-white/15 bg-transparent text-white hover:bg-white/10">
+                        <Button className="rounded-2xl bg-[#03cd8c] text-white hover:bg-[#02b67c]">Set reminder</Button>
+                        <Button variant="outline" className="rounded-2xl border-slate-200 bg-white text-slate-900 hover:border-[#03cd8c]/25 hover:bg-[#f8fffb]">
                           Details
                         </Button>
                       </div>
