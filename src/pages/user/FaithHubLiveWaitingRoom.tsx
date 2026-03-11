@@ -71,13 +71,13 @@ export default function FaithHubLiveWaitingRoom() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="min-h-screen overflow-x-clip bg-[#f2f2f2] text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -89,7 +89,7 @@ export default function FaithHubLiveWaitingRoom() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
               {offlineMode ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
               {offlineMode ? "Reconnect + audio fallback" : `Bandwidth ${bandwidthState.toLowerCase()}`}
@@ -119,7 +119,7 @@ export default function FaithHubLiveWaitingRoom() {
                   <div className="grid gap-5 lg:grid-cols-[0.62fr_0.38fr]">
                     <div className="space-y-4">
                       <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Youth Impact Night</div>
-                      <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                      <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         Gather early, review the agenda, test the connection, and prepare your language and accessibility settings before the live session begins.
                       </h1>
                       <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
@@ -144,7 +144,7 @@ export default function FaithHubLiveWaitingRoom() {
 
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Countdown</div>
-                      <div className="grid grid-cols-3 gap-3 text-center">
+                      <div className="grid grid-cols-1 gap-3 text-center min-[420px]:grid-cols-3">
                         {[
                           { label: "Hours", value: countdown.hours },
                           { label: "Minutes", value: countdown.minutes },

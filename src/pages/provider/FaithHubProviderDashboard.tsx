@@ -62,13 +62,13 @@ export default function FaithHubProviderDashboard() {
   const [biConnectors, setBiConnectors] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="min-h-screen overflow-x-clip bg-[#f2f2f2] text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -80,7 +80,7 @@ export default function FaithHubProviderDashboard() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
               {offlineReadOnly ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
               {offlineReadOnly ? "Read-only KPI cache" : "Live provider telemetry"}
@@ -109,7 +109,7 @@ export default function FaithHubProviderDashboard() {
                   <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
                     <div className="space-y-4">
                       <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">See the whole operation at once</div>
-                      <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                      <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         A provider command dashboard for streaming health, donations, alerts, moderation, and growth visibility.
                       </h1>
                       <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
@@ -123,7 +123,7 @@ export default function FaithHubProviderDashboard() {
                           <div className="text-xs uppercase tracking-[0.18em] text-white/70">Real-time</div>
                           <div className="mt-1 text-2xl font-semibold text-white">3 active anomalies</div>
                         </div>
-                        <div className="grid gap-2 sm:grid-cols-2">
+                        <div className="grid gap-2 lg:grid-cols-2">
                           <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open alerts</Button>
                           <Button
                             variant="outline"
@@ -180,7 +180,7 @@ export default function FaithHubProviderDashboard() {
                           {stream.health}
                         </span>
                       </div>
-                      <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-4">
+                      <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2 xl:grid-cols-4">
                         <div className="rounded-2xl bg-[#f8fafc] px-3 py-2">Bitrate: {stream.bitrate}</div>
                         <div className="rounded-2xl bg-[#f8fafc] px-3 py-2">Latency: {stream.latency}</div>
                         <div className="rounded-2xl bg-[#f8fafc] px-3 py-2">Viewers: {stream.viewers}</div>

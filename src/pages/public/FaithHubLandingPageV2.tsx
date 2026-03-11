@@ -370,29 +370,29 @@ export default function FaithHubLandingPageV2() {
   }, [walkthroughOpen]);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
+    <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
-          <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
+          <button type="button" onClick={() => scrollToId("overview")} className="flex min-w-0 items-center gap-3 text-left">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
               <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
             </div>
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
-              <div className="inline-flex items-center gap-2 text-2xl font-extrabold leading-none text-slate-900">
+            <div className="min-w-0">
+              <div className="truncate text-xs font-semibold uppercase tracking-[0.2em] text-[#03cd8c] sm:tracking-[0.26em]">EVzone Super App</div>
+              <div className="inline-flex max-w-full items-center gap-2 truncate text-xl font-extrabold leading-none text-slate-900 sm:text-2xl">
                 FaithHub
                 <span className="h-2.5 w-2.5 rounded-full bg-[#03cd8c]" />
               </div>
             </div>
           </button>
 
-          <nav className="hidden items-center gap-2 lg:flex">
+          <nav className="hidden items-center gap-1 xl:flex">
             {navItems.map((item) => (
               <button
                 type="button"
                 key={item.id}
                 onClick={() => scrollToId(item.id)}
-                className="group inline-flex items-center gap-2 rounded-full border border-transparent bg-transparent px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-white hover:text-[#03cd8c] hover:shadow-sm"
+                className="group inline-flex items-center gap-2 rounded-full border border-transparent bg-transparent px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-white hover:text-[#03cd8c] hover:shadow-sm"
               >
                 <item.icon className="h-4 w-4 text-slate-400 transition group-hover:text-[#03cd8c]" />
                 {item.label}
@@ -400,8 +400,8 @@ export default function FaithHubLandingPageV2() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2 sm:flex">
-            <ColorModeToggle />
+          <div className="hidden items-center gap-2 lg:flex xl:flex-nowrap">
+            <ColorModeToggle className="hidden 2xl:inline-flex" />
             <Button
               variant="outline"
               className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
@@ -427,7 +427,7 @@ export default function FaithHubLandingPageV2() {
             aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileNavOpen}
             aria-controls="faithhub-mobile-nav"
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 sm:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:hidden"
           >
             {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -441,7 +441,7 @@ export default function FaithHubLandingPageV2() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.18 }}
               id="faithhub-mobile-nav"
-              className="border-t border-slate-200 bg-white px-4 py-4 shadow-sm sm:hidden"
+              className="border-t border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden"
             >
               <div className="space-y-2">
                 {navItems.map((item) => (
@@ -482,7 +482,7 @@ export default function FaithHubLandingPageV2() {
       </header>
 
       <main>
-        <section id="overview" className="relative overflow-visible scroll-mt-24">
+        <section id="overview" className="relative overflow-hidden scroll-mt-24">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)]" />
           <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[0.58fr_0.42fr] lg:px-8 lg:py-16 2xl:max-w-[110rem] 2xl:grid-cols-[0.6fr_0.4fr] 2xl:gap-14 2xl:px-10 2xl:py-20">
             <motion.div
@@ -503,7 +503,7 @@ export default function FaithHubLandingPageV2() {
               </div>
 
               <div className="space-y-4">
-                <h1 className="max-w-4xl text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl xl:text-7xl 2xl:max-w-5xl 2xl:text-8xl">
+                <h1 className="max-w-4xl text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl lg:text-6xl xl:text-7xl 2xl:max-w-5xl 2xl:text-8xl">
                   FaithHub is designed to become the most complete digital faith platform in the world.
                 </h1>
                 <p className="max-w-3xl text-base leading-8 text-slate-600 sm:text-lg 2xl:max-w-4xl">
@@ -513,12 +513,12 @@ export default function FaithHubLandingPageV2() {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-3">
-                <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => navigate("/user") }>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button className="w-full rounded-2xl bg-[#03cd8c] px-5 py-5 text-base hover:bg-[#02b67c] sm:w-auto sm:py-6" onClick={() => navigate("/user") }>
                   Enter FaithHub
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => navigate("/provider")}>
+                <Button variant="outline" className="w-full rounded-2xl border-slate-200 bg-white px-5 py-5 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb] sm:w-auto sm:py-6" onClick={() => navigate("/provider")}>
                   Start Building
                 </Button>
               </div>
@@ -836,13 +836,13 @@ export default function FaithHubLandingPageV2() {
                     <MonitorSmartphone className="h-7 w-7 text-[#8ef0ca]" />
                   </div>
 
-                  <div className="mb-5 flex w-full flex-nowrap gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+                  <div className="mb-5 flex w-full flex-wrap gap-2">
                     {deviceTabs.map((item) => (
                       <button
                         type="button"
                         key={item.key}
                         onClick={() => setActiveDevice(item.key)}
-                        className={`shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
+                        className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                           activeDevice === item.key
                             ? "bg-white text-slate-900"
                             : "bg-white/10 text-white hover:bg-white/15"
@@ -957,7 +957,7 @@ export default function FaithHubLandingPageV2() {
                 <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
                   Take the next step
                 </div>
-                <div className="max-w-[20ch] text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-[2.75rem]">
+                <div className="max-w-[20ch] text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-[2.5rem]">
                   Bring FaithHub to life with a real strategy, not just a template.
                 </div>
                 <div className="mt-4 max-w-[52ch] text-base leading-8 text-slate-600">

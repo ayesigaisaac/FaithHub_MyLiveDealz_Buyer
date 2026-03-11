@@ -1,7 +1,6 @@
 import React from "react";
 import { ArrowRight, ExternalLink, Landmark, Lock, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import faithhubMark from "@/assets/faithhub-mark.svg";
 
@@ -31,16 +30,16 @@ const accessCards = [
 
 export default function FaithHubAccessGateway() {
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)] px-4 py-8 text-slate-900 sm:px-6 lg:px-8">
+    <div className="min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)] px-4 py-8 text-slate-900 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-          <Link to="/" className="flex items-center gap-3 text-left">
+          <Link to="/" className="flex min-w-0 items-center gap-3 text-left">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
               <img src={faithhubMark} alt="FaithHub" className="h-9 w-9" />
             </div>
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
-              <div className="text-2xl font-extrabold leading-none">FaithHub</div>
+            <div className="min-w-0">
+              <div className="truncate text-xs font-semibold uppercase tracking-[0.26em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="truncate text-2xl font-extrabold leading-none">FaithHub</div>
             </div>
           </Link>
           <Link
@@ -57,7 +56,7 @@ export default function FaithHubAccessGateway() {
             <div className="inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
               Internal Preview Access
             </div>
-            <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
+            <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
               Open any FaithHub dashboard without typing deep routes.
             </h1>
             <p className="mt-4 max-w-3xl text-base leading-8 text-slate-600">

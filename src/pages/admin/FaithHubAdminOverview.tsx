@@ -147,13 +147,13 @@ export default function FaithHubAdminOverview() {
   const [moduleFilter, setModuleFilter] = useState("All modules");
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="min-h-screen overflow-x-clip bg-[#f2f2f2] text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -164,7 +164,7 @@ export default function FaithHubAdminOverview() {
               <div className="text-lg font-semibold">FaithHub Admin Overview</div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
               {offlineReadOnly ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
               {offlineReadOnly ? "Cached overview only" : "Global admin telemetry live"}
@@ -193,7 +193,7 @@ export default function FaithHubAdminOverview() {
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
                       <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Watch the entire system</div>
-                      <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                      <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         A premium admin overview for live operations, verification pressure, incidents, and cross-module system behavior.
                       </h1>
                       <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
@@ -207,7 +207,7 @@ export default function FaithHubAdminOverview() {
                         <div className="mt-1 text-3xl font-semibold text-white">Watch</div>
                         <div className="mt-2 text-sm text-white/80">9 active incidents and 4 anomaly panels need review.</div>
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 grid gap-2 lg:grid-cols-2">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" onClick={() => navigate("/app/admin/live-moderation")}>
                           Open incident desk
                         </Button>
@@ -360,7 +360,7 @@ export default function FaithHubAdminOverview() {
                   <select
                     value={moduleFilter}
                     onChange={(e) => setModuleFilter(e.target.value)}
-                    className="h-10 rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#03cd8c]"
+                    className="h-10 w-full rounded-2xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-[#03cd8c] sm:w-auto"
                   >
                     <option>All modules</option>
                     <option>FaithHub Core</option>

@@ -57,34 +57,34 @@ export default function AppShellLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
+    <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
       <div className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-[1800px] items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-5">
-          <div className="flex items-center gap-2 sm:gap-3">
+        <div className="mx-auto flex max-w-[1800px] flex-wrap items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-5">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <button type="button" onClick={() => setMobileOpen(true)} className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:hidden"><Menu className="h-5 w-5" /></button>
             <button type="button" onClick={() => setSidebarCollapsed((prev) => !prev)} className="hidden h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:flex">{sidebarCollapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}</button>
-            <button type="button" onClick={() => navigate('/')} className="flex items-center gap-3 rounded-[20px] border border-slate-200 bg-white px-3 py-2 shadow-sm sm:px-4">
+            <button type="button" onClick={() => navigate('/')} className="flex min-w-0 items-center gap-3 rounded-[20px] border border-slate-200 bg-white px-3 py-2 shadow-sm sm:px-4">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white shadow-lg shadow-slate-900/10 ring-1 ring-slate-200">
                 <img src={faithhubMark} alt="FaithHub" className="h-8 w-8" />
               </div>
-              <div className="hidden sm:block"><div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div><div className="text-base font-semibold text-slate-900">FaithHub</div></div>
+              <div className="hidden min-w-0 sm:block"><div className="truncate text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div><div className="truncate text-base font-semibold text-slate-900">FaithHub</div></div>
             </button>
           </div>
 
-          <div className="hidden min-w-0 flex-1 items-center gap-3 rounded-[24px] border border-slate-200 bg-white px-4 py-3 text-left text-sm text-slate-500 shadow-sm md:flex">
+          <div className="hidden min-w-0 flex-1 items-center gap-3 rounded-[24px] border border-slate-200 bg-white px-4 py-3 text-left text-sm text-slate-500 shadow-sm xl:flex">
             <Search className="h-4 w-4 shrink-0 text-[#03cd8c]" />
             <span className="truncate">Search routed FaithHub pages</span>
             <span className="ml-auto rounded-full bg-[#f8fafc] px-3 py-1 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{pages.length} pages</span>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            <ColorModeToggle className="hidden sm:inline-flex" />
+          <div className="flex min-w-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
+            <ColorModeToggle className="hidden xl:inline-flex" />
             <RoleSwitcher role={shellRole} onChange={(nextRole) => navigate(withAdminAccess(defaultPageForRole[nextRole], adminAllAccess || nextRole === "admin"))} />
             {adminAllAccess && routeRole !== "admin" ? (
               <button
                 type="button"
                 onClick={exitAdminView}
-                className="hidden rounded-[18px] border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c] md:inline-flex"
+                className="hidden rounded-[18px] border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c] xl:inline-flex"
               >
                 Exit admin view
               </button>
@@ -94,7 +94,7 @@ export default function AppShellLayout() {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-[1800px] gap-5 px-3 pb-10 pt-4 sm:px-4 lg:px-5">
+      <div className="mx-auto flex max-w-[1800px] min-w-0 gap-5 px-3 pb-10 pt-4 sm:px-4 lg:px-5">
         <aside className={`hidden lg:block ${sidebarCollapsed ? 'w-[92px]' : 'w-[320px]'}`}>
           <SidebarCard collapsed={sidebarCollapsed} role={shellRole} grouped={grouped} currentPath={location.pathname} navigate={navigateToPath} />
         </aside>
@@ -114,12 +114,12 @@ export default function AppShellLayout() {
                   <div className="mt-2 text-2xl font-semibold text-slate-900">{currentPage?.label || "FaithHub"}</div>
                   <div className="mt-1 text-sm text-slate-600">{currentPage?.description || "Routed workspace"}</div>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex min-w-0 flex-wrap gap-2">
                   <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">
                     {adminAllAccess ? "ADMIN · ALL ACCESS" : routeRole.toUpperCase()}
                   </Badge>
                   {currentPage?.template ? <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">{currentPage.template}</Badge> : null}
-                  <Badge className="rounded-full bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200 hover:bg-[#f8fafc]">{location.pathname}</Badge>
+                  <Badge className="max-w-full truncate rounded-full bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200 hover:bg-[#f8fafc] sm:max-w-[24rem]">{location.pathname}</Badge>
                 </div>
               </div>
             </CardContent>
@@ -134,11 +134,11 @@ export default function AppShellLayout() {
 function RoleSwitcher({ role, onChange }: { role: RoleKey; onChange: (role: RoleKey) => void }) {
   const roles: RoleKey[] = ['user', 'provider', 'admin'];
   return (
-    <div className="flex items-center gap-1 rounded-[24px] border border-slate-200 bg-white p-1 shadow-sm">
+    <div className="flex max-w-full flex-wrap items-center gap-1 rounded-[24px] border border-slate-200 bg-white p-1 shadow-sm">
       {roles.map((item) => {
         const active = role === item;
         return (
-          <button type="button" key={item} onClick={() => onChange(item)} className={`rounded-[18px] px-3 py-2 text-sm font-semibold transition ${active ? item === 'provider' ? 'bg-[#fff8ef] text-[#f77f00]' : item === 'admin' ? 'bg-slate-900 text-white' : 'bg-[#03cd8c] text-white' : 'text-slate-600 hover:bg-[#f8fafc]'}`}>
+          <button type="button" key={item} onClick={() => onChange(item)} className={`rounded-[18px] px-2.5 py-2 text-sm font-semibold transition sm:px-3 ${active ? item === 'provider' ? 'bg-[#fff8ef] text-[#f77f00]' : item === 'admin' ? 'bg-slate-900 text-white' : 'bg-[#03cd8c] text-white' : 'text-slate-600 hover:bg-[#f8fafc]'}`}>
             {item === 'user' ? 'User' : item === 'provider' ? 'Provider' : 'Admin'}
           </button>
         );

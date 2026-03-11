@@ -152,13 +152,13 @@ export default function FaithHubSubscriptionsMembership() {
   }, [selectedPlan, currentPlan, annualBilling]);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="min-h-screen overflow-x-clip bg-[#f2f2f2] text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -170,7 +170,7 @@ export default function FaithHubSubscriptionsMembership() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
             <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
               {offlineMode ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
               {offlineMode ? "Entitlement cache in use" : "Billing and entitlements synced"}
@@ -200,7 +200,7 @@ export default function FaithHubSubscriptionsMembership() {
                   <div className="grid gap-5 lg:grid-cols-[0.65fr_0.35fr]">
                     <div className="space-y-4">
                       <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Membership made clear</div>
-                      <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                      <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         Compare plans, manage billing, understand entitlements, and prepare for family or institution-wide membership in one calm experience.
                       </h1>
                       <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
@@ -262,7 +262,7 @@ export default function FaithHubSubscriptionsMembership() {
                   </Button>
                 </div>
 
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                   {plans.map((plan) => (
                     <button
                       key={plan.id}
@@ -317,18 +317,29 @@ export default function FaithHubSubscriptionsMembership() {
                   </Badge>
                 </div>
                 <div className="overflow-hidden rounded-[24px] border border-slate-200">
-                  <div className="grid grid-cols-4 bg-slate-900 px-4 py-3 text-sm font-semibold text-white">
+                  <div className="hidden grid-cols-4 bg-slate-900 px-4 py-3 text-sm font-semibold text-white sm:grid">
                     <div>Feature</div>
                     <div>Free</div>
                     <div>Supporter</div>
                     <div>Family</div>
                   </div>
                   {compareRows.map((row, index) => (
-                    <div key={row.label} className={`grid grid-cols-4 px-4 py-3 text-sm ${index % 2 === 0 ? "bg-white" : "bg-[#f8fafc]"}`}>
+                    <div key={row.label} className={`grid gap-3 px-4 py-4 text-sm sm:grid-cols-4 sm:gap-0 sm:py-3 ${index % 2 === 0 ? "bg-white" : "bg-[#f8fafc]"}`}>
                       <div className="font-medium text-slate-900">{row.label}</div>
-                      <div className="text-slate-600">{row.free}</div>
-                      <div className="text-slate-600">{row.supporter}</div>
-                      <div className="text-slate-600">{row.family}</div>
+                      <div className="grid gap-2 sm:contents">
+                        <div className="flex items-center justify-between rounded-2xl bg-[#f8fafc] px-3 py-2 sm:block sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                          <span className="font-medium text-slate-500 sm:hidden">Free</span>
+                          <span className="text-slate-600">{row.free}</span>
+                        </div>
+                        <div className="flex items-center justify-between rounded-2xl bg-[#f8fafc] px-3 py-2 sm:block sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                          <span className="font-medium text-slate-500 sm:hidden">Supporter</span>
+                          <span className="text-slate-600">{row.supporter}</span>
+                        </div>
+                        <div className="flex items-center justify-between rounded-2xl bg-[#f8fafc] px-3 py-2 sm:block sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">
+                          <span className="font-medium text-slate-500 sm:hidden">Family</span>
+                          <span className="text-slate-600">{row.family}</span>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
