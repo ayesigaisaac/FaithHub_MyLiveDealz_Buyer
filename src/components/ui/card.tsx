@@ -13,9 +13,8 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
   return (
     <div
       ref={ref}
-      className={className}
+      className={`rounded-[16px] ${className}`.trim()}
       style={{
-        borderRadius: "22px",
         border: "1px solid var(--border)",
         boxShadow: "var(--shadow-soft)",
         transition: "transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease, border-color 200ms ease",

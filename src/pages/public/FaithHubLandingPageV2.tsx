@@ -306,18 +306,18 @@ export default function FaithHubLandingPageV2() {
   return (
     <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
-          <button type="button" onClick={() => scrollToId("overview")} className="flex min-w-0 items-center gap-3 text-left">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
+          <button type="button" onClick={() => scrollToId("overview")} className="flex shrink-0 items-center gap-3 text-left">
             <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
           </button>
 
-          <nav className="hidden items-center gap-1 xl:flex">
+          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex">
             {navItems.map((item) => (
               <button
                 type="button"
                 key={item.id}
                 onClick={() => scrollToId(item.id)}
-                className="group inline-flex items-center gap-2 rounded-full border border-transparent bg-transparent px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-white hover:text-[#03cd8c] hover:shadow-sm"
+                className="group inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-transparent bg-transparent px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-white hover:text-[#03cd8c] hover:shadow-sm 2xl:px-4"
               >
                 <item.icon className="h-4 w-4 text-slate-400 transition group-hover:text-[#03cd8c]" />
                 {item.label}
@@ -325,16 +325,16 @@ export default function FaithHubLandingPageV2() {
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2 lg:flex xl:flex-nowrap">
+          <div className="hidden shrink-0 items-center gap-2 lg:flex xl:flex-nowrap">
             <ColorModeToggle className="hidden 2xl:inline-flex" />
             <Button
               variant="outline"
-              className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+              className="shrink-0 whitespace-nowrap rounded-2xl border-slate-200 bg-white px-5 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
               onClick={() => navigate("/user")}
             >
               Enter FaithHub
             </Button>
-            <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
+            <Button className="shrink-0 whitespace-nowrap rounded-2xl bg-[#03cd8c] px-5 hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
               Start Building
             </Button>
           </div>

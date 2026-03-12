@@ -5,15 +5,15 @@
 :root {
   color-scheme: light;
   font-family: "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --bg: #f2f2f2;
+  --bg: #f5f7f6;
   --surface: #ffffff;
   --card: #ffffff;
-  --border: #e2e8f0;
-  --text-primary: #0f172a;
-  --text-secondary: #334155;
-  --accent: #03cd8c;
-  --accent-soft: rgba(3, 205, 140, 0.12);
-  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --accent: #10b981;
+  --accent-soft: #ecfdf5;
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04);
 
   /* Legacy vars used throughout the codebase. */
   --faithhub-page-bg: var(--bg);
@@ -59,19 +59,33 @@ h1, h2, h3, h4 {
   --text-secondary: #9ca3af;
   --accent: #34d399;
   --accent-soft: rgba(52, 211, 153, 0.16);
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 
 /* Dark-mode mapping for existing Tailwind utility usage across pages. */
 [data-theme="dark"] [class*="bg-[#f2f2f2]"] { background-color: var(--bg) !important; }
+[data-theme="dark"] [class*="bg-[#f5f7f6]"] { background-color: var(--bg) !important; }
 [data-theme="dark"] [class*="bg-white"] { background-color: var(--card) !important; }
 [data-theme="dark"] [class*="bg-slate-50"],
 [data-theme="dark"] [class*="bg-[#f8fafc]"] { background-color: var(--surface) !important; }
+[data-theme="dark"] [class*="bg-emerald-50"],
 [data-theme="dark"] [class*="bg-[#ecfff8]"] { background-color: var(--accent-soft) !important; }
+[data-theme="dark"] [class*="bg-[linear-gradient"] {
+  background-image: none !important;
+  background-color: var(--card) !important;
+}
+[data-theme="dark"] [class*="bg-[radial-gradient"] {
+  background:
+    radial-gradient(circle at top right, rgba(52, 211, 153, 0.14), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(247, 127, 0, 0.08), transparent 22%) !important;
+}
 
 [data-theme="dark"] [class*="border-slate-"],
 [data-theme="dark"] [class*="border-[#03cd8c]"] { border-color: var(--border) !important; }
+[data-theme="dark"] [class*="border-emerald-100"],
+[data-theme="dark"] [class*="border-emerald-200"] { border-color: rgba(52, 211, 153, 0.22) !important; }
 [data-theme="dark"] [class*="ring-slate-"] { --tw-ring-color: var(--border) !important; }
+[data-theme="dark"] [class*="ring-emerald-100"] { --tw-ring-color: rgba(52, 211, 153, 0.22) !important; }
 
 [data-theme="dark"] [class*="text-slate-900"],
 [data-theme="dark"] [class*="text-slate-800"],
@@ -80,9 +94,13 @@ h1, h2, h3, h4 {
 [data-theme="dark"] [class*="text-slate-500"],
 [data-theme="dark"] [class*="text-slate-400"] { color: var(--text-secondary) !important; }
 
-[data-theme="dark"] [class*="text-[#03cd8c]"] { color: var(--accent) !important; }
+[data-theme="dark"] [class*="text-[#03cd8c]"],
+[data-theme="dark"] [class*="text-emerald-600"],
+[data-theme="dark"] [class*="text-emerald-700"],
+[data-theme="dark"] [class*="text-emerald-800"] { color: var(--accent) !important; }
 
 /* Preserve Tailwind opacity variants like bg-[#03cd8c]/10 so icons remain visible. */
 [data-theme="dark"] [class*="bg-[#03cd8c]/"] { background-color: var(--accent-soft) !important; }
 [data-theme="dark"] [class~="bg-[#03cd8c]"] { background-color: var(--accent) !important; }
+[data-theme="dark"] [class*="bg-emerald-500"] { background-color: var(--accent) !important; }
 

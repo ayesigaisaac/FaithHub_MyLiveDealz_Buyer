@@ -10,6 +10,30 @@ import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
+const sectionLabelMap: Partial<Record<RoleKey, Record<string, string>>> = {
+  user: {
+    "Start & Identity": "Account",
+    "Discovery & Institutions": "Explore",
+    "Series & Content": "Library",
+    "Live Sessionz": "Live",
+    "Events, Giving & Membership": "Community",
+    "Trust & Settings": "Preferences",
+  },
+  provider: {
+    "Onboarding & Core HQ": "Workspace",
+    "Content Studio": "Content",
+    "Live Operations": "Live Ops",
+    "Audience & Distribution": "Audience",
+    "Commerce, Funds & Trust": "Revenue & Trust",
+  },
+  admin: {
+    "Global Control": "Overview",
+    "Verification & Trust": "Trust",
+    "Finance & Channels": "Finance",
+    "Security & Evidence": "Security",
+  },
+};
+
 function getCurrentRole(pathname: string): RoleKey {
   if (pathname.startsWith('/app/provider')) return 'provider';
   if (pathname.startsWith('/app/admin')) return 'admin';
@@ -19,6 +43,10 @@ function getCurrentRole(pathname: string): RoleKey {
 function withAdminAccess(path: string, enabled: boolean) {
   if (!enabled || !path.startsWith("/app/")) return path;
   return path.includes("?") ? `${path}&admin=1` : `${path}?admin=1`;
+}
+
+function getSectionLabel(role: RoleKey, section: string) {
+  return sectionLabelMap[role]?.[section] || section;
 }
 
 export default function AppShellLayout() {
@@ -33,16 +61,16 @@ export default function AppShellLayout() {
   const pages = useMemo(() => (adminAllAccess ? pageRegistry : pagesByRole[routeRole] || []), [adminAllAccess, routeRole]);
   const grouped = useMemo(() => {
     const keyFor = (page: any) => {
-      if (!adminAllAccess) return page.section;
+      if (!adminAllAccess) return getSectionLabel(routeRole, page.section);
       const roleLabel = page.role === "provider" ? "Provider" : page.role === "admin" ? "Admin" : "User";
-      return `${roleLabel} · ${page.section}`;
+      return `${roleLabel} · ${getSectionLabel(page.role, page.section)}`;
     };
     return pages.reduce((acc, page) => {
       const key = keyFor(page);
       (acc[key] ||= []).push(page);
       return acc;
     }, {} as Record<string, typeof pages>);
-  }, [adminAllAccess, pages]);
+  }, [adminAllAccess, pages, routeRole]);
   const currentPage = pageRegistry.find((page) => page.path === location.pathname);
   const navigateToPath = (path: string) => navigate(withAdminAccess(path, adminAllAccess));
   const exitAdminView = () => navigate(location.pathname, { replace: true });
@@ -69,25 +97,36 @@ export default function AppShellLayout() {
             </button>
           </div>
 
-          <div className="hidden min-w-0 flex-1 items-center gap-3 rounded-[24px] border border-slate-200 bg-white px-4 py-3 text-left text-sm text-slate-500 shadow-sm xl:flex">
-            <Search className="h-4 w-4 shrink-0 text-[#03cd8c]" />
-            <span className="truncate">Search routed FaithHub pages</span>
-            <span className="ml-auto rounded-full bg-[#f8fafc] px-3 py-1 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{pages.length} pages</span>
+          <div className="hidden min-w-0 flex-1 items-center gap-3 rounded-[20px] border border-slate-200 bg-white px-4 py-3 text-left shadow-sm lg:flex">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+              <Search className="h-4 w-4" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Search</div>
+              <div className="truncate text-sm text-slate-500">Pages, institutions, routes, and workspace tools</div>
+            </div>
+            <span className="ml-auto rounded-full bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{pages.length} pages</span>
           </div>
 
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
-            <ColorModeToggle className="hidden xl:inline-flex" />
+            <div className="hidden items-center gap-2 rounded-[20px] border border-slate-200 bg-white px-2 py-1.5 shadow-sm xl:flex">
+              <span className="px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Display</span>
+              <ColorModeToggle className="inline-flex" />
+            </div>
             <RoleSwitcher role={shellRole} onChange={(nextRole) => navigate(withAdminAccess(defaultPageForRole[nextRole], adminAllAccess || nextRole === "admin"))} />
             {adminAllAccess && routeRole !== "admin" ? (
               <button
                 type="button"
                 onClick={exitAdminView}
-                className="hidden rounded-[18px] border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c] xl:inline-flex"
+                className="hidden rounded-[18px] border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-emerald-200 hover:text-emerald-600 xl:inline-flex"
               >
                 Exit admin view
               </button>
             ) : null}
-            <button type="button" className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm"><Bell className="h-5 w-5" /></button>
+            <div className="flex items-center gap-2 rounded-[20px] border border-slate-200 bg-white px-2 py-1.5 shadow-sm">
+              <span className="hidden px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 sm:inline">Alerts</span>
+              <button type="button" className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-50 text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-600"><Bell className="h-5 w-5" /></button>
+            </div>
           </div>
         </div>
       </div>
@@ -107,17 +146,15 @@ export default function AppShellLayout() {
           <Card className="mb-5 rounded-[24px] border border-slate-200 bg-white shadow-sm">
             <CardContent className="p-5 sm:p-6">
               <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">FaithHub Workspace</div>
-                  <div className="mt-2 text-2xl font-semibold text-slate-900">{currentPage?.label || "FaithHub"}</div>
-                  <div className="mt-1 text-sm text-slate-600">{currentPage?.description || "Routed workspace"}</div>
+                <div className="min-w-0">
+                  <div className="text-[28px] font-bold leading-none text-slate-900">{currentPage?.label || "FaithHub"}</div>
+                  <div className="mt-2 max-w-2xl text-sm text-slate-500">{currentPage?.description || "Routed workspace"}</div>
                 </div>
                 <div className="flex min-w-0 flex-wrap gap-2">
-                  <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">
+                  <Badge className="rounded-full border-emerald-100 bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
                     {adminAllAccess ? "ADMIN · ALL ACCESS" : routeRole.toUpperCase()}
                   </Badge>
-                  {currentPage?.template ? <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">{currentPage.template}</Badge> : null}
-                  <Badge className="max-w-full truncate rounded-full bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200 hover:bg-[#f8fafc] sm:max-w-[24rem]">{location.pathname}</Badge>
+                  <Badge className="max-w-full truncate rounded-full bg-slate-50 text-slate-500 hover:bg-slate-50 sm:max-w-[24rem]">{location.pathname}</Badge>
                 </div>
               </div>
             </CardContent>
@@ -132,11 +169,24 @@ export default function AppShellLayout() {
 function RoleSwitcher({ role, onChange }: { role: RoleKey; onChange: (role: RoleKey) => void }) {
   const roles: RoleKey[] = ['user', 'provider', 'admin'];
   return (
-    <div className="flex max-w-full flex-wrap items-center gap-1 rounded-[24px] border border-slate-200 bg-white p-1 shadow-sm">
+    <div className="flex max-w-full flex-wrap items-center gap-1 rounded-[20px] border border-slate-200 bg-white p-1.5 shadow-sm">
       {roles.map((item) => {
         const active = role === item;
         return (
-          <button type="button" key={item} onClick={() => onChange(item)} className={`rounded-[18px] px-2.5 py-2 text-sm font-semibold transition sm:px-3 ${active ? item === 'provider' ? 'bg-[#fff8ef] text-[#f77f00]' : item === 'admin' ? 'bg-slate-900 text-white' : 'bg-[#03cd8c] text-white' : 'text-slate-600 hover:bg-[#f8fafc]'}`}>
+          <button
+            type="button"
+            key={item}
+            onClick={() => onChange(item)}
+            className={`rounded-[14px] px-3 py-2 text-sm font-semibold transition ${
+              active
+                ? item === 'provider'
+                  ? 'bg-[#fff7ed] text-[#c2410c]'
+                  : item === 'admin'
+                    ? 'bg-slate-900 text-white'
+                    : 'bg-emerald-50 text-emerald-700'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+            }`}
+          >
             {item === 'user' ? 'User' : item === 'provider' ? 'Provider' : 'Admin'}
           </button>
         );
@@ -149,22 +199,22 @@ function SidebarCard({ collapsed, role, grouped, currentPath, navigate }: any) {
   return (
     <Card className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.35)]">
       <CardContent className="p-3">
-        <div className="mb-3 rounded-[20px] border border-[#03cd8c]/20 bg-[#ecfff8] p-4">
-          <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">{role} workspace</div>
-          {!collapsed ? <><div className="mt-2 text-xl font-semibold text-slate-900">{role === 'user' ? 'My Faith Space' : role === 'provider' ? 'Institution Workspace' : 'Global Control Tower'}</div><div className="mt-1 text-sm text-slate-600">{role === 'user' ? 'Discovery, Live Sessionz, events, giving' : role === 'provider' ? 'Builders, live ops, messaging, events, funds' : 'Verification, moderation, policy, security'}</div></> : null}
+        <div className="mb-4 rounded-[20px] border border-emerald-100 bg-emerald-50 p-4">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700">Workspace</div>
+          {!collapsed ? <><div className="mt-2 text-xl font-semibold text-slate-900">{role === 'user' ? 'My Faith Space' : role === 'provider' ? 'Institution Workspace' : 'Global Control Tower'}</div><div className="mt-1 text-sm leading-6 text-slate-500">{role === 'user' ? 'Discovery, live sessions, events, and giving in one place.' : role === 'provider' ? 'Operations, audiences, events, and revenue in one workspace.' : 'Verification, moderation, policy, and security oversight.'}</div></> : null}
         </div>
         <div className="space-y-4">
           {Object.entries(grouped).map(([section, items]: any) => (
             <div key={section} className="space-y-2">
-              {!collapsed ? <div className="px-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{section}</div> : null}
+              {!collapsed ? <div className="px-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">{section}</div> : null}
               <div className="space-y-1">
                 {items.map((item: any) => {
                   const Icon = item.icon;
                   const active = item.path === currentPath;
                   return (
-                    <button type="button" key={item.id} onClick={() => navigate(item.path)} className={`group flex w-full items-center gap-3 rounded-[20px] border px-3 py-3 text-left transition ${active ? 'border-[#03cd8c]/25 bg-[#ecfff8]' : 'border-transparent bg-white hover:border-slate-200 hover:bg-[#f8fafc]'}`}>
-                      <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${active ? 'bg-[#03cd8c] text-white' : 'bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200'}`}><Icon className="h-5 w-5" /></div>
-                      {!collapsed ? <div className="min-w-0 flex-1"><div className="truncate text-sm font-semibold text-slate-900">{item.label}</div><div className="truncate text-xs text-slate-500">{item.template} | {item.path}</div></div> : null}
+                    <button type="button" key={item.id} onClick={() => navigate(item.path)} className={`group flex w-full items-center gap-3 rounded-[18px] border px-3 py-3 text-left transition ${active ? 'border-emerald-100 bg-emerald-50' : 'border-transparent bg-white hover:border-slate-200 hover:bg-slate-50'}`}>
+                      <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-50 text-slate-500 ring-1 ring-slate-200 group-hover:bg-white'}`}><Icon className="h-5 w-5" /></div>
+                      {!collapsed ? <div className="min-w-0 flex-1"><div className={`truncate text-sm ${active ? 'font-semibold text-emerald-800' : 'font-medium text-slate-900'}`}>{item.label}</div><div className="truncate text-xs text-slate-500">{item.path}</div></div> : null}
                     </button>
                   );
                 })}
