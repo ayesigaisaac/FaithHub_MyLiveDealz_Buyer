@@ -49,6 +49,8 @@ const navItems = [
   { label: "Contact", id: "contact", icon: Mail },
 ];
 
+const desktopNavItems = [{ label: "Overview", id: "overview" }, { label: "Platform", id: "experiences" }, { label: "Live", id: "live" }, { label: "Commerce", id: "faithmart" }, { label: "Trust", id: "trust" }];
+
 const roleCards = [
   {
     role: "User",
@@ -164,16 +166,35 @@ const featureGroups = [
   },
 ];
 
-const liveDetails = [
-  "Waiting rooms, pre-chat, polls, and prayer requests before the session begins",
-  "Low-latency playback, live chat, captions, translation, and safe reporting tools",
-  "Post-live replays, chapters, transcripts, highlights, and reusable teaching assets",
-];
-
-const faithMartDetails = [
-  "Event tickets, vendor booths, branded merchandise, and marketplace-day selling",
-  "Institution-linked product and service discovery for faith communities",
-  "A connected commerce engine that supports sustainability without fragmenting the experience",
+const featuredPillars = [
+  {
+    id: "live",
+    tag: "Live Sessionz",
+    title: "A premium live faith infrastructure",
+    description:
+      "Deliver polished live sessions with calm moderation, audience participation, and replay-ready content built into one seamless flow.",
+    icon: Radio,
+    accent: "from-[#ecfff8] via-white to-white",
+    items: [
+      { icon: MessageSquare, text: "Waiting rooms, pre-chat, polls, and prayer requests before each session begins." },
+      { icon: Globe2, text: "Low-latency playback, live chat, captions, translation, and safe reporting tools." },
+      { icon: PlayCircle, text: "Post-live replays, chapters, transcripts, highlights, and reusable teaching assets." },
+    ],
+  },
+  {
+    id: "faithmart",
+    tag: "FaithMart",
+    title: "Commerce that actually belongs inside the experience",
+    description:
+      "Unify tickets, merchandise, booths, and institution-led selling in a commerce layer that feels native to the wider FaithHub journey.",
+    icon: ShoppingBag,
+    accent: "from-[#f5fbf8] via-white to-white",
+    items: [
+      { icon: CalendarDays, text: "Event tickets, vendor booths, branded merchandise, and marketplace-day selling." },
+      { icon: Landmark, text: "Institution-linked product and service discovery for faith communities." },
+      { icon: Wallet, text: "A connected commerce engine that supports sustainability without fragmenting the experience." },
+    ],
+  },
 ];
 
 const stats = [
@@ -305,36 +326,37 @@ export default function FaithHubLandingPageV2() {
 
   return (
     <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-[var(--bg)]/90 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
+      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-[var(--bg)]/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
           <button type="button" onClick={() => scrollToId("overview")} className="flex shrink-0 items-center gap-3 text-left">
             <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
           </button>
 
-          <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex">
-            {navItems.map((item) => (
+          <nav className="hidden min-w-0 flex-1 items-center justify-center xl:flex">
+            <div className="flex items-center gap-1 rounded-full bg-white/80 p-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] ring-1 ring-slate-200/70">
+              {desktopNavItems.map((item) => (
               <button
                 type="button"
                 key={item.id}
                 onClick={() => scrollToId(item.id)}
-                className="group inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-transparent bg-transparent px-3 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-200 hover:bg-white hover:text-[#03cd8c] hover:shadow-sm 2xl:px-4"
+                className="inline-flex shrink-0 items-center rounded-full px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
               >
-                <item.icon className="h-4 w-4 text-slate-400 transition group-hover:text-[#03cd8c]" />
                 {item.label}
               </button>
-            ))}
+              ))}
+            </div>
           </nav>
 
-          <div className="hidden shrink-0 items-center gap-2 lg:flex xl:flex-nowrap">
+          <div className="hidden shrink-0 items-center gap-3 lg:flex xl:flex-nowrap">
             <ColorModeToggle className="hidden 2xl:inline-flex" />
             <Button
               variant="outline"
-              className="shrink-0 whitespace-nowrap rounded-2xl border-slate-200 bg-white px-5 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+              className="shrink-0 whitespace-nowrap rounded-full border-transparent bg-white px-5 text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.06)] hover:bg-slate-50 hover:text-slate-900"
               onClick={() => navigate("/user")}
             >
               Enter FaithHub
             </Button>
-            <Button className="shrink-0 whitespace-nowrap rounded-2xl bg-[#03cd8c] px-5 hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
+            <Button className="shrink-0 whitespace-nowrap rounded-full bg-[#03cd8c] px-6 shadow-[0_14px_30px_rgba(3,205,140,0.22)] hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
               Start Building
             </Button>
           </div>
@@ -646,67 +668,66 @@ export default function FaithHubLandingPageV2() {
           </div>
         </section>
 
-        <section id="live" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-[110rem] 2xl:px-10">
-          <div className="grid gap-6 xl:grid-cols-[0.5fr_0.5fr]">
-            <Card className="overflow-visible rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
-              <CardContent className="p-6 sm:p-7">
-                <div className="mb-6 flex items-center gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                      <Radio className="h-6 w-6" />
-                    </div>
-                    <div>
-                    <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">Live Sessionz</div>
-                      <div className="mt-1 text-4xl font-semibold leading-tight">A premium live faith infrastructure</div>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                  {liveDetails.map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" />
-                      <div className="min-w-0 break-words whitespace-normal text-lg leading-8 text-slate-700">{item}</div>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
-                    Start Building
-                  </Button>
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("trust")}>
-                    See Trust Controls
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+        <section id="live" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-14 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-[110rem] 2xl:px-10">
+          <div className="rounded-[2rem] bg-[linear-gradient(180deg,#ffffff,rgba(248,250,252,0.9))] p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70 sm:p-8 lg:p-10">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="inline-flex rounded-full bg-[#ecfff8] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">
+                Platform pillars
+              </div>
+              <h2 className="mt-5 text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl lg:text-[3rem]">
+                Built for live engagement and connected faith commerce
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
+                Two premium product surfaces anchor the experience: immersive live sessions and a commerce layer that feels native, calm, and trustworthy.
+              </p>
+            </div>
 
-            <Card id="faithmart" className="scroll-mt-24 rounded-3xl border-slate-200 bg-white shadow-sm">
-              <CardContent className="p-6 sm:p-7">
-                <div className="mb-6 flex items-center gap-4">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                    <ShoppingBag className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">FaithMart</div>
-                    <div className="mt-1 text-4xl font-semibold leading-tight text-slate-900">Commerce that actually belongs inside the experience</div>
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {faithMartDetails.map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
-                      <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" />
-                      <div className="text-lg leading-8 text-slate-700">{item}</div>
+            <div className="mt-10 grid gap-6 xl:grid-cols-2">
+              {featuredPillars.map((panel) => (
+                <div
+                  key={panel.id}
+                  id={panel.id === "faithmart" ? "faithmart" : undefined}
+                  className={`relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br ${panel.accent} p-6 shadow-[0_18px_48px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70 sm:p-8`}
+                >
+                  <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top_left,rgba(3,205,140,0.12),transparent_55%)]" />
+                  <div className="relative">
+                    <div className="inline-flex rounded-full bg-[#ecfff8] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">
+                      {panel.tag}
                     </div>
-                  ))}
+
+                    <div className="mt-6 flex items-start gap-4">
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#dff8ee] text-[#03cd8c] shadow-inner">
+                        <panel.icon className="h-6 w-6" />
+                      </div>
+                      <div className="max-w-[22rem]">
+                        <h3 className="text-3xl font-semibold leading-[1.08] text-slate-900 sm:text-[2.5rem]">
+                          {panel.title}
+                        </h3>
+                        <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+                          {panel.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 space-y-4">
+                      {panel.items.map((item) => (
+                        <div
+                          key={item.text}
+                          className="flex items-start gap-4 rounded-2xl bg-white/88 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.05)] ring-1 ring-slate-200/60 backdrop-blur-sm sm:p-5"
+                        >
+                          <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#ecfff8] text-[#03cd8c]">
+                            <item.icon className="h-4 w-4" />
+                          </div>
+                          <p className="max-w-[28rem] text-base leading-7 text-slate-700 sm:text-[1.05rem]">
+                            {item.text}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => scrollToId("contact")}>
-                    Discuss FaithMart Setup
-                  </Button>
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => scrollToId("platform")}>
-                    Explore Platform Pillars
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              ))}
+            </div>
           </div>
         </section>
 
