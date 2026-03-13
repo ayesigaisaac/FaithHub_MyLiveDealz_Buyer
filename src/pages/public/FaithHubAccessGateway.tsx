@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, ExternalLink, Landmark, Lock, Users } from "lucide-react";
+import { ArrowRight, Building2, ExternalLink, Landmark, Lock, ShieldAlert, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -9,23 +9,37 @@ const accessCards = [
   {
     title: "User Workspace",
     description: "Open the routed FaithHub user experience for discovery, live sessions, events, giving, and settings.",
-    path: "/app/user/home",
+    path: "/app/user/home?as=user",
     tone: "bg-[#ecfff8] text-[#03cd8c]",
     icon: Users,
   },
   {
     title: "Provider Workspace",
     description: "Open the institution workspace for dashboards, live operations, publishing, messaging, and funds.",
-    path: "/app/provider/dashboard",
+    path: "/app/provider/dashboard?as=provider&tenant=tenant-faithway",
     tone: "bg-[#fff8ef] text-[#f77f00]",
     icon: Landmark,
   },
   {
-    title: "Admin Workspace",
-    description: "Open the hidden governance workspace for moderation, verification, finance oversight, and security.",
-    path: "/app/admin/overview",
+    title: "Super Admin",
+    description: "Open platform-wide control for tenants, providers, users, incidents, billing, and feature governance.",
+    path: "/super-admin/overview?as=super_admin",
     tone: "bg-slate-900 text-white",
     icon: Lock,
+  },
+  {
+    title: "Tenant Admin",
+    description: "Open institution-level workspace for members, events, sessions, branding, and moderation.",
+    path: "/tenant-admin/overview?as=tenant_admin&tenant=tenant-faithway",
+    tone: "bg-[#eff6ff] text-[#1d4ed8]",
+    icon: Building2,
+  },
+  {
+    title: "Ops / Safety",
+    description: "Open trust and safety workflows for reports, incidents, verification, and audit trail operations.",
+    path: "/ops/incidents?as=ops&tenant=tenant-faithway",
+    tone: "bg-[#fef2f2] text-[#b91c1c]",
+    icon: ShieldAlert,
   },
 ];
 
@@ -59,7 +73,7 @@ export default function FaithHubAccessGateway() {
               presents only User and Provider experiences.
             </p>
 
-            <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {accessCards.map((item) => {
                 const Icon = item.icon;
                 return (

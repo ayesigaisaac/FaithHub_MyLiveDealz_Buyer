@@ -1,4 +1,6 @@
-const exactPageActions: Record<string, Record<string, string>> = {
+import { defaultPageForRole, pageRegistry, type RoleKey } from "@/config/pageRegistry";
+
+const rawExactPageActions: Record<string, Record<string, string>> = {
   "/app/user/entry": {
     "continue to faithhub": "/app/user/auth",
     "browse as guest": "/app/user/discover",
@@ -202,7 +204,7 @@ const exactPageActions: Record<string, Record<string, string>> = {
   },
 };
 
-const roleLevelActions: Record<"user" | "provider" | "admin", Record<string, string>> = {
+const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
   user: {
     "open profile": "/app/user/institution",
     "explore profile": "/app/user/institution",
@@ -241,10 +243,82 @@ const roleLevelActions: Record<"user" | "provider" | "admin", Record<string, str
 };
 
 function normalizeLabel(label: string) {
-  return label.replace(/\s+/g, " ").trim().toLowerCase();
+  return label
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9\s]/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
 }
 
-function getRoleFromPath(pathname: string): "user" | "provider" | "admin" {
+function normalizeActionTable(actions: Record<string, string>, scope: string) {
+  const normalizedTable: Record<string, string> = {};
+  for (const [rawLabel, path] of Object.entries(actions)) {
+    const normalizedLabel = normalizeLabel(rawLabel);
+    if (!normalizedLabel) continue;
+    if (import.meta.env.DEV && normalizedTable[normalizedLabel] && normalizedTable[normalizedLabel] !== path) {
+      console.warn(`[FaithHub actions] Duplicate normalized action "${normalizedLabel}" in ${scope}. Last target wins.`);
+    }
+    normalizedTable[normalizedLabel] = path;
+  }
+  return normalizedTable;
+}
+
+const exactPageActions = Object.fromEntries(
+  Object.entries(rawExactPageActions).map(([pathname, actions]) => [
+    pathname,
+    normalizeActionTable(actions, `page:${pathname}`),
+  ]),
+) as Record<string, Record<string, string>>;
+
+const roleLevelActions = Object.fromEntries(
+  Object.entries(rawRoleLevelActions).map(([role, actions]) => [
+    role,
+    normalizeActionTable(actions, `role:${role}`),
+  ]),
+) as Record<RoleKey, Record<string, string>>;
+
+const knownActionTargets = new Set<string>([
+  "/",
+  "/access",
+  "/shell-preview",
+  "/app",
+  "/app-shell",
+  "/app/user",
+  "/app/provider",
+  "/app/admin",
+  ...Object.values(defaultPageForRole),
+  ...pageRegistry.map((page) => page.path),
+]);
+
+function validateActionTargets() {
+  const unknownTargets = new Set<string>();
+  for (const actions of Object.values(rawExactPageActions)) {
+    for (const path of Object.values(actions)) {
+      if (!knownActionTargets.has(path)) unknownTargets.add(path);
+    }
+  }
+  for (const actions of Object.values(rawRoleLevelActions)) {
+    for (const path of Object.values(actions)) {
+      if (!knownActionTargets.has(path)) unknownTargets.add(path);
+    }
+  }
+  if (unknownTargets.size > 0) {
+    console.warn(
+      `[FaithHub actions] Unknown navigation targets found: ${Array.from(unknownTargets)
+        .sort()
+        .join(", ")}`,
+    );
+  }
+}
+
+if (import.meta.env.DEV) {
+  validateActionTargets();
+}
+
+function getRoleFromPath(pathname: string): RoleKey {
   if (pathname.startsWith("/app/provider")) return "provider";
   if (pathname.startsWith("/app/admin")) return "admin";
   return "user";

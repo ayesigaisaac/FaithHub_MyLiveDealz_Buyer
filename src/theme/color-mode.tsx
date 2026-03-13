@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 export type ColorMode = "light" | "dark";
 
@@ -18,34 +18,38 @@ function applyMode(mode: ColorMode) {
   root.style.colorScheme = mode === "dark" ? "dark" : "light";
 }
 
+function getInitialMode(): ColorMode {
+  if (typeof window === "undefined") return "light";
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (saved === "dark" || saved === "light") return saved;
+  } catch {
+    // Ignore storage failures and continue with system preference fallback.
+  }
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 export function ColorModeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setModeState] = useState<ColorMode>("light");
+  const [mode, setModeState] = useState<ColorMode>(() => getInitialMode());
 
   useEffect(() => {
-    let initial: ColorMode = "light";
+    applyMode(mode);
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === "dark" || saved === "light") initial = saved;
-    } catch {
-      initial = "light";
-    }
-    setModeState(initial);
-    applyMode(initial);
-  }, []);
-
-  const setMode = (next: ColorMode) => {
-    setModeState(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
+      window.localStorage.setItem(STORAGE_KEY, mode);
     } catch {
       // Ignore storage failures (private mode, blocked storage).
     }
-    applyMode(next);
-  };
+  }, [mode]);
 
-  const toggle = () => setMode(mode === "dark" ? "light" : "dark");
+  const setMode = useCallback((next: ColorMode) => {
+    setModeState((prev) => (prev === next ? prev : next));
+  }, []);
 
-  const value = useMemo(() => ({ mode, setMode, toggle }), [mode]);
+  const toggle = useCallback(() => {
+    setModeState((prev) => (prev === "dark" ? "light" : "dark"));
+  }, []);
+
+  const value = useMemo(() => ({ mode, setMode, toggle }), [mode, setMode, toggle]);
   return <ColorModeContext.Provider value={value}>{children}</ColorModeContext.Provider>;
 }
 
@@ -57,4 +61,3 @@ export function useColorMode(): ColorModeContextValue {
   }
   return ctx;
 }
-

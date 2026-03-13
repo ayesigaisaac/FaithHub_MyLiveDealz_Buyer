@@ -35,3 +35,11 @@ npm run build
 - Only attached FaithHub pages were used as the application screens.
 - Pages are routed through a responsive app shell and code-split with lazy loading.
 - MUI theming and Tailwind utility styling are both included.
+
+## Enterprise Role Routes (Preview)
+
+- `/super-admin/*` platform-wide control tower scaffold
+- `/tenant-admin/*` tenant-level workspace scaffold
+- `/ops/*` trust and safety operations scaffold
+
+Use `/access` and choose a workspace card. Role context can be switched with `?as=<role>` and optional tenant scope with `&tenant=<tenant-id>`.
