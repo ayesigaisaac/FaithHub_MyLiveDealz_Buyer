@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -450,7 +450,7 @@ export default function FaithHubMultiRoleAppShell() {
 
             <StatsGrid stats={roleData.stats} role={role} />
 
-            <div className="grid gap-4 2xl:grid-cols-[1.12fr_0.88fr] xl:grid-cols-[1.08fr_0.92fr]">
+            <div className="grid gap-4 2xl:grid-cols-[1.12fr_0.88fr] xl:grid-cols-[1.12fr_0.88fr]">
               <div className="space-y-4">
                 <PageSurfacePreview
                   role={role}
@@ -528,7 +528,7 @@ function TopBar({
               <Sparkles className="h-5 w-5" />
             </div>
             <div className="hidden sm:block">
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-base font-semibold text-slate-900">FaithHub AppShell</div>
             </div>
           </div>
@@ -608,7 +608,7 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
         <Card className="overflow-hidden rounded-[32px] border border-white/70 bg-white/92 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.25)]">
           <CardContent className="p-3">
             <div className="mb-3 rounded-[24px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-4 text-white">
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">{roleData.label} role</div>
+              <div className="fh-eyebrow text-white/90">{roleData.label} role</div>
               {!sidebarCollapsed && (
                 <>
                   <div className="mt-2 text-xl font-semibold">{roleData.workspace}</div>
@@ -621,7 +621,7 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
               {roleData.sections.map((section) => (
                 <div key={section.title} className="space-y-2">
                   {!sidebarCollapsed && (
-                    <div className="px-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    <div className="px-2 fh-eyebrow text-slate-500">
                       {section.title}
                     </div>
                   )}
@@ -690,7 +690,7 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
           <div className="rounded-[28px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-5 text-white">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">FaithHub AppShell</div>
+                <div className="fh-eyebrow text-white/90">FaithHub AppShell</div>
                 <div className="mt-2 text-xl font-semibold">{roleData.workspace}</div>
               </div>
               <button onClick={close} className="rounded-2xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white">
@@ -704,7 +704,7 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
 
           {roleData.sections.map((section) => (
             <div key={section.title} className="space-y-2">
-              <div className="px-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{section.title}</div>
+              <div className="px-2 fh-eyebrow text-slate-500">{section.title}</div>
               {section.items.map((item) => {
                 const Icon = item.icon;
                 const active = item.id === currentPageId;
@@ -736,7 +736,7 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
   return (
     <Card className="overflow-hidden rounded-[36px] border border-white/70 bg-white/92 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.28)]">
       <CardContent className="p-0">
-        <div className="relative overflow-hidden bg-gradient-to-br from-[#03cd8c] via-[#21d29d] to-[#ebfcf6] p-5 sm:p-7">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#03cd8c] via-[#21d29d] to-[#ebfcf6] fh-pad-hero">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
           <div className="relative z-10 grid gap-5 xl:grid-cols-[0.66fr_0.34fr]">
             <div className="space-y-4 text-white">
@@ -745,11 +745,11 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
                 <Badge className={`rounded-full px-3 py-1 hover:bg-transparent ${getRoleBadge(role)}`}>{roleData.label} lane active</Badge>
               </div>
               <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">FaithHub foundation</div>
+                <div className="fh-eyebrow text-white/90">FaithHub foundation</div>
                 <h1 className="mt-2 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
                   {roleData.heroTitle}
                 </h1>
-                <p className="mt-3 max-w-3xl text-sm leading-7 text-white/90 sm:text-base">
+                <p className="mt-3 max-w-3xl fh-body text-white/90 sm:text-base">
                   {roleData.heroText}
                 </p>
               </div>
@@ -799,11 +799,11 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
 
 function StatsGrid({ stats, role }) {
   return (
-    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
       {stats.map((item) => (
         <Card key={item.label} className="rounded-[28px] border border-white/70 bg-white/92 shadow-sm">
           <CardContent className="p-5">
-            <div className={`text-xs font-semibold uppercase tracking-[0.22em] ${getRoleAccent(role)}`}>{item.label}</div>
+            <div className={`fh-eyebrow-wide ${getRoleAccent(role)}`}>{item.label}</div>
             <div className="mt-2 text-3xl font-semibold text-slate-900">{item.value}</div>
             <div className="mt-2 text-sm text-slate-500">{item.note}</div>
           </CardContent>
@@ -819,7 +819,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
 
   return (
     <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
-      <CardContent className="p-5 sm:p-6">
+      <CardContent className="fh-pad-panel">
         <SectionHeader
           title="Page surface preview"
           subtitle="The shell surrounds every page with structured actions, metadata, and contextual intelligence."
@@ -832,7 +832,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
                 <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">{currentPage?.template}</Badge>
               </div>
               <div className="text-2xl font-semibold text-slate-900">{currentPage?.label}</div>
-              <div className="mt-2 text-sm leading-7 text-slate-600">{currentPage?.description}</div>
+              <div className="mt-2 fh-body text-slate-600">{currentPage?.description}</div>
               <div className="mt-4 grid gap-2 sm:grid-cols-2">
                 <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">Breadcrumbs + route identity</div>
                 <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">Primary and secondary page actions</div>
@@ -856,7 +856,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
 
             <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm">
               <div className="mb-3 text-lg font-semibold text-slate-900">Cross-role handoff</div>
-              <div className="text-sm leading-7 text-slate-600">
+              <div className="fh-body text-slate-600">
                 This shell supports a clean handoff between roles. A {roleData.label.toLowerCase()} page can surface a linked {connectedLabel.toLowerCase()} destination without collapsing context or breaking workspace identity.
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -898,7 +898,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
 function RouteInventoryGrid({ roleData, currentPageId, goToPage }) {
   return (
     <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
-      <CardContent className="p-5 sm:p-6">
+      <CardContent className="fh-pad-panel">
         <SectionHeader
           title="Route inventory"
           subtitle="Every assigned page for the current role is already mapped into the shell.
@@ -944,7 +944,7 @@ function RouteInventoryGrid({ roleData, currentPageId, goToPage }) {
 function ShellCapabilitiesCard() {
   return (
     <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
-      <CardContent className="p-5 sm:p-6">
+      <CardContent className="fh-pad-panel">
         <SectionHeader
           title="Shell capabilities"
           subtitle="The shell is built to scale with the full FaithHub architecture across all roles."
@@ -953,7 +953,7 @@ function ShellCapabilitiesCard() {
           {shellCapabilities.map((item) => (
             <div key={item.title} className="rounded-[28px] border border-slate-200 bg-[#f8fafc] p-5">
               <div className="mb-2 text-base font-semibold text-slate-900">{item.title}</div>
-              <div className="text-sm leading-6 text-slate-600">{item.detail}</div>
+              <div className="fh-body-tight text-slate-600">{item.detail}</div>
             </div>
           ))}
         </div>
@@ -965,7 +965,7 @@ function ShellCapabilitiesCard() {
 function QuickSwitchCard({ role, handleRoleSwitch }) {
   return (
     <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
-      <CardContent className="p-5 sm:p-6">
+      <CardContent className="fh-pad-panel">
         <SectionHeader title="Role switch" subtitle="Fast switching between User and Provider with Admin always available." action="Role logic" />
         <RoleToggle role={role} handleRoleSwitch={handleRoleSwitch} />
         <div className="mt-4 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
@@ -979,7 +979,7 @@ function QuickSwitchCard({ role, handleRoleSwitch }) {
 function QuickActionsCard({ role, roleData, setPaletteOpen }) {
   return (
     <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
-      <CardContent className="p-5 sm:p-6">
+      <CardContent className="fh-pad-panel">
         <SectionHeader title="Quick actions" subtitle="High-frequency moves surfaced at shell level for the active role." action="Create" />
         <div className="grid gap-3 sm:grid-cols-2">
           {roleData.quickActions.map((action) => {
@@ -1006,7 +1006,7 @@ function QuickActionsCard({ role, roleData, setPaletteOpen }) {
 function AlertsCard({ roleData }) {
   return (
     <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
-      <CardContent className="p-5 sm:p-6">
+      <CardContent className="fh-pad-panel">
         <SectionHeader title="Alerts and activity" subtitle="Contextual signals that stay visible without overwhelming the main page." action="Inbox" />
         <div className="space-y-3">
           {roleData.alerts.map((alert) => (
@@ -1032,7 +1032,7 @@ function AlertsCard({ roleData }) {
 function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
   return (
     <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
-      <CardContent className="p-5 sm:p-6">
+      <CardContent className="fh-pad-panel">
         <SectionHeader title="Pinned and recent" subtitle="Fast return paths across roles and contexts." action="Library" />
         <div className="space-y-4">
           <div>
@@ -1125,7 +1125,7 @@ function CommandPalette({ query, setQuery, results, close, goToPage }) {
           </div>
         </div>
         <div className="max-h-[72vh] overflow-y-auto p-4 sm:p-5">
-          <div className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+          <div className="mb-3 fh-eyebrow-wide text-slate-500">
             {results.length} results
           </div>
           <div className="grid gap-3">
@@ -1149,7 +1149,7 @@ function CommandPalette({ query, setQuery, results, close, goToPage }) {
                       </span>
                     </div>
                     <div className="text-xs text-slate-500">{item.sectionTitle}  {item.route}</div>
-                    <div className="mt-2 text-sm leading-6 text-slate-600">{item.description}</div>
+                    <div className="mt-2 fh-body-tight text-slate-600">{item.description}</div>
                   </div>
                   <ChevronRight className="mt-1 h-4 w-4 shrink-0 text-slate-400" />
                 </button>
@@ -1175,4 +1175,7 @@ function SectionHeader({ title, subtitle, action = "Explore" }) {
     </div>
   );
 }
+
+
+
 

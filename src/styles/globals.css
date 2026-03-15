@@ -19,6 +19,36 @@
   --faithhub-page-bg: var(--bg);
   --faithhub-surface-bg: var(--surface);
   --faithhub-readable: var(--text-primary);
+
+  /* Visual pass tokens */
+  --fh-space-panel-sm: 1.375rem;
+  --fh-space-panel-lg: 1.625rem;
+  --fh-space-hero-sm: 1.5rem;
+  --fh-space-hero-lg: 1.875rem;
+  --fh-space-surface-sm: 1.5rem;
+  --fh-space-surface-lg: 2rem;
+  --fh-text-eyebrow: 0.68rem;
+  --fh-eyebrow-track: 0.16em;
+  --fh-text-eyebrow-soft: 0.68rem;
+  --fh-eyebrow-soft-track: 0.12em;
+  --fh-text-eyebrow-wide: 0.68rem;
+  --fh-eyebrow-wide-track: 0.22em;
+  --fh-text-label: 0.688rem;
+  --fh-label-track: 0.14em;
+  --fh-text-kicker: 0.9rem;
+  --fh-kicker-track: 0.24em;
+  --fh-text-kicker-muted: 0.74rem;
+  --fh-kicker-muted-track: 0.18em;
+  --fh-text-kicker-subtle: 0.88rem;
+  --fh-kicker-subtle-track: 0.15em;
+  --fh-text-kicker-wide: 0.9rem;
+  --fh-kicker-wide-track: 0.28em;
+  --fh-text-kicker-xl: 1rem;
+  --fh-kicker-xl-track: 0.18em;
+  --fh-text-body: 0.95rem;
+  --fh-text-body-tight: 0.92rem;
+  --fh-body-leading: 1.75;
+  --fh-body-tight-leading: 1.62;
 }
 
 html,
@@ -105,6 +135,115 @@ span,
 div,
 li {
   overflow-wrap: break-word;
+}
+
+/* Shared spacing and typography utilities for premium visual consistency */
+.fh-pad-panel {
+  padding: var(--fh-space-panel-sm);
+}
+
+.fh-pad-hero {
+  padding: var(--fh-space-hero-sm);
+}
+
+.fh-pad-surface {
+  padding: var(--fh-space-surface-sm);
+}
+
+.fh-eyebrow {
+  font-size: var(--fh-text-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--fh-eyebrow-track);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.fh-eyebrow-soft {
+  font-size: var(--fh-text-eyebrow-soft);
+  font-weight: 700;
+  letter-spacing: var(--fh-eyebrow-soft-track);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.fh-eyebrow-wide {
+  font-size: var(--fh-text-eyebrow-wide);
+  font-weight: 700;
+  letter-spacing: var(--fh-eyebrow-wide-track);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.fh-label {
+  font-size: var(--fh-text-label);
+  font-weight: 700;
+  letter-spacing: var(--fh-label-track);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.fh-kicker {
+  font-size: var(--fh-text-kicker);
+  font-weight: 600;
+  letter-spacing: var(--fh-kicker-track);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.fh-kicker-muted {
+  font-size: var(--fh-text-kicker-muted);
+  font-weight: 600;
+  letter-spacing: var(--fh-kicker-muted-track);
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.fh-kicker-subtle {
+  font-size: var(--fh-text-kicker-subtle);
+  font-weight: 600;
+  letter-spacing: var(--fh-kicker-subtle-track);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.fh-kicker-wide {
+  font-size: var(--fh-text-kicker-wide);
+  font-weight: 600;
+  letter-spacing: var(--fh-kicker-wide-track);
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.fh-kicker-xl {
+  font-size: var(--fh-text-kicker-xl);
+  font-weight: 600;
+  letter-spacing: var(--fh-kicker-xl-track);
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.fh-body {
+  font-size: var(--fh-text-body);
+  line-height: var(--fh-body-leading);
+}
+
+.fh-body-tight {
+  font-size: var(--fh-text-body-tight);
+  line-height: var(--fh-body-tight-leading);
+}
+
+@media (min-width: 640px) {
+  .fh-pad-panel {
+    padding: var(--fh-space-panel-lg);
+  }
+
+  .fh-pad-hero {
+    padding: var(--fh-space-hero-lg);
+  }
+
+  .fh-pad-surface {
+    padding: var(--fh-space-surface-lg);
+  }
 }
 
 @media (max-width: 640px) {

@@ -61,8 +61,8 @@ export default function FaithHubAccessGateway() {
         </div>
 
         <Card className="rounded-[32px] border-slate-200 bg-white/95 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.32)]">
-          <CardContent className="p-6 sm:p-8">
-            <div className="inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+          <CardContent className="fh-pad-surface">
+            <div className="inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
               Internal Preview Access
             </div>
             <h1 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
@@ -85,7 +85,7 @@ export default function FaithHubAccessGateway() {
                       <div className="mt-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-900 ring-1 ring-slate-200">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <p className="mt-4 text-sm leading-7 text-slate-600">{item.description}</p>
+                      <p className="mt-4 fh-body text-slate-600">{item.description}</p>
                       <div className="mt-4 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-xs font-semibold text-slate-500">
                         {item.path}
                       </div>
@@ -107,3 +107,5 @@ export default function FaithHubAccessGateway() {
     </div>
   );
 }
+
+

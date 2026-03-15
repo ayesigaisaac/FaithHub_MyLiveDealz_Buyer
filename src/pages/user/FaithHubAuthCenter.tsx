@@ -70,7 +70,7 @@ function MethodCard({ active, label, helper, icon: Icon, onClick }) {
         <Icon className="h-5 w-5" />
       </div>
       <div className="text-base font-semibold text-slate-900">{label}</div>
-      <div className="mt-1 text-sm leading-6 text-slate-600">{helper}</div>
+      <div className="mt-1 fh-body-tight text-slate-600">{helper}</div>
     </button>
   );
 }
@@ -115,7 +115,7 @@ export default function FaithHubAuthCenter() {
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+              <div className="fh-eyebrow text-[#03cd8c]">
                 EVzone Super App
               </div>
               <div className="text-lg font-semibold">FaithHub Authentication Center</div>
@@ -140,7 +140,7 @@ export default function FaithHubAuthCenter() {
             className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)]"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.1),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_20%)]" />
-            <div className="relative z-10 p-5 sm:p-7">
+            <div className="relative z-10 fh-pad-hero">
               <div className="mb-6 flex flex-wrap items-center gap-2 rounded-[24px] bg-[#f7fbfa] p-2 ring-1 ring-slate-200/80">
                 {tabs.map((item) => (
                   <SegmentedTab
@@ -153,11 +153,11 @@ export default function FaithHubAuthCenter() {
               </div>
 
               <div className="mb-6 max-w-2xl space-y-3">
-                <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                <div className="fh-eyebrow text-[#03cd8c]">
                   FH-U-002
                 </div>
                 <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">{title}</h1>
-                <p className="max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">{subtitle}</p>
+                <p className="max-w-2xl fh-body text-slate-600 sm:text-base">{subtitle}</p>
               </div>
 
               <div className="mb-6 grid gap-3 md:grid-cols-3">
@@ -171,9 +171,9 @@ export default function FaithHubAuthCenter() {
                 ))}
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+              <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
                 <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                  <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-3">
                       <div>
                         <div className="text-sm font-semibold text-slate-900">
@@ -335,10 +335,10 @@ export default function FaithHubAuthCenter() {
 
                 <div className="space-y-4">
                   <Card className="rounded-[28px] border-slate-200 bg-slate-950 text-white shadow-sm">
-                    <CardContent className="p-5 sm:p-6">
+                    <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
-                          <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">
+                          <div className="fh-eyebrow text-[#8ef0ca]">
                             Enterprise-ready
                           </div>
                           <div className="mt-2 text-xl font-semibold">SSO and organization access</div>
@@ -360,10 +360,10 @@ export default function FaithHubAuthCenter() {
                   </Card>
 
                   <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
-                    <CardContent className="p-5 sm:p-6">
+                    <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
-                          <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                          <div className="fh-eyebrow text-[#03cd8c]">
                             Trust and continuity
                           </div>
                           <div className="mt-2 text-xl font-semibold text-slate-900">What this page protects</div>
@@ -377,7 +377,7 @@ export default function FaithHubAuthCenter() {
                         {trustPoints.map((point) => (
                           <div key={point} className="flex gap-3 rounded-2xl border border-slate-100 bg-[#f8fafc] p-4">
                             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
-                            <div className="text-sm leading-6 text-slate-600">{point}</div>
+                            <div className="fh-body-tight text-slate-600">{point}</div>
                           </div>
                         ))}
                       </div>
@@ -386,7 +386,7 @@ export default function FaithHubAuthCenter() {
 
                   {offlineLibraryEnabled && (
                     <Card className="rounded-[28px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
-                      <CardContent className="p-5 sm:p-6">
+                      <CardContent className="fh-pad-panel">
                         <div className="mb-3 flex items-center gap-3">
                           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f77f00]/10 text-[#f77f00]">
                             <WifiOff className="h-5 w-5" />
@@ -396,7 +396,7 @@ export default function FaithHubAuthCenter() {
                             <div className="text-xs text-slate-500">Available when a previous valid session and cached library exist.</div>
                           </div>
                         </div>
-                        <div className="rounded-2xl border border-dashed border-[#f77f00]/20 bg-white p-4 text-sm leading-6 text-slate-600">
+                        <div className="rounded-2xl border border-dashed border-[#f77f00]/20 bg-white p-4 fh-body-tight text-slate-600">
                           Users can still open downloaded books, saved replays, and last-synced notes while the device is offline. Sensitive mutations wait until the connection is restored.
                         </div>
                       </CardContent>
@@ -414,11 +414,11 @@ export default function FaithHubAuthCenter() {
             className="flex flex-col gap-4"
           >
             <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#22d39f] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="mb-5 max-w-xl space-y-3 text-white">
-                  <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">Accessible and premium-ready</div>
+                  <div className="fh-eyebrow text-white/90">Accessible and premium-ready</div>
                   <h2 className="text-3xl font-semibold leading-tight">Authentication that feels calm, clear, and trustworthy.</h2>
-                  <p className="text-sm leading-7 text-white/85 sm:text-base">
+                  <p className="fh-body text-white/85 sm:text-base">
                     FaithHub avoids confusing puzzles, keeps labels visible, and balances convenience with protection across members, providers, and enterprise organizations.
                   </p>
                 </div>
@@ -448,10 +448,10 @@ export default function FaithHubAuthCenter() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/90 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Assistive details</div>
+                    <div className="fh-eyebrow text-[#03cd8c]">Assistive details</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Accessibility notes</div>
                   </div>
                   <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">No cognitive puzzles</Badge>
@@ -469,4 +469,6 @@ export default function FaithHubAuthCenter() {
     </div>
   );
 }
+
+
 

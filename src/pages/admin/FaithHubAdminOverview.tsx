@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -160,7 +160,7 @@ export default function FaithHubAdminOverview() {
               <Layers3 className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">FaithHub Admin Overview</div>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function FaithHubAdminOverview() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -183,7 +183,7 @@ export default function FaithHubAdminOverview() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -192,18 +192,18 @@ export default function FaithHubAdminOverview() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Watch the entire system</div>
+                      <div className="fh-kicker text-white/90">Watch the entire system</div>
                       <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         A premium admin overview for live operations, verification pressure, incidents, and cross-module system behavior.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This page gives admins a true system-wide view across FaithHub, Live Sessionz, FaithMart, messaging, verification, and moderation. It highlights what needs attention now and where trends are drifting out of normal range.
                       </p>
                     </div>
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Global posture</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="text-xs uppercase tracking-[0.18em] text-white/70">Overall state</div>
+                        <div className="fh-kicker-muted text-white/70">Overall state</div>
                         <div className="mt-1 text-3xl font-semibold text-white">Watch</div>
                         <div className="mt-2 text-sm text-white/80">9 active incidents and 4 anomaly panels need review.</div>
                       </div>
@@ -246,7 +246,7 @@ export default function FaithHubAdminOverview() {
             </div>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Live sessions running now"
                   subtitle="Global visibility into high-signal live sessions and health state."
@@ -276,7 +276,7 @@ export default function FaithHubAdminOverview() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Admin jump points"
                   subtitle="Cross-role entry points that keep admin oversight active."
@@ -292,7 +292,7 @@ export default function FaithHubAdminOverview() {
                       className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-left transition hover:border-[#03cd8c]/35 hover:bg-white"
                     >
                       <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                      <div className="mt-2 text-sm leading-6 text-slate-600">{item.detail}</div>
+                      <div className="mt-2 fh-body-tight text-slate-600">{item.detail}</div>
                     </button>
                   ))}
                 </div>
@@ -307,7 +307,7 @@ export default function FaithHubAdminOverview() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Incident alerts"
                   subtitle="The issues that require immediate admin attention."
@@ -330,7 +330,7 @@ export default function FaithHubAdminOverview() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Anomaly detection dashboards"
                   subtitle="World-class cross-module drift and irregularity tracking."
@@ -351,7 +351,7 @@ export default function FaithHubAdminOverview() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Cross-module status and BI exports</div>
@@ -411,4 +411,7 @@ function SectionHeader({ title, subtitle, action = "View all", onAction }: { tit
     </div>
   );
 }
+
+
+
 

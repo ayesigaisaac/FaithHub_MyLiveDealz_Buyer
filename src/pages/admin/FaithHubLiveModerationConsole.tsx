@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -154,7 +154,7 @@ export default function FaithHubLiveModerationConsole() {
               <ShieldAlert className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Moderation Console</div>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default function FaithHubLiveModerationConsole() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.04fr_0.96fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -177,7 +177,7 @@ export default function FaithHubLiveModerationConsole() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -186,18 +186,18 @@ export default function FaithHubLiveModerationConsole() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Protect live spaces in real time</div>
+                      <div className="fh-kicker text-white/90">Protect live spaces in real time</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         A live trust console for chat control, stream enforcement, user bans, and automated media risk screening.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         Admins can monitor active rooms, process reports, apply chat moderation, trigger stream takedowns, review automated media flags, and escalate complex incidents into dedicated human moderation lanes.
                       </p>
                     </div>
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Current room focus</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="text-xs uppercase tracking-[0.18em] text-white/70">Room</div>
+                        <div className="fh-kicker-muted text-white/70">Room</div>
                         <div className="mt-1 text-2xl font-semibold text-white">{selectedRoom}</div>
                         <div className="mt-2 text-sm text-white/80">{filteredQueue.length} queue items match current filter.</div>
                       </div>
@@ -218,7 +218,7 @@ export default function FaithHubLiveModerationConsole() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Active live rooms"
                   subtitle="Understand where moderation pressure is rising before it becomes an incident."
@@ -251,7 +251,7 @@ export default function FaithHubLiveModerationConsole() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Report queue and controls"
                   subtitle="Moderate live chat and session safety from a single response surface."
@@ -314,7 +314,7 @@ export default function FaithHubLiveModerationConsole() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Automated media moderation"
                   subtitle="Screen thumbnails, clips, and user-generated uploads before they spread."
@@ -358,7 +358,7 @@ export default function FaithHubLiveModerationConsole() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Escalation and human moderation"
                   subtitle="Premium trust and safety depth for high-risk or high-scale live environments."
@@ -389,7 +389,7 @@ export default function FaithHubLiveModerationConsole() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline posture"
                   subtitle="Keep admins informed even when live controls cannot be executed."
@@ -428,4 +428,7 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+
+
+
 

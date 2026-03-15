@@ -23,7 +23,7 @@ export default function SuperAdminOverview() {
         {kpis.map((item) => (
           <Card key={item.label} className="rounded-3xl border border-slate-200 bg-white shadow-sm">
             <CardContent className="p-5">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{item.label}</div>
+              <div className="fh-eyebrow text-slate-500">{item.label}</div>
               <div className="mt-2 text-2xl font-semibold text-slate-900">{item.value}</div>
               <div className="mt-1 text-sm text-slate-500">{item.note}</div>
             </CardContent>
@@ -33,7 +33,7 @@ export default function SuperAdminOverview() {
 
       <Card className="rounded-3xl border border-slate-200 bg-white shadow-sm">
         <CardContent className="p-5">
-          <div className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500">Platform Signals</div>
+          <div className="fh-kicker-subtle text-slate-500">Platform Signals</div>
           <div className="mt-3 space-y-3">
             {systemSignals.map((signal) => (
               <div key={signal} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
@@ -46,3 +46,5 @@ export default function SuperAdminOverview() {
     </div>
   );
 }
+
+

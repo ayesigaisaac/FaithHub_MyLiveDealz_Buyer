@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -96,7 +96,7 @@ export default function FaithHubDonationsFunds() {
               <HeartHandshake className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Donations & Funds</div>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function FaithHubDonationsFunds() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.02fr_0.98fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -119,7 +119,7 @@ export default function FaithHubDonationsFunds() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -128,18 +128,18 @@ export default function FaithHubDonationsFunds() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Manage generosity with rigor</div>
+                      <div className="fh-kicker text-white/90">Manage generosity with rigor</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Create giving funds, segment donors, manage payouts, and prepare premium-grade reconciliation from one command layer.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         Donations & Funds supports provider-side fund creation, recurring settings, receipt fields, privacy controls, payout timing, and enterprise-grade fundraising enhancements like instant payouts and reconciliation tooling.
                       </p>
                     </div>
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Selected fund</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="text-xs uppercase tracking-[0.18em] text-white/70">Fund</div>
+                        <div className="fh-kicker-muted text-white/70">Fund</div>
                         <div className="mt-1 text-2xl font-semibold text-white">{activeFund?.title}</div>
                         <div className="mt-2 text-sm text-white/80">Target {activeFund?.target}</div>
                       </div>
@@ -160,7 +160,7 @@ export default function FaithHubDonationsFunds() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Funds and campaigns"
                   subtitle="Create and manage institution giving destinations with recurring behavior and receipt readiness."
@@ -191,7 +191,7 @@ export default function FaithHubDonationsFunds() {
 
             <div className="grid gap-4 lg:grid-cols-[0.48fr_0.52fr]">
               <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+                <CardContent className="fh-pad-panel">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Donor segmentation and privacy</div>
                   <div className="space-y-4">
                     <div className="space-y-3">
@@ -216,7 +216,7 @@ export default function FaithHubDonationsFunds() {
               </Card>
 
               <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+                <CardContent className="fh-pad-panel">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Recurring and receipts</div>
                   <div className="space-y-4">
                     <button
@@ -253,7 +253,7 @@ export default function FaithHubDonationsFunds() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Payout scheduling"
                   subtitle="Define how money leaves the platform into the institutions payout flow."
@@ -280,7 +280,7 @@ export default function FaithHubDonationsFunds() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Premium fundraising suite"
                   subtitle="Advanced money movement and finance control for larger institutions."
@@ -320,7 +320,7 @@ export default function FaithHubDonationsFunds() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline behavior"
                   subtitle="Fundraising operations stay visible, but edits require connection."
@@ -360,4 +360,7 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+
+
+
 

@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -154,7 +154,7 @@ export default function FaithHubReviews() {
               <MessageSquareText className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Reviews</div>
             </div>
           </div>
@@ -172,7 +172,7 @@ export default function FaithHubReviews() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.03fr_0.97fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -180,7 +180,7 @@ export default function FaithHubReviews() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -190,11 +190,11 @@ export default function FaithHubReviews() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Feedback with integrity</div>
+                      <div className="fh-kicker text-white/90">Feedback with integrity</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Review sessions, series, and institutions with structured trust signals, safety reporting, and member credibility cues.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This page helps users leave useful feedback while protecting the ecosystem from abuse. It supports structured rating dimensions, verified badges, moderation reporting, and offline draft handling.
                       </p>
 
@@ -256,7 +256,7 @@ export default function FaithHubReviews() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Write a review"
                   subtitle="Rate with more context than a single star count."
@@ -305,7 +305,7 @@ export default function FaithHubReviews() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Community reviews"
                   subtitle="Helpful public feedback with reporting and trust indicators."
@@ -333,7 +333,7 @@ export default function FaithHubReviews() {
                         <div className="rounded-full bg-[#f8fafc] px-3 py-2 ring-1 ring-slate-200">Safety {review.safety}/5</div>
                       </div>
 
-                      <div className="text-sm leading-6 text-slate-600">{review.text}</div>
+                      <div className="fh-body-tight text-slate-600">{review.text}</div>
 
                       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
@@ -362,7 +362,7 @@ export default function FaithHubReviews() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Trust and moderation"
                   subtitle="Keep review quality high without damaging authentic feedback."
@@ -392,7 +392,7 @@ export default function FaithHubReviews() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Structured review dimensions</div>
@@ -409,7 +409,7 @@ export default function FaithHubReviews() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline review draft"
                   subtitle="Protect user effort if the connection drops while writing."
@@ -438,4 +438,7 @@ export default function FaithHubReviews() {
     </div>
   );
 }
+
+
+
 

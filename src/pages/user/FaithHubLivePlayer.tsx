@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -97,7 +97,7 @@ export default function FaithHubLivePlayer() {
               <PlayCircle className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Player</div>
             </div>
           </div>
@@ -113,7 +113,7 @@ export default function FaithHubLivePlayer() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ export default function FaithHubLivePlayer() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -131,11 +131,11 @@ export default function FaithHubLivePlayer() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Youth Impact Night  Live now</div>
+                      <div className="fh-kicker text-white/90">Youth Impact Night  Live now</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         A full live faith experience with playback control, translation, interaction, moderation, clips, and premium engagement lanes.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         The live player is where FaithHub becomes truly interactive. Users can tune quality, captions, translation, reactions, reporting, donations, membership lanes, and AI-powered highlights while the stream continues in real time.
                       </p>
 
@@ -171,7 +171,7 @@ export default function FaithHubLivePlayer() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Player and controls"
                   subtitle="Core playback, accessibility, reporting, and giving actions."
@@ -180,7 +180,7 @@ export default function FaithHubLivePlayer() {
                 <div className="space-y-4">
                   <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-4 h-[360px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200" />
-                    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                    <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
                       <select
                         value={quality}
                         onChange={(e) => setQuality(e.target.value)}
@@ -224,7 +224,7 @@ export default function FaithHubLivePlayer() {
                       </button>
                     </div>
 
-                    <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
                       <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
                         <HeartHandshake className="mr-2 h-4 w-4" /> Donate
                       </Button>
@@ -261,7 +261,7 @@ export default function FaithHubLivePlayer() {
                                 </span>
                               )}
                             </div>
-                            <div className="text-sm leading-6 text-slate-600">{message.text}</div>
+                            <div className="fh-body-tight text-slate-600">{message.text}</div>
                           </div>
                         ))}
                       </div>
@@ -309,7 +309,7 @@ export default function FaithHubLivePlayer() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="AI highlights and takeaways"
                   subtitle="Subscriber-grade summary intelligence during live or replay playback."
@@ -341,10 +341,10 @@ export default function FaithHubLivePlayer() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Premium engagement</div>
+                    <div className="fh-eyebrow text-[#f77f00]">Premium engagement</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Badges, member lanes, and ticket validation</div>
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Monetized live layer</Badge>
@@ -361,7 +361,7 @@ export default function FaithHubLivePlayer() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Auto-retry and fallback"
                   subtitle="The live player should keep serving the user even when the connection weakens."
@@ -406,4 +406,7 @@ export default function FaithHubLivePlayer() {
     </div>
   );
 }
+
+
+
 

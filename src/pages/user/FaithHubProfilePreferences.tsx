@@ -136,7 +136,7 @@ export default function FaithHubProfilePreferences() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+              <div className="fh-eyebrow text-[#03cd8c]">
                 EVzone Super App
               </div>
               <div className="text-lg font-semibold">FaithHub Profile & Faith Preferences</div>
@@ -153,7 +153,7 @@ export default function FaithHubProfilePreferences() {
           </div>
         </motion.div>
 
-        <div className="grid flex-1 gap-4 xl:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid flex-1 gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -161,15 +161,15 @@ export default function FaithHubProfilePreferences() {
             className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)]"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.1),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_22%)]" />
-            <div className="relative z-10 p-5 sm:p-7">
+            <div className="relative z-10 fh-pad-hero">
               <div className="mb-6 flex flex-col gap-3 rounded-[28px] bg-gradient-to-r from-[#03cd8c] to-[#20cf9c] p-5 text-white shadow-[0_24px_80px_-36px_rgba(3,205,140,0.5)] sm:p-6">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="max-w-2xl space-y-3">
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-white/90">FH-U-003</div>
+                    <div className="fh-eyebrow text-white/90">FH-U-003</div>
                     <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
                       Shape your profile, faith preferences, audience groups, and privacy in one calm place.
                     </h1>
-                    <p className="text-sm leading-7 text-white/85 sm:text-base">
+                    <p className="fh-body text-white/85 sm:text-base">
                       Sensitive fields stay optional. Minor-safe defaults, consent journaling, and family account readiness keep the experience inclusive, adaptable, and trustworthy across denominations.
                     </p>
                   </div>
@@ -196,10 +196,10 @@ export default function FaithHubProfilePreferences() {
 
               <div className="space-y-4">
                 <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                  <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                        <div className="fh-eyebrow text-[#03cd8c]">
                           Identity basics
                         </div>
                         <div className="mt-2 text-xl font-semibold text-slate-900">Profile presence</div>
@@ -274,10 +274,10 @@ export default function FaithHubProfilePreferences() {
                 </Card>
 
                 <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                  <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                        <div className="fh-eyebrow text-[#03cd8c]">
                           Topics and discovery
                         </div>
                         <div className="mt-2 text-xl font-semibold text-slate-900">What should FaithHub surface more often?</div>
@@ -301,10 +301,10 @@ export default function FaithHubProfilePreferences() {
                 </Card>
 
                 <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                  <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                        <div className="fh-eyebrow text-[#03cd8c]">
                           Audience groups
                         </div>
                         <div className="mt-2 text-xl font-semibold text-slate-900">Enrollment preferences and smaller faith communities</div>
@@ -336,10 +336,10 @@ export default function FaithHubProfilePreferences() {
                 </Card>
 
                 <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
-                  <CardContent className="p-5 sm:p-6">
+                  <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                        <div className="fh-eyebrow text-[#03cd8c]">
                           Privacy, safety and age band
                         </div>
                         <div className="mt-2 text-xl font-semibold text-slate-900">Control who sees what, and how safeguards apply</div>
@@ -407,7 +407,7 @@ export default function FaithHubProfilePreferences() {
                               <AlertTriangle className="h-4 w-4 text-[#f77f00]" />
                               Minor-safe defaults
                             </div>
-                            <div className="text-sm leading-6 text-slate-600">
+                            <div className="fh-body-tight text-slate-600">
                               Age-sensitive accounts use reduced public discoverability, limited direct messaging, safer live chat defaults, and stricter moderation rules until appropriate verification or guardian approval is complete.
                             </div>
                           </div>
@@ -450,10 +450,10 @@ export default function FaithHubProfilePreferences() {
             className="flex flex-col gap-4"
           >
             <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">
+                    <div className="fh-eyebrow text-[#8ef0ca]">
                       Live preview
                     </div>
                     <div className="mt-2 text-xl font-semibold">How this profile behaves in FaithHub</div>
@@ -502,10 +502,10 @@ export default function FaithHubProfilePreferences() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                    <div className="fh-eyebrow text-[#03cd8c]">
                       Consent journaling
                     </div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Recent privacy and preference history</div>
@@ -521,7 +521,7 @@ export default function FaithHubProfilePreferences() {
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                        <div className="mt-1 text-sm leading-6 text-slate-600">{item.detail}</div>
+                        <div className="mt-1 fh-body-tight text-slate-600">{item.detail}</div>
                         <div className="mt-2 flex items-center gap-2 text-xs text-slate-500">
                           <Clock3 className="h-3.5 w-3.5" />
                           {item.time}
@@ -534,10 +534,10 @@ export default function FaithHubProfilePreferences() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">
+                    <div className="fh-eyebrow text-[#f77f00]">
                       Offline and verification states
                     </div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Queued edits and extra checks</div>
@@ -565,4 +565,6 @@ export default function FaithHubProfilePreferences() {
     </div>
   );
 }
+
+
 

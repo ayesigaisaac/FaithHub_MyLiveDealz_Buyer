@@ -1,4 +1,4 @@
-ï»¿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
 import { Bell, Menu, PanelLeftClose, PanelLeftOpen, Search } from "lucide-react";
@@ -71,7 +71,7 @@ export default function AppShellLayout() {
     const keyFor = (page: PageRegistryItem) => {
       if (!adminAllAccess) return getSectionLabel(routeRole, page.section);
       const roleLabel = page.role === "provider" ? "Provider" : page.role === "admin" ? "Admin" : "User";
-      return `${roleLabel} Â· ${getSectionLabel(page.role, page.section)}`;
+      return `${roleLabel} · ${getSectionLabel(page.role, page.section)}`;
     };
     return pages.reduce((acc, page) => {
       const key = keyFor(page);
@@ -132,7 +132,7 @@ export default function AppShellLayout() {
               <Search className="h-4 w-4" />
             </div>
             <div className="min-w-0">
-              <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Search</div>
+              <div className="fh-label text-slate-400">Search</div>
               <div className="truncate text-sm text-slate-500">Pages, institutions, routes, and workspace tools</div>
             </div>
             <span className="ml-auto rounded-full bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{pages.length} pages</span>
@@ -140,7 +140,7 @@ export default function AppShellLayout() {
 
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
             <div className="hidden items-center gap-2 rounded-[20px] border border-slate-200 bg-white px-2 py-1.5 shadow-sm xl:flex">
-              <span className="px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Display</span>
+              <span className="px-2 fh-label text-slate-400">Display</span>
               <ColorModeToggle className="inline-flex" />
             </div>
             <RoleSwitcher role={shellRole} onChange={(nextRole) => navigate(withAdminAccess(defaultPageForRole[nextRole], adminAllAccess || nextRole === "admin"))} />
@@ -154,7 +154,7 @@ export default function AppShellLayout() {
               </button>
             ) : null}
             <div className="flex items-center gap-2 rounded-[20px] border border-slate-200 bg-white px-2 py-1.5 shadow-sm">
-              <span className="hidden px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 sm:inline">Alerts</span>
+              <span className="hidden px-2 fh-label text-slate-400 sm:inline">Alerts</span>
               <button
                 type="button"
                 aria-label="Open alerts"
@@ -180,7 +180,7 @@ export default function AppShellLayout() {
 
         <main className="min-w-0 flex-1" onClickCapture={handlePageAction}>
           <Card className="mb-5 rounded-[24px] border border-slate-200 bg-white shadow-sm">
-            <CardContent className="p-5 sm:p-6">
+            <CardContent className="fh-pad-panel">
               <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <div className="min-w-0">
                   <div className="text-[28px] font-bold leading-none text-slate-900">{currentPage?.label || "FaithHub"}</div>
@@ -188,7 +188,7 @@ export default function AppShellLayout() {
                 </div>
                 <div className="flex min-w-0 flex-wrap gap-2">
                   <Badge className="rounded-full border-emerald-100 bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
-                    {adminAllAccess ? "ADMIN Â· ALL ACCESS" : routeRole.toUpperCase()}
+                    {adminAllAccess ? "ADMIN · ALL ACCESS" : routeRole.toUpperCase()}
                   </Badge>
                   <Badge className="max-w-full truncate rounded-full bg-slate-50 text-slate-500 hover:bg-slate-50 sm:max-w-[24rem]">{location.pathname}</Badge>
                 </div>
@@ -237,13 +237,13 @@ function SidebarCard({ collapsed, role, grouped, currentPath, navigate }: { coll
     <Card className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.35)]">
       <CardContent className="p-3">
         <div className="mb-4 rounded-[20px] border border-emerald-100 bg-emerald-50 p-4">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-emerald-700">Workspace</div>
-          {!collapsed ? <><div className="mt-2 text-xl font-semibold text-slate-900">{role === 'user' ? 'My Faith Space' : role === 'provider' ? 'Institution Workspace' : 'Global Control Tower'}</div><div className="mt-1 text-sm leading-6 text-slate-500">{role === 'user' ? 'Discovery, live sessions, events, and giving in one place.' : role === 'provider' ? 'Operations, audiences, events, and revenue in one workspace.' : 'Verification, moderation, policy, and security oversight.'}</div></> : null}
+          <div className="fh-label text-emerald-700">Workspace</div>
+          {!collapsed ? <><div className="mt-2 text-xl font-semibold text-slate-900">{role === 'user' ? 'My Faith Space' : role === 'provider' ? 'Institution Workspace' : 'Global Control Tower'}</div><div className="mt-1 fh-body-tight text-slate-500">{role === 'user' ? 'Discovery, live sessions, events, and giving in one place.' : role === 'provider' ? 'Operations, audiences, events, and revenue in one workspace.' : 'Verification, moderation, policy, and security oversight.'}</div></> : null}
         </div>
         <div className="space-y-4">
           {Object.entries(grouped).map(([section, items]) => (
             <div key={section} className="space-y-2">
-              {!collapsed ? <div className="px-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">{section}</div> : null}
+              {!collapsed ? <div className="px-2 fh-label text-slate-400">{section}</div> : null}
               <div className="space-y-1">
                 {items.map((item) => {
                   const Icon = item.icon;
@@ -269,6 +269,9 @@ function SidebarCard({ collapsed, role, grouped, currentPath, navigate }: { coll
     </Card>
   );
 }
+
+
+
 
 
 

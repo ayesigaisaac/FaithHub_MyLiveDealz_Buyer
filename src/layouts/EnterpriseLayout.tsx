@@ -79,7 +79,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
           </div>
 
           <div className="mt-3 hidden flex-wrap items-center justify-end gap-2 lg:flex">
-            <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 fh-eyebrow-soft text-slate-500">
               Role
               <select
                 aria-label="Select enterprise role"
@@ -100,7 +100,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
             </label>
 
             {tenantSwitchEnabled ? (
-              <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 fh-eyebrow-soft text-slate-500">
                 Tenant
                 <select
                   aria-label="Select tenant"
@@ -129,7 +129,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
           {mobileNavOpen ? (
             <div className="mt-4 space-y-4 border-t border-slate-200 pt-4 lg:hidden">
               <div className="grid gap-3">
-                <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 fh-eyebrow-soft text-slate-500">
                   Role
                   <select
                     aria-label="Select enterprise role"
@@ -151,7 +151,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                 </label>
 
                 {tenantSwitchEnabled ? (
-                  <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                  <label className="rounded-2xl border border-slate-200 bg-white px-3 py-2 fh-eyebrow-soft text-slate-500">
                     Tenant
                     <select
                       aria-label="Select tenant"
@@ -172,7 +172,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
               <Card className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm">
                 <CardContent className="p-3">
                   <div className="mb-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-                    <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Workspace</div>
+                    <div className="fh-eyebrow text-slate-500">Workspace</div>
                     <div className="mt-1 text-sm font-semibold text-slate-900">
                       {activeTenant ? activeTenant.name : "Platform scope"}
                     </div>
@@ -240,7 +240,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
           <Card className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_20px_55px_-35px_rgba(15,23,42,0.35)]">
             <CardContent className="p-3">
               <div className="mb-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Workspace</div>
+                <div className="fh-eyebrow text-slate-500">Workspace</div>
                 <div className="mt-1 text-sm font-semibold text-slate-900">
                   {activeTenant ? activeTenant.name : "Platform scope"}
                 </div>
@@ -305,7 +305,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
             <CardContent className="p-4 sm:p-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
-                  <div className="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500">
+                  <div className="fh-kicker-subtle text-slate-500">
                     Global Command Search
                   </div>
                   <div className="mt-1 text-sm text-slate-600">
@@ -332,3 +332,4 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
     </div>
   );
 }
+

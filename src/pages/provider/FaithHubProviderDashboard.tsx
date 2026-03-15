@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -75,7 +75,7 @@ export default function FaithHubProviderDashboard() {
               <BarChart3 className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-600">Provider workspace</div>
+              <div className="fh-eyebrow text-emerald-600">Provider workspace</div>
               <div className="text-lg font-semibold">Provider Dashboard</div>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function FaithHubProviderDashboard() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -108,11 +108,11 @@ export default function FaithHubProviderDashboard() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.16em] text-emerald-600">Provider dashboard</div>
+                      <div className="fh-kicker-subtle text-emerald-600">Provider dashboard</div>
                       <h1 className="max-w-[18ch] text-[2rem] font-semibold leading-[1.08] sm:text-[2.25rem]">
                         See stream health, donations, alerts, and upcoming activity in one view.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
+                      <p className="max-w-2xl fh-body text-slate-500 sm:text-base">
                         Track what is happening now, what needs attention next, and where the team should step in without scanning multiple screens.
                       </p>
                     </div>
@@ -120,7 +120,7 @@ export default function FaithHubProviderDashboard() {
                       <div className="mb-3 text-sm font-semibold text-slate-900">Alert posture</div>
                       <div className="space-y-3">
                         <div className="rounded-[16px] border border-emerald-100 bg-emerald-50 p-4">
-                          <div className="text-xs uppercase tracking-[0.18em] text-emerald-700">Real-time</div>
+                          <div className="fh-kicker-muted text-emerald-700">Real-time</div>
                           <div className="mt-1 text-2xl font-semibold text-slate-900">3 active anomalies</div>
                         </div>
                         <div className="grid gap-2 lg:grid-cols-2">
@@ -140,7 +140,7 @@ export default function FaithHubProviderDashboard() {
               </CardContent>
             </Card>
 
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
               {kpis.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -180,7 +180,7 @@ export default function FaithHubProviderDashboard() {
                           {stream.health}
                         </span>
                       </div>
-                      <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2 xl:grid-cols-4">
+                      <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2 2xl:grid-cols-4">
                         <div className="rounded-2xl bg-[#f8fafc] px-3 py-2">Bitrate: {stream.bitrate}</div>
                         <div className="rounded-2xl bg-[#f8fafc] px-3 py-2">Latency: {stream.latency}</div>
                         <div className="rounded-2xl bg-[#f8fafc] px-3 py-2">Viewers: {stream.viewers}</div>
@@ -314,4 +314,7 @@ export default function FaithHubProviderDashboard() {
     </div>
   );
 }
+
+
+
 

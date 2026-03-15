@@ -17,6 +17,15 @@ const rawExactPageActions: Record<string, Record<string, string>> = {
     "discover institutions": "/app/user/discover",
     "open home": "/app/user/home",
   },
+  "/app/user/home": {
+    "open watch live": "/app/user/live",
+    "open catch up": "/app/user/replay",
+    "open give": "/app/user/giving",
+    "open join group": "/app/user/discover",
+    "open calendar": "/app/user/events",
+    "open event": "/app/user/events/detail",
+    "open series": "/app/user/series/detail",
+  },
   "/app/user/discover": {
     "open profile": "/app/user/institution",
     "explore profile": "/app/user/institution",
@@ -86,6 +95,7 @@ const rawExactPageActions: Record<string, Record<string, string>> = {
   "/app/user/giving": {
     "manage plan": "/app/user/membership",
     "open institution": "/app/user/institution",
+    "continue to payment": "/app/user/membership",
   },
   "/app/user/membership": {
     "manage plan": "/app/user/settings",

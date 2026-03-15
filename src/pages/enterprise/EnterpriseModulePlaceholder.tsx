@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { useParams } from "react-router-dom";
 import { roleDisplayName } from "@/config/permissions";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,12 +23,13 @@ export default function EnterpriseModulePlaceholder({ role }: EnterpriseModulePl
   return (
     <Card className="rounded-3xl border border-slate-200 bg-white shadow-sm">
       <CardContent className="p-6">
-        <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{roleDisplayName[role]} Module</div>
+        <div className="fh-eyebrow text-slate-500">{roleDisplayName[role]} Module</div>
         <div className="mt-2 text-2xl font-semibold text-slate-900">{toTitleCase(section)}</div>
-        <div className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
+        <div className="mt-3 max-w-3xl fh-body text-slate-600">
           This route is wired into the enterprise shell and permissions system. Replace this placeholder with a dedicated module page when feature details are ready.
         </div>
       </CardContent>
     </Card>
   );
 }
+

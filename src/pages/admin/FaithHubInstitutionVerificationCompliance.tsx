@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -108,7 +108,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
               <BadgeCheck className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Institution Verification & Compliance</div>
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.02fr_0.98fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -131,7 +131,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -140,18 +140,18 @@ export default function FaithHubInstitutionVerificationCompliance() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Trust starts with provider legitimacy</div>
+                      <div className="fh-kicker text-white/90">Trust starts with provider legitimacy</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Approve institutions, validate administrators, resolve role disputes, and issue verified trust signals with rigor.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This page centralizes provider approval, badge management, staff-role disputes, location checks, and identity workflows. Premium tools add compliance automation and exportable audit packs for formal review environments.
                       </p>
                     </div>
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Verification posture</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="text-xs uppercase tracking-[0.18em] text-white/70">Pending actions</div>
+                        <div className="fh-kicker-muted text-white/70">Pending actions</div>
                         <div className="mt-1 text-3xl font-semibold text-white">6</div>
                         <div className="mt-2 text-sm text-white/80">Providers, badges, and disputes currently awaiting review.</div>
                       </div>
@@ -172,7 +172,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Provider approval queue"
                   subtitle="Approve institutions, manage badges, and identify exceptions quickly."
@@ -229,7 +229,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Identity verification workflow"
                   subtitle="Stronger trust checks for admins and sensitive provider actions."
@@ -263,7 +263,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Staff role disputes"
                   subtitle="Resolve conflicts over administrative access and role hierarchy."
@@ -290,7 +290,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Compliance automation and audit packs"
                   subtitle="Premium controls for deeper governance and formal review trails."
@@ -346,4 +346,7 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+
+
+
 

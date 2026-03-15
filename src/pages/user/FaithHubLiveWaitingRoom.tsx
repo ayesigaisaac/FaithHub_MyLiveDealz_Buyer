@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -84,7 +84,7 @@ export default function FaithHubLiveWaitingRoom() {
               <TimerReset className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Waiting Room</div>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function FaithHubLiveWaitingRoom() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.02fr_0.98fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export default function FaithHubLiveWaitingRoom() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -118,11 +118,11 @@ export default function FaithHubLiveWaitingRoom() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.62fr_0.38fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Youth Impact Night</div>
+                      <div className="fh-kicker text-white/90">Youth Impact Night</div>
                       <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         Gather early, review the agenda, test the connection, and prepare your language and accessibility settings before the live session begins.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         The waiting room is the bridge between discovery and participation. Users can see countdowns, session rules, pre-chat, polls, prayer requests, sharing tools, and donation prompts before the stream opens.
                       </p>
 
@@ -152,7 +152,7 @@ export default function FaithHubLiveWaitingRoom() {
                         ].map((item) => (
                           <div key={item.label} className="rounded-2xl border border-white/15 bg-white/10 px-3 py-4">
                             <div className="text-3xl font-semibold text-white">{item.value}</div>
-                            <div className="mt-1 text-xs uppercase tracking-[0.18em] text-white/70">{item.label}</div>
+                            <div className="mt-1 fh-kicker-muted text-white/70">{item.label}</div>
                           </div>
                         ))}
                       </div>
@@ -169,7 +169,7 @@ export default function FaithHubLiveWaitingRoom() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Agenda and session rules"
                   subtitle="Users know what comes next and how to participate safely."
@@ -193,7 +193,7 @@ export default function FaithHubLiveWaitingRoom() {
                       {rules.map((item) => (
                         <div key={item} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-[#f8fafc] p-3">
                           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
-                          <div className="text-sm leading-6 text-slate-600">{item}</div>
+                          <div className="fh-body-tight text-slate-600">{item}</div>
                         </div>
                       ))}
                     </div>
@@ -203,7 +203,7 @@ export default function FaithHubLiveWaitingRoom() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Pre-chat, polls, and prayer requests"
                   subtitle="Give the audience meaningful interaction before the session opens."
@@ -216,7 +216,7 @@ export default function FaithHubLiveWaitingRoom() {
                           <div className="text-sm font-semibold text-slate-900">{message.name}</div>
                           <span className="rounded-full bg-[#ecfff8] px-2.5 py-1 text-xs font-semibold text-[#03cd8c]">{message.badge}</span>
                         </div>
-                        <div className="text-sm leading-6 text-slate-600">{message.text}</div>
+                        <div className="fh-body-tight text-slate-600">{message.text}</div>
                       </div>
                     ))}
                   </div>
@@ -270,7 +270,7 @@ export default function FaithHubLiveWaitingRoom() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Language, captions, and connection"
                   subtitle="Tune accessibility and bandwidth before playback starts."
@@ -284,7 +284,7 @@ export default function FaithHubLiveWaitingRoom() {
                     </div>
                     <div className="grid gap-3 sm:grid-cols-2">
                       <label className="block space-y-2">
-                        <span className="text-xs uppercase tracking-[0.16em] text-white/60">Captions</span>
+                        <span className="fh-eyebrow text-white/60">Captions</span>
                         <select
                           value={captionsLanguage}
                           onChange={(e) => setCaptionsLanguage(e.target.value)}
@@ -296,7 +296,7 @@ export default function FaithHubLiveWaitingRoom() {
                         </select>
                       </label>
                       <label className="block space-y-2">
-                        <span className="text-xs uppercase tracking-[0.16em] text-white/60">Live translation</span>
+                        <span className="fh-eyebrow text-white/60">Live translation</span>
                         <select
                           value={translationLanguage}
                           onChange={(e) => setTranslationLanguage(e.target.value)}
@@ -354,10 +354,10 @@ export default function FaithHubLiveWaitingRoom() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Supporter layer</div>
+                    <div className="fh-eyebrow text-[#f77f00]">Supporter layer</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Early-access chat and supporter upsell</div>
                   </div>
                   <Button
@@ -402,7 +402,7 @@ export default function FaithHubLiveWaitingRoom() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline and reconnect behavior"
                   subtitle="Keep users calm if the network fails before the stream begins."
@@ -444,4 +444,7 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+
+
+
 

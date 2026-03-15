@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -82,7 +82,7 @@ export default function FaithHubProviderOnboarding() {
               <Building2 className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Provider Onboarding</div>
             </div>
           </div>
@@ -106,9 +106,9 @@ export default function FaithHubProviderOnboarding() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4">
-                  <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Onboarding flow</div>
+                  <div className="fh-eyebrow text-[#8ef0ca]">Onboarding flow</div>
                   <div className="mt-2 text-xl font-semibold">Build the institution foundation correctly</div>
                 </div>
                 <div className="space-y-3">
@@ -140,7 +140,7 @@ export default function FaithHubProviderOnboarding() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Live onboarding posture</div>
                   <div className="text-sm text-slate-500">Critical checks before activation and payouts.</div>
@@ -179,7 +179,7 @@ export default function FaithHubProviderOnboarding() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -188,9 +188,9 @@ export default function FaithHubProviderOnboarding() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Current focus</div>
+                      <div className="fh-kicker text-white/90">Current focus</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">{activeStepLabel}</h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         Provider onboarding establishes the institution identity, compliance posture, staff governance, denomination mapping, physical presence, and premium deployment options before public operations begin.
                       </p>
                       <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
@@ -229,7 +229,7 @@ export default function FaithHubProviderOnboarding() {
 
             <div className="grid gap-4 lg:grid-cols-[0.54fr_0.46fr]">
               <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+                <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Institution profile and verification</div>
                     <div className="text-sm text-slate-500">Create the institution record, legal identity, and validation stack.</div>
@@ -279,7 +279,7 @@ export default function FaithHubProviderOnboarding() {
               </Card>
 
               <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-                <CardContent className="p-5 sm:p-6">
+                <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Locations and staff</div>
                     <div className="text-sm text-slate-500">Map campuses, assign administrators, and invite operational teams.</div>
@@ -322,7 +322,7 @@ export default function FaithHubProviderOnboarding() {
             </div>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900">Premium rollout options</div>
@@ -370,4 +370,6 @@ export default function FaithHubProviderOnboarding() {
     </div>
   );
 }
+
+
 

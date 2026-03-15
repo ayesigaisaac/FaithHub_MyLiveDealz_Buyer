@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -101,7 +101,7 @@ export default function FaithHubEntry() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+              <div className="fh-eyebrow text-[#03cd8c]">
                 EVzone Super App
               </div>
               <div className="text-lg font-semibold">FaithHub Entry</div>
@@ -139,7 +139,7 @@ export default function FaithHubEntry() {
                 </div>
 
                 <div className="max-w-2xl space-y-4">
-                  <div className="text-sm font-semibold uppercase tracking-[0.28em] text-white/90">
+                  <div className="fh-kicker-wide text-white/90">
                     Welcome into FaithHub
                   </div>
                   <h1 className="max-w-2xl text-4xl font-semibold leading-tight text-white sm:text-5xl">
@@ -161,10 +161,10 @@ export default function FaithHubEntry() {
 
               <div className="grid gap-4 xl:grid-cols-[1fr_0.95fr]">
                 <Card className="rounded-[28px] border-white/65 bg-white/88 shadow-xl shadow-black/5 backdrop-blur">
-                  <CardContent className="p-5 sm:p-6">
+                  <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
-                        <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                        <div className="fh-eyebrow text-[#03cd8c]">
                           Entry actions
                         </div>
                         <h2 className="mt-2 text-2xl font-semibold text-slate-900">Choose how you want to enter</h2>
@@ -245,10 +245,10 @@ export default function FaithHubEntry() {
 
                 <div className="flex flex-col gap-4">
                   <Card className="rounded-[28px] border-white/70 bg-slate-950/90 text-white shadow-xl shadow-black/15">
-                    <CardContent className="p-5 sm:p-6">
+                    <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-start justify-between gap-3">
                         <div>
-                          <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                          <div className="fh-eyebrow text-[#03cd8c]">
                             Smart entry state
                           </div>
                           <h3 className="mt-2 text-xl font-semibold">Adaptive onboarding</h3>
@@ -260,7 +260,7 @@ export default function FaithHubEntry() {
 
                       <div className="space-y-3 text-sm text-white/80">
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                          <div className="mb-1 text-xs uppercase tracking-[0.18em] text-white/50">Followed institutions</div>
+                          <div className="mb-1 fh-kicker-muted text-white/50">Followed institutions</div>
                           <div className="text-lg font-semibold text-white">3 already followed</div>
                           <div className="mt-2 text-white/70">
                             Saint Marys Cathedral, Al Massira Community, FaithHub Youth Network.
@@ -268,7 +268,7 @@ export default function FaithHubEntry() {
                         </div>
 
                         <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                          <div className="mb-1 text-xs uppercase tracking-[0.18em] text-white/50">Resume suggestion</div>
+                          <div className="mb-1 fh-kicker-muted text-white/50">Resume suggestion</div>
                           <div className="text-lg font-semibold text-white">Wednesday Prayer Replay</div>
                           <div className="mt-2 text-white/70">Continue from 18:42 with transcript and giving note restored.</div>
                         </div>
@@ -277,10 +277,10 @@ export default function FaithHubEntry() {
                   </Card>
 
                   <Card className="rounded-[28px] border border-white/70 bg-white/90 shadow-xl shadow-black/5">
-                    <CardContent className="p-5 sm:p-6">
+                    <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
-                          <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                          <div className="fh-eyebrow text-[#03cd8c]">
                             Data aware experience
                           </div>
                           <div className="mt-2 text-xl font-semibold text-slate-900">Low-data mode prompt</div>
@@ -330,7 +330,7 @@ export default function FaithHubEntry() {
                 <div className="border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4">
                   <div className="flex items-center justify-between gap-3">
                     <div>
-                      <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">
+                      <div className="fh-eyebrow text-[#03cd8c]">
                         Experience preview
                       </div>
                       <div className="mt-1 text-xl font-semibold text-slate-900">What opens next</div>
@@ -356,7 +356,7 @@ export default function FaithHubEntry() {
                           <Icon className="h-5 w-5" />
                         </div>
                         <div className="text-base font-semibold text-slate-900">{item.title}</div>
-                        <div className="mt-2 text-sm leading-6 text-slate-600">{item.subtitle}</div>
+                        <div className="mt-2 fh-body-tight text-slate-600">{item.subtitle}</div>
                       </motion.div>
                     );
                   })}
@@ -365,10 +365,10 @@ export default function FaithHubEntry() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-slate-900 text-white shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">
+                    <div className="fh-eyebrow text-[#8ef0ca]">
                       Offline and continuity
                     </div>
                     <div className="mt-2 text-xl font-semibold">FaithHub never starts cold</div>
@@ -406,4 +406,6 @@ export default function FaithHubEntry() {
     </div>
   );
 }
+
+
 

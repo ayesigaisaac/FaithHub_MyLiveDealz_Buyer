@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -134,7 +134,7 @@ export default function FaithHubLiveDashboardOperations() {
               <MonitorUp className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Dashboard</div>
             </div>
           </div>
@@ -150,7 +150,7 @@ export default function FaithHubLiveDashboardOperations() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.04fr_0.96fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -158,7 +158,7 @@ export default function FaithHubLiveDashboardOperations() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -168,11 +168,11 @@ export default function FaithHubLiveDashboardOperations() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.62fr_0.38fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Provider-side reliability center</div>
+                      <div className="fh-kicker text-white/90">Provider-side reliability center</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Watch the live operation like an engineer, not just a broadcaster.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This dashboard tracks session status, viewer metrics, ingest health, chat pressure, and moderation load. It also prepares providers for premium routing, redundancy, and SLA-grade reliability operations.
                       </p>
 
@@ -193,7 +193,7 @@ export default function FaithHubLiveDashboardOperations() {
                       <div className="mb-3 text-sm font-semibold text-white">Session posture</div>
                       <div className="space-y-3">
                         <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                          <div className="text-xs uppercase tracking-[0.18em] text-white/70">Session</div>
+                          <div className="fh-kicker-muted text-white/70">Session</div>
                           <div className="mt-1 text-2xl font-semibold text-white">Evening Prayer Revival</div>
                           <div className="mt-2 text-sm text-white/80">Status: {primaryHealthy ? "Live and stable" : "Attention required"}</div>
                         </div>
@@ -216,7 +216,7 @@ export default function FaithHubLiveDashboardOperations() {
               </CardContent>
             </Card>
 
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
               {kpis.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -237,7 +237,7 @@ export default function FaithHubLiveDashboardOperations() {
             </div>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Ingest and encoder health</div>
@@ -271,7 +271,7 @@ export default function FaithHubLiveDashboardOperations() {
                   {presets.map((preset) => (
                     <div key={preset.name} className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
                       <div className="mb-2 text-sm font-semibold text-slate-900">{preset.name}</div>
-                      <div className="text-sm leading-6 text-slate-600">{preset.detail}</div>
+                      <div className="fh-body-tight text-slate-600">{preset.detail}</div>
                     </div>
                   ))}
                 </div>
@@ -286,7 +286,7 @@ export default function FaithHubLiveDashboardOperations() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-white sm:text-xl">Stream key and ingest guidance</div>
@@ -328,7 +328,7 @@ export default function FaithHubLiveDashboardOperations() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Automatic health alerts</div>
@@ -351,7 +351,7 @@ export default function FaithHubLiveDashboardOperations() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Enterprise reliability add-on</div>
@@ -392,7 +392,7 @@ export default function FaithHubLiveDashboardOperations() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 text-lg font-semibold text-slate-900">Chat and moderation pulse</div>
                 <div className="space-y-3">
                   {modQueue.map((item) => (
@@ -413,4 +413,7 @@ export default function FaithHubLiveDashboardOperations() {
     </div>
   );
 }
+
+
+
 

@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -165,7 +165,7 @@ export default function FaithHubSubscriptionsMembership() {
               <Crown className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Subscriptions & Membership</div>
             </div>
           </div>
@@ -181,7 +181,7 @@ export default function FaithHubSubscriptionsMembership() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.06fr_0.94fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -189,7 +189,7 @@ export default function FaithHubSubscriptionsMembership() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -199,11 +199,11 @@ export default function FaithHubSubscriptionsMembership() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.65fr_0.35fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Membership made clear</div>
+                      <div className="fh-kicker text-white/90">Membership made clear</div>
                       <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         Compare plans, manage billing, understand entitlements, and prepare for family or institution-wide membership in one calm experience.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This page is built for clarity around subscriptions and memberships. Users can compare plans, see entitlement effects, understand proration, and view cached access when offline.
                       </p>
 
@@ -226,7 +226,7 @@ export default function FaithHubSubscriptionsMembership() {
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Current plan</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="mb-1 text-xs uppercase tracking-[0.18em] text-white/70">Active</div>
+                        <div className="mb-1 fh-kicker-muted text-white/70">Active</div>
                         <div className="text-2xl font-semibold text-white">{currentPlanData?.name}</div>
                         <div className="mt-2 text-sm text-white/80">{annualBilling ? "Annual billing" : "Monthly billing"}</div>
                       </div>
@@ -247,7 +247,7 @@ export default function FaithHubSubscriptionsMembership() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Available plans</div>
@@ -279,7 +279,7 @@ export default function FaithHubSubscriptionsMembership() {
                         <div className="text-3xl font-semibold text-slate-900">{plan.price}</div>
                         <div className="pb-1 text-sm text-slate-500">{plan.cadence}</div>
                       </div>
-                      <div className="text-sm leading-6 text-slate-600">{plan.description}</div>
+                      <div className="fh-body-tight text-slate-600">{plan.description}</div>
                       <div className="mt-4 space-y-2 text-sm text-slate-600">
                         {plan.features.map((feature) => (
                           <div key={feature} className="flex items-start gap-2">
@@ -306,7 +306,7 @@ export default function FaithHubSubscriptionsMembership() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Plan comparison</div>
@@ -354,7 +354,7 @@ export default function FaithHubSubscriptionsMembership() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-white sm:text-xl">Entitlements</div>
@@ -383,7 +383,7 @@ export default function FaithHubSubscriptionsMembership() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Family and group memberships</div>
@@ -432,7 +432,7 @@ export default function FaithHubSubscriptionsMembership() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Billing state and sync history</div>
@@ -469,4 +469,7 @@ export default function FaithHubSubscriptionsMembership() {
     </div>
   );
 }
+
+
+
 

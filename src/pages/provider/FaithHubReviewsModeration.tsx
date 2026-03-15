@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -130,7 +130,7 @@ export default function FaithHubReviewsModeration() {
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Reviews & Moderation</div>
             </div>
           </div>
@@ -145,7 +145,7 @@ export default function FaithHubReviewsModeration() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.03fr_0.97fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -153,7 +153,7 @@ export default function FaithHubReviewsModeration() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -162,18 +162,18 @@ export default function FaithHubReviewsModeration() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Trust and safety for large communities</div>
+                      <div className="fh-kicker text-white/90">Trust and safety for large communities</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Respond to real feedback while protecting the institution from abuse, brigading, and harmful escalation.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This moderation console supports provider replies, review hiding, abuse reporting, and appeals, while adding world-class signals for coordinated attacks and language toxicity. Premium tooling strengthens control for large institutions.
                       </p>
                     </div>
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Moderation posture</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="text-xs uppercase tracking-[0.18em] text-white/70">Open queue</div>
+                        <div className="fh-kicker-muted text-white/70">Open queue</div>
                         <div className="mt-1 text-3xl font-semibold text-white">{visibleReviews.length}</div>
                         <div className="mt-2 text-sm text-white/80">Filtered by {selectedTab} workflow.</div>
                       </div>
@@ -194,7 +194,7 @@ export default function FaithHubReviewsModeration() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Review response queue"
                   subtitle="Respond, hide, escalate, and document review decisions."
@@ -234,7 +234,7 @@ export default function FaithHubReviewsModeration() {
                           ))}
                         </div>
                       </div>
-                      <div className="mb-3 text-sm leading-6 text-slate-600">{review.text}</div>
+                      <div className="mb-3 fh-body-tight text-slate-600">{review.text}</div>
                       <div className="mb-3 flex flex-wrap items-center gap-2">
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${review.signal === "Healthy" ? "bg-[#ecfff8] text-[#03cd8c]" : review.signal === "Watch" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-rose-50 text-rose-600"}`}>
                           {review.signal}
@@ -266,7 +266,7 @@ export default function FaithHubReviewsModeration() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Trust signals and assistive moderation"
                   subtitle="Spot harmful patterns early and make safer moderation decisions."
@@ -304,7 +304,7 @@ export default function FaithHubReviewsModeration() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Appeals workflow"
                   subtitle="Support reversals, reconsiderations, and documented moderation outcomes."
@@ -329,7 +329,7 @@ export default function FaithHubReviewsModeration() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Enterprise moderation suite"
                   subtitle="Premium moderation depth for large institutions and high-volume communities."
@@ -356,7 +356,7 @@ export default function FaithHubReviewsModeration() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Response drafting"
                   subtitle="Provider-safe response crafting with optional tone assist."
@@ -401,4 +401,7 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     </div>
   );
 }
+
+
+
 

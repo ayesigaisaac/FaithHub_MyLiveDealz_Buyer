@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -105,7 +105,7 @@ export default function FaithHubReplaySermonPlayer() {
               <PlayCircle className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Replay & Sermon Player</div>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function FaithHubReplaySermonPlayer() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -129,7 +129,7 @@ export default function FaithHubReplaySermonPlayer() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -139,11 +139,11 @@ export default function FaithHubReplaySermonPlayer() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Walking in Wisdom  Episode Replay</div>
+                      <div className="fh-kicker text-white/90">Walking in Wisdom  Episode Replay</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Replay sermons with structure, searchable understanding, and premium learning depth when needed.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         FaithHub treats replay as more than video-on-demand. Users can navigate chapters, search transcript text, highlight notes, adjust speed, download audio, and unlock offline video or study guides where supported.
                       </p>
 
@@ -176,7 +176,7 @@ export default function FaithHubReplaySermonPlayer() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Replay controls"
                   subtitle="Move fluidly between playback, notes, clips, and download actions."
@@ -184,7 +184,7 @@ export default function FaithHubReplaySermonPlayer() {
                 <div className="space-y-4">
                   <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
                     <div className="mb-4 h-[360px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200" />
-                    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                    <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
                       <select
                         value={playbackSpeed}
                         onChange={(e) => setPlaybackSpeed(e.target.value)}
@@ -289,7 +289,7 @@ export default function FaithHubReplaySermonPlayer() {
                                 <span className="rounded-full bg-white px-3 py-1 ring-1 ring-slate-200">{item.time}</span>
                                 <span>{item.speaker}</span>
                               </div>
-                              <div className="text-sm leading-6 text-slate-700">{item.text}</div>
+                              <div className="fh-body-tight text-slate-700">{item.text}</div>
                             </div>
                           );
                         })}
@@ -308,7 +308,7 @@ export default function FaithHubReplaySermonPlayer() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Searchable understanding"
                   subtitle="Transcript search and highlight notes help replay become study, not just playback."
@@ -328,10 +328,10 @@ export default function FaithHubReplaySermonPlayer() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Premium study layer</div>
+                    <div className="fh-eyebrow text-[#f77f00]">Premium study layer</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Offline video and premium study guide</div>
                   </div>
                   <Button
@@ -348,7 +348,7 @@ export default function FaithHubReplaySermonPlayer() {
                       <FileText className="h-6 w-6" />
                     </div>
                     <div className="mb-2 text-lg font-semibold text-slate-900">Premium replay extensions</div>
-                    <div className="mx-auto max-w-md text-sm leading-6 text-slate-600">
+                    <div className="mx-auto max-w-md fh-body-tight text-slate-600">
                       Institutions can optionally unlock offline video downloads and a premium study guide for subscribers or members.
                     </div>
                     <div className="mt-5 flex justify-center gap-2">
@@ -370,7 +370,7 @@ export default function FaithHubReplaySermonPlayer() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Clip sharing and cache state"
                   subtitle="Prepare short-form clip moments while keeping downloads organized."
@@ -413,4 +413,7 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     </div>
   );
 }
+
+
+
 

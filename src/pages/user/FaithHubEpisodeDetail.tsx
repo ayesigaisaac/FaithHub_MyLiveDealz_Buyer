@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -103,7 +103,7 @@ export default function FaithHubEpisodeDetail() {
               <PlayCircle className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Episode Detail</div>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function FaithHubEpisodeDetail() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -129,7 +129,7 @@ export default function FaithHubEpisodeDetail() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -139,11 +139,11 @@ export default function FaithHubEpisodeDetail() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Guarding the Heart</div>
+                      <div className="fh-kicker text-white/90">Guarding the Heart</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         One episode, fully equipped for replay, notes, related sessions, and deeper premium resources.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         Follow the episode details, open its replay or upcoming live counterparts, read notes offline, download audio for low-data use, and unlock deeper study attachments if the institution enables premium resources.
                       </p>
 
@@ -193,7 +193,7 @@ export default function FaithHubEpisodeDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Replay attachments"
                   subtitle="Everything linked to this episode in one clean detail layer."
@@ -208,7 +208,7 @@ export default function FaithHubEpisodeDetail() {
                           <Icon className="h-5 w-5" />
                         </div>
                         <div className="text-base font-semibold text-slate-900">{item.title}</div>
-                        <div className="mt-1 text-sm leading-6 text-slate-600">{item.subtitle}</div>
+                        <div className="mt-1 fh-body-tight text-slate-600">{item.subtitle}</div>
                         <Button variant="ghost" className="mt-4 rounded-full px-0 text-[#03cd8c] hover:bg-transparent hover:text-[#03cd8c]">
                           Open attachment
                         </Button>
@@ -220,7 +220,7 @@ export default function FaithHubEpisodeDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Related Live Sessionz"
                   subtitle="Past and upcoming sessions connected to this episode."
@@ -258,7 +258,7 @@ export default function FaithHubEpisodeDetail() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="AI chaptering"
                   subtitle="Optional smart structure for quick episode navigation."
@@ -283,7 +283,7 @@ export default function FaithHubEpisodeDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Resources and premium attachments"
                   subtitle="Free and premium assets attached to the episode experience."
@@ -328,10 +328,10 @@ export default function FaithHubEpisodeDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Offline behavior</div>
+                    <div className="fh-eyebrow text-[#f77f00]">Offline behavior</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Notes and audio stay usable beyond the stream</div>
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Low-data optimized</Badge>
@@ -360,4 +360,7 @@ export default function FaithHubEpisodeDetail() {
     </div>
   );
 }
+
+
+
 

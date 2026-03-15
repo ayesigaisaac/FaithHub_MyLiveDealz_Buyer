@@ -2,7 +2,12 @@
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
 type Variant = "default" | "outline" | "ghost";
-export interface ButtonProps extends Omit<MuiButtonProps, "variant"> { variant?: Variant; }
+type UiSize = "sm" | "md" | "lg";
+
+export interface ButtonProps extends Omit<MuiButtonProps, "variant"> {
+  variant?: Variant;
+  uiSize?: UiSize;
+}
 
 function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; sx: any } {
   if (variant === "outline") {
@@ -22,16 +27,21 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
       },
     };
   }
+
   if (variant === "ghost") {
     return {
       variant: "text",
       sx: {
         textTransform: "none",
         color: "var(--text-secondary)",
-        "&:hover": { backgroundColor: "var(--accent-soft)", color: "var(--text-primary)" },
+        "&:hover": {
+          backgroundColor: "var(--accent-soft)",
+          color: "var(--text-primary)",
+        },
       },
     };
   }
+
   return {
     variant: "contained",
     sx: {
@@ -48,11 +58,37 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
   };
 }
 
+function resolveSize(uiSize: UiSize) {
+  if (uiSize === "sm") {
+    return {
+      minHeight: 40,
+      paddingInline: "14px",
+      fontSize: "0.88rem",
+    };
+  }
+
+  if (uiSize === "lg") {
+    return {
+      minHeight: 50,
+      paddingInline: "20px",
+      fontSize: "0.98rem",
+    };
+  }
+
+  return {
+    minHeight: 44,
+    paddingInline: "16px",
+    fontSize: "0.93rem",
+  };
+}
+
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = "default", className, sx, ...props },
+  { variant = "default", uiSize = "md", className, sx, ...props },
   ref
 ) {
   const resolved = resolveStyles(variant);
+  const sizeStyles = resolveSize(uiSize);
+
   return (
     <MuiButton
       ref={ref}
@@ -61,15 +97,15 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
       className={className}
       sx={{
         borderRadius: "12px",
-        minHeight: 44,
-        paddingInline: "16px",
         fontWeight: 700,
-        fontSize: "0.92rem",
         letterSpacing: "0.01em",
+        lineHeight: 1.2,
+        whiteSpace: "nowrap",
+        transition: "all 180ms ease",
+        ...sizeStyles,
         ...(resolved.sx || {}),
         ...((sx as any) || {}),
       } as any}
     />
   );
 });
-

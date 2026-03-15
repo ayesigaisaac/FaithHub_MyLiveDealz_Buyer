@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -460,7 +460,7 @@ export default function FaithHubLandingPageV2() {
                 </Button>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
                 {stats.map((item) => (
                   <Card key={item.label} className="rounded-2xl border-slate-200 bg-white shadow-sm">
                     <CardContent className="p-5">
@@ -468,9 +468,9 @@ export default function FaithHubLandingPageV2() {
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#03cd8c]">
                           <item.icon className="h-4 w-4" />
                         </div>
-                        <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">{item.label}</div>
+                        <div className="fh-label text-[#03cd8c]">{item.label}</div>
                         <div className="text-4xl font-semibold leading-none text-slate-900">{item.value}</div>
-                        <div className="min-w-0 text-sm leading-6 text-slate-600">{item.note}</div>
+                        <div className="min-w-0 fh-body-tight text-slate-600">{item.note}</div>
                       </div>
                     </CardContent>
                   </Card>
@@ -489,7 +489,7 @@ export default function FaithHubLandingPageV2() {
                   <div className="border-b border-[#03cd8c]/20 bg-[#ecfff8] p-6 text-slate-900 sm:p-7">
                     <div className="mb-5 flex items-center justify-between gap-3">
                       <div>
-                        <div className="text-sm font-semibold uppercase tracking-[0.14em] text-[#03cd8c]">FaithHub Snapshot</div>
+                        <div className="fh-kicker-subtle text-[#03cd8c]">FaithHub Snapshot</div>
                         <div className="mt-2 text-3xl font-semibold leading-tight text-[#03cd8c]">A platform for users and institutions</div>
                       </div>
                       <div className="rounded-full border border-[#03cd8c]/25 bg-white px-3 py-1 text-xs font-semibold text-[#03cd8c]">
@@ -519,7 +519,7 @@ export default function FaithHubLandingPageV2() {
                     </div>
                   </div>
 
-                  <div className="space-y-5 p-5 sm:p-6">
+                  <div className="space-y-5 fh-pad-panel">
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <div className="text-sm font-semibold text-slate-900">Current focus</div>
@@ -530,7 +530,7 @@ export default function FaithHubLandingPageV2() {
                       </span>
                     </div>
 
-                    <p className="text-sm leading-7 text-slate-600">{currentRole?.description}</p>
+                    <p className="fh-body text-slate-600">{currentRole?.description}</p>
 
                     <div className="space-y-3">
                       {currentRole?.bullets.map((item) => (
@@ -564,7 +564,7 @@ export default function FaithHubLandingPageV2() {
         </section>
 
         <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10 2xl:max-w-[110rem] 2xl:px-10">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
             {topHighlights.map((item) => (
               <Card key={item.title} className="h-full rounded-2xl border-slate-200 bg-white shadow-sm">
                 <CardContent className="flex h-full flex-col p-6">
@@ -572,7 +572,7 @@ export default function FaithHubLandingPageV2() {
                     <item.icon className="h-5 w-5" />
                   </div>
                   <div className="text-balance text-lg font-semibold leading-snug text-slate-900">{item.title}</div>
-                  <div className="mt-2 text-pretty text-sm leading-7 text-slate-600">{item.text}</div>
+                  <div className="mt-2 text-pretty fh-body text-slate-600">{item.text}</div>
                 </CardContent>
               </Card>
             ))}
@@ -581,7 +581,7 @@ export default function FaithHubLandingPageV2() {
 
         <section id="platform" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-[110rem] 2xl:px-10">
           <div className="mb-6 max-w-3xl">
-            <div className="text-base font-semibold uppercase tracking-[0.18em] text-[#03cd8c]">How the ecosystem works</div>
+            <div className="fh-kicker-xl text-[#03cd8c]">How the ecosystem works</div>
             <h2 className="mt-2 text-5xl font-semibold text-slate-900 sm:text-6xl leading-tight">
               FaithHub is structured around a complete digital faith lifecycle.
             </h2>
@@ -621,7 +621,7 @@ export default function FaithHubLandingPageV2() {
         <section id="experiences" className="bg-white/50 scroll-mt-24 py-10 sm:py-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
             <div className="mb-6 max-w-3xl">
-              <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">Role architecture</div>
+              <div className="fh-kicker text-[#03cd8c]">Role architecture</div>
               <h2 className="mt-2 text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
                 One platform. Two public-facing experiences.
               </h2>
@@ -634,7 +634,7 @@ export default function FaithHubLandingPageV2() {
             <div className="grid gap-4 xl:grid-cols-2">
               {roleCards.map((item) => (
                 <Card key={item.role} className="rounded-2xl border-slate-200 bg-white shadow-sm">
-                  <CardContent className="p-6 sm:p-7">
+                  <CardContent className="fh-pad-hero">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                         <item.icon className="h-5 w-5" />
@@ -671,7 +671,7 @@ export default function FaithHubLandingPageV2() {
         <section id="live" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-14 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-[110rem] 2xl:px-10">
           <div className="rounded-[2rem] bg-[linear-gradient(180deg,#ffffff,rgba(248,250,252,0.9))] p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70 sm:p-8 lg:p-10">
             <div className="mx-auto max-w-2xl text-center">
-              <div className="inline-flex rounded-full bg-[#ecfff8] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">
+              <div className="inline-flex rounded-full bg-[#ecfff8] px-4 py-1.5 fh-eyebrow-wide text-[#03cd8c]">
                 Platform pillars
               </div>
               <h2 className="mt-5 text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl lg:text-[3rem]">
@@ -691,7 +691,7 @@ export default function FaithHubLandingPageV2() {
                 >
                   <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top_left,rgba(3,205,140,0.12),transparent_55%)]" />
                   <div className="relative">
-                    <div className="inline-flex rounded-full bg-[#ecfff8] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-[#03cd8c]">
+                    <div className="inline-flex rounded-full bg-[#ecfff8] px-3 py-1.5 fh-eyebrow-wide text-[#03cd8c]">
                       {panel.tag}
                     </div>
 
@@ -735,7 +735,7 @@ export default function FaithHubLandingPageV2() {
           <div className="grid gap-6 xl:grid-cols-[0.48fr_0.52fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
               <CardContent className="p-7 sm:p-8">
-                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
                   Experience journey
                 </div>
                 <div className="space-y-5">
@@ -759,7 +759,7 @@ export default function FaithHubLandingPageV2() {
                 <div className="bg-slate-950 p-5 text-white sm:p-7">
                   <div className="mb-4 flex items-center justify-between gap-3">
                     <div>
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-[#8ef0ca]">Built for every device</div>
+                      <div className="fh-kicker text-[#8ef0ca]">Built for every device</div>
                       <div className="mt-2 text-2xl font-semibold leading-tight sm:text-3xl">Responsive across desktop, tablet, and mobile</div>
                     </div>
                     <MonitorSmartphone className="h-7 w-7 text-[#8ef0ca]" />
@@ -785,7 +785,7 @@ export default function FaithHubLandingPageV2() {
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
                     <div className="mb-4 aspect-video w-full rounded-xl bg-white/10" />
                     <div className="text-xl font-semibold">{currentDevice?.title}</div>
-                    <div className="mt-2 text-sm leading-7 text-white/80">{currentDevice?.text}</div>
+                    <div className="mt-2 fh-body text-white/80">{currentDevice?.text}</div>
                   </div>
                 </div>
               </CardContent>
@@ -798,13 +798,13 @@ export default function FaithHubLandingPageV2() {
             <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
                 <CardContent className="p-7 sm:p-8">
-                  <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                  <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
                     Trust and safety
                   </div>
                   <div className="text-4xl font-semibold text-slate-900 sm:text-5xl">
                     FaithHub is designed to be trusted by users, institutions, and platform operators.
                   </div>
-                  <div className="mt-4 space-y-4 text-sm leading-7 text-slate-600">
+                  <div className="mt-4 space-y-4 fh-body text-slate-600">
                     <p>
                       The platform includes institution verification, review and moderation flows, content policy
                       controls, live moderation consoles, audit visibility, and payments oversight.
@@ -829,7 +829,7 @@ export default function FaithHubLandingPageV2() {
 
               <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
                 <CardContent className="p-7 sm:p-8">
-                  <div className="mb-3 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+                  <div className="mb-3 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
                     What people will feel
                   </div>
                   <div className="mb-5 text-base font-semibold leading-tight text-slate-900">Real feedback from the FaithHub product vision</div>
@@ -856,8 +856,8 @@ export default function FaithHubLandingPageV2() {
         <section id="faq" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8 lg:py-16 2xl:max-w-[110rem] 2xl:px-10">
           <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
             <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-              <CardContent className="p-6 sm:p-8">
-                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+              <CardContent className="fh-pad-surface">
+                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
                   Frequently asked questions
                 </div>
                 <div className="space-y-3">
@@ -873,7 +873,7 @@ export default function FaithHubLandingPageV2() {
                         <ChevronDown className={`h-5 w-5 shrink-0 text-slate-400 transition ${faqOpen === index ? "rotate-180" : ""}`} />
                       </div>
                       {faqOpen === index ? (
-                        <div className="mt-4 text-sm leading-7 text-slate-600">{item.a}</div>
+                        <div className="mt-4 fh-body text-slate-600">{item.a}</div>
                       ) : null}
                     </button>
                   ))}
@@ -882,8 +882,8 @@ export default function FaithHubLandingPageV2() {
             </Card>
 
             <Card id="contact" className="scroll-mt-24 overflow-hidden rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
-              <CardContent className="p-6 sm:p-8">
-                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#03cd8c]">
+              <CardContent className="fh-pad-surface">
+                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
                   Take the next step
                 </div>
                 <div className="max-w-[20ch] text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-[2.5rem]">
@@ -938,7 +938,7 @@ export default function FaithHubLandingPageV2() {
             <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
               <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
             </button>
-            <div className="mt-4 max-w-lg text-sm leading-7 text-slate-600">
+            <div className="mt-4 max-w-lg fh-body text-slate-600">
               A world-class digital faith ecosystem for communities and institutions, powered by the wider EVzone vision.
             </div>
           </div>
@@ -975,5 +975,9 @@ export default function FaithHubLandingPageV2() {
     </div>
   );
 }
+
+
+
+
 
 

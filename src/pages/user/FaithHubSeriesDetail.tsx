@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -82,7 +82,7 @@ export default function FaithHubSeriesDetail() {
               <BookOpen className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Series Detail</div>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function FaithHubSeriesDetail() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.06fr_0.94fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -108,7 +108,7 @@ export default function FaithHubSeriesDetail() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -118,11 +118,11 @@ export default function FaithHubSeriesDetail() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Walking in Wisdom</div>
+                      <div className="fh-kicker text-white/90">Walking in Wisdom</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         A structured teaching journey with episode progress, reminders, series sharing, and premium extensions.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         Follow the series, track each sermon episode, add the journey to your calendar, and connect it to FaithMart merchandise or special live experiences where available.
                       </p>
 
@@ -171,7 +171,7 @@ export default function FaithHubSeriesDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Episode journey"
                   subtitle="Track progress episode by episode across replays, live checkpoints, and future releases."
@@ -218,7 +218,7 @@ export default function FaithHubSeriesDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Series actions"
                   subtitle="Calendar sync, share card, and series communication tools."
@@ -232,7 +232,7 @@ export default function FaithHubSeriesDetail() {
                           <Icon className="h-5 w-5" />
                         </div>
                         <div className="text-base font-semibold text-slate-900">{item.title}</div>
-                        <div className="mt-1 text-sm leading-6 text-slate-600">{item.subtitle}</div>
+                        <div className="mt-1 fh-body-tight text-slate-600">{item.subtitle}</div>
                         <Button variant="ghost" className="mt-4 rounded-full px-0 text-[#03cd8c] hover:bg-transparent hover:text-[#03cd8c]">
                           Open action
                         </Button>
@@ -251,7 +251,7 @@ export default function FaithHubSeriesDetail() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Share series card"
                   subtitle="Invite others with a beautiful, branded snapshot of the series."
@@ -277,10 +277,10 @@ export default function FaithHubSeriesDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Premium series access</div>
+                    <div className="fh-eyebrow text-[#f77f00]">Premium series access</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Unlock deeper study and bundled experiences</div>
                   </div>
                   <Button
@@ -298,7 +298,7 @@ export default function FaithHubSeriesDetail() {
                       <Lock className="h-6 w-6" />
                     </div>
                     <div className="mb-2 text-lg font-semibold text-slate-900">Premium series layer</div>
-                    <div className="mx-auto max-w-md text-sm leading-6 text-slate-600">
+                    <div className="mx-auto max-w-md fh-body-tight text-slate-600">
                       Some series can be gated at the series level, unlocking exclusive attachments, guided plans, bonus sessions, and bundled institution offerings.
                     </div>
                     <div className="mt-5 flex justify-center gap-2">
@@ -336,7 +336,7 @@ export default function FaithHubSeriesDetail() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline and queue behavior"
                   subtitle="Metadata stays visible and replay downloads can queue safely."
@@ -366,4 +366,7 @@ export default function FaithHubSeriesDetail() {
     </div>
   );
 }
+
+
+
 

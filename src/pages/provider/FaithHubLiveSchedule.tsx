@@ -57,7 +57,7 @@ export default function FaithHubLiveSchedule() {
               <CalendarDays className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Schedule</div>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function FaithHubLiveSchedule() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.04fr_0.96fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,7 +80,7 @@ export default function FaithHubLiveSchedule() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -89,18 +89,18 @@ export default function FaithHubLiveSchedule() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Plan every live touchpoint</div>
+                      <div className="fh-kicker text-white/90">Plan every live touchpoint</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Keep the provider calendar coordinated across broadcasts, people, reminders, and venue readiness.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This schedule page gives ministries one operating surface for upcoming Live Sessionz, crew assignments, rehearsal timing, audience reminders, and handoff into studio or live operations.
                       </p>
                     </div>
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Next action</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="text-xs uppercase tracking-[0.18em] text-white/70">Upcoming slot</div>
+                        <div className="fh-kicker-muted text-white/70">Upcoming slot</div>
                         <div className="mt-1 text-2xl font-semibold text-white">Evening Prayer Revival</div>
                         <div className="mt-2 text-sm text-white/80">Crew confirmation closes in 2 hours.</div>
                       </div>
@@ -123,7 +123,7 @@ export default function FaithHubLiveSchedule() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Scheduled sessions</div>
@@ -173,7 +173,7 @@ export default function FaithHubLiveSchedule() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-white sm:text-xl">Readiness checklist</div>
@@ -194,7 +194,7 @@ export default function FaithHubLiveSchedule() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Fast links</div>
@@ -226,3 +226,6 @@ export default function FaithHubLiveSchedule() {
     </div>
   );
 }
+
+
+

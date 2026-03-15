@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -188,7 +188,7 @@ export default function FaithHubLiveHub() {
               <Radio className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Hub</div>
             </div>
           </div>
@@ -204,7 +204,7 @@ export default function FaithHubLiveHub() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -212,7 +212,7 @@ export default function FaithHubLiveHub() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -221,11 +221,11 @@ export default function FaithHubLiveHub() {
                   </div>
 
                   <div className="max-w-3xl space-y-3">
-                    <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Live-first faith infrastructure</div>
+                    <div className="fh-kicker text-white/90">Live-first faith infrastructure</div>
                     <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                       Step into live worship, upcoming sessions, and replays with the right filters, the right speed, and the right access path.
                     </h1>
-                    <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                    <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                       Discover Live Sessionz by institution, series, and audience group. See low-latency indicators, jump into waiting rooms early, and stay productive even offline with cached replays and full schedules.
                     </p>
                   </div>
@@ -262,7 +262,7 @@ export default function FaithHubLiveHub() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Filters"
                   subtitle="Refine by institution, series, and audience group."
@@ -300,7 +300,7 @@ export default function FaithHubLiveHub() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Now Live"
                   subtitle="Join current live sessions with quality context and access cues."
@@ -356,7 +356,7 @@ export default function FaithHubLiveHub() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Upcoming"
                   subtitle="Plan ahead and enter waiting rooms before session start."
@@ -397,7 +397,7 @@ export default function FaithHubLiveHub() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Replays"
                   subtitle="Resume cached replays when live is over or connectivity is poor."
@@ -424,10 +424,10 @@ export default function FaithHubLiveHub() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Monetization</div>
+                    <div className="fh-eyebrow text-[#f77f00]">Monetization</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Ticketed sessions and memberships</div>
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Policy-aware</Badge>
@@ -448,4 +448,7 @@ export default function FaithHubLiveHub() {
     </div>
   );
 }
+
+
+
 

@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -116,7 +116,7 @@ export default function FaithHubSecurityAuditLogs() {
               <History className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Security & Audit Logs</div>
             </div>
           </div>
@@ -131,7 +131,7 @@ export default function FaithHubSecurityAuditLogs() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.02fr_0.98fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ export default function FaithHubSecurityAuditLogs() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -148,18 +148,18 @@ export default function FaithHubSecurityAuditLogs() {
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Every sensitive action should leave a durable trace</div>
+                      <div className="fh-kicker text-white/90">Every sensitive action should leave a durable trace</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Watch admin behavior, preserve critical actions, and export trustworthy evidence for internal or external review.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         This page covers core security visibility across role changes, privileged operations, moderation actions, finance mutations, and system-generated checkpoints. Premium layers add immutable logs and SIEM integrations.
                       </p>
                     </div>
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
                       <div className="mb-3 text-sm font-semibold text-white">Audit posture</div>
                       <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="text-xs uppercase tracking-[0.18em] text-white/70">Critical actions logged</div>
+                        <div className="fh-kicker-muted text-white/70">Critical actions logged</div>
                         <div className="mt-1 text-3xl font-semibold text-white">{auditEvents.length}</div>
                         <div className="mt-2 text-sm text-white/80">Immutable chain {immutableLogs ? "enabled" : "disabled"} in preview.</div>
                       </div>
@@ -180,7 +180,7 @@ export default function FaithHubSecurityAuditLogs() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Admin audit trail"
                   subtitle="Filter high-trust actions across modules and users."
@@ -224,7 +224,7 @@ export default function FaithHubSecurityAuditLogs() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Critical action coverage"
                   subtitle="Protect the events that matter most in a multi-role admin system."
@@ -241,7 +241,7 @@ export default function FaithHubSecurityAuditLogs() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Immutable logs and exports"
                   subtitle="World-class record durability for high-trust environments."
@@ -271,7 +271,7 @@ export default function FaithHubSecurityAuditLogs() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="SIEM integration"
                   subtitle="Premium external security event forwarding and enterprise visibility."
@@ -321,4 +321,7 @@ function SectionHeader({ title, subtitle, action = "Manage" }) {
     </div>
   );
 }
+
+
+
 

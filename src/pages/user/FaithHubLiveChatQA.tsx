@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -168,7 +168,7 @@ export default function FaithHubLiveChatQA() {
               <MessageCircle className="h-5 w-5" />
             </div>
             <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#03cd8c]">EVzone Super App</div>
+              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Chat & Q&A</div>
             </div>
           </div>
@@ -184,7 +184,7 @@ export default function FaithHubLiveChatQA() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -192,7 +192,7 @@ export default function FaithHubLiveChatQA() {
             className="space-y-4"
           >
             <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="p-5 sm:p-7">
+              <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
@@ -202,11 +202,11 @@ export default function FaithHubLiveChatQA() {
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
-                      <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/90">Audience interaction done right</div>
+                      <div className="fh-kicker text-white/90">Audience interaction done right</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         Keep the live conversation helpful, safe, structured, and resilient even when the network fails.
                       </h1>
-                      <p className="max-w-2xl text-sm leading-7 text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
                         FaithHub separates fast chat from structured Q&A, supports slow mode and reporting, adds community moderation and toxicity assist, and lets the audience keep composing even while offline.
                       </p>
 
@@ -255,7 +255,7 @@ export default function FaithHubLiveChatQA() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Pinned messages and live chat"
                   subtitle="Keep the room readable while still letting the community engage naturally."
@@ -268,7 +268,7 @@ export default function FaithHubLiveChatQA() {
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Pin className="h-4 w-4 text-[#03cd8c]" /> {item.title}
                       </div>
-                      <div className="text-sm leading-6 text-slate-600">{item.body}</div>
+                      <div className="fh-body-tight text-slate-600">{item.body}</div>
                     </div>
                   ))}
                 </div>
@@ -293,7 +293,7 @@ export default function FaithHubLiveChatQA() {
                         </span>
                         <span className="text-xs text-slate-400">{item.time}</span>
                       </div>
-                      <div className="text-sm leading-6 text-slate-600">{item.message}</div>
+                      <div className="fh-body-tight text-slate-600">{item.message}</div>
                       <div className="mt-3 flex items-center gap-2">
                         <Button variant="ghost" className="rounded-full px-3 text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">Reply</Button>
                         <Button variant="ghost" className="rounded-full px-3 text-slate-600 hover:bg-slate-100">Block</Button>
@@ -340,7 +340,7 @@ export default function FaithHubLiveChatQA() {
             className="space-y-4"
           >
             <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Q&A queue"
                   subtitle="Structured questions remain separate from fast chat so hosts and moderators can respond well."
@@ -356,7 +356,7 @@ export default function FaithHubLiveChatQA() {
                         )}
                         <span className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] text-white/80">{item.status}</span>
                       </div>
-                      <div className="text-sm leading-6 text-white/80">{item.question}</div>
+                      <div className="fh-body-tight text-white/80">{item.question}</div>
                       <div className="mt-3 flex items-center justify-between gap-3 text-xs text-white/65">
                         <span>{threadedView ? `${item.threadedReplies} threaded replies` : `${item.threadedReplies} community replies`}</span>
                         <Button variant="ghost" className="rounded-full text-[#8ef0ca] hover:bg-white/10 hover:text-[#8ef0ca]">
@@ -370,10 +370,10 @@ export default function FaithHubLiveChatQA() {
             </Card>
 
             <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f77f00]">Premium interaction controls</div>
+                    <div className="fh-eyebrow text-[#f77f00]">Premium interaction controls</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Anonymous moderator route and priority handling</div>
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">No pay-to-speak abuse</Badge>
@@ -408,7 +408,7 @@ export default function FaithHubLiveChatQA() {
             </Card>
 
             <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
-              <CardContent className="p-5 sm:p-6">
+              <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Moderation assist"
                   subtitle="Human-first controls supported by healthy-risk indicators."
@@ -431,7 +431,7 @@ export default function FaithHubLiveChatQA() {
                     <div className="mb-3 h-2 rounded-full bg-slate-100">
                       <div className="h-2 rounded-full bg-[#03cd8c]" style={{ width: `${toxicityAssistScore}%` }} />
                     </div>
-                    <div className="text-sm leading-6 text-slate-600">
+                    <div className="fh-body-tight text-slate-600">
                       Assistive scoring helps moderators spot likely harmful phrasing sooner, but human review remains the final decision point.
                     </div>
                   </div>
@@ -460,4 +460,7 @@ export default function FaithHubLiveChatQA() {
     </div>
   );
 }
+
+
+
 
