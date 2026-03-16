@@ -52,14 +52,17 @@ export interface PageRegistryItem {
   role: RoleKey;
   section: string;
   label: string;
+  navTag: string;
   path: string;
   template: string;
   description: string;
-  icon: React.ComponentType<any>;
-  element: React.LazyExoticComponent<React.ComponentType<any>>;
+  icon: React.ComponentType<{ className?: string }>;
+  element: React.LazyExoticComponent<React.ComponentType>;
 }
 
-export const pageRegistry: PageRegistryItem[] = [
+type BasePageRegistryItem = Omit<PageRegistryItem, "navTag">;
+
+const basePageRegistry: BasePageRegistryItem[] = [
   { id: "u-entry", role: "user", section: "Start & Identity", label: "FaithHub Entry", path: "/app/user/entry", template: "T2", description: "First-run entry and low-data welcome.", icon: Sparkles, element: FaithHubEntry },
   { id: "u-auth", role: "user", section: "Start & Identity", label: "Sign-in / Sign-up / Recovery", path: "/app/user/auth", template: "T3", description: "Authentication and account recovery.", icon: KeyRound, element: FaithHubAuthCenter },
   { id: "u-profile", role: "user", section: "Start & Identity", label: "Profile & Faith Preferences", path: "/app/user/profile", template: "T3", description: "Profile, faith preferences, privacy, and audience groups.", icon: Users, element: FaithHubProfilePreferences },
@@ -104,6 +107,63 @@ export const pageRegistry: PageRegistryItem[] = [
   { id: "a-channels", role: "admin", section: "Finance & Channels", label: "Channels Registry & Deliverability", path: "/app/admin/channels", template: "T8", description: "Templates, sender reputation, and deliverability oversight.", icon: Send, element: FaithHubChannelsRegistryDeliverability },
   { id: "a-security", role: "admin", section: "Security & Evidence", label: "Security & Audit Logs", path: "/app/admin/security", template: "T8", description: "Audit trails, immutable logs, and SIEM posture.", icon: Settings2, element: FaithHubSecurityAuditLogs },
 ];
+
+const navTagById: Record<string, string> = {
+  "u-entry": "Start",
+  "u-auth": "Access",
+  "u-profile": "Profile",
+  "u-home": "Home",
+  "u-discover": "Discover",
+  "u-institution": "Institution",
+  "u-series-library": "Series",
+  "u-series-detail": "Series",
+  "u-episode-detail": "Episode",
+  "u-replay-player": "Replay",
+  "u-clip-viewer": "Clips",
+  "u-live-hub": "Live",
+  "u-waiting-room": "Waiting",
+  "u-live-player": "Player",
+  "u-live-chat": "Chat",
+  "u-events-hub": "Events",
+  "u-event-detail": "Event",
+  "u-giving": "Giving",
+  "u-membership": "Member",
+  "u-reviews": "Reviews",
+  "u-settings": "Settings",
+  "p-onboarding": "Onboard",
+  "p-dashboard": "Dashboard",
+  "p-series-builder": "Builder",
+  "p-episode-builder": "Episode",
+  "p-post-live": "Publish",
+  "p-live-builder": "Live",
+  "p-live-schedule": "Schedule",
+  "p-live-ops": "Ops",
+  "p-live-studio": "Studio",
+  "p-stream-platforms": "Stream",
+  "p-notifications": "Notify",
+  "p-contacts": "Contacts",
+  "p-events": "Events",
+  "p-funds": "Funds",
+  "p-reviews-mod": "Moderate",
+  "a-overview": "Overview",
+  "a-verification": "Verify",
+  "a-live-mod": "Moderate",
+  "a-policy": "Policy",
+  "a-finance": "Finance",
+  "a-channels": "Channels",
+  "a-security": "Security",
+};
+
+function resolveNavTag(page: BasePageRegistryItem) {
+  const explicitTag = navTagById[page.id];
+  if (explicitTag) return explicitTag;
+  return page.label.match(/[A-Za-z0-9]+/)?.[0] || "Page";
+}
+
+export const pageRegistry: PageRegistryItem[] = basePageRegistry.map((page) => ({
+  ...page,
+  navTag: resolveNavTag(page),
+}));
 
 export const defaultPageForRole: Record<RoleKey, string> = { user: "/app/user/home", provider: "/app/provider/dashboard", admin: "/app/admin/overview" };
 

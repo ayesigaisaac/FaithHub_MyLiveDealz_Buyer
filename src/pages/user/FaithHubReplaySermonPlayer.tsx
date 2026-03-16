@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -26,7 +25,29 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const chapters = [
+type ChapterItem = {
+  title: string;
+  time: string;
+};
+
+type TranscriptItem = {
+  time: string;
+  speaker: string;
+  text: string;
+};
+
+type ClipItem = {
+  title: string;
+  range: string;
+};
+
+type SectionHeaderProps = {
+  title: string;
+  subtitle: string;
+  action?: string;
+};
+
+const chapters: ChapterItem[] = [
   { title: "Opening prayer", time: "00:00" },
   { title: "The core teaching", time: "05:14" },
   { title: "How wisdom becomes daily practice", time: "14:42" },
@@ -34,7 +55,7 @@ const chapters = [
   { title: "Closing prayer and next steps", time: "39:18" },
 ];
 
-const transcriptBlocks = [
+const transcriptBlocks: TranscriptItem[] = [
   {
     time: "00:42",
     speaker: "Rev. Naomi",
@@ -62,7 +83,7 @@ const transcriptBlocks = [
   },
 ];
 
-const clips = [
+const clips: ClipItem[] = [
   { title: "Wisdom becomes daily practice", range: "14:42  18:10" },
   { title: "Family application highlight", range: "27:05  30:12" },
   { title: "Closing prayer takeaway", range: "39:18  41:02" },
@@ -70,7 +91,7 @@ const clips = [
 
 const notes = [
   "Key idea: wisdom must move from inspiration into routine.",
-  "Family conversations are one of the strongest places to apply tonights message.",
+  "Family conversations are one of the strongest places to apply tonight's message.",
   "Replay pairs well with the Walking in Wisdom reading plan and episode worksheet.",
 ];
 
@@ -92,43 +113,43 @@ export default function FaithHubReplaySermonPlayer() {
   const visibleTranscript = showTranscriptOnlyMatches ? transcriptView : transcriptBlocks;
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
+      <div className="mx-auto w-full max-w-[1680px] px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-[24px] border border-slate-200/80 bg-white/90 px-4 py-3.5 shadow-sm backdrop-blur"
         >
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
               <PlayCircle className="h-5 w-5" />
             </div>
-            <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
-              <div className="text-lg font-semibold">Replay & Sermon Player</div>
+            <div className="min-w-0">
+              <div className="fh-eyebrow text-emerald-600">EVzone Super App</div>
+              <div className="truncate text-lg font-semibold text-slate-900">Replay & Sermon Player</div>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
-              {offlineMode ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
+              {offlineMode ? <WifiOff className="h-4 w-4 text-amber-600" /> : <Wifi className="h-4 w-4 text-emerald-600" />}
               {offlineMode ? "Cached downloads available" : "Replay ready"}
             </div>
-            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
+            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-emerald-200 hover:text-emerald-600">
               <Bell className="h-5 w-5" />
             </button>
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
+        <div className="grid gap-5 xl:grid-cols-[1.08fr_0.92fr]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
-            className="space-y-4"
+            className="space-y-5"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="relative overflow-hidden rounded-[28px] border border-white/65 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -137,13 +158,13 @@ export default function FaithHubReplaySermonPlayer() {
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chapters, transcript, notes, downloads</Badge>
                   </div>
 
-                  <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
+                  <div className="grid gap-5 lg:grid-cols-[0.62fr_0.38fr]">
                     <div className="space-y-4">
-                      <div className="fh-kicker text-white/90">Walking in Wisdom  Episode Replay</div>
-                      <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                      <div className="fh-kicker text-white/90">Walking in Wisdom Episode Replay</div>
+                      <h1 className="max-w-[14ch] break-normal text-[clamp(2.35rem,4.2vw,4.75rem)] font-semibold leading-[1.02] tracking-tight">
                         Replay sermons with structure, searchable understanding, and premium learning depth when needed.
                       </h1>
-                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
+                      <p className="max-w-[56ch] fh-body text-white/90 sm:text-base">
                         FaithHub treats replay as more than video-on-demand. Users can navigate chapters, search transcript text, highlight notes, adjust speed, download audio, and unlock offline video or study guides where supported.
                       </p>
 
@@ -160,14 +181,23 @@ export default function FaithHubReplaySermonPlayer() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-40 rounded-[22px] bg-white/20" />
+                    <div className="rounded-[24px] border border-white/15 bg-white/12 p-4 backdrop-blur">
+                      <div className="mb-4 rounded-[18px] border border-white/20 bg-slate-950/35 p-3">
+                        <div className="mb-3 flex items-center justify-between text-sm text-white/85">
+                          <span>Replay preview</span>
+                          <span>43:18</span>
+                        </div>
+                        <div className="mb-2 h-1.5 rounded-full bg-white/20">
+                          <div className="h-full w-[58%] rounded-full bg-emerald-300" />
+                        </div>
+                        <div className="text-xs text-white/70">Chapter 3 - 15:58</div>
+                      </div>
                       <div className="mb-3 text-sm font-semibold text-white">Quick controls</div>
                       <div className="space-y-2 text-sm text-white/85">
-                        <div className="flex items-center justify-between"><span>Speed</span><span>{playbackSpeed}</span></div>
-                        <div className="flex items-center justify-between"><span>Captions</span><span>{captionsOn ? "On" : "Off"}</span></div>
-                        <div className="flex items-center justify-between"><span>Audio download</span><span>{audioDownloaded ? "Ready" : "Not queued"}</span></div>
-                        <div className="flex items-center justify-between"><span>Offline video</span><span>{videoDownloads ? "Available" : "Premium"}</span></div>
+                        <div className="flex items-center justify-between gap-3"><span>Speed</span><span className="font-semibold">{playbackSpeed}</span></div>
+                        <div className="flex items-center justify-between gap-3"><span>Captions</span><span className="font-semibold">{captionsOn ? "On" : "Off"}</span></div>
+                        <div className="flex items-center justify-between gap-3"><span>Audio download</span><span className="font-semibold">{audioDownloaded ? "Ready" : "Not queued"}</span></div>
+                        <div className="flex items-center justify-between gap-3"><span>Offline video</span><span className="font-semibold">{videoDownloads ? "Available" : "Premium"}</span></div>
                       </div>
                     </div>
                   </div>
@@ -175,7 +205,7 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Replay controls"
@@ -305,9 +335,9 @@ export default function FaithHubReplaySermonPlayer() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.4 }}
-            className="space-y-4"
+            className="space-y-5"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="rounded-[30px] border border-white/10 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.58)]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Searchable understanding"
@@ -327,7 +357,7 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="rounded-[28px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -369,7 +399,7 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Clip sharing and cache state"
@@ -400,11 +430,11 @@ export default function FaithHubReplaySermonPlayer() {
   );
 }
 
-function SectionHeader({ title, subtitle, action = "See all" }) {
+function SectionHeader({ title, subtitle, action = "See all" }: SectionHeaderProps) {
   return (
-    <div className="mb-4 flex items-center justify-between gap-3">
-      <div>
-        <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
+    <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+      <div className="min-w-0">
+        <div className="break-normal text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
         <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">

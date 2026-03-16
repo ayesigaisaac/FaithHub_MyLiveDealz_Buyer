@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
+import type { SxProps, Theme } from "@mui/material/styles";
 
 type Variant = "default" | "outline" | "ghost";
 type UiSize = "sm" | "md" | "lg";
@@ -9,7 +10,7 @@ export interface ButtonProps extends Omit<MuiButtonProps, "variant"> {
   uiSize?: UiSize;
 }
 
-function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; sx: any } {
+function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; sx: SxProps<Theme> } {
   if (variant === "outline") {
     return {
       variant: "outlined",
@@ -58,7 +59,7 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
   };
 }
 
-function resolveSize(uiSize: UiSize) {
+function resolveSize(uiSize: UiSize): SxProps<Theme> {
   if (uiSize === "sm") {
     return {
       minHeight: 40,
@@ -84,7 +85,7 @@ function resolveSize(uiSize: UiSize) {
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant = "default", uiSize = "md", className, sx, ...props },
-  ref
+  ref,
 ) {
   const resolved = resolveStyles(variant);
   const sizeStyles = resolveSize(uiSize);
@@ -95,17 +96,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
       {...props}
       variant={resolved.variant}
       className={className}
-      sx={{
-        borderRadius: "12px",
-        fontWeight: 700,
-        letterSpacing: "0.01em",
-        lineHeight: 1.2,
-        whiteSpace: "nowrap",
-        transition: "all 180ms ease",
-        ...sizeStyles,
-        ...(resolved.sx || {}),
-        ...((sx as any) || {}),
-      } as any}
+      sx={[
+        {
+          borderRadius: "12px",
+          fontWeight: 700,
+          letterSpacing: "0.01em",
+          lineHeight: 1.2,
+          whiteSpace: "nowrap",
+          transition: "all 180ms ease",
+        },
+        sizeStyles,
+        resolved.sx,
+        ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
+      ]}
     />
   );
 });

@@ -71,7 +71,7 @@ export default function AppShellLayout() {
     const keyFor = (page: PageRegistryItem) => {
       if (!adminAllAccess) return getSectionLabel(routeRole, page.section);
       const roleLabel = page.role === "provider" ? "Provider" : page.role === "admin" ? "Admin" : "User";
-      return `${roleLabel} · ${getSectionLabel(page.role, page.section)}`;
+      return `${roleLabel} Â· ${getSectionLabel(page.role, page.section)}`;
     };
     return pages.reduce((acc, page) => {
       const key = keyFor(page);
@@ -96,15 +96,15 @@ export default function AppShellLayout() {
 
   return (
     <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
-      <div className="sticky top-0 z-30 border-b border-slate-200/80 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex max-w-[1800px] flex-wrap items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-5">
+      <div className="sticky top-0 z-30 border-b border-slate-200/80 bg-[#f8fafc]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-[1800px] flex-wrap items-center justify-between gap-3 px-3 py-2.5 sm:px-4 lg:px-5">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <button
               type="button"
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}
-              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:hidden"
+              className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-[0_4px_12px_rgba(15,23,42,0.04)] lg:hidden"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -113,7 +113,7 @@ export default function AppShellLayout() {
               aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
               aria-pressed={sidebarCollapsed}
               onClick={() => setSidebarCollapsed((prev) => !prev)}
-              className="hidden h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:flex"
+              className="hidden h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-[0_4px_12px_rgba(15,23,42,0.04)] lg:flex"
             >
               {sidebarCollapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}
             </button>
@@ -121,46 +121,56 @@ export default function AppShellLayout() {
               type="button"
               aria-label="Go to FaithHub landing page"
               onClick={() => navigate('/')}
-              className="flex min-w-0 items-center rounded-[20px] border border-slate-200 bg-white px-3 py-2 shadow-sm sm:px-4"
+              className="flex h-14 min-w-0 items-center rounded-[18px] border border-slate-200 bg-white px-3 shadow-[0_4px_12px_rgba(15,23,42,0.04)] sm:px-4"
             >
               <img src={faithmartLogoLandscape} alt="FaithMart" className="h-10 w-auto max-w-[11rem] object-contain sm:h-11 sm:max-w-[12rem]" />
             </button>
           </div>
 
-          <div className="hidden min-w-0 flex-1 items-center gap-3 rounded-[20px] border border-slate-200 bg-white px-4 py-3 text-left shadow-sm lg:flex">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+          <div className="hidden min-w-0 flex-1 items-center gap-3 rounded-[18px] border border-slate-200 bg-white px-4 py-2 text-left shadow-[0_4px_12px_rgba(15,23,42,0.04)] lg:flex">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-sky-600">
               <Search className="h-4 w-4" />
             </div>
-            <div className="min-w-0">
-              <div className="fh-label text-slate-400">Search</div>
-              <div className="truncate text-sm text-slate-500">Pages, institutions, routes, and workspace tools</div>
+            <div className="min-w-0 flex-1">
+              <label htmlFor="shell-search" className="sr-only">
+                Search pages
+              </label>
+              <input
+                id="shell-search"
+                type="text"
+                placeholder="Search pages..."
+                className="h-10 w-full min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-700 placeholder:text-slate-400 outline-none transition focus:border-sky-300 focus:bg-white"
+              />
             </div>
-            <span className="ml-auto rounded-full bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-500 ring-1 ring-slate-200">{pages.length} pages</span>
+            <span className="ml-auto inline-flex h-9 min-w-[2.25rem] shrink-0 items-center justify-center rounded-full border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-slate-600">
+              {pages.length}
+            </span>
           </div>
 
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2 sm:gap-3">
-            <div className="hidden items-center gap-2 rounded-[20px] border border-slate-200 bg-white px-2 py-1.5 shadow-sm xl:flex">
-              <span className="px-2 fh-label text-slate-400">Display</span>
-              <ColorModeToggle className="inline-flex" />
+            <div className="hidden h-14 items-center gap-2 rounded-[18px] border border-slate-200 bg-white px-2 shadow-[0_4px_12px_rgba(15,23,42,0.04)] xl:flex">
+              <span className="px-2 text-xs font-semibold tracking-[0.08em] text-slate-400 whitespace-nowrap">Theme</span>
+              <ColorModeToggle className="inline-flex min-h-0 h-10 rounded-xl px-3 py-1.5 shadow-none hover:translate-y-0" />
             </div>
             <RoleSwitcher role={shellRole} onChange={(nextRole) => navigate(withAdminAccess(defaultPageForRole[nextRole], adminAllAccess || nextRole === "admin"))} />
             {adminAllAccess && routeRole !== "admin" ? (
               <button
                 type="button"
                 onClick={exitAdminView}
-                className="hidden rounded-[18px] border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-emerald-200 hover:text-emerald-600 xl:inline-flex"
+                className="hidden h-14 items-center rounded-[18px] border border-slate-200 bg-transparent px-4 text-sm font-semibold text-slate-500 transition hover:bg-slate-50 hover:text-slate-700 xl:inline-flex"
               >
                 Exit admin view
               </button>
             ) : null}
-            <div className="flex items-center gap-2 rounded-[20px] border border-slate-200 bg-white px-2 py-1.5 shadow-sm">
-              <span className="hidden px-2 fh-label text-slate-400 sm:inline">Alerts</span>
+            <div className="flex h-14 items-center gap-1 rounded-[18px] border border-slate-200 bg-white px-2 shadow-[0_4px_12px_rgba(15,23,42,0.04)]">
+              <span className="hidden px-2 text-xs font-semibold tracking-[0.08em] text-slate-400 whitespace-nowrap sm:inline">Alerts</span>
               <button
                 type="button"
                 aria-label="Open alerts"
-                className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-50 text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-600"
+                className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 text-slate-700 transition hover:bg-sky-50 hover:text-sky-700"
               >
                 <Bell className="h-5 w-5" />
+                <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-sky-500" />
               </button>
             </div>
           </div>
@@ -168,9 +178,11 @@ export default function AppShellLayout() {
       </div>
 
       <div className="mx-auto flex max-w-[1800px] min-w-0 gap-5 px-3 pb-10 pt-4 sm:px-4 lg:px-5">
-        <aside className={`hidden lg:block ${sidebarCollapsed ? 'w-[92px]' : 'w-[320px]'}`}>
-          <SidebarCard collapsed={sidebarCollapsed} role={shellRole} grouped={grouped} currentPath={location.pathname} navigate={navigateToPath} />
-        </aside>
+        {!sidebarCollapsed ? (
+          <aside className="hidden w-[320px] lg:block">
+            <SidebarCard collapsed={false} role={shellRole} grouped={grouped} currentPath={location.pathname} navigate={navigateToPath} />
+          </aside>
+        ) : null}
 
         <Drawer open={mobileOpen} onClose={() => setMobileOpen(false)} sx={{ display: { lg: 'none' } }}>
           <div className="w-[320px] max-w-[86vw] p-4">
@@ -188,9 +200,11 @@ export default function AppShellLayout() {
                 </div>
                 <div className="flex min-w-0 flex-wrap gap-2">
                   <Badge className="rounded-full border-emerald-100 bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
-                    {adminAllAccess ? "ADMIN · ALL ACCESS" : routeRole.toUpperCase()}
+                    {adminAllAccess ? "ADMIN Â· ALL ACCESS" : routeRole.toUpperCase()}
                   </Badge>
-                  <Badge className="max-w-full truncate rounded-full bg-slate-50 text-slate-500 hover:bg-slate-50 sm:max-w-[24rem]">{location.pathname}</Badge>
+                  <Badge className="max-w-full truncate rounded-full bg-slate-50 text-slate-500 hover:bg-slate-50 sm:max-w-[24rem]">
+                    {currentPage?.navTag || "Workspace"}
+                  </Badge>
                 </div>
               </div>
             </CardContent>
@@ -205,7 +219,10 @@ export default function AppShellLayout() {
 function RoleSwitcher({ role, onChange }: { role: RoleKey; onChange: (role: RoleKey) => void }) {
   const roles: RoleKey[] = ['user', 'provider', 'admin'];
   return (
-    <div aria-label="Switch workspace role" className="flex max-w-full flex-wrap items-center gap-1 rounded-[20px] border border-slate-200 bg-white p-1.5 shadow-sm">
+    <div
+      aria-label="Switch workspace role"
+      className="flex h-14 max-w-full flex-wrap items-center gap-1 rounded-[18px] border border-slate-200 bg-white p-1.5 shadow-[0_4px_12px_rgba(15,23,42,0.04)]"
+    >
       {roles.map((item) => {
         const active = role === item;
         return (
@@ -214,14 +231,14 @@ function RoleSwitcher({ role, onChange }: { role: RoleKey; onChange: (role: Role
             key={item}
             aria-pressed={active}
             onClick={() => onChange(item)}
-            className={`rounded-[14px] px-3 py-2 text-sm font-semibold transition ${
+            className={`h-11 whitespace-nowrap rounded-[12px] px-4 text-sm font-semibold transition ${
               active
                 ? item === 'provider'
-                  ? 'bg-[#fff7ed] text-[#c2410c]'
+                  ? 'bg-amber-50 text-amber-700 ring-1 ring-amber-200'
                   : item === 'admin'
-                    ? 'bg-slate-900 text-white'
-                    : 'bg-emerald-50 text-emerald-700'
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-slate-800 text-white ring-1 ring-slate-700'
+                    : 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200'
+                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             {item === 'user' ? 'User' : item === 'provider' ? 'Provider' : 'Admin'}
@@ -252,12 +269,24 @@ function SidebarCard({ collapsed, role, grouped, currentPath, navigate }: { coll
                     <button
                       type="button"
                       key={item.id}
+                      aria-label={`${item.label} - ${item.navTag}`}
                       aria-current={active ? "page" : undefined}
                       onClick={() => navigate(item.path)}
                       className={`group flex w-full items-center gap-3 rounded-[18px] border px-3 py-3 text-left transition ${active ? 'border-emerald-100 bg-emerald-50' : 'border-transparent bg-white hover:border-slate-200 hover:bg-slate-50'}`}
                     >
                       <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-50 text-slate-500 ring-1 ring-slate-200 group-hover:bg-white'}`}><Icon className="h-5 w-5" /></div>
-                      {!collapsed ? <div className="min-w-0 flex-1"><div className={`truncate text-sm ${active ? 'font-semibold text-emerald-800' : 'font-medium text-slate-900'}`}>{item.label}</div><div className="truncate text-xs text-slate-500">{item.path}</div></div> : null}
+                      {!collapsed ? (
+                        <div className="min-w-0 flex-1">
+                          <div className={`truncate text-sm ${active ? 'font-semibold text-emerald-800' : 'font-medium text-slate-900'}`}>
+                            {item.label}
+                          </div>
+                          <div className="mt-1">
+                            <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
+                              {item.navTag}
+                            </span>
+                          </div>
+                        </div>
+                      ) : null}
                     </button>
                   );
                 })}
@@ -269,6 +298,7 @@ function SidebarCard({ collapsed, role, grouped, currentPath, navigate }: { coll
     </Card>
   );
 }
+
 
 
 

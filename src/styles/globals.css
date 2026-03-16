@@ -279,11 +279,15 @@ li {
 }
 
 /* Dark-mode mapping for existing Tailwind utility usage across pages. */
-[data-theme="dark"] [class*="bg-[#f2f2f2]"] {
+[data-theme="dark"] [class*="bg-[#f2f2f2]"],
+[data-theme="dark"] [class*="bg-[#f2f2f2]" i] {
   background-color: var(--bg) !important;
 }
 
-[data-theme="dark"] [class*="bg-[#f5f7f6]"] {
+[data-theme="dark"] [class*="bg-[#f5f7f6]"],
+[data-theme="dark"] [class*="bg-[#f5f7f6]" i],
+[data-theme="dark"] [class*="bg-[#f5f7fa]"],
+[data-theme="dark"] [class*="bg-[#f5f7fa]" i] {
   background-color: var(--bg) !important;
 }
 
@@ -291,9 +295,72 @@ li {
   background-color: var(--card) !important;
 }
 
+[data-theme="dark"] [class*="bg-slate-100"] {
+  background-color: #182131 !important;
+}
+
+[data-theme="dark"] [class*="bg-slate-200"] {
+  background-color: #202a3b !important;
+}
+
 [data-theme="dark"] [class*="bg-slate-50"],
-[data-theme="dark"] [class*="bg-[#f8fafc]"] {
+[data-theme="dark"] [class*="bg-[#f8fafc]"],
+[data-theme="dark"] [class*="bg-[#f8fafc]" i] {
   background-color: var(--surface) !important;
+}
+
+[data-theme="dark"] [class*="bg-[#f7fffb]"],
+[data-theme="dark"] [class*="bg-[#fff8ef]"],
+[data-theme="dark"] [class*="bg-[#fffaf3]"],
+[data-theme="dark"] [class*="bg-[#f7fffb]" i],
+[data-theme="dark"] [class*="bg-[#fff8ef]" i],
+[data-theme="dark"] [class*="bg-[#fffaf3]" i] {
+  background-color: var(--card) !important;
+}
+
+/* Remap light neutral Tailwind gradient stops so dark mode keeps readable contrast. */
+[data-theme="dark"] [class*="from-[#f8fafc]"],
+[data-theme="dark"] [class*="from-[#f6fdf9]"],
+[data-theme="dark"] [class*="from-[#f5fbf8]"],
+[data-theme="dark"] [class*="from-[#ecfff8]"],
+[data-theme="dark"] [class*="from-[#ffffff]"],
+[data-theme="dark"] [class*="from-white"],
+[data-theme="dark"] [class*="from-slate-50"],
+[data-theme="dark"] [class*="from-slate-100"] {
+  --tw-gradient-from: #131a27 var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(19 26 39 / 0) var(--tw-gradient-to-position) !important;
+}
+
+[data-theme="dark"] [class*="via-[#f5f7fa]"],
+[data-theme="dark"] [class*="via-[#f6fdf9]"],
+[data-theme="dark"] [class*="via-[#ffffff]"],
+[data-theme="dark"] [class*="via-white"],
+[data-theme="dark"] [class*="via-[#20cf9c]"],
+[data-theme="dark"] [class*="via-[#1fd29d]"],
+[data-theme="dark"] [class*="via-[#21d29d]"],
+[data-theme="dark"] [class*="via-[#22d39f]"],
+[data-theme="dark"] [class*="via-slate-100"] {
+  --tw-gradient-via: #182131 var(--tw-gradient-via-position) !important;
+}
+
+[data-theme="dark"] [class*="to-[#eef6f2]"],
+[data-theme="dark"] [class*="to-[#edf6f2]"],
+[data-theme="dark"] [class*="to-[#ebfbf4]"],
+[data-theme="dark"] [class*="to-[#eafcf6]"],
+[data-theme="dark"] [class*="to-[#ebfcf6]"],
+[data-theme="dark"] [class*="to-[#e9fbf3]"],
+[data-theme="dark"] [class*="to-[#f2f2f2]"],
+[data-theme="dark"] [class*="to-[#ffffff]"],
+[data-theme="dark"] [class*="to-white"],
+[data-theme="dark"] [class*="to-slate-200"],
+[data-theme="dark"] [class*="to-slate-100"] {
+  --tw-gradient-to: #1b2433 var(--tw-gradient-to-position) !important;
+}
+
+/* Keep green hero gradients readable in dark mode without bright white washout. */
+[data-theme="dark"] [class*="from-[#03cd8c]"] {
+  --tw-gradient-from: #0f342c var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(15 52 44 / 0) var(--tw-gradient-to-position) !important;
 }
 
 [data-theme="dark"] [class*="bg-emerald-50"],
@@ -302,6 +369,16 @@ li {
 }
 
 [data-theme="dark"] [class*="bg-[linear-gradient"] {
+  background-image: none !important;
+  background-color: var(--card) !important;
+}
+
+/*
+  Project-wide guardrail:
+  Any Tailwind gradient utility can carry light stops from older screens.
+  In dark mode, flatten to dark surface to eliminate white washout globally.
+*/
+[data-theme="dark"] [class*="bg-gradient-to"] {
   background-image: none !important;
   background-color: var(--card) !important;
 }
@@ -317,12 +394,20 @@ li {
   border-color: var(--border) !important;
 }
 
+[data-theme="dark"] [class*="border-white"] {
+  border-color: var(--border) !important;
+}
+
 [data-theme="dark"] [class*="border-emerald-100"],
 [data-theme="dark"] [class*="border-emerald-200"] {
   border-color: rgba(52, 211, 153, 0.22) !important;
 }
 
 [data-theme="dark"] [class*="ring-slate-"] {
+  --tw-ring-color: var(--border) !important;
+}
+
+[data-theme="dark"] [class*="ring-white"] {
   --tw-ring-color: var(--border) !important;
 }
 
@@ -338,7 +423,8 @@ li {
 
 [data-theme="dark"] [class*="text-slate-600"],
 [data-theme="dark"] [class*="text-slate-500"],
-[data-theme="dark"] [class*="text-slate-400"] {
+[data-theme="dark"] [class*="text-slate-400"],
+[data-theme="dark"] [class*="text-slate-300"] {
   color: var(--text-secondary) !important;
 }
 

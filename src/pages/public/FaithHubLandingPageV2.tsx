@@ -63,7 +63,7 @@ const roleCards = [
       "Events, RSVP, FaithMart tickets, and giving",
     ],
     icon: Users,
-    badgeTone: "bg-[#ecfff8] text-[#03cd8c]",
+    badgeTone: "border border-sky-200 bg-sky-50 text-sky-700",
   },
   {
     role: "Provider",
@@ -76,7 +76,7 @@ const roleCards = [
       "Events, ticketing, funds, and trust workflows",
     ],
     icon: Landmark,
-    badgeTone: "bg-[#fff8ef] text-[#f77f00]",
+    badgeTone: "border border-slate-200 bg-slate-100 text-slate-700",
   },
 ];
 
@@ -484,42 +484,44 @@ export default function FaithHubLandingPageV2() {
               transition={{ delay: 0.08, duration: 0.45 }}
               className="relative z-10"
             >
-              <Card className="overflow-hidden rounded-3xl border-slate-200 bg-white shadow-[0_30px_90px_-40px_rgba(15,23,42,0.32)]">
+              <Card className="overflow-hidden rounded-3xl border border-slate-200 bg-[#f8fafc] shadow-[0_20px_56px_-42px_rgba(15,23,42,0.28)]">
                 <CardContent className="p-0">
-                  <div className="border-b border-[#03cd8c]/20 bg-[#ecfff8] p-6 text-slate-900 sm:p-7">
-                    <div className="mb-5 flex items-center justify-between gap-3">
+                  <div className="border-b border-slate-200 bg-[#f8fafc] p-6 text-slate-900 sm:p-7">
+                    <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
                       <div>
-                        <div className="fh-kicker-subtle text-[#03cd8c]">FaithHub Snapshot</div>
-                        <div className="mt-2 text-3xl font-semibold leading-tight text-[#03cd8c]">A platform for users and institutions</div>
+                        <div className="fh-kicker-subtle tracking-[0.05em] text-slate-500">FaithHub Platform</div>
+                        <div className="mt-2 text-3xl font-semibold leading-tight text-slate-900 sm:text-[2rem]">
+                          Connecting users and institutions
+                        </div>
                       </div>
-                      <div className="rounded-full border border-[#03cd8c]/25 bg-white px-3 py-1 text-xs font-semibold text-[#03cd8c]">
+                      <div className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-[#0ea5e9]">
                         Website Landing Experience
                       </div>
                     </div>
 
-                    <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="mx-auto grid max-w-[900px] gap-6 sm:grid-cols-2">
                       {roleCards.map((item) => (
                         <button
                           type="button"
                           key={item.role}
                           onClick={() => setActiveRole(item.role)}
-                          className={`rounded-xl border p-4 text-left transition ${
+                          className={`rounded-2xl border bg-white p-6 text-left shadow-[0_4px_12px_rgba(15,23,42,0.04)] transition ${
                             activeRole === item.role
-                              ? "border-[#03cd8c]/35 bg-white shadow-sm"
-                              : "border-[#03cd8c]/20 bg-white hover:border-[#03cd8c]/35"
+                              ? "border-sky-300"
+                              : "border-slate-200 hover:border-sky-200"
                           }`}
                         >
-                          <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
+                          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 p-3 text-[#0ea5e9]">
                             <item.icon className="h-5 w-5" />
                           </div>
-                          <div className="text-base font-semibold text-slate-900">{item.role}</div>
-                          <div className="mt-1 text-sm text-slate-600">{item.title}</div>
+                          <div className="text-xl font-semibold text-slate-900">{item.role}</div>
+                          <div className="mt-2 text-base leading-7 text-slate-600">{item.title}</div>
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  <div className="space-y-5 fh-pad-panel">
+                  <div className="space-y-5 bg-white fh-pad-panel">
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <div className="text-sm font-semibold text-slate-900">Current focus</div>
@@ -534,8 +536,11 @@ export default function FaithHubLandingPageV2() {
 
                     <div className="space-y-3">
                       {currentRole?.bullets.map((item) => (
-                        <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
+                        <div
+                          key={item}
+                          className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-[#f8fafc] p-4 shadow-[0_4px_12px_rgba(15,23,42,0.03)]"
+                        >
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0ea5e9]" />
                           <div className="text-sm text-slate-700">{item}</div>
                         </div>
                       ))}
@@ -543,14 +548,14 @@ export default function FaithHubLandingPageV2() {
 
                     <div className="flex flex-wrap gap-3">
                       <Button
-                        className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]"
+                        className="rounded-2xl bg-[#0ea5e9] hover:bg-[#0284c7]"
                         onClick={() => navigate(currentRole?.role === "Provider" ? "/provider" : "/user")}
                       >
                         {currentRole?.role === "Provider" ? "Open Provider Workspace" : "Open User Experience"}
                       </Button>
                       <Button
                         variant="outline"
-                        className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                        className="rounded-2xl border-slate-200 bg-white hover:border-sky-300 hover:bg-sky-50/40"
                         onClick={() => scrollToId("experiences")}
                       >
                         Compare Roles
