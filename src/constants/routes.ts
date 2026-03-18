@@ -1,0 +1,107 @@
+type RouteParam = string | number;
+
+function encodeSegment(value: RouteParam) {
+  return encodeURIComponent(String(value).trim());
+}
+
+export const routes = {
+  public: {
+    landing: "/",
+    access: "/access",
+    shellPreview: "/shell-preview",
+  },
+  app: {
+    root: "/app",
+    shell: "/app-shell",
+    user: {
+      base: "/app/user",
+      entry: "/app/user/entry",
+      auth: "/app/user/auth",
+      profile: "/app/user/profile",
+      home: "/app/user/home",
+      discover: "/app/user/discover",
+      institution: "/app/user/institution",
+      institutionPattern: "/app/user/institution/:institutionId",
+      institutionById: (institutionId: RouteParam) =>
+        `/app/user/institution/${encodeSegment(institutionId)}`,
+      series: "/app/user/series",
+      seriesDetail: "/app/user/series/detail",
+      seriesDetailPattern: "/app/user/series/:seriesId",
+      seriesDetailById: (seriesId: RouteParam) => `/app/user/series/${encodeSegment(seriesId)}`,
+      episode: "/app/user/episode",
+      episodePattern: "/app/user/episode/:episodeId",
+      episodeById: (episodeId: RouteParam) => `/app/user/episode/${encodeSegment(episodeId)}`,
+      replay: "/app/user/replay",
+      replayPattern: "/app/user/replay/:replayId",
+      replayById: (replayId: RouteParam) => `/app/user/replay/${encodeSegment(replayId)}`,
+      clips: "/app/user/clips",
+      liveHub: "/app/user/live",
+      liveWaitingRoom: "/app/user/live/waiting-room",
+      livePlayer: "/app/user/live/player",
+      livePlayerPattern: "/app/user/live/:sessionId/player",
+      livePlayerBySession: (sessionId: RouteParam) =>
+        `/app/user/live/${encodeSegment(sessionId)}/player`,
+      liveChat: "/app/user/live/chat",
+      liveChatPattern: "/app/user/live/:sessionId/chat",
+      liveChatBySession: (sessionId: RouteParam) =>
+        `/app/user/live/${encodeSegment(sessionId)}/chat`,
+      events: "/app/user/events",
+      eventDetail: "/app/user/events/detail",
+      eventDetailPattern: "/app/user/events/:eventId",
+      eventDetailById: (eventId: RouteParam) => `/app/user/events/${encodeSegment(eventId)}`,
+      giving: "/app/user/giving",
+      membership: "/app/user/membership",
+      reviews: "/app/user/reviews",
+      settings: "/app/user/settings",
+    },
+    provider: {
+      base: "/app/provider",
+      onboarding: "/app/provider/onboarding",
+      dashboard: "/app/provider/dashboard",
+      seriesBuilder: "/app/provider/series-builder",
+      episodeBuilder: "/app/provider/episode-builder",
+      postLive: "/app/provider/post-live",
+      liveBuilder: "/app/provider/live-builder",
+      liveSchedule: "/app/provider/live-schedule",
+      liveOps: "/app/provider/live-ops",
+      liveStudio: "/app/provider/live-studio",
+      streamToPlatforms: "/app/provider/stream-to-platforms",
+      notifications: "/app/provider/notifications",
+      contacts: "/app/provider/contacts",
+      events: "/app/provider/events",
+      funds: "/app/provider/funds",
+      reviewsModeration: "/app/provider/reviews-moderation",
+    },
+    admin: {
+      base: "/app/admin",
+      overview: "/app/admin/overview",
+      verification: "/app/admin/verification",
+      liveModeration: "/app/admin/live-moderation",
+      policy: "/app/admin/policy",
+      finance: "/app/admin/finance",
+      channels: "/app/admin/channels",
+      security: "/app/admin/security",
+    },
+  },
+  aliases: {
+    user: "/user",
+    provider: "/provider",
+    admin: "/admin",
+  },
+  enterprise: {
+    superAdminOverview: "/super-admin/overview",
+    tenantAdminOverview: "/tenant-admin/overview",
+    opsIncidents: "/ops/incidents",
+  },
+} as const;
+
+export const faithHubRouteAliases: Record<string, string[]> = {
+  [routes.app.user.institution]: [routes.app.user.institutionPattern],
+  [routes.app.user.seriesDetail]: [routes.app.user.seriesDetailPattern],
+  [routes.app.user.episode]: [routes.app.user.episodePattern],
+  [routes.app.user.replay]: [routes.app.user.replayPattern],
+  [routes.app.user.livePlayer]: [routes.app.user.livePlayerPattern],
+  [routes.app.user.liveChat]: [routes.app.user.liveChatPattern],
+  [routes.app.user.eventDetail]: [routes.app.user.eventDetailPattern],
+};
+

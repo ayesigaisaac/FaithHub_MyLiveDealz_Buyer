@@ -40,6 +40,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import FaithHubFooter from "@/components/layout/FaithHubFooter";
 import { defaultPageForRole, pageRegistry } from "@/config/pageRegistry";
 
 const roleCatalog = {
@@ -476,6 +477,7 @@ export default function FaithHubMultiRoleAppShell() {
               </div>
             </div>
           </motion.div>
+          <FaithHubFooter variant="public" surface="band" density="compact" className="mb-14 lg:mb-0" />
         </main>
       </div>
 

@@ -19,6 +19,7 @@ export default function UserActionBar({ actions }: UserActionBarProps) {
             onClick={action.onClick}
             disabled={action.disabled}
             data-action-label={action.dataActionLabel}
+            data-action-id={action.dataActionId}
             className="whitespace-nowrap rounded-xl border-slate-200 bg-white px-4"
           >
             {action.icon}

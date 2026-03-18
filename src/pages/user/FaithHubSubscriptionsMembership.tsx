@@ -419,7 +419,7 @@ export default function FaithHubSubscriptionsMembership() {
                         <Building2 className="h-4 w-4 text-[#f77f00]" /> Enterprise group memberships
                       </div>
                       <div className="text-sm text-slate-600">
-                        Schools, ministries, and institutions can provision shared memberships across approved users, with central billing, managed access, and synchronized entitlements.
+                        Churches, ministries, and institutions can provision shared memberships across approved users, with central billing, managed access, and synchronized entitlements.
                       </div>
                     </div>
                   ) : (

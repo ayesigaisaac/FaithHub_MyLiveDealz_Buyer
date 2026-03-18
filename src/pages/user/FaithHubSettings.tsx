@@ -368,7 +368,7 @@ export default function FaithHubSettings() {
                     Download controls for minors and review visibility restrictions for youth-facing environments.
                   </div>
                   <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
-                    Per-segment notification management for parents following childrens church, school faith clubs, or family events.
+                    Per-segment notification management for parents following childrens church, youth faith groups, or family events.
                   </div>
                 </div>
               </CardContent>

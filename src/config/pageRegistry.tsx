@@ -1,5 +1,6 @@
 ﻿import React, { lazy } from "react";
 import { BadgeCheck, Building2, BookOpen, CalendarDays, Clock3, Compass, FileText, HeartHandshake, Home, KeyRound, Layers3, LayoutDashboard, MessageSquare, MonitorPlay, PlayCircle, Radio, Settings2, ShieldCheck, Sparkles, Users, Wallet, Bell, Send } from "lucide-react";
+import { faithHubRouteAliases, routes } from "@/constants/routes";
 
 export type RoleKey = "user" | "provider" | "admin";
 
@@ -54,13 +55,14 @@ export interface PageRegistryItem {
   label: string;
   navTag: string;
   path: string;
+  routePatterns: string[];
   template: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
   element: React.LazyExoticComponent<React.ComponentType>;
 }
 
-type BasePageRegistryItem = Omit<PageRegistryItem, "navTag">;
+type BasePageRegistryItem = Omit<PageRegistryItem, "navTag" | "routePatterns">;
 
 const basePageRegistry: BasePageRegistryItem[] = [
   { id: "u-entry", role: "user", section: "Start & Identity", label: "FaithHub Entry", path: "/app/user/entry", template: "T2", description: "First-run entry and low-data welcome.", icon: Sparkles, element: FaithHubEntry },
@@ -163,9 +165,23 @@ function resolveNavTag(page: BasePageRegistryItem) {
 export const pageRegistry: PageRegistryItem[] = basePageRegistry.map((page) => ({
   ...page,
   navTag: resolveNavTag(page),
+  routePatterns: [page.path, ...(faithHubRouteAliases[page.path] || [])],
 }));
 
-export const defaultPageForRole: Record<RoleKey, string> = { user: "/app/user/home", provider: "/app/provider/dashboard", admin: "/app/admin/overview" };
+export function getRoutePatterns(page: Pick<PageRegistryItem, "path" | "routePatterns">) {
+  if (page.routePatterns?.length) return page.routePatterns;
+  return [page.path];
+}
+
+export const defaultPageForRole: Record<RoleKey, string> = {
+  user: routes.app.user.home,
+  provider: routes.app.provider.dashboard,
+  admin: routes.app.admin.overview,
+};
 
 export const pagesByRole = pageRegistry.reduce((acc, page) => { (acc[page.role] ||= []).push(page); return acc; }, {} as Record<RoleKey, PageRegistryItem[]>);
+
+
+
+
 

@@ -6,6 +6,7 @@ export type QuickAction = {
   id: string;
   label: string;
   dataActionLabel?: string;
+  dataActionId?: string;
   onClick?: () => void;
   icon?: ReactNode;
   variant?: "default" | "outline" | "ghost";

@@ -1,4 +1,5 @@
 import { defaultPageForRole, pageRegistry, type RoleKey } from "@/config/pageRegistry";
+import { routes } from "@/constants/routes";
 
 const rawExactPageActions: Record<string, Record<string, string>> = {
   "/app/user/entry": {
@@ -252,6 +253,70 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
   },
 };
 
+const rawExactPageActionIds: Record<string, Record<string, string>> = {
+  [routes.app.user.home]: {
+    "open-live-hub": routes.app.user.liveHub,
+    "open-replay-player": routes.app.user.replay,
+    "open-giving": routes.app.user.giving,
+    "open-discover": routes.app.user.discover,
+    "open-events": routes.app.user.events,
+    "open-event-detail": routes.app.user.eventDetail,
+    "open-series-detail": routes.app.user.seriesDetail,
+  },
+  [routes.app.provider.dashboard]: {
+    "open-live-studio": routes.app.provider.liveStudio,
+    "open-live-schedule": routes.app.provider.liveSchedule,
+    "open-live-ops": routes.app.provider.liveOps,
+    "open-reviews-moderation": routes.app.provider.reviewsModeration,
+    "open-notifications": routes.app.provider.notifications,
+    "open-contacts": routes.app.provider.contacts,
+  },
+  [routes.app.admin.overview]: {
+    "open-admin-live-moderation": routes.app.admin.liveModeration,
+    "open-admin-verification": routes.app.admin.verification,
+    "open-admin-security": routes.app.admin.security,
+    "open-live-ops": routes.app.provider.liveOps,
+    "open-discover": routes.app.user.discover,
+  },
+};
+
+const rawRoleLevelActionIds: Record<RoleKey, Record<string, string>> = {
+  user: {
+    "open-profile": routes.app.user.institution,
+    "open-series-detail": routes.app.user.seriesDetail,
+    "open-episode-detail": routes.app.user.episode,
+    "open-event-detail": routes.app.user.eventDetail,
+    "open-live-waiting-room": routes.app.user.liveWaitingRoom,
+    "open-live-player": routes.app.user.livePlayer,
+    "open-live-chat": routes.app.user.liveChat,
+    "open-giving": routes.app.user.giving,
+    "open-membership": routes.app.user.membership,
+    "open-settings": routes.app.user.settings,
+    "open-discover": routes.app.user.discover,
+    "open-events": routes.app.user.events,
+  },
+  provider: {
+    "open-live-schedule": routes.app.provider.liveSchedule,
+    "open-live-studio": routes.app.provider.liveStudio,
+    "open-stream-destinations": routes.app.provider.streamToPlatforms,
+    "open-notifications": routes.app.provider.notifications,
+    "open-contacts": routes.app.provider.contacts,
+    "open-reviews-moderation": routes.app.provider.reviewsModeration,
+    "open-live-ops": routes.app.provider.liveOps,
+  },
+  admin: {
+    "open-admin-overview": routes.app.admin.overview,
+    "open-admin-live-moderation": routes.app.admin.liveModeration,
+    "open-admin-verification": routes.app.admin.verification,
+    "open-admin-policy": routes.app.admin.policy,
+    "open-admin-security": routes.app.admin.security,
+    "open-admin-finance": routes.app.admin.finance,
+    "open-admin-channels": routes.app.admin.channels,
+    "open-live-ops": routes.app.provider.liveOps,
+    "open-discover": routes.app.user.discover,
+  },
+};
+
 function normalizeLabel(label: string) {
   return label
     .normalize("NFKD")
@@ -261,6 +326,16 @@ function normalizeLabel(label: string) {
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
+}
+
+function normalizeActionId(actionId: string) {
+  return actionId
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_]+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 function normalizeActionTable(actions: Record<string, string>, scope: string) {
@@ -276,6 +351,25 @@ function normalizeActionTable(actions: Record<string, string>, scope: string) {
   return normalizedTable;
 }
 
+function normalizeActionIdTable(actions: Record<string, string>, scope: string) {
+  const normalizedTable: Record<string, string> = {};
+  for (const [rawActionId, path] of Object.entries(actions)) {
+    const normalizedActionId = normalizeActionId(rawActionId);
+    if (!normalizedActionId) continue;
+    if (
+      import.meta.env.DEV &&
+      normalizedTable[normalizedActionId] &&
+      normalizedTable[normalizedActionId] !== path
+    ) {
+      console.warn(
+        `[FaithHub actions] Duplicate normalized action id "${normalizedActionId}" in ${scope}. Last target wins.`,
+      );
+    }
+    normalizedTable[normalizedActionId] = path;
+  }
+  return normalizedTable;
+}
+
 const exactPageActions = Object.fromEntries(
   Object.entries(rawExactPageActions).map(([pathname, actions]) => [
     pathname,
@@ -287,6 +381,20 @@ const roleLevelActions = Object.fromEntries(
   Object.entries(rawRoleLevelActions).map(([role, actions]) => [
     role,
     normalizeActionTable(actions, `role:${role}`),
+  ]),
+) as Record<RoleKey, Record<string, string>>;
+
+const exactPageActionIds = Object.fromEntries(
+  Object.entries(rawExactPageActionIds).map(([pathname, actions]) => [
+    pathname,
+    normalizeActionIdTable(actions, `page-id:${pathname}`),
+  ]),
+) as Record<string, Record<string, string>>;
+
+const roleLevelActionIds = Object.fromEntries(
+  Object.entries(rawRoleLevelActionIds).map(([role, actions]) => [
+    role,
+    normalizeActionIdTable(actions, `role-id:${role}`),
   ]),
 ) as Record<RoleKey, Record<string, string>>;
 
@@ -315,6 +423,16 @@ function validateActionTargets() {
       if (!knownActionTargets.has(path)) unknownTargets.add(path);
     }
   }
+  for (const actions of Object.values(rawExactPageActionIds)) {
+    for (const path of Object.values(actions)) {
+      if (!knownActionTargets.has(path)) unknownTargets.add(path);
+    }
+  }
+  for (const actions of Object.values(rawRoleLevelActionIds)) {
+    for (const path of Object.values(actions)) {
+      if (!knownActionTargets.has(path)) unknownTargets.add(path);
+    }
+  }
   if (unknownTargets.size > 0) {
     console.warn(
       `[FaithHub actions] Unknown navigation targets found: ${Array.from(unknownTargets)
@@ -334,7 +452,16 @@ function getRoleFromPath(pathname: string): RoleKey {
   return "user";
 }
 
-export function resolvePageButtonAction(pathname: string, label: string) {
+export function resolvePageButtonAction(pathname: string, label: string, actionId = "") {
+  const normalizedActionId = normalizeActionId(actionId);
+  if (normalizedActionId) {
+    const exactByActionId = exactPageActionIds[pathname]?.[normalizedActionId];
+    if (exactByActionId) return exactByActionId;
+
+    const roleByActionId = roleLevelActionIds[getRoleFromPath(pathname)]?.[normalizedActionId];
+    if (roleByActionId) return roleByActionId;
+  }
+
   const normalized = normalizeLabel(label);
   if (!normalized) return null;
   const exact = exactPageActions[pathname]?.[normalized];

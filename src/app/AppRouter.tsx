@@ -7,7 +7,13 @@ import { useColorMode } from "@/theme/color-mode";
 import { ScrollToTop } from "@/components/system/ScrollToTop";
 import RoleGuard from "@/components/system/guards/RoleGuard";
 import TenantScopeGuard from "@/components/system/guards/TenantScopeGuard";
-import { defaultPageForRole, pagesByRole, type RoleKey } from "@/config/pageRegistry";
+import {
+  defaultPageForRole,
+  getRoutePatterns,
+  pagesByRole,
+  type RoleKey,
+} from "@/config/pageRegistry";
+import { routes } from "@/constants/routes";
 import AppShellLayout from "@/components/layout/AppShellLayout";
 import SuperAdminLayout from "@/layouts/SuperAdminLayout";
 import TenantAdminLayout from "@/layouts/TenantAdminLayout";
@@ -21,9 +27,9 @@ import SuperAdminOverview from "@/pages/super-admin/SuperAdminOverview";
 import TenantAdminOverview from "@/pages/tenant-admin/TenantAdminOverview";
 
 const roleBasePath: Record<RoleKey, string> = {
-  user: "/app/user",
-  provider: "/app/provider",
-  admin: "/app/admin",
+  user: routes.app.user.base,
+  provider: routes.app.provider.base,
+  admin: routes.app.admin.base,
 };
 
 const roleOrder: RoleKey[] = ["user", "provider", "admin"];
@@ -55,9 +61,9 @@ export default function AppRouter() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<FaithHubLandingPageV2 />} />
-          <Route path="/access" element={<FaithHubAccessGateway />} />
-          <Route path="/shell-preview" element={<FaithHubMultiRoleAppShell />} />
+          <Route path={routes.public.landing} element={<FaithHubLandingPageV2 />} />
+          <Route path={routes.public.access} element={<FaithHubAccessGateway />} />
+          <Route path={routes.public.shellPreview} element={<FaithHubMultiRoleAppShell />} />
           <Route
             path="/super-admin"
             element={
@@ -101,32 +107,36 @@ export default function AppRouter() {
             <Route path=":module" element={<EnterpriseModulePlaceholder role="ops" />} />
             <Route path="*" element={<Navigate to="/ops/incidents" replace />} />
           </Route>
-          <Route path="/user" element={<Navigate to={defaultPageForRole.user} replace />} />
-          <Route path="/provider" element={<Navigate to={defaultPageForRole.provider} replace />} />
-          <Route path="/admin" element={<Navigate to={defaultPageForRole.admin} replace />} />
-          <Route path="/app-shell" element={<Navigate to={defaultPageForRole.user} replace />} />
-          <Route path="/app" element={<Navigate to={defaultPageForRole.user} replace />} />
+          <Route path={routes.aliases.user} element={<Navigate to={defaultPageForRole.user} replace />} />
+          <Route
+            path={routes.aliases.provider}
+            element={<Navigate to={defaultPageForRole.provider} replace />}
+          />
+          <Route path={routes.aliases.admin} element={<Navigate to={defaultPageForRole.admin} replace />} />
+          <Route path={routes.app.shell} element={<Navigate to={defaultPageForRole.user} replace />} />
+          <Route path={routes.app.root} element={<Navigate to={defaultPageForRole.user} replace />} />
           {roleOrder.map((role) => (
             <Route key={role} path={roleBasePath[role]} element={<AppShellLayout />}>
               <Route index element={<Navigate to={defaultPageForRole[role]} replace />} />
               {(pagesByRole[role] || []).map((page) => {
                 const Component = page.element;
-                return (
+                const paths = getRoutePatterns(page);
+                return paths.map((path) => (
                   <Route
-                    key={page.id}
-                    path={getNestedRoutePath(page.path, role)}
+                    key={`${page.id}:${path}`}
+                    path={getNestedRoutePath(path, role)}
                     element={
                       <Suspense fallback={<RouteFallback />}>
                         <Component />
                       </Suspense>
                     }
                   />
-                );
+                ));
               })}
               <Route path="*" element={<Navigate to={defaultPageForRole[role]} replace />} />
             </Route>
           ))}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to={routes.public.landing} replace />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

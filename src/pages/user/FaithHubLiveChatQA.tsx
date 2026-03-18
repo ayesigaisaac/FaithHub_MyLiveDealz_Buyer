@@ -90,7 +90,7 @@ const chatMessages = [
 const qnaItems = [
   {
     id: 1,
-    question: "How can youth apply this teaching during the school week?",
+    question: "How can youth apply this teaching throughout the week?",
     by: "Naomi",
     status: "Queued for host",
     threadedReplies: 3,

@@ -1,22 +1,21 @@
-// @ts-nocheck
-import React, { useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   BadgeCheck,
+  Bell,
   BellRing,
   BookOpen,
   CalendarDays,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   Compass,
   Globe2,
-  HelpCircle,
-  HeartHandshake,
   Landmark,
   Layers3,
+  LayoutGrid,
   Lock,
   Mail,
   Menu,
@@ -27,31 +26,434 @@ import {
   Search,
   ShieldCheck,
   ShoppingBag,
+  Sparkles,
   Star,
   Users,
   Wallet,
   X,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import FaithHubFooter from "@/components/layout/FaithHubFooter";
+import { ctaPriorityClass } from "@/constants/ctaStyles";
+import { faithHubToneCopy } from "@/constants/faithHubTone";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
-const navItems = [
-  { label: "Overview", id: "overview", icon: Compass },
-  { label: "Experiences", id: "experiences", icon: Users },
-  { label: "Live Sessionz", id: "live", icon: Radio },
-  { label: "FaithMart", id: "faithmart", icon: ShoppingBag },
-  { label: "Trust & Safety", id: "trust", icon: ShieldCheck },
-  { label: "FAQ", id: "faq", icon: HelpCircle },
-  { label: "Contact", id: "contact", icon: Mail },
+type QuickTone = "emerald" | "orange" | "slate";
+
+type SidebarEntry = {
+  title: string;
+  detail: string;
+  target?: string;
+  highlighted?: boolean;
+};
+
+type SidebarModule = {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  entries: SidebarEntry[];
+};
+
+type OperatorRoleSection = "Platform Leadership" | "Worship & Content" | "Engagement & Trust";
+
+type OperatorRole = {
+  id: string;
+  label: string;
+  description: string;
+  section: OperatorRoleSection;
+  icon: LucideIcon;
+  defaultRoute: string;
+  baseRole: string;
+  heroFocus: string;
+  viewingAs: string;
+  modules: SidebarModule[];
+};
+
+type RoleCard = {
+  role: "User" | "Provider";
+  title: string;
+  description: string;
+  bullets: string[];
+  icon: LucideIcon;
+  badgeTone: string;
+  target: "/user" | "/provider";
+};
+
+type DeviceTab = {
+  key: "desktop" | "tablet" | "mobile";
+  label: string;
+  title: string;
+  text: string;
+};
+
+const operatorRoleSections: OperatorRoleSection[] = [
+  "Platform Leadership",
+  "Worship & Content",
+  "Engagement & Trust",
 ];
 
-const desktopNavItems = [{ label: "Overview", id: "overview" }, { label: "Platform", id: "experiences" }, { label: "Live", id: "live" }, { label: "Commerce", id: "faithmart" }, { label: "Trust", id: "trust" }];
+const operatorRoles: OperatorRole[] = [
+  {
+    id: "platform-admin",
+    label: "Platform Administrator",
+    description: "Global control, governance, and role visibility",
+    section: "Platform Leadership",
+    icon: ShieldCheck,
+    defaultRoute: "/app/admin/overview",
+    baseRole: "FaithAdmin",
+    heroFocus: "Global governance and multi-module oversight",
+    viewingAs: "Platform Administrator",
+    modules: [
+      {
+        id: "control",
+        label: "Control",
+        icon: LayoutGrid,
+        entries: [
+          { title: "Admin Overview", detail: "Global KPIs and command posture", target: "/app/admin/overview", highlighted: true },
+          { title: "Policy & Taxonomy", detail: "Platform policy controls", target: "/app/admin/policy" },
+          { title: "Institution Verification", detail: "Approval and compliance flow", target: "/app/admin/verification" },
+        ],
+      },
+      {
+        id: "security",
+        label: "Security",
+        icon: Lock,
+        entries: [
+          { title: "Security & Audit Logs", detail: "Evidence and compliance tracing", target: "/app/admin/security" },
+          { title: "Live Moderation Console", detail: "Cross-network intervention control", target: "/app/admin/live-moderation" },
+        ],
+      },
+      {
+        id: "finance",
+        label: "Finance",
+        icon: Wallet,
+        entries: [
+          { title: "Payments & Disputes", detail: "Payouts, refunds, and risk controls", target: "/app/admin/finance" },
+          { title: "Channels Registry", detail: "Deliverability and sender governance", target: "/app/admin/channels" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "verification-lead",
+    label: "Verification & Compliance Lead",
+    description: "Institution approvals, checks, and escalations",
+    section: "Platform Leadership",
+    icon: BadgeCheck,
+    defaultRoute: "/app/admin/verification",
+    baseRole: "ComplianceLead",
+    heroFocus: "Verification and trust governance operations",
+    viewingAs: "Verification Lead",
+    modules: [
+      {
+        id: "verification",
+        label: "Verification",
+        icon: BadgeCheck,
+        entries: [
+          { title: "Institution Verification", detail: "Review and approve institutions", target: "/app/admin/verification", highlighted: true },
+          { title: "Provider Onboarding", detail: "Readiness and setup status", target: "/app/provider/onboarding" },
+        ],
+      },
+      {
+        id: "risk",
+        label: "Risk",
+        icon: ShieldCheck,
+        entries: [
+          { title: "Moderation Signals", detail: "Trust incidents and alerts", target: "/app/admin/live-moderation" },
+          { title: "Policy Control Board", detail: "Localized policy decisions", target: "/app/admin/policy" },
+        ],
+      },
+      {
+        id: "audit",
+        label: "Audit",
+        icon: Lock,
+        entries: [
+          { title: "Security Logs", detail: "Evidence trails and posture", target: "/app/admin/security" },
+          { title: "Compliance Finance Signals", detail: "Disputes and suspicious flows", target: "/app/admin/finance" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "live-ops-director",
+    label: "Live Operations Director",
+    description: "Live schedule, studio, and stream operations",
+    section: "Worship & Content",
+    icon: Radio,
+    defaultRoute: "/app/provider/live-ops",
+    baseRole: "LiveOpsLead",
+    heroFocus: "Live production readiness and stream reliability",
+    viewingAs: "Live Operations",
+    modules: [
+      {
+        id: "live-ops",
+        label: "Live Ops",
+        icon: Radio,
+        entries: [
+          { title: "Live Dashboard", detail: "Operational status and handoff", target: "/app/provider/live-ops", highlighted: true },
+          { title: "Live Schedule", detail: "Run-of-show and staffing", target: "/app/provider/live-schedule" },
+        ],
+      },
+      {
+        id: "studio",
+        label: "Studio",
+        icon: MonitorSmartphone,
+        entries: [
+          { title: "Live Studio", detail: "Scenes, hosts, and overlays", target: "/app/provider/live-studio" },
+          { title: "Stream Destinations", detail: "Simulcast and outbound routing", target: "/app/provider/stream-to-platforms" },
+        ],
+      },
+      {
+        id: "audience",
+        label: "Audience",
+        icon: BellRing,
+        entries: [
+          { title: "Audience Notifications", detail: "Pre-live and post-live messaging", target: "/app/provider/notifications" },
+          { title: "Live Chat & Q&A", detail: "Community interaction lane", target: "/app/user/live/chat" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "content-editor",
+    label: "Series & Content Editor",
+    description: "Series planning, episode creation, and publishing",
+    section: "Worship & Content",
+    icon: BookOpen,
+    defaultRoute: "/app/provider/series-builder",
+    baseRole: "ContentLead",
+    heroFocus: "Content studio and publishing workflows",
+    viewingAs: "Content Operations",
+    modules: [
+      {
+        id: "library",
+        label: "Library",
+        icon: BookOpen,
+        entries: [
+          { title: "Series Builder", detail: "Program and season management", target: "/app/provider/series-builder", highlighted: true },
+          { title: "Episode Builder", detail: "Episode production workspace", target: "/app/provider/episode-builder" },
+        ],
+      },
+      {
+        id: "publishing",
+        label: "Publishing",
+        icon: Layers3,
+        entries: [
+          { title: "Post-live Publishing", detail: "Replay and clip distribution", target: "/app/provider/post-live" },
+          { title: "Provider Dashboard", detail: "Content KPIs and progress", target: "/app/provider/dashboard" },
+        ],
+      },
+      {
+        id: "distribution",
+        label: "Distribution",
+        icon: Sparkles,
+        entries: [
+          { title: "Audience Notifications", detail: "Broadcast and journey messaging", target: "/app/provider/notifications" },
+          { title: "Series Library View", detail: "End-user consumption preview", target: "/app/user/series" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "events-faithmart-manager",
+    label: "Events & FaithMart",
+    description: "Events operations, tickets, commerce, and funds",
+    section: "Engagement & Trust",
+    icon: CalendarDays,
+    defaultRoute: "/app/provider/events",
+    baseRole: "FaithMartOps",
+    heroFocus: "Events and marketplace operations at scale",
+    viewingAs: "Events & Commerce",
+    modules: [
+      {
+        id: "events-core",
+        label: "Events",
+        icon: CalendarDays,
+        entries: [
+          { title: "Events Manager", detail: "Scheduling and event operations", target: "/app/provider/events", highlighted: true },
+          { title: "Events Hub (User)", detail: "Member-facing event journey", target: "/app/user/events" },
+        ],
+      },
+      {
+        id: "commerce-core",
+        label: "Commerce",
+        icon: ShoppingBag,
+        entries: [
+          { title: "Giving Console", detail: "Funds and campaign operations", target: "/app/provider/funds" },
+          { title: "User Giving View", detail: "Donor flow and checkout preview", target: "/app/user/giving" },
+        ],
+      },
+      {
+        id: "funds",
+        label: "Trust",
+        icon: Wallet,
+        entries: [
+          { title: "Finance & Disputes", detail: "Risk, disputes, and payout checks", target: "/app/admin/finance" },
+          { title: "Reviews Moderation", detail: "Commerce trust and response workflow", target: "/app/provider/reviews-moderation" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "community-care-coordinator",
+    label: "Community Care Coordinator",
+    description: "Messaging, care queues, and member engagement",
+    section: "Engagement & Trust",
+    icon: MessageSquare,
+    defaultRoute: "/app/provider/contacts",
+    baseRole: "CommunityCare",
+    heroFocus: "Member communication and pastoral care operations",
+    viewingAs: "Community Care",
+    modules: [
+      {
+        id: "contacts",
+        label: "Contacts",
+        icon: MessageSquare,
+        entries: [
+          { title: "Contact Manager", detail: "Audience records and channels", target: "/app/provider/contacts", highlighted: true },
+          { title: "Audience Notifications", detail: "Automated and manual sends", target: "/app/provider/notifications" },
+        ],
+      },
+      {
+        id: "community",
+        label: "Community",
+        icon: Users,
+        entries: [
+          { title: "FaithHub Home", detail: "Member dashboard experience", target: "/app/user/home" },
+          { title: "Discover Institutions", detail: "Community and institution discovery", target: "/app/user/discover" },
+        ],
+      },
+      {
+        id: "care",
+        label: "Care",
+        icon: ShieldCheck,
+        entries: [
+          { title: "Live Chat & Q&A", detail: "Prayer and conversation lane", target: "/app/user/live/chat" },
+          { title: "Reviews Oversight", detail: "Community trust and response", target: "/app/user/reviews" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "trust-safety-reviewer",
+    label: "Trust & Safety Reviewer",
+    description: "Moderation incidents, policy, and safety posture",
+    section: "Engagement & Trust",
+    icon: Lock,
+    defaultRoute: "/app/admin/live-moderation",
+    baseRole: "TrustReviewer",
+    heroFocus: "Trust posture and moderation response operations",
+    viewingAs: "Trust & Safety",
+    modules: [
+      {
+        id: "moderation",
+        label: "Moderation",
+        icon: ShieldCheck,
+        entries: [
+          { title: "Live Moderation Console", detail: "Incident response and enforcement", target: "/app/admin/live-moderation", highlighted: true },
+          { title: "Policy Taxonomy", detail: "Rule sets and notices", target: "/app/admin/policy" },
+        ],
+      },
+      {
+        id: "evidence",
+        label: "Evidence",
+        icon: Lock,
+        entries: [
+          { title: "Security & Audit Logs", detail: "Investigations and traceability", target: "/app/admin/security" },
+          { title: "Channels Deliverability", detail: "Abuse vectors and sender checks", target: "/app/admin/channels" },
+        ],
+      },
+      {
+        id: "resolution",
+        label: "Resolution",
+        icon: BellRing,
+        entries: [
+          { title: "Payments & Disputes", detail: "Finance-side trust incidents", target: "/app/admin/finance" },
+          { title: "Provider Reviews Moderation", detail: "Public feedback management", target: "/app/provider/reviews-moderation" },
+        ],
+      },
+    ],
+  },
+];
 
-const roleCards = [
+const cockpitTabs = ["7 days", "30 days", "This term"] as const;
+type CockpitTab = (typeof cockpitTabs)[number];
+
+const moduleShortcutCards = [
+  { label: "Live Dashboard", icon: Radio, target: "/app/provider/live-ops" },
+  { label: "Series Builder", icon: Layers3, target: "/app/provider/series-builder" },
+  { label: "Events Manager", icon: CalendarDays, target: "/app/provider/events" },
+  { label: "Contact Manager", icon: MessageSquare, target: "/app/provider/contacts" },
+];
+
+const progressCards = [
+  {
+    title: "Live readiness",
+    value: "89%",
+    note: "Most communities are stable for scheduled sessions.",
+    tag: "In review",
+    tone: "orange" as QuickTone,
+    widthClass: "w-[58%]",
+  },
+  {
+    title: "Engagement depth",
+    value: "64%",
+    note: "Participation and response rates are improving weekly.",
+    tag: "Schedule",
+    tone: "slate" as QuickTone,
+    widthClass: "w-[44%]",
+  },
+  {
+    title: "Trust posture",
+    value: "92%",
+    note: "Moderation and verification controls are healthy.",
+    tag: "Stable",
+    tone: "emerald" as QuickTone,
+    widthClass: "w-[72%]",
+  },
+];
+
+const miniStats = [
+  {
+    title: "Public-facing roles",
+    value: String(operatorRoles.length),
+    trend: "+0",
+    tone: "emerald" as QuickTone,
+    icon: Users,
+    spark: "M2 12 L8 11 L14 9 L20 6 L26 5",
+  },
+  {
+    title: "Page ecosystem",
+    value: "50+",
+    trend: "+4%",
+    tone: "orange" as QuickTone,
+    icon: BookOpen,
+    spark: "M2 6 L8 7 L14 10 L20 11 L26 9",
+  },
+  {
+    title: "Core pillars",
+    value: "6",
+    trend: "+0.0%",
+    tone: "emerald" as QuickTone,
+    icon: Layers3,
+    spark: "M2 11 L8 11 L14 8 L20 4 L26 6",
+  },
+  {
+    title: "Device readiness",
+    value: "100%",
+    trend: "+2%",
+    tone: "orange" as QuickTone,
+    icon: MonitorSmartphone,
+    spark: "M2 11 L8 8 L14 6 L20 3 L26 4",
+  },
+];
+
+const roleCards: RoleCard[] = [
   {
     role: "User",
     title: "A richer digital faith journey",
@@ -64,6 +466,7 @@ const roleCards = [
     ],
     icon: Users,
     badgeTone: "border border-sky-200 bg-sky-50 text-sky-700",
+    target: "/user",
   },
   {
     role: "Provider",
@@ -77,6 +480,7 @@ const roleCards = [
     ],
     icon: Landmark,
     badgeTone: "border border-slate-200 bg-slate-100 text-slate-700",
+    target: "/provider",
   },
 ];
 
@@ -174,7 +578,6 @@ const featuredPillars = [
     description:
       "Deliver polished live sessions with calm moderation, audience participation, and replay-ready content built into one seamless flow.",
     icon: Radio,
-    accent: "from-[#ecfff8] via-white to-white",
     items: [
       { icon: MessageSquare, text: "Waiting rooms, pre-chat, polls, and prayer requests before each session begins." },
       { icon: Globe2, text: "Low-latency playback, live chat, captions, translation, and safe reporting tools." },
@@ -186,22 +589,14 @@ const featuredPillars = [
     tag: "FaithMart",
     title: "Commerce that actually belongs inside the experience",
     description:
-      "Unify tickets, merchandise, booths, and institution-led selling in a commerce layer that feels native to the wider FaithHub journey.",
+      "Unify tickets, merchandise, booths, and institution-led selling in a commerce layer that feels native, calm, and trustworthy.",
     icon: ShoppingBag,
-    accent: "from-[#f5fbf8] via-white to-white",
     items: [
       { icon: CalendarDays, text: "Event tickets, vendor booths, branded merchandise, and marketplace-day selling." },
       { icon: Landmark, text: "Institution-linked product and service discovery for faith communities." },
       { icon: Wallet, text: "A connected commerce engine that supports sustainability without fragmenting the experience." },
     ],
   },
-];
-
-const stats = [
-  { label: "Public-facing roles", value: "2", note: "User and Provider", icon: Users },
-  { label: "Page ecosystem", value: "50+", note: "Structured across the project architecture", icon: BookOpen },
-  { label: "Core pillars", value: "6", note: "Live, Series, Events, Messaging, Commerce, Trust", icon: Layers3 },
-  { label: "Device readiness", value: "100%", note: "Desktop, tablet, and mobile responsive", icon: MonitorSmartphone },
 ];
 
 const trustTiles = [
@@ -251,7 +646,7 @@ const timelineSteps = [
   },
 ];
 
-const deviceTabs = [
+const deviceTabs: DeviceTab[] = [
   {
     key: "desktop",
     label: "Desktop",
@@ -291,698 +686,1030 @@ const faq = [
   },
 ];
 
-function scrollToId(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-}
+const mobileJumpLinks = [
+  { label: "Overview", target: "overview", icon: Compass },
+  { label: "Experiences", target: "experiences", icon: Users },
+  { label: "Live", target: "live", icon: Radio },
+  { label: "Commerce", target: "faithmart", icon: ShoppingBag },
+  { label: "Trust", target: "trust", icon: ShieldCheck },
+  { label: "FAQ", target: "faq", icon: ChevronDown },
+  { label: "Contact", target: "contact", icon: Mail },
+];
 
-function SectionHeader({ title, subtitle, action, onAction }) {
-  return (
-    <div className="mb-4 flex items-center justify-between gap-3">
-      <div>
-        <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
-      </div>
-      {action ? (
-        <Button variant="ghost" onClick={onAction} className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
-          {action}
-        </Button>
-      ) : null}
-    </div>
-  );
+function scrollToId(id: string) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 export default function FaithHubLandingPageV2() {
   const navigate = useNavigate();
-  const [activeRole, setActiveRole] = useState("User");
-  const [activeDevice, setActiveDevice] = useState("desktop");
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const copy = faithHubToneCopy.publicShell;
+  const fallbackOperatorRole = operatorRoles[0]!;
+  const [activeRole, setActiveRole] = useState<RoleCard["role"]>("User");
+  const [activeOperatorRoleId, setActiveOperatorRoleId] = useState(fallbackOperatorRole.id);
+  const [activeDevice, setActiveDevice] = useState<DeviceTab["key"]>("desktop");
   const [faqOpen, setFaqOpen] = useState(0);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [openModule, setOpenModule] = useState(fallbackOperatorRole.modules[0]?.id || "");
+  const [operatorMenuOpen, setOperatorMenuOpen] = useState(false);
+  const [selectedWindow, setSelectedWindow] = useState<CockpitTab>("7 days");
+  const [profileHintOpen, setProfileHintOpen] = useState(false);
+  const operatorMenuRef = useRef<HTMLDivElement | null>(null);
+  const operatorTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const profileHintRef = useRef<HTMLDivElement | null>(null);
 
   const currentRole = useMemo(() => roleCards.find((item) => item.role === activeRole), [activeRole]);
   const currentDevice = useMemo(() => deviceTabs.find((item) => item.key === activeDevice), [activeDevice]);
+  const activeOperatorRole = useMemo(
+    () => operatorRoles.find((role) => role.id === activeOperatorRoleId) || fallbackOperatorRole,
+    [activeOperatorRoleId, fallbackOperatorRole],
+  );
+  const activeSidebarModules = useMemo(() => activeOperatorRole.modules, [activeOperatorRole]);
+  const roleSwitcherGroups = useMemo(
+    () =>
+      operatorRoleSections
+        .map((section) => ({
+          section,
+          roles: operatorRoles.filter((role) => role.section === section),
+        }))
+        .filter((group) => group.roles.length > 0),
+    [],
+  );
+  const shortcutCards = useMemo(() => {
+    const roleCards = activeSidebarModules
+      .flatMap((module) =>
+        module.entries
+          .filter((entry) => Boolean(entry.target))
+          .map((entry) => ({
+            label: entry.title,
+            icon: module.icon,
+            target: entry.target || "overview",
+          })),
+      )
+      .slice(0, 4);
+    return roleCards.length > 0 ? roleCards : moduleShortcutCards;
+  }, [activeSidebarModules]);
+  const viewingLabel = `Viewing as ${activeOperatorRole.viewingAs}`;
+
+  useEffect(() => {
+    if (!profileHintOpen) return;
+    const timeoutId = window.setTimeout(() => setProfileHintOpen(false), 2400);
+    return () => window.clearTimeout(timeoutId);
+  }, [profileHintOpen]);
+
+  useEffect(() => {
+    if (!activeSidebarModules.some((module) => module.id === openModule)) {
+      setOpenModule(activeSidebarModules[0]?.id || "");
+    }
+  }, [activeSidebarModules, openModule]);
+
+  useEffect(() => {
+    if (!profileHintOpen) return;
+    const handlePointerDown = (event: MouseEvent) => {
+      if (!profileHintRef.current?.contains(event.target as Node)) {
+        setProfileHintOpen(false);
+      }
+    };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setProfileHintOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [profileHintOpen]);
+
+  useEffect(() => {
+    if (!operatorMenuOpen) return;
+    const handlePointerDown = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const clickInsideMenu = operatorMenuRef.current?.contains(target);
+      const clickInsideTrigger = operatorTriggerRef.current?.contains(target);
+      if (!clickInsideMenu && !clickInsideTrigger) {
+        setOperatorMenuOpen(false);
+      }
+    };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOperatorMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [operatorMenuOpen]);
+
+  const handleOperatorRoleSelect = (roleId: string) => {
+    const selectedRole = operatorRoles.find((role) => role.id === roleId);
+    if (!selectedRole) return;
+    setActiveOperatorRoleId(roleId);
+    setOpenModule(selectedRole.modules[0]?.id || "");
+    setOperatorMenuOpen(false);
+    setMobileNavOpen(false);
+    navigate(selectedRole.defaultRoute);
+  };
+
+  const runTarget = (target: string) => {
+    if (target.startsWith("/")) {
+      navigate(target);
+      return;
+    }
+    scrollToId(target);
+  };
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
-      <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-[var(--bg)]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
-          <button type="button" onClick={() => scrollToId("overview")} className="flex shrink-0 items-center gap-3 text-left">
-            <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
+    <div className="flex h-[100dvh] flex-col overflow-hidden bg-[color:var(--bg)] text-[color:var(--text-primary)]">
+      <header className="fh-shell-topbar z-40 shrink-0 border-b border-[color:var(--border)]">
+        <div className="mx-auto flex max-w-[1860px] items-center gap-2 px-2 py-3 sm:px-4 lg:px-5">
+          <button
+            type="button"
+            onClick={() => setMobileSidebarOpen(true)}
+            aria-label="Open sidebar"
+            className="fh-shell-control inline-flex h-11 w-11 items-center justify-center rounded-2xl lg:hidden"
+          >
+            <Menu className="h-5 w-5" />
           </button>
-
-          <nav className="hidden min-w-0 flex-1 items-center justify-center xl:flex">
-            <div className="flex items-center gap-1 rounded-full bg-white/80 p-1.5 shadow-[0_12px_30px_rgba(15,23,42,0.06)] ring-1 ring-slate-200/70">
-              {desktopNavItems.map((item) => (
-              <button
-                type="button"
-                key={item.id}
-                onClick={() => scrollToId(item.id)}
-                className="inline-flex shrink-0 items-center rounded-full px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900"
-              >
-                {item.label}
-              </button>
-              ))}
-            </div>
-          </nav>
-
-          <div className="hidden shrink-0 items-center gap-3 lg:flex xl:flex-nowrap">
-            <ColorModeToggle className="hidden 2xl:inline-flex" />
-            <Button
-              variant="outline"
-              className="shrink-0 whitespace-nowrap rounded-full border-transparent bg-white px-5 text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.06)] hover:bg-slate-50 hover:text-slate-900"
-              onClick={() => navigate("/user")}
-            >
-              Enter FaithHub
-            </Button>
-            <Button className="shrink-0 whitespace-nowrap rounded-full bg-[#03cd8c] px-6 shadow-[0_14px_30px_rgba(3,205,140,0.22)] hover:bg-[#02b67c]" onClick={() => navigate("/provider")}>
-              Start Building
-            </Button>
-          </div>
 
           <button
             type="button"
-            onClick={() => setMobileNavOpen((prev) => !prev)}
-            aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileNavOpen}
-            aria-controls="faithhub-mobile-nav"
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 lg:hidden"
+            onClick={() => scrollToId("overview")}
+            aria-label="Go to overview"
+            className="fh-shell-control inline-flex min-w-0 items-center rounded-2xl px-2.5 py-1.5"
           >
-            {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <img
+              src={faithmartLogoLandscape}
+              alt="FaithMart"
+              className="h-9 w-auto max-w-[11.5rem] object-contain sm:h-10 sm:max-w-[12.8rem]"
+            />
           </button>
+
+          <div className="ml-auto flex items-center gap-2">
+            <div className="relative hidden md:block">
+              <button
+                ref={operatorTriggerRef}
+                type="button"
+                aria-label="Switch FaithHub operator role"
+                aria-expanded={operatorMenuOpen}
+                onClick={() => setOperatorMenuOpen((prev) => !prev)}
+                className="fh-shell-control inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-xs font-semibold text-slate-700"
+              >
+                <activeOperatorRole.icon className="h-4 w-4" />
+                <span>{activeOperatorRole.label}</span>
+                <ChevronDown className={`h-4 w-4 text-slate-500 transition ${operatorMenuOpen ? "rotate-180" : ""}`} />
+              </button>
+            </div>
+            <TopChip icon={Landmark} label="SMC" className="hidden lg:inline-flex" />
+            <div ref={profileHintRef} className="relative hidden sm:block">
+              <button
+                type="button"
+                aria-label="Open profile options"
+                onClick={() => setProfileHintOpen((prev) => !prev)}
+                className="fh-shell-control inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-left"
+              >
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#111827] text-[11px] font-semibold text-white">
+                  BM
+                </span>
+                <span className="leading-tight">
+                  <span className="block text-xs font-semibold text-slate-900">Brian M.</span>
+                  <span className="block text-[11px] text-slate-500">Greenhill Community - Member</span>
+                </span>
+                <ChevronDown className="h-4 w-4 text-slate-500" />
+              </button>
+              {profileHintOpen ? (
+                <div className="pointer-events-none absolute left-1/2 top-[calc(100%+8px)] z-10 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
+                  <span className="absolute left-1/2 top-[-4px] h-2 w-2 -translate-x-1/2 rotate-45 bg-slate-900" />
+                  Community: Greenhill Community
+                </div>
+              ) : null}
+            </div>
+            <label className="fh-shell-control hidden h-11 items-center gap-2 rounded-2xl px-3 xl:flex">
+              <Search className="h-4 w-4 text-slate-500" />
+              <input
+                type="search"
+                placeholder="Search..."
+                className="w-[9rem] border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+              />
+            </label>
+            <ColorModeToggle className="h-11 w-11 rounded-2xl" />
+            <button
+              type="button"
+              aria-label="Open alerts"
+              className="fh-shell-control relative inline-flex h-11 w-11 items-center justify-center rounded-2xl"
+            >
+              <Bell className="h-5 w-5 text-slate-700" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--accent)]" />
+            </button>
+            <button
+              type="button"
+              aria-label="Open quick navigation"
+              onClick={() => setMobileNavOpen((prev) => !prev)}
+              className="fh-shell-control inline-flex h-11 w-11 items-center justify-center rounded-2xl lg:hidden"
+            >
+              {mobileNavOpen ? <X className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
 
-        <AnimatePresence>
-          {mobileNavOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.18 }}
-              id="faithhub-mobile-nav"
-              className="border-t border-slate-200 bg-white px-4 py-4 shadow-sm lg:hidden"
+        {operatorMenuOpen ? (
+          <>
+            <button
+              type="button"
+              aria-label="Close role switcher"
+              onClick={() => setOperatorMenuOpen(false)}
+              className="fixed inset-0 z-40 bg-slate-900/25 backdrop-blur-[1px]"
+            />
+            <div
+              ref={operatorMenuRef}
+              className="fixed inset-x-3 top-[88px] z-50 max-h-[76vh] overflow-hidden rounded-[24px] border border-[var(--border)] bg-[color:var(--card)] shadow-[0_26px_70px_rgba(15,23,42,0.35)] sm:inset-x-auto sm:right-5 sm:top-[74px] sm:w-[460px]"
             >
-              <div className="space-y-2">
-                {navItems.map((item) => (
-                  <button
-                    type="button"
-                    key={item.id}
-                    onClick={() => {
-                      scrollToId(item.id);
-                      setMobileNavOpen(false);
-                    }}
-                    className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 py-3 text-left text-sm font-medium text-slate-700"
-                  >
-                    <span className="inline-flex items-center gap-3">
-                      <item.icon className="h-4 w-4 text-[#03cd8c]" />
-                      {item.label}
-                    </span>
-                    <ChevronRight className="h-4 w-4 text-slate-400" />
-                  </button>
-                ))}
-                <div className="pt-2">
-                  <ColorModeToggle className="w-full justify-between" />
-                </div>
-                <div className="grid grid-cols-2 gap-2 pt-2">
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white" onClick={() => { navigate("/user"); setMobileNavOpen(false); }}>
-                    Enter FaithHub
-                  </Button>
-                  <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={() => { navigate("/provider"); setMobileNavOpen(false); }}>
-                    Start Building
-                  </Button>
-                </div>
+              <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
+                <div className="text-xl font-semibold text-slate-900">Switch role</div>
+                <button
+                  type="button"
+                  aria-label="Close role switcher"
+                  onClick={() => setOperatorMenuOpen(false)}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[color:var(--surface)] text-slate-600"
+                >
+                  <X className="h-4 w-4" />
+                </button>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+              <div className="fh-scroll-region max-h-[calc(76vh-122px)] space-y-4 overflow-y-auto px-3 py-3">
+                {roleSwitcherGroups.map((group) => (
+                  <div key={group.section}>
+                    <div className="px-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{group.section}</div>
+                    <div className="mt-2 space-y-2">
+                      {group.roles.map((role) => {
+                        const active = role.id === activeOperatorRole.id;
+                        return (
+                          <button
+                            key={role.id}
+                            type="button"
+                            aria-pressed={active}
+                            onClick={() => handleOperatorRoleSelect(role.id)}
+                            className={`w-full rounded-2xl border px-3 py-3 text-left transition ${
+                              active
+                                ? "border-[#a2e2cd] bg-[#ecfff8]"
+                                : "border-[var(--border)] bg-[color:var(--surface)] hover:-translate-y-[1px] hover:border-[#a2e2cd] hover:bg-[#f7fffb]"
+                            }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <span
+                                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                                  active ? "bg-[#03cd8c] text-white" : "bg-slate-100 text-slate-600"
+                                }`}
+                              >
+                                <role.icon className="h-5 w-5" />
+                              </span>
+                              <span className="min-w-0 flex-1">
+                                <span className="block text-xl font-semibold leading-[1.2] text-slate-900">
+                                  Switch to {role.label}
+                                </span>
+                                <span className="mt-0.5 block text-sm text-slate-600">{role.description}</span>
+                              </span>
+                              {active ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" /> : null}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="border-t border-[var(--border)] p-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOperatorMenuOpen(false);
+                    navigate("/app/admin/overview");
+                  }}
+                  className="inline-flex w-full items-center justify-center rounded-2xl border border-[var(--border)] bg-[color:var(--surface)] px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-[#f7fffb] hover:text-[#049e6d]"
+                >
+                  Manage roles & permissions
+                </button>
+              </div>
+            </div>
+          </>
+        ) : null}
+
+        {mobileNavOpen ? (
+          <div className="border-t border-[color:var(--border)] bg-[color:var(--card)] px-3 py-3 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setOperatorMenuOpen(true)}
+              className="mb-2 flex w-full items-center justify-between rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] px-3 py-2 text-left text-sm font-semibold"
+            >
+              <span className="inline-flex items-center gap-2">
+                <activeOperatorRole.icon className="h-4 w-4 text-[#03cd8c]" />
+                {activeOperatorRole.label}
+              </span>
+              <ChevronRight className="h-4 w-4 text-slate-400" />
+            </button>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {mobileJumpLinks.map((item) => (
+                <button
+                  key={item.target}
+                  type="button"
+                  onClick={() => {
+                    scrollToId(item.target);
+                    setMobileNavOpen(false);
+                  }}
+                  className="flex items-center justify-between rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] px-3 py-2 text-left text-sm font-semibold"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <item.icon className="h-4 w-4 text-[#03cd8c]" />
+                    {item.label}
+                  </span>
+                  <ChevronRight className="h-4 w-4 text-slate-400" />
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : null}
       </header>
 
-      <main>
-        <section id="overview" className="relative overflow-hidden scroll-mt-24">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)]" />
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 sm:py-14 lg:grid-cols-[0.58fr_0.42fr] lg:px-8 lg:py-16 2xl:max-w-[110rem] 2xl:grid-cols-[0.6fr_0.4fr] 2xl:gap-14 2xl:px-10 2xl:py-20">
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45 }}
-              className="relative z-10 space-y-6"
-            >
-              <div className="flex flex-wrap items-center gap-2.5">
-                <div className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--border)] bg-[var(--accent-soft)] px-4 py-1.5 text-[12px] font-semibold tracking-[0.14em] text-[var(--accent)] shadow-[var(--shadow-soft)]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                  A new digital faith infrastructure
+      <div className="mx-auto flex max-w-[1860px] min-h-0 flex-1 gap-3 overflow-hidden px-2 pb-3 pt-3 sm:px-3 lg:px-4">
+        <aside className={`hidden min-h-0 shrink-0 lg:block ${sidebarCollapsed ? "w-[84px]" : "w-[248px]"}`}>
+          <div className="h-full">
+            {sidebarCollapsed ? (
+              <LandingSidebarRail
+                modules={activeSidebarModules}
+                activeModule={openModule}
+                onModuleSelect={setOpenModule}
+                onExpand={() => setSidebarCollapsed(false)}
+              />
+            ) : (
+              <LandingSidebarPanel
+                modules={activeSidebarModules}
+                openModule={openModule}
+                onModuleToggle={setOpenModule}
+                onAction={runTarget}
+                onCollapse={() => setSidebarCollapsed(true)}
+              />
+            )}
+          </div>
+        </aside>
+
+        {mobileSidebarOpen ? (
+          <div className="fixed inset-0 z-50 bg-slate-900/45 backdrop-blur-[1px] lg:hidden">
+            <div className="h-full w-[320px] max-w-[88vw] bg-[color:var(--bg)] p-3 shadow-2xl">
+              <div className="mb-3 flex items-center justify-between px-1">
+                <div>
+                  <div className="text-sm font-semibold">Navigation</div>
+                  <div className="text-xs text-[color:var(--text-secondary)]">Modules</div>
                 </div>
-                <div className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-slate-900/95 px-4 py-1.5 text-[12px] font-semibold tracking-[0.14em] text-white shadow-[var(--shadow-soft)]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                  <span className="text-white">Multi-faith, live-first, commerce-enabled</span>
+                <button
+                  type="button"
+                  aria-label="Close sidebar"
+                  onClick={() => setMobileSidebarOpen(false)}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[color:var(--border)] bg-[color:var(--card)]"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <LandingSidebarPanel
+                modules={activeSidebarModules}
+                openModule={openModule}
+                onModuleToggle={setOpenModule}
+                onAction={(target) => {
+                  runTarget(target);
+                  setMobileSidebarOpen(false);
+                }}
+                compactHeight
+              />
+            </div>
+          </div>
+        ) : null}
+
+        <main className="fh-scroll-region min-h-0 min-w-0 flex-1 space-y-3 overflow-y-auto pr-1">
+          <section
+            id="overview"
+            className="overflow-hidden rounded-[24px] border border-[color:var(--fh-hero-border)] shadow-[0_18px_34px_rgba(15,23,42,0.1)]"
+            style={{ background: "var(--fh-hero-grad)" }}
+          >
+            <div className="p-4 sm:p-5">
+              <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
+                <div className="min-w-0">
+                  <div className="text-xs text-slate-500">FaithHub Platform</div>
+                  <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">{copy.hero.title}</h1>
+                  <p className="mt-2 max-w-3xl text-sm text-slate-600">
+                    FaithHub brings worship, teachings, Live Sessionz, events, giving, memberships, messaging,
+                    marketplace experiences, trust systems, provider operations, and platform-grade governance into one
+                    premium ecosystem inside the EVzone Super App.
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <Badge className="rounded-full border border-[#f5d39b] bg-[#fff8ef] text-[#cc6500] hover:bg-[#fff2e2]">
+                      {activeOperatorRole.label}
+                    </Badge>
+                    <Badge className="rounded-full border border-slate-200 bg-[color:var(--card)] text-slate-700 hover:bg-[color:var(--surface)]">
+                      Base role: {activeOperatorRole.baseRole}
+                    </Badge>
+                    <Badge className="rounded-full border border-slate-200 bg-[color:var(--card)] text-slate-700 hover:bg-[color:var(--surface)]">
+                      {activeOperatorRole.heroFocus}
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 xl:justify-end">
+                  <TopChip icon={Users} label={viewingLabel} />
+                  <div className="inline-flex rounded-xl border border-slate-200 bg-[color:var(--card)] p-1">
+                    {cockpitTabs.map((windowLabel) => (
+                      <button
+                        key={windowLabel}
+                        type="button"
+                        onClick={() => setSelectedWindow(windowLabel)}
+                        className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
+                          selectedWindow === windowLabel
+                            ? "bg-slate-900 text-white"
+                            : "text-slate-600 hover:bg-[color:var(--surface)]"
+                        }`}
+                      >
+                        {windowLabel}
+                      </button>
+                    ))}
+                  </div>
+                  <TopChip icon={MessageSquare} label={copy.hero.openMessages} />
+                  <Button
+                    className={`h-9 rounded-xl px-4 text-xs font-semibold ${ctaPriorityClass("primary")}`}
+                    onClick={() => navigate("/user")}
+                  >
+                    {copy.ctas.openUserApp}
+                  </Button>
+                  <Button
+                    className={`h-9 rounded-xl px-4 text-xs font-semibold ${ctaPriorityClass("accent")}`}
+                    onClick={() => navigate("/provider")}
+                  >
+                    {copy.ctas.openProviderApp}
+                  </Button>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <h1 className="max-w-4xl text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl lg:text-6xl xl:text-7xl 2xl:max-w-5xl 2xl:text-8xl">
-                  FaithHub is designed to become the most complete digital faith platform in the world.
-                </h1>
-                <p className="max-w-3xl text-base leading-8 text-slate-600 sm:text-lg 2xl:max-w-4xl">
-                  FaithHub brings worship, teachings, Live Sessionz, events, giving, memberships, messaging,
-                  marketplace experiences, trust systems, provider operations, and platform-grade governance into one
-                  premium ecosystem inside the EVzone Super App.
-                </p>
+              <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-4">
+                {shortcutCards.map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => runTarget(item.target)}
+                    className="group flex items-center justify-between rounded-xl border border-slate-200 bg-[color:var(--card)] px-3 py-2 text-left transition hover:-translate-y-[1px]"
+                  >
+                    <span className="inline-flex min-w-0 items-center gap-2">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-700">
+                        <item.icon className="h-4 w-4" />
+                      </span>
+                      <span className="truncate text-sm font-semibold text-slate-900">{item.label}</span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:text-slate-600" />
+                  </button>
+                ))}
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button className="w-full rounded-2xl bg-[#03cd8c] px-5 py-5 text-base hover:bg-[#02b67c] sm:w-auto sm:py-6" onClick={() => navigate("/user") }>
-                  Enter FaithHub
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                <Button variant="outline" className="w-full rounded-2xl border-slate-200 bg-white px-5 py-5 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb] sm:w-auto sm:py-6" onClick={() => navigate("/provider")}>
-                  Start Building
-                </Button>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-4">
-                {stats.map((item) => (
-                  <Card key={item.label} className="rounded-2xl border-slate-200 bg-white shadow-sm">
-                    <CardContent className="p-5">
-                      <div className="flex h-full min-h-[170px] flex-col gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#03cd8c]">
-                          <item.icon className="h-4 w-4" />
-                        </div>
-                        <div className="fh-label text-[#03cd8c]">{item.label}</div>
-                        <div className="text-4xl font-semibold leading-none text-slate-900">{item.value}</div>
-                        <div className="min-w-0 fh-body-tight text-slate-600">{item.note}</div>
+              <div className="mt-3 grid gap-2 lg:grid-cols-3">
+                {progressCards.map((item) => (
+                  <Card key={item.title} className="rounded-xl border-slate-200 bg-[color:var(--card)]/95">
+                    <CardContent className="p-3">
+                      <div className="mb-1 flex items-center justify-between gap-2">
+                        <div className="text-xs text-slate-500">{item.title}</div>
+                        <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${pillToneClass(item.tone)}`}>
+                          {item.tag}
+                        </span>
                       </div>
+                      <div className="text-3xl font-bold leading-none text-slate-900">{item.value}</div>
+                      <div className="mt-2 h-1.5 rounded-full bg-slate-200">
+                        <div className={`h-full rounded-full ${item.widthClass} ${progressToneClass(item.tone)}`} />
+                      </div>
+                      <p className="mt-1 text-xs text-slate-600">{item.note}</p>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-            </motion.div>
+            </div>
+          </section>
 
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08, duration: 0.45 }}
-              className="relative z-10"
-            >
-              <Card className="overflow-hidden rounded-3xl border border-slate-200 bg-[#f8fafc] shadow-[0_20px_56px_-42px_rgba(15,23,42,0.28)]">
-                <CardContent className="p-0">
-                  <div className="border-b border-slate-200 bg-[#f8fafc] p-6 text-slate-900 sm:p-7">
-                    <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-                      <div>
-                        <div className="fh-kicker-subtle tracking-[0.05em] text-slate-500">FaithHub Platform</div>
-                        <div className="mt-2 text-3xl font-semibold leading-tight text-slate-900 sm:text-[2rem]">
-                          Connecting users and institutions
-                        </div>
-                      </div>
-                      <div className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-semibold text-[#0ea5e9]">
-                        Website Landing Experience
-                      </div>
-                    </div>
-
-                    <div className="mx-auto grid max-w-[900px] gap-6 sm:grid-cols-2">
-                      {roleCards.map((item) => (
-                        <button
-                          type="button"
-                          key={item.role}
-                          onClick={() => setActiveRole(item.role)}
-                          className={`rounded-2xl border bg-white p-6 text-left shadow-[0_4px_12px_rgba(15,23,42,0.04)] transition ${
-                            activeRole === item.role
-                              ? "border-sky-300"
-                              : "border-slate-200 hover:border-sky-200"
-                          }`}
-                        >
-                          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 p-3 text-[#0ea5e9]">
-                            <item.icon className="h-5 w-5" />
-                          </div>
-                          <div className="text-xl font-semibold text-slate-900">{item.role}</div>
-                          <div className="mt-2 text-base leading-7 text-slate-600">{item.title}</div>
-                        </button>
-                      ))}
-                    </div>
+          <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {miniStats.map((item) => (
+              <Card key={item.title} className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+                <CardContent className="p-3">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
+                      <item.icon className="h-4 w-4" />
+                    </span>
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${pillToneClass(item.tone)}`}>
+                      {item.trend}
+                    </span>
                   </div>
-
-                  <div className="space-y-5 bg-white fh-pad-panel">
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <div className="text-sm font-semibold text-slate-900">Current focus</div>
-                        <div className="mt-1 text-2xl font-semibold text-slate-900">{currentRole?.title}</div>
-                      </div>
-                      <span className={`rounded-full px-3 py-2 text-xs font-semibold ${currentRole?.badgeTone}`}>
-                        {currentRole?.role}
-                      </span>
-                    </div>
-
-                    <p className="fh-body text-slate-600">{currentRole?.description}</p>
-
-                    <div className="space-y-3">
-                      {currentRole?.bullets.map((item) => (
-                        <div
-                          key={item}
-                          className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-[#f8fafc] p-4 shadow-[0_4px_12px_rgba(15,23,42,0.03)]"
-                        >
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0ea5e9]" />
-                          <div className="text-sm text-slate-700">{item}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="flex flex-wrap gap-3">
-                      <Button
-                        className="rounded-2xl bg-[#0ea5e9] hover:bg-[#0284c7]"
-                        onClick={() => navigate(currentRole?.role === "Provider" ? "/provider" : "/user")}
-                      >
-                        {currentRole?.role === "Provider" ? "Open Provider Workspace" : "Open User Experience"}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="rounded-2xl border-slate-200 bg-white hover:border-sky-300 hover:bg-sky-50/40"
-                        onClick={() => scrollToId("experiences")}
-                      >
-                        Compare Roles
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10 2xl:max-w-[110rem] 2xl:px-10">
-          <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-4">
-            {topHighlights.map((item) => (
-              <Card key={item.title} className="h-full rounded-2xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="flex h-full flex-col p-6">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                    <item.icon className="h-5 w-5" />
-                  </div>
-                  <div className="text-balance text-lg font-semibold leading-snug text-slate-900">{item.title}</div>
-                  <div className="mt-2 text-pretty fh-body text-slate-600">{item.text}</div>
+                  <div className="mt-2 text-xs text-slate-500">{item.title}</div>
+                  <div className="text-3xl font-bold leading-none text-slate-900">{item.value}</div>
+                  <svg viewBox="0 0 28 14" className="mt-2 h-6 w-full text-[#03cd8c]" fill="none" aria-hidden>
+                    <path d={item.spark} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </section>
+          </section>
 
-        <section id="platform" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-[110rem] 2xl:px-10">
-          <div className="mb-6 max-w-3xl">
-            <div className="fh-kicker-xl text-[#03cd8c]">How the ecosystem works</div>
-            <h2 className="mt-2 text-5xl font-semibold text-slate-900 sm:text-6xl leading-tight">
-              FaithHub is structured around a complete digital faith lifecycle.
-            </h2>
-            <p className="mt-4 text-lg leading-9 text-slate-600">
-              Every major pillar of digital faith is covered, from content and live participation to events,
-              commerce, fundraising, trust, and institutional administration.
-            </p>
-          </div>
-
-          <div className="grid gap-5 xl:grid-cols-2">
-            {featureGroups.map((group) => (
-              <Card key={group.title} className="rounded-2xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="p-7 sm:p-8">
-                  <div className="mb-5 flex items-start gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                      <group.icon className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <div className="text-3xl font-semibold leading-tight text-[#03cd8c]">{group.title}</div>
-                      <div className="mt-1 text-lg text-slate-500">{group.subtitle}</div>
-                    </div>
+          <section className="grid gap-3 xl:grid-cols-[1.05fr_1.05fr_1fr]">
+            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+              <CardContent className="p-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <div>
+                    <div className="text-lg font-semibold text-slate-900">FaithHub priorities</div>
+                    <div className="text-sm text-slate-500">Move platform capabilities forward</div>
                   </div>
-                  <div className="space-y-3">
-                    {group.items.map((item) => (
-                      <div key={item} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-5">
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" />
-                        <div className="text-lg leading-8 text-slate-700">{item}</div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        <section id="experiences" className="bg-white/50 scroll-mt-24 py-10 sm:py-14">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
-            <div className="mb-6 max-w-3xl">
-              <div className="fh-kicker text-[#03cd8c]">Role architecture</div>
-              <h2 className="mt-2 text-5xl font-semibold leading-tight text-slate-900 sm:text-6xl">
-                One platform. Two public-facing experiences.
-              </h2>
-              <p className="mt-4 text-lg leading-9 text-slate-600">
-                FaithHub publicly presents a user experience and a provider experience, while stronger governance
-                and operational control remain embedded in the platform backbone.
-              </p>
-            </div>
-
-            <div className="grid gap-4 xl:grid-cols-2">
-              {roleCards.map((item) => (
-                <Card key={item.role} className="rounded-2xl border-slate-200 bg-white shadow-sm">
-                  <CardContent className="fh-pad-hero">
-                    <div className="mb-4 flex items-center justify-between gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                        <item.icon className="h-5 w-5" />
-                      </div>
-                      <span className={`rounded-full px-3 py-2 text-xs font-semibold ${item.badgeTone}`}>
-                        {item.role}
-                      </span>
-                    </div>
-                    <div className="text-4xl font-semibold leading-tight text-[#03cd8c]">{item.title}</div>
-                    <div className="mt-3 text-lg leading-8 text-slate-600">{item.description}</div>
-                    <div className="mt-5 space-y-3">
-                      {item.bullets.map((bullet) => (
-                        <div key={bullet} className="flex items-start gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
-                          <div className="text-sm text-slate-700">{bullet}</div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-5 flex flex-wrap gap-3">
-                      <Button
-                        className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]"
-                        onClick={() => navigate(item.role === "Provider" ? "/provider" : "/user")}
-                      >
-                        {item.role === "Provider" ? "Open Provider Workspace" : "Enter FaithHub"}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="live" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-14 sm:px-6 lg:px-8 lg:py-20 2xl:max-w-[110rem] 2xl:px-10">
-          <div className="rounded-[2rem] bg-[linear-gradient(180deg,#ffffff,rgba(248,250,252,0.9))] p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70 sm:p-8 lg:p-10">
-            <div className="mx-auto max-w-2xl text-center">
-              <div className="inline-flex rounded-full bg-[#ecfff8] px-4 py-1.5 fh-eyebrow-wide text-[#03cd8c]">
-                Platform pillars
-              </div>
-              <h2 className="mt-5 text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl lg:text-[3rem]">
-                Built for live engagement and connected faith commerce
-              </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-                Two premium product surfaces anchor the experience: immersive live sessions and a commerce layer that feels native, calm, and trustworthy.
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 xl:grid-cols-2">
-              {featuredPillars.map((panel) => (
-                <div
-                  key={panel.id}
-                  id={panel.id === "faithmart" ? "faithmart" : undefined}
-                  className={`relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br ${panel.accent} p-6 shadow-[0_18px_48px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70 sm:p-8`}
-                >
-                  <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top_left,rgba(3,205,140,0.12),transparent_55%)]" />
-                  <div className="relative">
-                    <div className="inline-flex rounded-full bg-[#ecfff8] px-3 py-1.5 fh-eyebrow-wide text-[#03cd8c]">
-                      {panel.tag}
-                    </div>
-
-                    <div className="mt-6 flex items-start gap-4">
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#dff8ee] text-[#03cd8c] shadow-inner">
-                        <panel.icon className="h-6 w-6" />
-                      </div>
-                      <div className="max-w-[22rem]">
-                        <h3 className="text-3xl font-semibold leading-[1.08] text-slate-900 sm:text-[2.5rem]">
-                          {panel.title}
-                        </h3>
-                        <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
-                          {panel.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-8 space-y-4">
-                      {panel.items.map((item) => (
-                        <div
-                          key={item.text}
-                          className="flex items-start gap-4 rounded-2xl bg-white/88 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.05)] ring-1 ring-slate-200/60 backdrop-blur-sm sm:p-5"
-                        >
-                          <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#ecfff8] text-[#03cd8c]">
-                            <item.icon className="h-4 w-4" />
-                          </div>
-                          <p className="max-w-[28rem] text-base leading-7 text-slate-700 sm:text-[1.05rem]">
-                            {item.text}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <button type="button" className="text-sm font-semibold text-slate-500">
+                    {copy.ctas.openFullList}
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-[110rem] 2xl:px-10">
-          <div className="grid gap-6 xl:grid-cols-[0.48fr_0.52fr]">
-            <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-              <CardContent className="p-7 sm:p-8">
-                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
-                  Experience journey
-                </div>
-                <div className="space-y-5">
-                  {timelineSteps.map((step, index) => (
-                    <div key={step.title} className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#03cd8c] text-base font-semibold text-white">
-                        {index + 1}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-2xl font-semibold leading-tight text-slate-900">{step.title}</div>
-                        <div className="mt-3 text-base leading-8 text-slate-600">{step.text}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden rounded-3xl border-slate-200 bg-white shadow-sm">
-              <CardContent className="p-0">
-                <div className="bg-slate-950 p-5 text-white sm:p-7">
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <div>
-                      <div className="fh-kicker text-[#8ef0ca]">Built for every device</div>
-                      <div className="mt-2 text-2xl font-semibold leading-tight sm:text-3xl">Responsive across desktop, tablet, and mobile</div>
-                    </div>
-                    <MonitorSmartphone className="h-7 w-7 text-[#8ef0ca]" />
-                  </div>
-
-                  <div className="mb-5 flex w-full flex-wrap gap-2">
-                    {deviceTabs.map((item) => (
-                      <button
-                        type="button"
-                        key={item.key}
-                        onClick={() => setActiveDevice(item.key)}
-                        className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
-                          activeDevice === item.key
-                            ? "bg-white text-slate-900"
-                            : "bg-white/10 text-white hover:bg-white/15"
-                        }`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                    <div className="mb-4 aspect-video w-full rounded-xl bg-white/10" />
-                    <div className="text-xl font-semibold">{currentDevice?.title}</div>
-                    <div className="mt-2 fh-body text-white/80">{currentDevice?.text}</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-
-        <section id="trust" className="bg-white/50 scroll-mt-24 py-10 sm:py-14">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
-            <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
-              <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="p-7 sm:p-8">
-                  <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
-                    Trust and safety
-                  </div>
-                  <div className="text-4xl font-semibold text-slate-900 sm:text-5xl">
-                    FaithHub is designed to be trusted by users, institutions, and platform operators.
-                  </div>
-                  <div className="mt-4 space-y-4 fh-body text-slate-600">
-                    <p>
-                      The platform includes institution verification, review and moderation flows, content policy
-                      controls, live moderation consoles, audit visibility, and payments oversight.
-                    </p>
-                    <p>
-                      This is essential for a digital faith platform that aims to move far beyond the limitations of
-                      simple live streaming or brochure-style ministry websites.
-                    </p>
-                  </div>
-                  <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                    {trustTiles.map((item) => (
-                      <div key={item.label} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-[#f8fafc] p-4">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                          <item.icon className="h-5 w-5" />
-                        </div>
-                        <div className="text-sm font-semibold text-[#03cd8c]">{item.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-                <CardContent className="p-7 sm:p-8">
-                  <div className="mb-3 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
-                    What people will feel
-                  </div>
-                  <div className="mb-5 text-base font-semibold leading-tight text-slate-900">Real feedback from the FaithHub product vision</div>
-                  <div className="space-y-4">
-                    {testimonials.map((item) => (
-                      <div key={item.quote} className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5">
-                        <div className="mb-4 flex gap-1 text-[#f77f00]">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star key={star} className="h-4 w-4 fill-[#f77f00] text-[#f77f00]" />
-                          ))}
-                        </div>
-                        <div className="min-w-0 break-words whitespace-normal text-base leading-8 text-slate-700">"{item.quote}"</div>
-                        <div className="mt-4 text-sm font-semibold text-[#03cd8c]">{item.name}</div>
-                        <div className="text-xs text-slate-500">{item.title}</div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        <section id="faq" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-12 sm:px-6 lg:px-8 lg:py-16 2xl:max-w-[110rem] 2xl:px-10">
-          <div className="grid gap-6 xl:grid-cols-[0.52fr_0.48fr]">
-            <Card className="rounded-3xl border-slate-200 bg-white shadow-sm">
-              <CardContent className="fh-pad-surface">
-                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
-                  Frequently asked questions
-                </div>
-                <div className="space-y-3">
-                  {faq.map((item, index) => (
+                <div className="space-y-2">
+                  {featureGroups.slice(0, 3).map((group) => (
                     <button
+                      key={group.title}
                       type="button"
-                      key={item.q}
-                      onClick={() => setFaqOpen(index === faqOpen ? -1 : index)}
-                      className="w-full rounded-2xl border border-slate-200 bg-[#f8fafc] p-5 text-left"
+                      onClick={() => runTarget("platform")}
+                      className="group flex w-full items-center justify-between rounded-xl border border-slate-200 bg-[color:var(--surface)] px-3 py-3 text-left"
                     >
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="text-xl font-semibold leading-tight text-slate-900">{item.q}</div>
-                        <ChevronDown className={`h-5 w-5 shrink-0 text-slate-400 transition ${faqOpen === index ? "rotate-180" : ""}`} />
+                      <div className="min-w-0">
+                        <div className="truncate text-sm font-semibold text-slate-900">{group.title}</div>
+                        <div className="truncate text-xs text-slate-500">{group.subtitle}</div>
                       </div>
-                      {faqOpen === index ? (
-                        <div className="mt-4 fh-body text-slate-600">{item.a}</div>
-                      ) : null}
+                      <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:text-slate-600" />
                     </button>
                   ))}
                 </div>
               </CardContent>
             </Card>
 
-            <Card id="contact" className="scroll-mt-24 overflow-hidden rounded-3xl border-slate-200 bg-white text-slate-900 shadow-sm">
-              <CardContent className="fh-pad-surface">
-                <div className="mb-6 inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
-                  Take the next step
-                </div>
-                <div className="max-w-[20ch] text-3xl font-semibold leading-[1.08] sm:text-4xl lg:text-[2.5rem]">
-                  Open the right workspace and move straight into the product.
-                </div>
-                <div className="mt-4 max-w-[52ch] text-base leading-8 text-slate-600">
-                  Keep the public experience focused on real entry points: the user journey and the provider workspace.
-                </div>
-
-                <div className="mt-7 grid gap-4 sm:grid-cols-2">
+            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+              <CardContent className="p-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <div>
+                    <div className="text-lg font-semibold text-slate-900">Agenda</div>
+                    <div className="text-sm text-slate-500">Today's timeline</div>
+                  </div>
                   <button
                     type="button"
+                    className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-[color:var(--card)] px-2.5 py-1.5 text-xs font-semibold text-slate-600"
+                  >
+                    <CalendarDays className="h-3.5 w-3.5" />
+                    {copy.ctas.openSchedule}
+                  </button>
+                </div>
+                <div className="space-y-2">
+                  {timelineSteps.slice(0, 3).map((step, index) => (
+                    <div key={step.title} className="rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
+                      <div className="flex items-start gap-2">
+                        <div className="inline-flex h-7 min-w-[2.2rem] items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
+                          {index === 0 ? "09:15" : index === 1 ? "12:10" : "16:20"}
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-slate-900">{step.title}</div>
+                          <div className="mt-1 text-xs text-slate-500">{step.text}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
+                  <div className="mb-1 text-xs text-slate-500">Completion</div>
+                  <div className="text-2xl font-bold leading-none text-slate-900">58%</div>
+                  <div className="mt-2 h-1.5 rounded-full bg-slate-200">
+                    <div className="h-full w-[58%] rounded-full bg-[#f77f00]" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card id="trust" className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+              <CardContent className="p-4">
+                <div className="mb-3 flex items-center justify-between">
+                  <div>
+                    <div className="text-lg font-semibold text-slate-900">Action Center</div>
+                    <div className="text-sm text-slate-500">Notifications, insights and fast actions</div>
+                  </div>
+                  <button
+                    type="button"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-[color:var(--card)] text-slate-600"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <div className="space-y-2">
+                  {trustTiles.map((item) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      className="group flex w-full items-center justify-between rounded-xl border border-slate-200 bg-[color:var(--surface)] px-3 py-2 text-left"
+                    >
+                      <span className="inline-flex items-center gap-2">
+                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
+                          <item.icon className="h-4 w-4" />
+                        </span>
+                        <span className="text-sm font-semibold text-slate-900">{item.label}</span>
+                      </span>
+                      <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:text-slate-600" />
+                    </button>
+                  ))}
+                </div>
+
+                <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
+                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insights</div>
+                  <div className="mt-1 text-sm font-semibold text-slate-900">Practical signals for better decisions</div>
+                  <div className="mt-1 text-xs text-slate-600">{topHighlights[0].text}</div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section id="experiences" className="grid gap-3 lg:grid-cols-2">
+            {roleCards.map((role) => (
+              <Card key={role.role} className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+                <CardContent className="p-4">
+                  <div className="mb-3 flex items-center justify-between">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#03cd8c]">
+                      <role.icon className="h-5 w-5" />
+                    </span>
+                    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${role.badgeTone}`}>{role.role}</span>
+                  </div>
+                  <div className="text-xl font-semibold text-slate-900">{role.title}</div>
+                  <p className="mt-2 text-sm text-slate-600">{role.description}</p>
+                  <div className="mt-3 space-y-1.5">
+                    {role.bullets.map((bullet) => (
+                      <div key={bullet} className="flex items-start gap-2 rounded-lg border border-slate-200 bg-[color:var(--surface)] p-2.5">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-[#03cd8c]" />
+                        <div className="text-xs text-slate-700">{bullet}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-3 flex gap-2">
+                    <Button
+                      className="h-9 rounded-xl bg-[#03cd8c] px-3 text-xs font-semibold hover:bg-[#02b67c]"
+                      onClick={() => navigate(role.target)}
+                    >
+                      {role.role === "Provider" ? "Open Provider Workspace" : "Enter FaithHub"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="h-9 rounded-xl border-slate-200 bg-[color:var(--card)] px-3 text-xs font-semibold"
+                      onClick={() => setActiveRole(role.role)}
+                    >
+                      Set focus
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
+
+          <section id="platform" className="grid gap-3 xl:grid-cols-2">
+            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+              <CardContent className="p-4">
+                <div className="mb-3 text-lg font-semibold text-slate-900">Platform architecture</div>
+                <div className="space-y-2">
+                  {featureGroups.map((group) => (
+                    <div key={group.title} className="rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
+                      <div className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+                        <group.icon className="h-4 w-4 text-[#03cd8c]" />
+                        {group.title}
+                      </div>
+                      <div className="mt-1 text-xs text-slate-500">{group.subtitle}</div>
+                      <div className="mt-2 space-y-1">
+                        {group.items.map((entry) => (
+                          <div key={entry} className="text-xs text-slate-600">
+                            - {entry}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card id="live" className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+              <CardContent className="p-4">
+                <div className="mb-3 text-lg font-semibold text-slate-900">Live and commerce pillars</div>
+                <div className="space-y-2">
+                  {featuredPillars.map((panel) => (
+                    <div
+                      key={panel.id}
+                      id={panel.id === "faithmart" ? "faithmart" : undefined}
+                      className="rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3"
+                    >
+                      <div className="mb-2 inline-flex rounded-full bg-[#ecfff8] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#049e6d]">
+                        {panel.tag}
+                      </div>
+                      <div className="text-sm font-semibold text-slate-900">{panel.title}</div>
+                      <div className="mt-1 text-xs text-slate-600">{panel.description}</div>
+                      <div className="mt-2 space-y-1">
+                        {panel.items.map((item) => (
+                          <div key={item.text} className="flex items-start gap-2 text-xs text-slate-700">
+                            <item.icon className="mt-0.5 h-3.5 w-3.5 text-[#03cd8c]" />
+                            {item.text}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section id="faq" className="grid gap-3 xl:grid-cols-[1.1fr_0.9fr]">
+            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+              <CardContent className="p-4">
+                <div className="mb-3 text-lg font-semibold text-slate-900">FAQ</div>
+                <div className="space-y-2">
+                  {faq.map((item, index) => (
+                    <button
+                      key={item.q}
+                      type="button"
+                      onClick={() => setFaqOpen((prev) => (prev === index ? -1 : index))}
+                      className="w-full rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3 text-left"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="text-sm font-semibold text-slate-900">{item.q}</div>
+                        <ChevronDown className={`h-4 w-4 text-slate-400 transition ${faqOpen === index ? "rotate-180" : ""}`} />
+                      </div>
+                      {faqOpen === index ? <div className="mt-2 text-xs text-slate-600">{item.a}</div> : null}
+                    </button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card id="contact" className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+              <CardContent className="p-4">
+                <div className="mb-3 text-lg font-semibold text-slate-900">Signals and reviews</div>
+                <div className="space-y-2">
+                  {testimonials.map((item) => (
+                    <div key={item.quote} className="rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
+                      <div className="mb-1 flex gap-1 text-[#f77f00]">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star key={star} className="h-3.5 w-3.5 fill-[#f77f00] text-[#f77f00]" />
+                        ))}
+                      </div>
+                      <div className="text-xs text-slate-700">"{item.quote}"</div>
+                      <div className="mt-2 text-xs font-semibold text-[#049e6d]">{item.name}</div>
+                      <div className="text-[11px] text-slate-500">{item.title}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-3 rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
+                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Device readiness</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {deviceTabs.map((item) => (
+                      <button
+                        key={item.key}
+                        type="button"
+                        onClick={() => setActiveDevice(item.key)}
+                        className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
+                          activeDevice === item.key
+                            ? "bg-slate-900 text-white"
+                            : "border border-slate-200 bg-[color:var(--card)] text-slate-600"
+                        }`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-2 text-sm font-semibold text-slate-900">{currentDevice?.title}</div>
+                  <div className="mt-1 text-xs text-slate-600">{currentDevice?.text}</div>
+                </div>
+
+                <div className="mt-3 flex gap-2">
+                  <Button
                     onClick={() => navigate("/user")}
-                    className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 text-left transition hover:border-[#03cd8c]/30 hover:bg-[#f7fffb]"
+                    className="h-10 rounded-xl bg-[#03cd8c] px-4 text-xs font-semibold hover:bg-[#02b67c]"
                   >
-                    <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                      <Compass className="h-5 w-5" />
-                    </div>
-                    <div className="text-lg font-semibold">Enter FaithHub</div>
-                    <div className="mt-2 text-base leading-7 text-slate-600">Open the user experience for discovery, live sessions, giving, events, and community engagement.</div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => navigate("/provider")}
-                    className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6 text-left transition hover:border-[#03cd8c]/30 hover:bg-[#f7fffb]"
-                  >
-                    <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
-                      <Landmark className="h-5 w-5" />
-                    </div>
-                    <div className="text-lg font-semibold">Start Building</div>
-                    <div className="mt-2 text-base leading-7 text-slate-600">Open the provider workspace for dashboards, live operations, publishing, messaging, and institution tools.</div>
-                  </button>
-                </div>
-
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Button className="rounded-2xl bg-[#03cd8c] px-5 py-6 text-base hover:bg-[#02b67c]" onClick={() => navigate("/user")}>
                     Enter FaithHub
+                    <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                   </Button>
-                  <Button variant="outline" className="rounded-2xl border-slate-200 bg-white px-5 py-6 text-base hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]" onClick={() => navigate("/provider")}>
+                  <Button
+                    onClick={() => navigate("/provider")}
+                    variant="outline"
+                    className="h-10 rounded-xl border-slate-200 bg-[color:var(--card)] px-4 text-xs font-semibold"
+                  >
                     Start Building
                   </Button>
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </section>
-      </main>
+          </section>
 
-      <footer className="border-t border-slate-200 bg-white/70">
-        <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8 2xl:max-w-[110rem] 2xl:px-10">
-          <div>
-            <button type="button" onClick={() => scrollToId("overview")} className="flex items-center gap-3 text-left">
-              <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
-            </button>
-            <div className="mt-4 max-w-lg fh-body text-slate-600">
-              A world-class digital faith ecosystem for communities and institutions, powered by the wider EVzone vision.
-            </div>
-          </div>
+          <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+            <CardContent className="p-4">
+              <div className="mb-3 text-lg font-semibold text-slate-900">Current focus context</div>
+              <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-4">
+                <FocusTile icon={Users} label="Role focus" value={currentRole?.role ?? "User"} detail={currentRole?.title ?? ""} />
+                <FocusTile icon={Compass} label="Digital posture" value="Live-first" detail={topHighlights[1].title} />
+                <FocusTile icon={ShoppingBag} label="Commerce posture" value="FaithMart ready" detail={topHighlights[2].title} />
+                <FocusTile icon={ShieldCheck} label="Trust posture" value="Policy-ready" detail={topHighlights[3].title} />
+              </div>
+            </CardContent>
+          </Card>
 
-          <div className="grid gap-6 sm:grid-cols-3">
-            <div>
-              <div className="text-sm font-semibold text-slate-900">Explore</div>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <button type="button" onClick={() => scrollToId("experiences")} className="block hover:text-[#03cd8c]">User Experience</button>
-                <button type="button" onClick={() => scrollToId("experiences")} className="block hover:text-[#03cd8c]">Provider Workspace</button>
-                <button type="button" onClick={() => scrollToId("platform")} className="block hover:text-[#03cd8c]">Platform Architecture</button>
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-slate-900">Core Systems</div>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <button type="button" onClick={() => scrollToId("live")} className="block hover:text-[#03cd8c]">Live Sessionz</button>
-                <button type="button" onClick={() => scrollToId("platform")} className="block hover:text-[#03cd8c]">Series & Teachings</button>
-                <button type="button" onClick={() => scrollToId("faithmart")} className="block hover:text-[#03cd8c]">FaithMart</button>
-              </div>
-            </div>
-            <div>
-              <div className="text-sm font-semibold text-slate-900">Trust & Support</div>
-              <div className="mt-3 space-y-2 text-sm text-slate-600">
-                <button type="button" onClick={() => scrollToId("trust")} className="block hover:text-[#03cd8c]">Trust & Safety</button>
-                <button type="button" onClick={() => scrollToId("faq")} className="block hover:text-[#03cd8c]">FAQ</button>
-                <button type="button" onClick={() => scrollToId("contact")} className="block hover:text-[#03cd8c]">Contact</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-
+        </main>
+      </div>
+      <div className="mx-auto w-full max-w-[1860px] px-2 pb-4 sm:px-3 lg:px-4">
+        <FaithHubFooter variant="public" surface="band" density="compact" />
+      </div>
     </div>
   );
 }
 
+function TopChip({ icon: Icon, label, className = "" }: { icon: LucideIcon; label: string; className?: string }) {
+  return (
+    <button
+      type="button"
+      className={`fh-shell-control inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-xs font-semibold text-slate-700 ${className}`}
+    >
+      <Icon className="h-4 w-4" />
+      {label}
+    </button>
+  );
+}
 
+function LandingSidebarPanel({
+  modules,
+  openModule,
+  onModuleToggle,
+  onAction,
+  onCollapse,
+  compactHeight = false,
+}: {
+  modules: SidebarModule[];
+  openModule: string;
+  onModuleToggle: (id: string) => void;
+  onAction: (target: string) => void;
+  onCollapse?: () => void;
+  compactHeight?: boolean;
+}) {
+  return (
+    <Card className="h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_20px_40px_rgba(2,8,20,0.18)]">
+      <CardContent
+        className={`flex min-h-0 flex-col gap-2.5 p-2.5 ${compactHeight ? "max-h-[78vh]" : "h-full"}`}
+      >
+        <div className="flex items-start justify-between px-0.5">
+          <div>
+            <div className="text-sm font-semibold text-[var(--fh-nav-title)]">Navigation</div>
+            <div className="text-xs text-[var(--fh-nav-muted)]">Modules</div>
+          </div>
+          {onCollapse ? (
+            <button
+              type="button"
+              aria-label="Minimize sidebar"
+              onClick={onCollapse}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)]"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+          ) : null}
+        </div>
 
+        <div className="fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
+          {modules.map((module) => {
+            const expanded = openModule === module.id;
+            return (
+              <div key={module.id} className="rounded-xl border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]">
+                <button
+                  type="button"
+                  onClick={() => onModuleToggle(expanded ? "" : module.id)}
+                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-left"
+                >
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)]">
+                    <module.icon className="h-4 w-4" />
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-muted)]">
+                    {module.label}
+                  </span>
+                  <ChevronRight
+                    className={`h-4 w-4 text-[var(--fh-nav-item-chevron)] transition ${expanded ? "rotate-90" : ""}`}
+                  />
+                </button>
 
+                {expanded && module.entries.length > 0 ? (
+                  <div className="space-y-1 border-t border-[var(--fh-nav-section-divider)] px-2 pb-2 pt-2">
+                    {module.entries.map((entry) => (
+                      <button
+                        key={entry.title}
+                        type="button"
+                        onClick={() => (entry.target ? onAction(entry.target) : undefined)}
+                        className={`w-full rounded-lg border px-2.5 py-2 text-left transition ${
+                          entry.highlighted
+                            ? "border-[#69d3b2] bg-[#03cd8c] text-white"
+                            : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)]"
+                        }`}
+                      >
+                        <div className="text-sm font-semibold">{entry.title}</div>
+                        <div className={`text-xs ${entry.highlighted ? "text-white/90" : "text-[var(--fh-nav-item-sub)]"}`}>
+                          {entry.detail}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
 
+      </CardContent>
+    </Card>
+  );
+}
+
+function LandingSidebarRail({
+  modules,
+  activeModule,
+  onModuleSelect,
+  onExpand,
+}: {
+  modules: SidebarModule[];
+  activeModule: string;
+  onModuleSelect: (id: string) => void;
+  onExpand: () => void;
+}) {
+  return (
+    <Card className="h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_20px_40px_rgba(2,8,20,0.18)]">
+      <CardContent className="flex h-full min-h-0 flex-col items-center gap-1.5 p-1.5">
+        <button
+          type="button"
+          aria-label="Expand sidebar"
+          onClick={onExpand}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)]"
+        >
+          <ChevronRight className="h-4 w-4" />
+        </button>
+
+        <div className="mt-0.5 flex w-full flex-col items-center gap-1.5">
+          {modules.map((module) => (
+            <button
+              key={module.id}
+              type="button"
+              aria-label={module.label}
+              title={module.label}
+              onClick={() => onModuleSelect(module.id)}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border transition ${
+                activeModule === module.id
+                  ? "border-[var(--fh-nav-rail-active-border)] bg-[color:var(--fh-nav-rail-active-bg)] text-[var(--fh-nav-rail-active-fg)]"
+                  : "border-[var(--fh-nav-rail-icon-border)] bg-[color:var(--fh-nav-rail-icon-bg)] text-[var(--fh-nav-rail-icon-fg)]"
+              }`}
+            >
+              <module.icon className="h-4 w-4" />
+            </button>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function FocusTile({
+  icon: Icon,
+  label,
+  value,
+  detail,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  detail: string;
+}) {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
+      <div className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
+        <Icon className="h-4 w-4" />
+      </div>
+      <div className="text-xs text-slate-500">{label}</div>
+      <div className="text-sm font-semibold text-slate-900">{value}</div>
+      <div className="text-xs text-slate-600">{detail}</div>
+    </div>
+  );
+}
+
+function pillToneClass(tone: QuickTone) {
+  if (tone === "orange") return "bg-[#fff3e8] text-[#cc6500]";
+  if (tone === "slate") return "bg-slate-100 text-slate-600";
+  return "bg-[#ecfff8] text-[#049e6d]";
+}
+
+function progressToneClass(tone: QuickTone) {
+  if (tone === "orange") return "bg-[#f77f00]";
+  if (tone === "slate") return "bg-[#3b82f6]";
+  return "bg-[#10b981]";
+}
 

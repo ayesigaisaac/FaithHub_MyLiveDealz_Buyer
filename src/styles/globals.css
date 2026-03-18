@@ -4,16 +4,87 @@
 
 :root {
   color-scheme: light;
-  font-family: "Segoe UI Variable", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --bg: #f5f7f6;
-  --surface: #ffffff;
+  font-family: "Manrope", "Plus Jakarta Sans", "Segoe UI Variable", "Trebuchet MS", sans-serif;
+  --bg: #eff3f4;
+  --surface: #f8fbfc;
   --card: #ffffff;
-  --border: #e5e7eb;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --accent: #10b981;
-  --accent-soft: #ecfdf5;
-  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --panel: #f4f7f9;
+  --border: #d9e1e8;
+  --text-primary: #0f172a;
+  --text-secondary: #5b6676;
+  --accent: #03cd8c;
+  --accent-soft: rgba(3, 205, 140, 0.12);
+  --warning: #f77f00;
+  --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --fh-shadow-card: 0 14px 34px rgba(15, 23, 42, 0.08);
+  --fh-shadow-card-hover: 0 22px 44px rgba(15, 23, 42, 0.13);
+  --fh-shell-topbar: linear-gradient(180deg, rgba(248, 251, 252, 0.98), rgba(246, 250, 251, 0.9));
+  --fh-hero-grad: linear-gradient(
+    109deg,
+    rgba(3, 205, 140, 0.16),
+    rgba(248, 251, 252, 0.95) 36%,
+    rgba(247, 127, 0, 0.1)
+  );
+  --fh-hero-border: rgba(3, 205, 140, 0.22);
+  --fh-nav-shell-bg: #f8fafb;
+  --fh-nav-shell-border: #d3dce6;
+  --fh-nav-title: #0f172a;
+  --fh-nav-muted: #64748b;
+  --fh-nav-kicker: #94a3b8;
+  --fh-nav-ghost-btn-bg: #ffffff;
+  --fh-nav-ghost-btn-border: #d5dee8;
+  --fh-nav-ghost-btn-hover: #f1f5f9;
+  --fh-nav-section-bg: #ffffff;
+  --fh-nav-section-border: #d7dfe8;
+  --fh-nav-section-divider: #e4ebf2;
+  --fh-nav-section-icon-bg: #ecfff8;
+  --fh-nav-section-icon-fg: #049e6d;
+  --fh-nav-item-bg: #f7f9fc;
+  --fh-nav-item-hover: #eef3f9;
+  --fh-nav-item-hover-border: #ccd8e8;
+  --fh-nav-item-active-bg: #ecfff8;
+  --fh-nav-item-active-border: #6fd5b5;
+  --fh-nav-item-active-icon-bg: rgba(3, 205, 140, 0.2);
+  --fh-nav-item-active-icon-fg: #049e6d;
+  --fh-nav-item-icon-bg: #e9eff7;
+  --fh-nav-item-icon-fg: #5f6f84;
+  --fh-nav-item-title: #142033;
+  --fh-nav-item-sub: #627186;
+  --fh-nav-item-chevron: #8da0b8;
+  --fh-nav-divider: #d8e2ec;
+  --fh-nav-quick-bg: #f6f8fb;
+  --fh-nav-quick-border: #d7dfe8;
+  --fh-nav-quick-text: #1f2937;
+  --fh-nav-quick-hover: #eef2f7;
+  --fh-nav-child-bg: #ffffff;
+  --fh-nav-child-border: #d7dfe8;
+  --fh-nav-child-chip-bg: #111827;
+  --fh-nav-child-chip-fg: #f8fafc;
+  --fh-nav-rail-icon-bg: #ffffff;
+  --fh-nav-rail-icon-border: #d4dfe9;
+  --fh-nav-rail-icon-fg: #5d6c81;
+  --fh-nav-rail-active-bg: #ecfff8;
+  --fh-nav-rail-active-border: #69d3b2;
+  --fh-nav-rail-active-fg: #049e6d;
+  --fh-nav-rail-chip-bg: #0f172a;
+  --fh-nav-rail-chip-fg: #e2e8f0;
+  --fh-footer-band-bg: #f6f9fc;
+  --fh-footer-band-border: #d6e0ea;
+  --fh-footer-band-brand-bg: #ffffff;
+  --fh-footer-band-brand-border: #d6e0ea;
+  --fh-footer-band-brand-text: #0f172a;
+  --fh-footer-band-text: #607086;
+  --fh-footer-band-link: #40546c;
+  --fh-footer-band-link-hover: #049e6d;
+  --fh-footer-band-chip-bg: #ffffff;
+  --fh-footer-band-chip-border: #d4deea;
+  --fh-footer-band-chip-text: #3f5168;
+  --fh-footer-band-status-bg: #ecfff8;
+  --fh-footer-band-status-border: #bfe9d9;
+  --fh-footer-band-status-text: #049e6d;
+  --fh-scroll-track: #dde7ef;
+  --fh-scroll-thumb: #6f859b;
+  --fh-scroll-thumb-hover: #546b82;
 
   /* Legacy vars used throughout the codebase. */
   --faithhub-page-bg: var(--bg);
@@ -67,7 +138,10 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 8% 0%, rgba(3, 205, 140, 0.07), transparent 26%),
+    radial-gradient(circle at 92% 0%, rgba(247, 127, 0, 0.08), transparent 22%),
+    var(--bg);
   color: var(--text-primary);
   line-height: 1.5;
   letter-spacing: 0.01em;
@@ -232,6 +306,87 @@ li {
   line-height: var(--fh-body-tight-leading);
 }
 
+.fh-shell-topbar {
+  background: var(--fh-shell-topbar);
+}
+
+.fh-shell-control {
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow-soft);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.fh-shell-control:hover {
+  background: var(--surface);
+  transform: translateY(-1px);
+}
+
+.fh-panel-card {
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--fh-shadow-card);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.fh-panel-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--fh-shadow-card-hover);
+}
+
+.fh-hero-card {
+  border: 1px solid var(--fh-hero-border);
+  background: var(--fh-hero-grad);
+  box-shadow: var(--fh-shadow-card);
+}
+
+.fh-pill {
+  border-radius: 9999px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fh-pill-emerald {
+  border: 1px solid rgba(3, 205, 140, 0.26);
+  background: rgba(3, 205, 140, 0.12);
+  color: #047857;
+}
+
+.fh-pill-orange {
+  border: 1px solid rgba(247, 127, 0, 0.28);
+  background: rgba(247, 127, 0, 0.12);
+  color: #b45309;
+}
+
+.fh-pill-slate {
+  border: 1px solid rgba(100, 116, 139, 0.24);
+  background: rgba(148, 163, 184, 0.16);
+  color: #475569;
+}
+
+.fh-inline-action {
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.fh-inline-action:hover {
+  background: var(--surface);
+  transform: translateY(-1px);
+}
+
 @media (min-width: 640px) {
   .fh-pad-panel {
     padding: var(--fh-space-panel-lg);
@@ -267,15 +422,86 @@ li {
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0b0f19;
-  --surface: #111827;
-  --card: #161b26;
-  --border: #1f2937;
-  --text-primary: #e5e7eb;
-  --text-secondary: #9ca3af;
+  --bg: #0d141f;
+  --surface: #111a26;
+  --card: #162233;
+  --panel: #131d2b;
+  --border: #243244;
+  --text-primary: #e8eef8;
+  --text-secondary: #9fb0c5;
   --accent: #34d399;
   --accent-soft: rgba(52, 211, 153, 0.16);
-  --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --warning: #ff9f3d;
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.42);
+  --fh-shadow-card: 0 18px 42px rgba(0, 0, 0, 0.4);
+  --fh-shadow-card-hover: 0 26px 52px rgba(0, 0, 0, 0.52);
+  --fh-shell-topbar: linear-gradient(180deg, rgba(17, 26, 38, 0.98), rgba(13, 20, 31, 0.9));
+  --fh-hero-grad: linear-gradient(
+    109deg,
+    rgba(52, 211, 153, 0.18),
+    rgba(20, 30, 43, 0.96) 40%,
+    rgba(247, 127, 0, 0.12)
+  );
+  --fh-hero-border: rgba(52, 211, 153, 0.3);
+  --fh-nav-shell-bg: #15243a;
+  --fh-nav-shell-border: #27405f;
+  --fh-nav-title: #e2e8f0;
+  --fh-nav-muted: #94a3b8;
+  --fh-nav-kicker: #64748b;
+  --fh-nav-ghost-btn-bg: #1a2f49;
+  --fh-nav-ghost-btn-border: #3b5577;
+  --fh-nav-ghost-btn-hover: #223b5b;
+  --fh-nav-section-bg: #1a2f49;
+  --fh-nav-section-border: #304c6e;
+  --fh-nav-section-divider: #2b4261;
+  --fh-nav-section-icon-bg: #0e3f4f;
+  --fh-nav-section-icon-fg: #10d4a0;
+  --fh-nav-item-bg: #142944;
+  --fh-nav-item-hover: #1d3552;
+  --fh-nav-item-hover-border: #355577;
+  --fh-nav-item-active-bg: rgba(14, 207, 156, 0.2);
+  --fh-nav-item-active-border: #13d0a0;
+  --fh-nav-item-active-icon-bg: rgba(14, 207, 156, 0.3);
+  --fh-nav-item-active-icon-fg: #3af3c1;
+  --fh-nav-item-icon-bg: #1f3958;
+  --fh-nav-item-icon-fg: #cbd5e1;
+  --fh-nav-item-title: #f1f5f9;
+  --fh-nav-item-sub: #94a3b8;
+  --fh-nav-item-chevron: #64748b;
+  --fh-nav-divider: #2b4261;
+  --fh-nav-quick-bg: #1b3150;
+  --fh-nav-quick-border: #2f4868;
+  --fh-nav-quick-text: #e2e8f0;
+  --fh-nav-quick-hover: #254066;
+  --fh-nav-child-bg: #1b2f49;
+  --fh-nav-child-border: #2f4868;
+  --fh-nav-child-chip-bg: #0d1d31;
+  --fh-nav-child-chip-fg: #e2e8f0;
+  --fh-nav-rail-icon-bg: #1a2f49;
+  --fh-nav-rail-icon-border: #2f4868;
+  --fh-nav-rail-icon-fg: #cbd5e1;
+  --fh-nav-rail-active-bg: rgba(14, 207, 156, 0.25);
+  --fh-nav-rail-active-border: #16d2a2;
+  --fh-nav-rail-active-fg: #37efbe;
+  --fh-nav-rail-chip-bg: #0d1d31;
+  --fh-nav-rail-chip-fg: #e2e8f0;
+  --fh-footer-band-bg: #0f1724;
+  --fh-footer-band-border: #25364a;
+  --fh-footer-band-brand-bg: #152233;
+  --fh-footer-band-brand-border: #2f4868;
+  --fh-footer-band-brand-text: #e2ebf7;
+  --fh-footer-band-text: #8fa1b8;
+  --fh-footer-band-link: #cbd8ea;
+  --fh-footer-band-link-hover: #8bf3cd;
+  --fh-footer-band-chip-bg: #15263c;
+  --fh-footer-band-chip-border: #304a6a;
+  --fh-footer-band-chip-text: #d0def2;
+  --fh-footer-band-status-bg: #123327;
+  --fh-footer-band-status-border: #2aa77c;
+  --fh-footer-band-status-text: #85f2c5;
+  --fh-scroll-track: #152338;
+  --fh-scroll-thumb: #5f7fa1;
+  --fh-scroll-thumb-hover: #7d9fc2;
 }
 
 /* Dark-mode mapping for existing Tailwind utility usage across pages. */
@@ -446,4 +672,37 @@ li {
 
 [data-theme="dark"] [class*="bg-emerald-500"] {
   background-color: var(--accent) !important;
+}
+
+.fh-scroll-region {
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--fh-scroll-thumb) var(--fh-scroll-track);
+}
+
+.fh-scroll-region::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.fh-scroll-region::-webkit-scrollbar-track {
+  background: var(--fh-scroll-track);
+  border-radius: 999px;
+}
+
+.fh-scroll-region::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--fh-scroll-thumb), color-mix(in srgb, var(--fh-scroll-thumb) 72%, #03cd8c 28%));
+  border-radius: 999px;
+  border: 1px solid var(--fh-scroll-track);
+  min-height: 28px;
+}
+
+.fh-scroll-region::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--fh-scroll-thumb-hover), color-mix(in srgb, var(--fh-scroll-thumb-hover) 74%, #03cd8c 26%));
+}
+
+.fh-scroll-region::-webkit-scrollbar-corner {
+  background: transparent;
 }

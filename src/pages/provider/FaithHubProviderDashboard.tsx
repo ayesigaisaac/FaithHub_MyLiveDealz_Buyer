@@ -1,663 +1,558 @@
-import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+﻿import React, { useMemo, useState } from "react";
 import {
-  AlertTriangle,
-  ArrowUpRight,
-  BarChart3,
-  Bell,
-  CheckCircle2,
+  CalendarDays,
+  CalendarRange,
+  ChevronRight,
   Clock3,
-  Download,
-  Eye,
-  HeartHandshake,
+  MessageSquare,
   MonitorPlay,
-  Radio,
   ShieldAlert,
   Sparkles,
-  Users,
-  Wifi,
-  WifiOff,
+  TriangleAlert,
+  Wallet,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  DashboardActionItem,
+  DashboardSectionHeader,
+  DashboardStatCard,
+} from "@/components/dashboard";
+import { ctaPriorityClass } from "@/constants/ctaStyles";
+import { faithHubToneCopy } from "@/constants/faithHubTone";
 
-type IconType = React.ComponentType<{ className?: string }>;
+type TimeWindow = "7d" | "30d" | "term";
 
-type StreamHealth = "Healthy" | "Stable" | "Watch";
-type QueueSeverity = "Critical" | "High" | "Medium";
-type SignalState = "good" | "watch" | "elevated";
-
-interface KPIItem {
-  label: string;
-  value: string;
-  trend: string;
-  trendWidth: string;
-  trendNote: string;
-  icon: IconType;
-}
-
-interface LiveHealthItem {
-  name: string;
-  bitrate: string;
-  latency: string;
-  viewers: string;
-  health: StreamHealth;
-}
-
-interface UpcomingSessionItem {
+type ModuleTile = {
+  id: string;
   title: string;
-  time: string;
-  channel: string;
-}
+  description: string;
+  actionLabel: string;
+  actionId: string;
+  icon: React.ComponentType<{ className?: string }>;
+};
 
-interface ModerationQueueItem {
-  item: string;
-  severity: QueueSeverity;
-  area: string;
-  eta: string;
-}
-
-interface AnomalyAlertItem {
-  title: string;
-  detail: string;
-  impact: string;
-}
-
-interface ProviderSignalItem {
+type ProgressMetric = {
+  id: string;
   label: string;
   value: string;
   note: string;
-  progress: string;
-  state: SignalState;
-}
+  progress: number;
+  tone: "emerald" | "orange" | "rose";
+  badge: string;
+};
 
-const kpis: KPIItem[] = [
+type PulseMetric = {
+  id: string;
+  label: string;
+  value: string;
+  delta: string;
+  trend: "up" | "down" | "flat";
+  tone: "emerald" | "orange" | "slate";
+};
+
+type PriorityItem = {
+  id: string;
+  title: string;
+  detail: string;
+  actionLabel: string;
+  actionId: string;
+  tone?: "default" | "elevated";
+};
+
+type AgendaItem = {
+  id: string;
+  time: string;
+  title: string;
+  detail: string;
+};
+
+const modules: ModuleTile[] = [
   {
-    label: "Live viewers now",
-    value: "4,280",
-    trend: "+12%",
-    trendWidth: "74%",
-    trendNote: "Momentum rising in main channel",
-    icon: Users,
+    id: "live-studio",
+    title: "Live Studio",
+    description: "Scene switching, host controls, and overlays.",
+    actionLabel: "Open studio",
+    actionId: "open-live-studio",
+    icon: MonitorPlay,
   },
   {
-    label: "Upcoming sessions",
-    value: "9",
-    trend: "+3",
-    trendWidth: "63%",
-    trendNote: "Weekend lineup now fully staffed",
-    icon: Radio,
+    id: "schedule",
+    title: "Schedule",
+    description: "Session calendar, staffing, and reminders.",
+    actionLabel: "Open scheduler",
+    actionId: "open-live-schedule",
+    icon: CalendarRange,
   },
   {
-    label: "Recent donations",
-    value: "$12.4k",
-    trend: "+18%",
-    trendWidth: "79%",
-    trendNote: "Family ministry campaign strongest",
-    icon: HeartHandshake,
+    id: "signals",
+    title: "Giving Signals",
+    description: "Track momentum, conversion, and payout readiness.",
+    actionLabel: "Export analytics",
+    actionId: "open-live-ops",
+    icon: Wallet,
   },
   {
-    label: "Moderation queue",
-    value: "14",
-    trend: "2 urgent",
-    trendWidth: "48%",
-    trendNote: "Urgent items still within SLA",
+    id: "moderation",
+    title: "Trust Moderation",
+    description: "Review trust queue and escalation follow-up.",
+    actionLabel: "Open trust queue",
+    actionId: "open-reviews-moderation",
     icon: ShieldAlert,
   },
 ];
 
-const liveHealth: LiveHealthItem[] = [
+const progressMetrics: ProgressMetric[] = [
   {
-    name: "Main Sunday Stream",
-    bitrate: "4.2 Mbps",
-    latency: "Low",
-    viewers: "2.8k",
-    health: "Healthy",
+    id: "sessions",
+    label: "Upcoming live sessions",
+    value: "9",
+    note: "Two prime-time sessions still need final checks.",
+    progress: 74,
+    tone: "orange",
+    badge: "In review",
   },
   {
-    name: "Women Fellowship Reflection",
-    bitrate: "3.1 Mbps",
-    latency: "Normal",
-    viewers: "920",
-    health: "Stable",
+    id: "queue",
+    label: "Moderation queue",
+    value: "14",
+    note: "Three items are urgent and still inside SLA.",
+    progress: 58,
+    tone: "rose",
+    badge: "Needs attention",
   },
   {
-    name: "Youth Rehearsal Feed",
-    bitrate: "1.2 Mbps",
-    latency: "Elevated",
-    viewers: "230",
-    health: "Watch",
-  },
-];
-
-const upcomingSessions: UpcomingSessionItem[] = [
-  { title: "Mercy in Motion Episode 5", time: "Tonight 7:30 PM", channel: "Main live channel" },
-  { title: "Family Prayer Circle", time: "Tomorrow 6:00 PM", channel: "Family ministry channel" },
-  { title: "Marketplace Day Launch", time: "Saturday 10:00 AM", channel: "Event live relay" },
-];
-
-const moderationQueue: ModerationQueueItem[] = [
-  {
-    item: "Live chat abuse report",
-    severity: "High",
-    area: "Youth Impact Night",
-    eta: "Respond in 6 min",
-  },
-  {
-    item: "Review flagged for brigading pattern",
-    severity: "Medium",
-    area: "Walking in Wisdom",
-    eta: "Review in 18 min",
-  },
-  {
-    item: "Prayer request escalation",
-    severity: "High",
-    area: "Women Fellowship Reflection",
-    eta: "Respond in 9 min",
-  },
-  {
-    item: "Suspicious payout detail change",
-    severity: "Critical",
-    area: "Finance controls",
-    eta: "Immediate",
+    id: "conversion",
+    label: "Donation conversion",
+    value: "64%",
+    note: "Follow-up reminders are keeping conversion stable.",
+    progress: 81,
+    tone: "emerald",
+    badge: "Stable",
   },
 ];
 
-const anomalyAlerts: AnomalyAlertItem[] = [
+const pulseMetrics: PulseMetric[] = [
+  { id: "in-review", label: "Sessions in review", value: "26", delta: "+12%", trend: "up", tone: "emerald" },
+  { id: "missing-assets", label: "Missing assets", value: "6", delta: "-4%", trend: "down", tone: "orange" },
+  { id: "pastoral-followups", label: "Pastoral follow-ups", value: "3", delta: "+0.0%", trend: "flat", tone: "slate" },
+  { id: "conversion", label: "Conversion", value: "64%", delta: "+0.2%", trend: "up", tone: "emerald" },
+];
+
+const priorities: PriorityItem[] = [
   {
-    title: "Join/leave churn spike",
-    detail: "Youth Rehearsal Feed showed a sharp join-exit pattern over the last 4 minutes.",
-    impact: "Viewer drop risk",
+    id: "missing-assets",
+    title: "Request missing stream assets",
+    detail: "6 scheduled sessions still have incomplete artwork or metadata.",
+    actionLabel: "Open scheduler",
+    actionId: "open-live-schedule",
   },
   {
-    title: "Donation conversion outlier",
-    detail: "Evening Prayer Revival recorded conversion velocity above historical range.",
-    impact: "Finance verification",
+    id: "queue",
+    title: "Process urgent trust queue",
+    detail: "3 urgent moderation items are waiting for provider response.",
+    actionLabel: "Open trust queue",
+    actionId: "open-reviews-moderation",
+    tone: "elevated",
   },
   {
-    title: "Queue response drift",
-    detail: "Moderation response time is trending above the target for two active sessions.",
-    impact: "Trust operations",
+    id: "notifications",
+    title: "Notify pre-registered attendees",
+    detail: "Audience reminders are due for tomorrow's headline session.",
+    actionLabel: "Notify audience",
+    actionId: "open-notifications",
+  },
+  {
+    id: "signals",
+    title: "Reconcile campaign fund snapshots",
+    detail: "Export this week's donation and payout movement for finance ops.",
+    actionLabel: "Export analytics",
+    actionId: "open-live-ops",
   },
 ];
 
-const providerSignals: ProviderSignalItem[] = [
+const agenda: AgendaItem[] = [
   {
-    label: "Stream uptime",
-    value: "99.4%",
-    note: "No ingest interruptions in 24h",
-    progress: "94%",
-    state: "good",
+    id: "doc-review",
+    time: "09:15",
+    title: "Stream metadata review",
+    detail: "Verify titles, thumbnails, and publishing tags.",
   },
   {
-    label: "Moderation response SLA",
-    value: "92%",
-    note: "2 urgent items need follow-up",
-    progress: "68%",
-    state: "watch",
+    id: "rehearsal",
+    time: "12:10",
+    title: "Host rehearsal block",
+    detail: "Scene transitions and backup audio checks.",
   },
   {
-    label: "Donation processing confidence",
-    value: "Stable",
-    note: "No high-risk payout anomalies",
-    progress: "82%",
-    state: "good",
+    id: "handoff",
+    time: "16:20",
+    title: "Moderator handoff",
+    detail: "Finalize queue ownership before evening session.",
   },
 ];
 
-const surfaceCardClass =
-  "rounded-[28px] border border-white/75 bg-white/95 shadow-[0_16px_45px_-26px_rgba(15,23,42,0.34)]";
-const panelItemClass = "rounded-[20px] border border-slate-200/95 bg-white p-4 shadow-sm";
+const actionCenterItems: PriorityItem[] = [
+  {
+    id: "forms",
+    title: "Missing campaign forms",
+    detail: "Most common publishing blocker in this window.",
+    actionLabel: "Open scheduler",
+    actionId: "open-live-schedule",
+    tone: "elevated",
+  },
+  {
+    id: "contacts",
+    title: "Follow-up queue",
+    detail: "3 pastoral follow-ups still need schedule confirmation.",
+    actionLabel: "Open contacts",
+    actionId: "open-contacts",
+  },
+  {
+    id: "queue-action",
+    title: "Moderation follow-up",
+    detail: "Resolve trust queue items before session launch.",
+    actionLabel: "Open trust queue",
+    actionId: "open-reviews-moderation",
+  },
+];
 
-function getStreamHealthPillClass(health: StreamHealth) {
-  if (health === "Healthy") {
-    return "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100";
-  }
-
-  if (health === "Watch") {
-    return "bg-amber-50 text-amber-700 ring-1 ring-amber-100";
-  }
-
-  return "bg-slate-100 text-slate-700 ring-1 ring-slate-200";
+function pulseToneClass(tone: PulseMetric["tone"]) {
+  if (tone === "orange") return "bg-[#fff3e8] text-[#cc6500]";
+  if (tone === "slate") return "bg-slate-100 text-slate-700";
+  return "bg-[#ecfff8] text-[#049e6d]";
 }
 
-function getQueueSeverityPillClass(severity: QueueSeverity) {
-  if (severity === "Critical") {
-    return "bg-rose-50 text-rose-600 ring-1 ring-rose-100";
-  }
-
-  if (severity === "High") {
-    return "bg-amber-50 text-amber-700 ring-1 ring-amber-100";
-  }
-
-  return "bg-slate-100 text-slate-700 ring-1 ring-slate-200";
-}
-
-function getQueueSeverityRowClass(severity: QueueSeverity) {
-  if (severity === "Critical") {
-    return "border-l-rose-400";
-  }
-
-  if (severity === "High") {
-    return "border-l-amber-300";
-  }
-
-  return "border-l-slate-300";
-}
-
-function getSignalBarClass(state: SignalState) {
-  if (state === "good") {
-    return "bg-emerald-300";
-  }
-
-  if (state === "elevated") {
-    return "bg-rose-300";
-  }
-
-  return "bg-amber-200";
-}
-
-function getSignalValueClass(state: SignalState) {
-  if (state === "good") {
-    return "text-emerald-700";
-  }
-
-  if (state === "elevated") {
-    return "text-rose-700";
-  }
-
-  return "text-amber-700";
+function pulseBarClass(metric: PulseMetric) {
+  if (metric.trend === "down") return "w-[38%] bg-[#f77f00]/75";
+  if (metric.trend === "flat") return "w-[54%] bg-slate-400/70";
+  return "w-[70%] bg-[#03cd8c]/75";
 }
 
 export default function FaithHubProviderDashboard() {
-  const [offlineReadOnly, setOfflineReadOnly] = useState(false);
-  const [analyticsPack, setAnalyticsPack] = useState(true);
-  const [biConnectors, setBiConnectors] = useState(false);
+  const [windowView, setWindowView] = useState<TimeWindow>("7d");
+  const copy = faithHubToneCopy.providerDashboard;
 
-  const watchStreams = useMemo(
-    () => liveHealth.filter((stream) => stream.health !== "Healthy").length,
-    [],
-  );
-  const urgentQueueCount = useMemo(
-    () => moderationQueue.filter((item) => item.severity !== "Medium").length,
-    [],
+  const topActions = useMemo(
+    () => [
+      {
+        id: "messages",
+        label: copy.ctas.openInbox,
+        actionLabel: "Open contacts",
+        actionId: "open-contacts",
+        variant: "outline" as const,
+        priority: "secondary" as const,
+      },
+      {
+        id: "explore",
+        label: copy.ctas.openSchedule,
+        actionLabel: "Open scheduler",
+        actionId: "open-live-schedule",
+        variant: "default" as const,
+        priority: "primary" as const,
+      },
+      {
+        id: "support",
+        label: copy.ctas.openTrustQueue,
+        actionLabel: "Open trust queue",
+        actionId: "open-reviews-moderation",
+        variant: "outline" as const,
+        priority: "secondary" as const,
+      },
+    ],
+    [copy.ctas.openInbox, copy.ctas.openSchedule, copy.ctas.openTrustQueue],
   );
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#f5f7f6] text-slate-900">
-      <div className="mx-auto w-full max-w-[1680px] px-4 py-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.26 }}
-          className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-[24px] border border-slate-200/75 bg-white/90 px-4 py-3.5 shadow-sm backdrop-blur"
-        >
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
-              <BarChart3 className="h-5 w-5" />
-            </div>
+    <div className="space-y-4">
+      <Card className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(3,205,140,0.12),rgba(248,251,252,0.92)_34%,rgba(247,127,0,0.1))] shadow-[var(--shadow-soft)]">
+        <CardContent className="p-4 sm:p-5 lg:p-6">
+          <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
-              <div className="fh-eyebrow text-emerald-600">Provider workspace</div>
-              <div className="truncate text-lg font-semibold tracking-tight text-slate-900">
-                Provider Dashboard
+              <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
+              <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">{copy.hero.title}</h2>
+              <p className="mt-2 text-sm text-slate-600">{copy.hero.subtitle}</p>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Badge className="rounded-full border-[#f6d5b0] bg-[#fff3e8] text-[#cc6500] hover:bg-[#fff3e8]">
+                  {copy.badges.primary}
+                </Badge>
+                <Badge className="rounded-full border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-100">
+                  {copy.badges.secondary}
+                </Badge>
+                <Badge className="rounded-full border-slate-200 bg-white text-slate-600 hover:bg-white">
+                  {copy.badges.tertiary}
+                </Badge>
+              </div>
+            </div>
+
+            <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[420px]">
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                <div className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white p-1">
+                  <button
+                    type="button"
+                    onClick={() => setWindowView("7d")}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                      windowView === "7d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                    }`}
+                  >
+                    7 days
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setWindowView("30d")}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                      windowView === "30d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                    }`}
+                  >
+                    30 days
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setWindowView("term")}
+                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                      windowView === "term" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                    }`}
+                  >
+                    This term
+                  </button>
+                </div>
+
+                {topActions.map((item) => (
+                  <Button
+                    key={item.id}
+                    variant={item.variant}
+                    data-action-label={item.actionLabel}
+                    data-action-id={item.actionId}
+                    className={`h-10 rounded-xl px-4 text-sm ${ctaPriorityClass(item.priority)}`}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
-              {offlineReadOnly ? (
-                <WifiOff className="h-4 w-4 text-amber-600" />
-              ) : (
-                <Wifi className="h-4 w-4 text-emerald-600" />
-              )}
-              {offlineReadOnly ? "Read-only KPI cache" : "Live provider telemetry"}
-            </div>
-            <button
-              type="button"
-              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-emerald-200 hover:text-emerald-600"
-            >
-              <Bell className="h-5 w-5" />
-            </button>
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {modules.map((module) => {
+              const Icon = module.icon;
+              return (
+                <button
+                  key={module.id}
+                  type="button"
+                  data-action-label={module.actionLabel}
+                  data-action-id={module.actionId}
+                  className="group w-full rounded-2xl border border-[var(--border)] bg-white/90 p-4 text-left transition hover:border-[#c8f0e0] hover:bg-white"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5" />
+                  </div>
+
+                  <div className="mt-3 text-sm font-semibold text-slate-900">{module.title}</div>
+                  <div className="mt-1 text-xs text-slate-500">{module.description}</div>
+                </button>
+              );
+            })}
           </div>
-        </motion.div>
 
-        <div className="grid items-start gap-5 xl:grid-cols-[1.14fr_0.86fr]">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.04, duration: 0.26 }}
-            className="space-y-5"
-          >
-            <Card className="relative overflow-hidden rounded-[30px] border border-white/65 bg-gradient-to-br from-white via-[#f6fdf9] to-[#ebfbf4] shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)]">
-              <CardContent className="fh-pad-hero">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.12),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(245,158,11,0.08),transparent_28%)]" />
+          <div className="mt-4 grid gap-3 lg:grid-cols-3">
+            {progressMetrics.map((metric) => (
+              <DashboardStatCard
+                key={metric.id}
+                label={metric.label}
+                value={metric.value}
+                badge={metric.badge}
+                hint={metric.note}
+                tone={metric.tone}
+                progress={metric.progress}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-                <div className="relative z-10 text-slate-900">
-                  <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full border-emerald-100 bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
-                      Operations overview
-                    </Badge>
-                    <Badge className="rounded-full bg-slate-100 text-slate-600 hover:bg-slate-100">
-                      KPIs, live health, and alerts
-                    </Badge>
-                  </div>
-
-                  <div className="grid gap-6 lg:grid-cols-[0.58fr_0.42fr]">
-                    <div className="space-y-4">
-                      <div className="fh-kicker-subtle text-emerald-600">Provider dashboard</div>
-                      <h1 className="max-w-[21ch] break-normal text-3xl font-semibold leading-tight sm:text-4xl lg:text-[2.6rem]">
-                        Stream, donations, alerts, and upcoming sessions in one professional control view.
-                      </h1>
-                      <p className="max-w-2xl break-normal fh-body text-slate-600 sm:text-base">
-                        See what is healthy now, where attention is needed next, and how your team can act
-                        without switching between dashboards.
-                      </p>
-
-                      <div className="grid gap-2 sm:grid-cols-2">
-                        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-3">
-                          <div className="fh-kicker-muted text-emerald-700">Streams at watch level</div>
-                          <div className="mt-1 text-2xl font-semibold text-slate-900">{watchStreams}</div>
-                        </div>
-                        <div className="rounded-2xl border border-amber-100 bg-amber-50 p-3">
-                          <div className="fh-kicker-muted text-amber-700">Urgent queue items</div>
-                          <div className="mt-1 text-2xl font-semibold text-slate-900">{urgentQueueCount}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-                      <div className="mb-3 flex items-center justify-between gap-2">
-                        <div className="text-sm font-semibold text-slate-900">Alert posture</div>
-                        <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
-                          Active
-                        </span>
-                      </div>
-
-                      <div className="rounded-[18px] border border-emerald-100 bg-emerald-50 p-4">
-                        <div className="fh-kicker-muted text-emerald-700">Real-time</div>
-                        <div className="mt-1 text-2xl font-semibold text-slate-900">3 active anomalies</div>
-                      </div>
-
-                      <div className="mt-4 space-y-3">
-                        {providerSignals.map((signal) => (
-                          <div key={signal.label} className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                            <div className="mb-1 flex items-center justify-between gap-2 text-sm text-slate-700">
-                              <span>{signal.label}</span>
-                              <span className={`font-semibold ${getSignalValueClass(signal.state)}`}>
-                                {signal.value}
-                              </span>
-                            </div>
-                            <div className="h-1.5 w-full rounded-full bg-slate-200">
-                              <div
-                                className={`h-full rounded-full ${getSignalBarClass(signal.state)}`}
-                                style={{ width: signal.progress }}
-                              />
-                            </div>
-                            <div className="mt-1 text-xs text-slate-500">{signal.note}</div>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="mt-4 grid gap-2 2xl:grid-cols-2">
-                        <Button
-                          className="h-11 w-full min-w-0 rounded-2xl bg-emerald-500 px-4 text-sm hover:bg-emerald-600"
-                          sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-                        >
-                          Open alerts
-                        </Button>
-                        <Button
-                          variant="outline"
-                          className="h-11 w-full min-w-0 rounded-2xl border-slate-200 bg-white px-4 text-sm text-slate-900 hover:border-emerald-200 hover:bg-emerald-50"
-                          sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-                          onClick={() => setOfflineReadOnly((prev) => !prev)}
-                        >
-                          {offlineReadOnly ? "Go live" : "Read only"}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {pulseMetrics.map((metric) => (
+          <Card key={metric.id} className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+            <CardContent className="p-4">
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{metric.label}</div>
+                  <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
                 </div>
-              </CardContent>
-            </Card>
+                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${pulseToneClass(metric.tone)}`}>
+                  {metric.delta}
+                </span>
+              </div>
 
-            <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
-              {kpis.map((item) => {
-                const Icon = item.icon;
+              <div className="mt-3 h-8 rounded-xl bg-slate-100/90 p-1">
+                <div className={`h-full rounded-lg ${pulseBarClass(metric)}`} />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
-                return (
-                  <Card key={item.label} className={surfaceCardClass}>
-                    <CardContent className="p-5">
-                      <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div className="text-sm text-slate-500">{item.label}</div>
-                      <div className="mt-1 text-3xl font-semibold tracking-tight text-slate-900">{item.value}</div>
-                      <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-emerald-100">
-                        <ArrowUpRight className="h-3.5 w-3.5" /> {item.trend}
-                      </div>
-                      <div className="mt-3 h-1.5 rounded-full bg-slate-100">
-                        <div className="h-full rounded-full bg-emerald-500" style={{ width: item.trendWidth }} />
-                      </div>
-                      <div className="mt-2 text-xs text-slate-500">{item.trendNote}</div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+      <div className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]">
+        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+          <CardContent className="p-4 sm:p-5">
+            <DashboardSectionHeader
+              title="Provider Priorities"
+              subtitle="Move high-impact tasks through the workflow"
+              action={
+                <button
+                  type="button"
+                  data-action-label="Open scheduler"
+                  data-action-id="open-live-schedule"
+                  className="text-sm font-semibold text-slate-500 transition hover:text-slate-800"
+                >
+                  {copy.ctas.openFullList}
+                </button>
+              }
+            />
+
+            <div className="space-y-2">
+              {priorities.map((item) => (
+                <DashboardActionItem
+                  key={item.id}
+                  title={item.title}
+                  detail={item.detail}
+                  actionLabel={item.actionLabel}
+                  actionId={item.actionId}
+                  tone={item.tone}
+                />
+              ))}
             </div>
+          </CardContent>
+        </Card>
 
-            <Card className={surfaceCardClass}>
-              <CardContent className="fh-pad-panel">
-                <PanelHeader
-                  title="Real-time stream health"
-                  subtitle="Monitor bitrate, latency, viewers, and attention risks."
-                  action={
-                    <Badge className="rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
-                      <MonitorPlay className="mr-1 h-3.5 w-3.5" /> Live telemetry
-                    </Badge>
-                  }
-                />
+        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+          <CardContent className="p-4 sm:p-5">
+            <DashboardSectionHeader
+              title="Agenda"
+              subtitle="Broadcast and community-care timeline for today"
+              action={
+                <button
+                  type="button"
+                  data-action-label="Open scheduler"
+                  data-action-id="open-live-schedule"
+                  className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+                >
+                  <CalendarDays className="mr-1.5 h-3.5 w-3.5" />
+                  {copy.ctas.openScheduleInline}
+                </button>
+              }
+            />
 
-                <div className="space-y-3">
-                  {liveHealth.map((stream) => (
-                    <div key={stream.name} className={panelItemClass}>
-                      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                        <div className="text-base font-semibold text-slate-900">{stream.name}</div>
-                        <span
-                          className={`rounded-full px-3 py-1 text-xs font-semibold ${getStreamHealthPillClass(stream.health)}`}
-                        >
-                          {stream.health}
-                        </span>
-                      </div>
-                      <div className="grid gap-2 text-sm text-slate-600 sm:grid-cols-2 2xl:grid-cols-4">
-                        <div className="rounded-2xl bg-slate-50 px-3 py-2">Bitrate: {stream.bitrate}</div>
-                        <div className="rounded-2xl bg-slate-50 px-3 py-2">Latency: {stream.latency}</div>
-                        <div className="rounded-2xl bg-slate-50 px-3 py-2">Viewers: {stream.viewers}</div>
-                        <div className="rounded-2xl bg-slate-50 px-3 py-2 inline-flex items-center gap-2">
-                          <Eye className="h-3.5 w-3.5 text-emerald-600" /> Health signal live
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08, duration: 0.26 }}
-            className="space-y-5"
-          >
-            <Card className={surfaceCardClass}>
-              <CardContent className="fh-pad-panel">
-                <PanelHeader
-                  title="Upcoming sessions"
-                  subtitle="What the institution needs to prepare next."
-                  action={
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-slate-200 bg-white text-slate-900 hover:border-emerald-200 hover:bg-emerald-50"
-                    >
-                      Open scheduler
-                    </Button>
-                  }
-                />
-
-                <div className="space-y-3">
-                  {upcomingSessions.map((session) => (
-                    <div key={session.title} className={panelItemClass}>
-                      <div className="mb-1 text-base font-semibold text-slate-900">{session.title}</div>
-                      <div className="text-sm text-slate-500">{session.channel}</div>
-                      <div className="mt-4 inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700 ring-1 ring-emerald-100">
-                        <Clock3 className="mr-2 h-4 w-4" /> {session.time}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className={surfaceCardClass}>
-              <CardContent className="fh-pad-panel">
-                <PanelHeader
-                  title="Moderation queue"
-                  subtitle="Items that require immediate or tracked action."
-                  action={
-                    <Badge className="rounded-full bg-amber-50 text-amber-700 hover:bg-amber-50">
-                      {urgentQueueCount} urgent
-                    </Badge>
-                  }
-                />
-
-                <div className="space-y-3">
-                  {moderationQueue.map((item) => (
-                    <div
-                      key={item.item}
-                      className={`rounded-[20px] border border-slate-200 border-l-4 bg-white p-4 shadow-sm ${getQueueSeverityRowClass(item.severity)}`}
-                    >
-                      <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
-                        <div className="text-sm font-semibold text-slate-900">{item.item}</div>
-                        <span
-                          className={`rounded-full px-3 py-1 text-xs font-semibold ${getQueueSeverityPillClass(item.severity)}`}
-                        >
-                          {item.severity}
-                        </span>
-                      </div>
-                      <div className="text-sm text-slate-600">{item.area}</div>
-                      <div className="mt-1 text-xs text-slate-500">{item.eta}</div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="rounded-[28px] border border-amber-200/55 bg-[#fffaf3] shadow-sm">
-              <CardContent className="fh-pad-panel">
-                <PanelHeader
-                  title="Anomaly alerts"
-                  subtitle="Provider-side risk and performance warnings."
-                  action={
-                    <Badge className="rounded-full bg-amber-100 text-amber-700 hover:bg-amber-100">
-                      Adaptive anomaly watch
-                    </Badge>
-                  }
-                />
-
-                <div className="space-y-3">
-                  {anomalyAlerts.map((alert) => (
-                    <div key={alert.title} className="rounded-[20px] border border-amber-100 bg-white p-4 shadow-sm">
-                      <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
-                        <AlertTriangle className="h-4 w-4 text-amber-600" /> {alert.title}
-                      </div>
-                      <div className="text-sm text-slate-600">{alert.detail}</div>
-                      <div className="mt-2 inline-flex rounded-full bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700 ring-1 ring-amber-100">
-                        {alert.impact}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className={surfaceCardClass}>
-              <CardContent className="fh-pad-panel">
-                <PanelHeader
-                  title="Premium analytics pack"
-                  subtitle="Exports, dashboards, and BI connectors for advanced institutions."
-                  action={
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-slate-200 bg-white hover:border-emerald-200 hover:bg-emerald-50"
-                      onClick={() => setAnalyticsPack((prev) => !prev)}
-                    >
-                      {analyticsPack ? "Analytics pack on" : "Preview pack"}
-                    </Button>
-                  }
-                />
-
-                <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[16px] border border-slate-200 bg-slate-50 p-4 leading-6">
-                    Export performance snapshots, donation flows, moderation metrics, and stream health
-                    history for institutional intelligence teams.
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setBiConnectors((prev) => !prev)}
-                    className={`w-full rounded-[16px] border p-4 text-left transition ${biConnectors ? "border-emerald-100 bg-emerald-50" : "border-slate-200 bg-white hover:border-emerald-200"}`}
-                  >
-                    <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
-                      <Download className="h-4 w-4 text-emerald-600" /> BI connectors
+            <div className="space-y-2">
+              {agenda.map((item) => (
+                <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white p-3">
+                  <div className="flex items-start gap-3">
+                    <div className="inline-flex h-7 min-w-[2.6rem] items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
+                      {item.time}
                     </div>
                     <div>
-                      {biConnectors
-                        ? "BI connector preview enabled for enterprise deployment patterns."
-                        : "Enable BI connector preview for exported analytics workflows."}
+                      <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                      <div className="mt-1 text-xs text-slate-500">{item.detail}</div>
                     </div>
-                  </button>
-
-                  <div className="grid gap-3 2xl:grid-cols-2">
-                    <Button
-                      className="w-full min-w-0 rounded-xl bg-emerald-500 px-4 text-sm hover:bg-emerald-600"
-                      sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-                    >
-                      Export analytics
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full min-w-0 rounded-xl border-slate-200 bg-white px-4 text-sm hover:border-emerald-200 hover:bg-emerald-50"
-                      sx={{ overflow: "hidden", textOverflow: "ellipsis" }}
-                    >
-                      <CheckCircle2 className="mr-2 h-4 w-4" /> View connector map
-                    </Button>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
+              ))}
+            </div>
+
+            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Completion</div>
+              <div className="mt-1 text-2xl font-bold text-slate-900">58%</div>
+              <div className="mt-2 h-1.5 rounded-full bg-slate-200">
+                <div className="h-full w-[58%] rounded-full bg-[#03cd8c]" />
+              </div>
+              <div className="mt-2 text-xs text-slate-500">Keep workflows moving. Most delays are from missing assets.</div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+          <CardContent className="p-4 sm:p-5">
+            <DashboardSectionHeader
+              title="Action Center"
+              subtitle="Alerts, recommendations, and fast actions"
+              action={
+                <button
+                  type="button"
+                  aria-label="Open action center settings"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
+                >
+                  <Sparkles className="h-4 w-4" />
+                </button>
+              }
+            />
+
+            <div className="rounded-xl border border-[var(--border)] bg-slate-50 p-3">
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Highlights</div>
+                <MessageSquare className="h-4 w-4 text-slate-400" />
+              </div>
+
+              <div className="space-y-2">
+                {actionCenterItems.map((item) => (
+                  <DashboardActionItem
+                    key={item.id}
+                    title={item.title}
+                    detail={item.detail}
+                    actionLabel={item.actionLabel}
+                    actionId={item.actionId}
+                    tone={item.tone}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insight</div>
+              <div className="mt-1 text-sm font-semibold text-slate-900">Practical signals for better decisions</div>
+              <p className="mt-1 text-xs text-slate-600">
+                Funnel optimization improves when attendee reminders are sent within 20 minutes.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <DashboardStatCard
+          label="Trust queue"
+          value="14"
+          hint="3 urgent items"
+          tone="rose"
+          icon={<TriangleAlert className="h-4 w-4" />}
+        />
+        <DashboardStatCard
+          label="Live readiness"
+          value="92%"
+          hint="Crew and assets prepared"
+          tone="emerald"
+          icon={<MonitorPlay className="h-4 w-4" />}
+        />
+        <DashboardStatCard
+          label="Next launch"
+          value="2h 18m"
+          hint="Evening Prayer Revival"
+          tone="orange"
+          icon={<Clock3 className="h-4 w-4" />}
+        />
+        <DashboardStatCard
+          label="Giving"
+          value="$12.4k"
+          hint="Current 24h signal"
+          tone="slate"
+          icon={<Wallet className="h-4 w-4" />}
+        />
       </div>
     </div>
   );
 }
 
-type PanelHeaderProps = {
-  title: string;
-  subtitle: string;
-  action?: React.ReactNode;
-};
-
-function PanelHeader({ title, subtitle, action }: PanelHeaderProps) {
-  return (
-    <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-      <div className="min-w-0">
-        <div className="break-normal text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
-      </div>
-      {action ? <div className="shrink-0">{action}</div> : null}
-    </div>
-  );
-}
