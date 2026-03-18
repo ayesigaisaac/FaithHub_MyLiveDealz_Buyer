@@ -9,9 +9,7 @@ import {
   ChevronRight,
   Clock3,
   LayoutGrid,
-  MapPin,
   Menu,
-  MessageSquare,
   PanelLeftClose,
   PanelLeftOpen,
   Search,
@@ -22,7 +20,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
 import {
   defaultPageForRole,
@@ -37,14 +34,6 @@ import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
 type GroupedPages = Record<string, PageRegistryItem[]>;
-
-type QuickLink = {
-  id: string;
-  label: string;
-  path: string;
-  icon: LucideIcon;
-  tone: "emerald" | "orange" | "slate";
-};
 
 const sectionLabelMap: Partial<Record<RoleKey, Record<string, string>>> = {
   user: {
@@ -89,12 +78,6 @@ function getSectionLabel(role: RoleKey, section: string) {
   return sectionLabelMap[role]?.[section] || section;
 }
 
-function getRoleSummary(role: RoleKey) {
-  if (role === "provider") return "Institution workspace for content, live operations, and funds.";
-  if (role === "admin") return "Global command scope for verification, moderation, finance, and security.";
-  return "Member journey for discovery, live sessions, events, giving, and settings.";
-}
-
 function getSectionIcon(sectionLabel: string): LucideIcon {
   const value = sectionLabel.toLowerCase();
   if (value.includes("finance") || value.includes("revenue")) return Wallet;
@@ -113,30 +96,6 @@ function compactModuleLabel(sectionLabel: string) {
   return clean.length > 18 ? `${clean.slice(0, 18)}...` : clean;
 }
 
-function getQuickLinks(role: RoleKey): QuickLink[] {
-  if (role === "provider") {
-    return [
-      { id: "provider-live-ops", label: "Live Ops", path: "/app/provider/live-ops", icon: LayoutGrid, tone: "emerald" },
-      { id: "provider-schedule", label: "Schedule", path: "/app/provider/live-schedule", icon: MessageSquare, tone: "slate" },
-      { id: "provider-notify", label: "Notify", path: "/app/provider/notifications", icon: Bell, tone: "orange" },
-      { id: "provider-funds", label: "Funds", path: "/app/provider/funds", icon: Wallet, tone: "emerald" },
-    ];
-  }
-  if (role === "admin") {
-    return [
-      { id: "admin-moderation", label: "Moderation", path: "/app/admin/live-moderation", icon: ShieldAlert, tone: "orange" },
-      { id: "admin-verify", label: "Verify", path: "/app/admin/verification", icon: LayoutGrid, tone: "emerald" },
-      { id: "admin-security", label: "Security", path: "/app/admin/security", icon: Bell, tone: "slate" },
-      { id: "admin-finance", label: "Finance", path: "/app/admin/finance", icon: Wallet, tone: "orange" },
-    ];
-  }
-  return [
-    { id: "user-live", label: "Live", path: "/app/user/live", icon: Clock3, tone: "emerald" },
-    { id: "user-events", label: "Events", path: "/app/user/events", icon: MapPin, tone: "slate" },
-    { id: "user-giving", label: "Giving", path: "/app/user/giving", icon: Wallet, tone: "orange" },
-    { id: "user-settings", label: "Help & Safety", path: "/app/user/settings", icon: ShieldAlert, tone: "emerald" },
-  ];
-}
 export default function AppShellLayout() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -178,19 +137,10 @@ export default function AppShellLayout() {
     }, {} as GroupedPages);
   }, [adminAllAccess, filteredPages, routeRole]);
 
-  const sectionCount = Object.keys(grouped).length;
   const currentPage = pageRegistry.find((page) => matchesPagePath(page, location.pathname));
   const activeNavPath = currentPage?.path || location.pathname;
-  const quickLinks = useMemo(() => getQuickLinks(shellRole), [shellRole]);
 
   const navigateToPath = (path: string) => navigate(withAdminAccess(path, adminAllAccess));
-
-  const exitAdminView = () => {
-    const params = new URLSearchParams(location.search);
-    params.delete("admin");
-    const query = params.toString();
-    navigate(query ? `${location.pathname}?${query}` : location.pathname, { replace: true });
-  };
 
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement | null;
@@ -395,70 +345,6 @@ export default function AppShellLayout() {
           </div>
         </Drawer>
         <main className="fh-scroll-region min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto pr-1" onClickCapture={handlePageAction}>
-          <Card className="fh-hero-card rounded-[26px]">
-            <CardContent className="p-5 sm:p-6">
-              <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-                <div className="min-w-0">
-                  <div className="fh-eyebrow text-[#03cd8c]">FaithHub Workspace</div>
-                  <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">
-                    {currentPage?.label || "Welcome back"}
-                  </h1>
-                  <p className="mt-2 max-w-3xl text-sm text-slate-600">
-                    {currentPage?.description || "Unified operations, discovery, and engagement modules."}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <Badge className="fh-pill fh-pill-emerald hover:bg-emerald-50">
-                      {adminAllAccess ? "Viewing as Admin Scope" : `${shellRole.toUpperCase()} workspace`}
-                    </Badge>
-                    <Badge className="fh-pill fh-pill-slate hover:bg-slate-100">{currentPage?.navTag || "Dashboard"}</Badge>
-                    <Badge className="fh-pill fh-pill-slate hover:bg-slate-50">{filteredPages.length} modules available</Badge>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {quickLinks.slice(0, 2).map((link) => (
-                    <button
-                      key={link.id}
-                      type="button"
-                      onClick={() => navigateToPath(link.path)}
-                      className={`inline-flex min-h-[42px] items-center rounded-xl px-4 text-sm font-semibold transition hover:-translate-y-[1px] ${
-                        link.tone === "orange"
-                          ? "bg-[#fff3e8] text-[#cc6500] hover:bg-[#ffe8d1]"
-                          : link.tone === "slate"
-                            ? "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                            : "bg-[#ecfff8] text-[#049e6d] hover:bg-[#ddf9ef]"
-                      }`}
-                    >
-                      <link.icon className="mr-2 h-4 w-4" />
-                      {link.label}
-                    </button>
-                  ))}
-                  {adminAllAccess && routeRole !== "admin" ? (
-                    <button
-                      type="button"
-                      onClick={exitAdminView}
-                      className="fh-inline-action inline-flex min-h-[42px] items-center rounded-xl px-4 text-sm font-semibold text-slate-600"
-                    >
-                      Exit admin view
-                    </button>
-                  ) : null}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            <MetricTile title="Modules" value={String(filteredPages.length)} hint="Available in current scope" tone="emerald" />
-            <MetricTile title="Sections" value={String(sectionCount)} hint="Navigation groups" tone="slate" />
-            <MetricTile
-              title="Workspace"
-              value={shellRole === "admin" ? "Control" : shellRole === "provider" ? "Institution" : "Member"}
-              hint="Current role mode"
-              tone="orange"
-            />
-            <MetricTile title="Status" value="Healthy" hint={getRoleSummary(shellRole)} tone="emerald" />
-          </div>
-
           <Outlet />
         </main>
       </div>
@@ -681,41 +567,5 @@ function SidebarRail({
     </Card>
   );
 }
-
-function MetricTile({
-  title,
-  value,
-  hint,
-  tone,
-}: {
-  title: string;
-  value: string;
-  hint: string;
-  tone: "emerald" | "orange" | "slate";
-}) {
-  return (
-    <Card className="fh-panel-card rounded-2xl">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between">
-          <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{title}</div>
-          <span
-            className={`inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold ${
-              tone === "orange"
-                ? "bg-[#fff3e8] text-[#cc6500]"
-                : tone === "slate"
-                  ? "bg-slate-100 text-slate-600"
-                  : "bg-[#ecfff8] text-[#049e6d]"
-            }`}
-          >
-            Live
-          </span>
-        </div>
-        <div className="mt-2 text-2xl font-bold leading-none text-slate-900">{value}</div>
-        <div className="mt-1 text-xs text-slate-500">{hint}</div>
-      </CardContent>
-    </Card>
-  );
-}
-
 
 
