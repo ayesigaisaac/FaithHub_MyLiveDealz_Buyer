@@ -24,7 +24,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
-import FaithHubFooter from "@/components/layout/FaithHubFooter";
 import {
   defaultPageForRole,
   getRoutePatterns,
@@ -462,9 +461,6 @@ export default function AppShellLayout() {
 
           <Outlet />
         </main>
-      </div>
-      <div className="mx-auto w-full max-w-[1860px] px-3 pb-4 sm:px-4 lg:px-5">
-        <FaithHubFooter variant="app" surface="band" density="compact" />
       </div>
     </div>
   );

@@ -36,7 +36,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import FaithHubFooter from "@/components/layout/FaithHubFooter";
 import { ctaPriorityClass } from "@/constants/ctaStyles";
 import { faithHubToneCopy } from "@/constants/faithHubTone";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
@@ -1523,9 +1522,6 @@ export default function FaithHubLandingPageV2() {
           </Card>
 
         </main>
-      </div>
-      <div className="mx-auto w-full max-w-[1860px] px-2 pb-4 sm:px-3 lg:px-4">
-        <FaithHubFooter variant="public" surface="band" density="compact" />
       </div>
     </div>
   );

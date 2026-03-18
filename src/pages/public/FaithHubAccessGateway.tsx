@@ -2,7 +2,6 @@ import React from "react";
 import { ArrowRight, Building2, ExternalLink, Landmark, Lock, ShieldAlert, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
-import FaithHubFooter from "@/components/layout/FaithHubFooter";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
@@ -105,7 +104,6 @@ export default function FaithHubAccessGateway() {
           </CardContent>
         </Card>
 
-        <FaithHubFooter variant="public" surface="band" density="compact" className="mt-6" />
       </div>
     </div>
   );
