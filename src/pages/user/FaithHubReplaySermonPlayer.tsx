@@ -149,7 +149,7 @@ export default function FaithHubReplaySermonPlayer() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-5"
           >
-            <Card className="relative overflow-hidden rounded-[28px] border border-white/65 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[28px] border border-white/65 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -205,7 +205,7 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Replay controls"
@@ -273,7 +273,7 @@ export default function FaithHubReplaySermonPlayer() {
                   </div>
 
                   <div className="grid gap-4 lg:grid-cols-[0.42fr_0.58fr]">
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 text-sm font-semibold text-slate-900">Chapters</div>
                       <div className="space-y-3">
                         {chapters.map((item) => (
@@ -285,7 +285,7 @@ export default function FaithHubReplaySermonPlayer() {
                       </div>
                     </div>
 
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center justify-between gap-3">
                         <div className="text-sm font-semibold text-slate-900">Transcript</div>
                         <Button
@@ -337,7 +337,7 @@ export default function FaithHubReplaySermonPlayer() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-5"
           >
-            <Card className="rounded-[30px] border border-white/10 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.58)]">
+            <Card className="fh-interactive-card rounded-[30px] border border-white/10 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.58)]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Searchable understanding"
@@ -357,7 +357,7 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[28px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card rounded-[28px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -388,10 +388,10 @@ export default function FaithHubReplaySermonPlayer() {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                    <div className="fh-subcard-accent rounded-[24px] p-4 text-sm text-slate-700">
                       Premium replay video is now available for offline travel and low-connectivity environments.
                     </div>
-                    <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                    <div className="fh-subcard-accent rounded-[24px] p-4 text-sm text-slate-700">
                       Study guide includes reflection questions, group prompts, scripture links, and action steps.
                     </div>
                   </div>
@@ -399,7 +399,7 @@ export default function FaithHubReplaySermonPlayer() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card rounded-[28px] border border-white/60 bg-white/92 shadow-sm">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Clip sharing and cache state"
@@ -408,7 +408,7 @@ export default function FaithHubReplaySermonPlayer() {
                 />
                 <div className="space-y-3">
                   {clips.map((item) => (
-                    <div key={item.title} className="flex items-center justify-between gap-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.title} className="flex items-center justify-between gap-3 fh-subcard rounded-[24px] p-4">
                       <div className="min-w-0 flex-1">
                         <div className="text-sm font-semibold text-slate-900">{item.title}</div>
                         <div className="text-xs text-slate-500">{item.range}</div>
@@ -417,7 +417,7 @@ export default function FaithHubReplaySermonPlayer() {
                     </div>
                   ))}
 
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
+                  <div className="fh-subcard-muted rounded-[24px] p-4 text-sm text-slate-600">
                     Cached downloads remain available offline. If sponsor mid-roll is enabled for compliant surfaces, it must stay clearly labeled and non-disruptive to the sermon experience.
                   </div>
                 </div>

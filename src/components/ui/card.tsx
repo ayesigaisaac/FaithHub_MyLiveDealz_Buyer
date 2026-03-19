@@ -16,8 +16,10 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
       className={`rounded-[16px] ${className}`.trim()}
       style={{
         border: "1px solid var(--border)",
+        background: "var(--card)",
         boxShadow: "var(--shadow-soft)",
-        transition: "transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease, border-color 200ms ease",
+        transition:
+          "transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease",
         ...sx,
         ...style,
       }}

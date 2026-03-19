@@ -395,7 +395,7 @@ export default function FaithHubMultiRoleAppShell() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <TopBar
         role={role}
         roleData={roleData}
@@ -605,7 +605,7 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
   return (
     <aside className={`hidden lg:block ${sidebarCollapsed ? "w-[92px]" : "w-[320px]"}`}>
       <div className="sticky top-[88px] space-y-4">
-        <Card className="overflow-hidden rounded-[32px] border border-white/70 bg-white/92 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.25)]">
+        <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/70 bg-white/92 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.25)]">
           <CardContent className="p-3">
             <div className="mb-3 rounded-[24px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-4 text-white">
               <div className="fh-eyebrow text-white/90">{roleData.label} role</div>
@@ -734,7 +734,7 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
 
 function HeroShellCard({ role, roleData, currentPage, currentSection, handleRoleSwitch, setPaletteOpen }) {
   return (
-    <Card className="overflow-hidden rounded-[36px] border border-white/70 bg-white/92 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.28)]">
+    <Card className="fh-interactive-card overflow-hidden rounded-[36px] border border-white/70 bg-white/92 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.28)]">
       <CardContent className="p-0">
         <div className="relative overflow-hidden bg-gradient-to-br from-[#03cd8c] via-[#21d29d] to-[#ebfcf6] fh-pad-hero">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
@@ -818,7 +818,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
   const connectedLabel = roleCatalog[connectedRole].label;
 
   return (
-    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
       <CardContent className="fh-pad-panel">
         <SectionHeader
           title="Page surface preview"
@@ -897,7 +897,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
 
 function RouteInventoryGrid({ roleData, currentPageId, goToPage }) {
   return (
-    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
       <CardContent className="fh-pad-panel">
         <SectionHeader
           title="Route inventory"
@@ -943,7 +943,7 @@ function RouteInventoryGrid({ roleData, currentPageId, goToPage }) {
 
 function ShellCapabilitiesCard() {
   return (
-    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
       <CardContent className="fh-pad-panel">
         <SectionHeader
           title="Shell capabilities"
@@ -964,11 +964,11 @@ function ShellCapabilitiesCard() {
 
 function QuickSwitchCard({ role, handleRoleSwitch }) {
   return (
-    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
       <CardContent className="fh-pad-panel">
         <SectionHeader title="Role switch" subtitle="Fast switching between User and Provider with Admin always available." action="Role logic" />
         <RoleToggle role={role} handleRoleSwitch={handleRoleSwitch} />
-        <div className="mt-4 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4 text-sm text-slate-600">
+        <div className="mt-4 fh-subcard-muted rounded-[24px] p-4 text-sm text-slate-600">
           User and Provider page states are preserved independently, so switching lanes does not lose your place.
         </div>
       </CardContent>
@@ -978,7 +978,7 @@ function QuickSwitchCard({ role, handleRoleSwitch }) {
 
 function QuickActionsCard({ role, roleData, setPaletteOpen }) {
   return (
-    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
       <CardContent className="fh-pad-panel">
         <SectionHeader title="Quick actions" subtitle="High-frequency moves surfaced at shell level for the active role." action="Create" />
         <div className="grid gap-3 sm:grid-cols-2">
@@ -1005,7 +1005,7 @@ function QuickActionsCard({ role, roleData, setPaletteOpen }) {
 
 function AlertsCard({ roleData }) {
   return (
-    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
       <CardContent className="fh-pad-panel">
         <SectionHeader title="Alerts and activity" subtitle="Contextual signals that stay visible without overwhelming the main page." action="Inbox" />
         <div className="space-y-3">
@@ -1015,7 +1015,7 @@ function AlertsCard({ roleData }) {
               <div className="text-sm text-slate-600">{alert.detail}</div>
             </div>
           ))}
-          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="fh-subcard rounded-[24px] p-4">
             <div className="mb-2 text-sm font-semibold text-slate-900">Recent activity</div>
             <div className="space-y-2">
               {roleData.activity.map((item) => (
@@ -1031,7 +1031,7 @@ function AlertsCard({ roleData }) {
 
 function PinnedAndRecentCard({ role, rolePinned, recent, goToPage }) {
   return (
-    <Card className="rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card rounded-[32px] border border-white/70 bg-white/92 shadow-sm">
       <CardContent className="fh-pad-panel">
         <SectionHeader title="Pinned and recent" subtitle="Fast return paths across roles and contexts." action="Library" />
         <div className="space-y-4">

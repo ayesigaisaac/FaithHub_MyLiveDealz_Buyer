@@ -10,12 +10,12 @@ type ContinueWatchingRailProps = {
 
 export default function ContinueWatchingRail({ items }: ContinueWatchingRailProps) {
   return (
-    <Card className="rounded-[20px] border border-slate-200 bg-white shadow-sm">
+    <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
       <CardContent className="p-6">
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <div className="text-lg font-semibold text-slate-900 sm:text-xl">Continue watching</div>
-            <div className="text-sm text-slate-500">
+            <div className="fh-section-title text-slate-900">Continue watching</div>
+            <div className="fh-section-subtitle text-slate-500">
               Resume where you left off across replays and series.
             </div>
           </div>
@@ -32,11 +32,11 @@ export default function ContinueWatchingRail({ items }: ContinueWatchingRailProp
           {items.map((item) => (
             <div
               key={item.id}
-              className="min-w-0 rounded-[16px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-200"
+              className="fh-interactive-card fh-subcard min-w-0 rounded-[18px] p-5"
             >
               <div className="mb-4 h-40 rounded-[20px] bg-gradient-to-br from-slate-100 to-slate-200" />
-              <div className="mb-1 text-base font-semibold text-slate-900">{item.title}</div>
-              <div className="text-sm text-slate-500">
+              <div className="mb-1 text-base font-semibold tracking-tight text-slate-900">{item.title}</div>
+              <div className="fh-body-tight text-slate-500">
                 {item.institution} - {item.duration}
               </div>
 
@@ -59,7 +59,7 @@ export default function ContinueWatchingRail({ items }: ContinueWatchingRailProp
                 </Button>
                 <button
                   type="button"
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 transition hover:border-emerald-200 hover:text-emerald-600"
+                  className="fh-inline-action flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-slate-600 hover:text-emerald-600"
                 >
                   <Bookmark className="h-4 w-4" />
                 </button>

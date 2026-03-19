@@ -31,7 +31,7 @@ export default function SuperAdminOverview() {
         ))}
       </div>
 
-      <Card className="rounded-3xl border border-slate-200 bg-white shadow-sm">
+      <Card className="fh-interactive-card rounded-3xl border border-slate-200 bg-white shadow-sm">
         <CardContent className="p-5">
           <div className="fh-kicker-subtle text-slate-500">Platform Signals</div>
           <div className="mt-3 space-y-3">

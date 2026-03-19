@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import {
   Activity,
   Bell,
@@ -231,7 +231,7 @@ export default function FaithHubAdminOverview() {
 
   return (
     <div className="space-y-4">
-      <Card className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(112deg,rgba(14,165,233,0.11),rgba(248,251,252,0.94)_38%,rgba(3,205,140,0.12))] shadow-[var(--shadow-soft)]">
+      <Card className="fh-interactive-card overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(112deg,rgba(14,165,233,0.11),rgba(248,251,252,0.94)_38%,rgba(3,205,140,0.12))] shadow-[var(--shadow-soft)]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
@@ -318,12 +318,12 @@ export default function FaithHubAdminOverview() {
                 type="button"
                 data-action-label={module.actionLabel}
                 data-action-id={module.actionId}
-                className="group w-full rounded-2xl border border-[var(--border)] bg-white/90 p-4 text-left transition hover:border-[#c8f0e0] hover:bg-white"
+                className="fh-interactive-card fh-subcard group w-full rounded-2xl p-4 text-left"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <div className="text-sm font-semibold text-slate-900">{module.title}</div>
-                    <div className="mt-1 text-xs text-slate-500">{module.description}</div>
+                    <div className="text-sm font-semibold tracking-tight text-slate-900">{module.title}</div>
+                    <div className="mt-1 fh-body-tight text-slate-500">{module.description}</div>
                   </div>
                   <ArrowBadge />
                 </div>
@@ -349,11 +349,11 @@ export default function FaithHubAdminOverview() {
 
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {signalCards.map((card) => (
-          <Card key={card.id} className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+          <Card key={card.id} className="fh-interactive-card fh-surface-card rounded-2xl">
             <CardContent className="p-4">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{card.label}</div>
+                  <div className="fh-label text-slate-400">{card.label}</div>
                   <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{card.value}</div>
                 </div>
                 <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${deltaToneClass(card.tone)}`}>
@@ -370,7 +370,7 @@ export default function FaithHubAdminOverview() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]">
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Priority Queue"
@@ -402,7 +402,7 @@ export default function FaithHubAdminOverview() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Ops Agenda"
@@ -422,7 +422,7 @@ export default function FaithHubAdminOverview() {
 
             <div className="space-y-2">
               {timeline.map((item) => (
-                <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white p-3">
+                <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="flex items-start gap-3">
                     <div className="inline-flex h-7 min-w-[2.6rem] items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
                       {item.time}
@@ -436,8 +436,8 @@ export default function FaithHubAdminOverview() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Completion</div>
+            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Completion</div>
               <div className="mt-1 text-2xl font-bold text-slate-900">63%</div>
               <div className="mt-2 h-1.5 rounded-full bg-slate-200">
                 <div className="h-full w-[63%] rounded-full bg-[#03cd8c]" />
@@ -447,7 +447,7 @@ export default function FaithHubAdminOverview() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -463,9 +463,9 @@ export default function FaithHubAdminOverview() {
               }
             />
 
-            <div className="rounded-xl border border-[var(--border)] bg-slate-50 p-3">
+            <div className="fh-subcard-muted rounded-xl p-3">
               <div className="mb-2 flex items-center justify-between gap-2">
-                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Highlights</div>
+                <div className="fh-label text-slate-400">Highlights</div>
                 <MessageSquare className="h-4 w-4 text-slate-400" />
               </div>
 
@@ -483,8 +483,8 @@ export default function FaithHubAdminOverview() {
               </div>
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insight</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Trust posture improves with faster escalation loops</div>
               <p className="mt-1 text-xs text-slate-600">
                 Incidents resolved under 10 minutes have significantly lower recurrence risk.

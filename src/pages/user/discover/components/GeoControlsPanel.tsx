@@ -1,11 +1,11 @@
-﻿import React from "react";
+import React from "react";
 import { ChevronRight, Navigation, SlidersHorizontal } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 export default function GeoControlsPanel() {
   return (
-    <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
       <CardContent className="fh-pad-panel">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>

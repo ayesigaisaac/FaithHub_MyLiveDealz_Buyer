@@ -71,13 +71,13 @@ export default function FaithHubLiveWaitingRoom() {
   }, []);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen overflow-x-clip text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -107,7 +107,12 @@ export default function FaithHubLiveWaitingRoom() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08, duration: 0.34, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-hero-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -167,15 +172,21 @@ export default function FaithHubLiveWaitingRoom() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.14, duration: 0.34, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Agenda and session rules"
                   subtitle="Users know what comes next and how to participate safely."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.48fr_0.52fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Session agenda</div>
                     <div className="space-y-3">
                       {agenda.map((item) => (
@@ -187,7 +198,7 @@ export default function FaithHubLiveWaitingRoom() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Session rules</div>
                     <div className="space-y-3">
                       {rules.map((item) => (
@@ -201,8 +212,14 @@ export default function FaithHubLiveWaitingRoom() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.34, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Pre-chat, polls, and prayer requests"
@@ -211,7 +228,7 @@ export default function FaithHubLiveWaitingRoom() {
                 <div className="grid gap-4 xl:grid-cols-[0.52fr_0.48fr]">
                   <div className="space-y-3">
                     {preChatMessages.map((message) => (
-                      <div key={`${message.name}-${message.text}`} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={`${message.name}-${message.text}`} className="fh-subcard rounded-[24px] p-4">
                         <div className="mb-2 flex items-center gap-2">
                           <div className="text-sm font-semibold text-slate-900">{message.name}</div>
                           <span className="rounded-full bg-[#ecfff8] px-2.5 py-1 text-xs font-semibold text-[#03cd8c]">{message.badge}</span>
@@ -222,7 +239,7 @@ export default function FaithHubLiveWaitingRoom() {
                   </div>
 
                   <div className="space-y-4">
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <BarChart3 className="h-4 w-4 text-[#03cd8c]" />
                         Live poll before start
@@ -242,7 +259,7 @@ export default function FaithHubLiveWaitingRoom() {
                       </div>
                     </div>
 
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <MessageSquare className="h-4 w-4 text-[#03cd8c]" />
                         Prayer request before live begins
@@ -261,6 +278,7 @@ export default function FaithHubLiveWaitingRoom() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -269,7 +287,12 @@ export default function FaithHubLiveWaitingRoom() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.22, duration: 0.32, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Language, captions, and connection"
@@ -352,10 +375,16 @@ export default function FaithHubLiveWaitingRoom() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.26, duration: 0.32, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
-                <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <div className="fh-eyebrow text-[#f77f00]">Supporter layer</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Early-access chat and supporter upsell</div>
@@ -372,19 +401,19 @@ export default function FaithHubLiveWaitingRoom() {
                 <div className="space-y-3 text-sm text-slate-600">
                   {supporterMode ? (
                     <>
-                      <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                      <div className="fh-subcard-accent rounded-[24px] p-4">
                         Supporters can access an early-access waiting room chat lane before the full audience opens.
                       </div>
-                      <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                      <div className="fh-subcard-accent rounded-[24px] p-4">
                         Priority moderation responses and enhanced interaction options can be surfaced here for supporter tiers.
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                      <div className="fh-subcard-warm rounded-[24px] p-4">
                         Prompt supporters with a tasteful upgrade path for early-access chat and special interactive participation.
                       </div>
-                      <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                      <div className="fh-subcard-warm rounded-[24px] p-4">
                         Donation prompts can appear without blocking the standard waiting room journey.
                       </div>
                     </>
@@ -400,8 +429,14 @@ export default function FaithHubLiveWaitingRoom() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.32, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline and reconnect behavior"
@@ -409,10 +444,10 @@ export default function FaithHubLiveWaitingRoom() {
                   action="Connection help"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     If the stream cannot load, the waiting room can suggest reconnect, lower-bandwidth mode, or audio-only access where supported.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Session schedule, rules, and prayer request forms remain visible even when full playback is not yet available.
                   </div>
                   <div className="rounded-[24px] border border-[#f77f00]/15 bg-[#fff8ef] p-4">
@@ -424,6 +459,7 @@ export default function FaithHubLiveWaitingRoom() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </motion.div>
         </div>
       </div>
@@ -433,12 +469,12 @@ export default function FaithHubLiveWaitingRoom() {
 
 function SectionHeader({ title, subtitle, action = "See all" }) {
   return (
-    <div className="mb-4 flex items-center justify-between gap-3">
+    <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
         <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
-      <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button variant="ghost" className="shrink-0 rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}
       </Button>
     </div>

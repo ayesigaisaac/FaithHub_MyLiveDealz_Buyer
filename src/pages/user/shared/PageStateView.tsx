@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { AlertTriangle, CloudOff, Inbox, LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { PageStateKind } from "@/pages/user/shared/userPage.types";
@@ -28,7 +28,7 @@ export default function PageStateView({
   const Icon = stateIcon[state];
 
   return (
-    <div className="rounded-[28px] border border-slate-200 bg-white p-8 text-center shadow-sm">
+    <div className="fh-surface-card rounded-[28px] p-8 text-center">
       <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
         <Icon className={`h-5 w-5 ${state === "loading" ? "animate-spin" : ""}`} />
       </div>

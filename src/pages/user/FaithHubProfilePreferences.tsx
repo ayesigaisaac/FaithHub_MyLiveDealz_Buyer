@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -123,7 +123,7 @@ export default function FaithHubProfilePreferences() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -195,7 +195,7 @@ export default function FaithHubProfilePreferences() {
               </div>
 
               <div className="space-y-4">
-                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-white shadow-sm">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
@@ -273,7 +273,7 @@ export default function FaithHubProfilePreferences() {
                   </CardContent>
                 </Card>
 
-                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-white shadow-sm">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
@@ -300,7 +300,7 @@ export default function FaithHubProfilePreferences() {
                   </CardContent>
                 </Card>
 
-                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-white shadow-sm">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
@@ -335,7 +335,7 @@ export default function FaithHubProfilePreferences() {
                   </CardContent>
                 </Card>
 
-                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-white shadow-sm">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
@@ -387,7 +387,7 @@ export default function FaithHubProfilePreferences() {
                           </button>
                         </div>
 
-                        <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                        <div className="fh-subcard-muted rounded-[24px] p-4">
                           <div className="mb-3 text-sm font-semibold text-slate-900">Age band</div>
                           <div className="flex flex-wrap gap-2">
                             {["Under 13", "13-17", "18-24", "25-34", "35+"] .map((item) => (
@@ -449,7 +449,7 @@ export default function FaithHubProfilePreferences() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="flex flex-col gap-4"
           >
-            <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card overflow-hidden fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
@@ -501,7 +501,7 @@ export default function FaithHubProfilePreferences() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
@@ -533,7 +533,7 @@ export default function FaithHubProfilePreferences() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card rounded-[32px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>

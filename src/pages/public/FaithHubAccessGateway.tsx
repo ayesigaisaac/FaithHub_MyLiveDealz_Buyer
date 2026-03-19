@@ -60,7 +60,7 @@ export default function FaithHubAccessGateway() {
           </Link>
         </div>
 
-        <Card className="rounded-[32px] border-slate-200 bg-white/95 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.32)]">
+        <Card className="fh-interactive-card rounded-[32px] border-slate-200 bg-white/95 shadow-[0_30px_90px_-40px_rgba(15,23,42,0.32)]">
           <CardContent className="fh-pad-surface">
             <div className="inline-flex items-center rounded-full bg-[#ecfff8] px-3 py-1 fh-eyebrow-soft text-[#03cd8c]">
               Internal Preview Access

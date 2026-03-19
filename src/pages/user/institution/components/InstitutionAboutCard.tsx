@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { LeaderItem, ServiceScheduleItem } from "@/pages/user/institution/types";
 
@@ -12,7 +12,7 @@ export default function InstitutionAboutCard({
   schedule,
 }: InstitutionAboutCardProps) {
   return (
-    <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
       <CardContent className="fh-pad-panel">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
@@ -27,7 +27,7 @@ export default function InstitutionAboutCard({
 
         <div className="grid gap-4 lg:grid-cols-[0.62fr_0.38fr]">
           <div className="space-y-4">
-            <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="fh-subcard rounded-[24px] p-4">
               <div className="mb-2 text-sm font-semibold text-slate-900">Mission and community focus</div>
               <div className="fh-body text-slate-600">
                 This institution serves a broad faith community through weekly worship, teaching
@@ -35,7 +35,7 @@ export default function InstitutionAboutCard({
               </div>
             </div>
 
-            <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="fh-subcard rounded-[24px] p-4">
               <div className="mb-3 text-sm font-semibold text-slate-900">Leaders</div>
               <div className="space-y-3">
                 {leaders.map((leader) => (
@@ -49,7 +49,7 @@ export default function InstitutionAboutCard({
             </div>
           </div>
 
-          <div className="space-y-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="space-y-3 fh-subcard rounded-[24px] p-4">
             <div className="text-sm font-semibold text-slate-900">Service schedule</div>
             {schedule.map((serviceItem) => (
               <div key={serviceItem.day} className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-4">

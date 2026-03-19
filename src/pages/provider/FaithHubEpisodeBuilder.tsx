@@ -75,13 +75,13 @@ export default function FaithHubEpisodeBuilder() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -111,7 +111,7 @@ export default function FaithHubEpisodeBuilder() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="fh-eyebrow text-[#8ef0ca]">Builder flow</div>
@@ -145,13 +145,13 @@ export default function FaithHubEpisodeBuilder() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Episode checklist</div>
                   <div className="text-sm text-slate-500">World-class completeness before publication.</div>
                 </div>
-                <div className="mb-4 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                <div className="mb-4 fh-subcard-muted rounded-[24px] p-4">
                   <div className="mb-2 text-sm font-semibold text-slate-900">Completion</div>
                   <div className="text-3xl font-semibold text-slate-900">{completion}%</div>
                   <div className="mt-3 h-2 rounded-full bg-slate-100">
@@ -182,7 +182,7 @@ export default function FaithHubEpisodeBuilder() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -223,7 +223,7 @@ export default function FaithHubEpisodeBuilder() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Episode content</div>
@@ -238,7 +238,7 @@ export default function FaithHubEpisodeBuilder() {
                       <span className="text-sm font-medium text-slate-700">Summary</span>
                       <textarea className="w-full rounded-2xl border border-slate-200 bg-[#f8fafc] px-4 py-3 text-sm outline-none focus:border-[#03cd8c]" rows={5} defaultValue="An episode focused on wisdom, discernment, and protecting inner life through practical spiritual habits." />
                     </label>
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Upload className="h-4 w-4 text-[#03cd8c]" /> Resources and attachments
                       </div>
@@ -261,7 +261,7 @@ export default function FaithHubEpisodeBuilder() {
               </Card>
 
               <div className="space-y-4">
-                <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+                <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div>
@@ -272,7 +272,7 @@ export default function FaithHubEpisodeBuilder() {
                     </div>
                     <div className="space-y-3">
                       {liveLinks.map((item) => (
-                        <div key={item.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                        <div key={item.title} className="fh-subcard rounded-[24px] p-4">
                           <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                           <div className="text-xs text-slate-500">{item.state}</div>
                           <div className="mt-1 text-sm text-slate-600">{item.time}</div>
@@ -285,7 +285,7 @@ export default function FaithHubEpisodeBuilder() {
                   </CardContent>
                 </Card>
 
-                <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+                <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-4 flex items-center justify-between gap-3">
                       <div>
@@ -303,7 +303,7 @@ export default function FaithHubEpisodeBuilder() {
                     {aiSuggestions ? (
                       <div className="space-y-3">
                         {aiOutline.map((item) => (
-                          <div key={item} className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                          <div key={item} className="fh-subcard-muted rounded-[24px] p-4">
                             <div className="flex items-start gap-3">
                               <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-[#03cd8c]" />
                               <div className="text-sm text-slate-700">{item}</div>
@@ -321,7 +321,7 @@ export default function FaithHubEpisodeBuilder() {
               </div>
             </div>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -337,10 +337,10 @@ export default function FaithHubEpisodeBuilder() {
                   </Button>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="fh-subcard-warm rounded-[24px] p-4">
                     Premium resources can include study guides, leader packs, advanced notes, or classroom-style follow-up material.
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                  <div className="fh-subcard-accent rounded-[24px] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <Lock className="h-4 w-4 text-[#03cd8c]" /> Gating mode
                     </div>

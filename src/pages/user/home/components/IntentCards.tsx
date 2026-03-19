@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { ChevronRight } from "lucide-react";
 import type { HomeIntent } from "@/pages/user/home/types";
 

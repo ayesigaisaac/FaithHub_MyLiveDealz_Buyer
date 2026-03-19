@@ -1,4 +1,5 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import {
   CalendarDays,
   CalendarRange,
@@ -265,140 +266,172 @@ export default function FaithHubProviderDashboard() {
   );
 
   return (
-    <div className="space-y-4">
-      <Card className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(3,205,140,0.12),rgba(248,251,252,0.92)_34%,rgba(247,127,0,0.1))] shadow-[var(--shadow-soft)]">
-        <CardContent className="p-4 sm:p-5 lg:p-6">
-          <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-            <div className="min-w-0">
-              <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
-              <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">{copy.hero.title}</h2>
-              <p className="mt-2 text-sm text-slate-600">{copy.hero.subtitle}</p>
+    <div className="space-y-5">
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
+        <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[26px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(3,205,140,0.12),rgba(248,251,252,0.92)_34%,rgba(247,127,0,0.1))] shadow-[var(--shadow-soft)]">
+          <CardContent className="p-4 sm:p-6 lg:p-7">
+            <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+              <div className="min-w-0">
+                <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
+                <h2 className="mt-2 text-[1.9rem] font-bold leading-tight tracking-tight text-slate-900 sm:text-[2.35rem]">
+                  {copy.hero.title}
+                </h2>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-[0.95rem]">
+                  {copy.hero.subtitle}
+                </p>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Badge className="rounded-full border-[#f6d5b0] bg-[#fff3e8] text-[#cc6500] hover:bg-[#fff3e8]">
-                  {copy.badges.primary}
-                </Badge>
-                <Badge className="rounded-full border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-100">
-                  {copy.badges.secondary}
-                </Badge>
-                <Badge className="rounded-full border-slate-200 bg-white text-slate-600 hover:bg-white">
-                  {copy.badges.tertiary}
-                </Badge>
-              </div>
-            </div>
-
-            <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[420px]">
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                <div className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white p-1">
-                  <button
-                    type="button"
-                    onClick={() => setWindowView("7d")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "7d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    7 days
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setWindowView("30d")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "30d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    30 days
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setWindowView("term")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "term" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    This term
-                  </button>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Badge className="rounded-full border-[#f6d5b0] bg-[#fff3e8] text-[#cc6500] hover:bg-[#fff3e8]">
+                    {copy.badges.primary}
+                  </Badge>
+                  <Badge className="rounded-full border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-100">
+                    {copy.badges.secondary}
+                  </Badge>
+                  <Badge className="rounded-full border-slate-200 bg-white text-slate-600 hover:bg-white">
+                    {copy.badges.tertiary}
+                  </Badge>
                 </div>
-
-                {topActions.map((item) => (
-                  <Button
-                    key={item.id}
-                    variant={item.variant}
-                    data-action-label={item.actionLabel}
-                    data-action-id={item.actionId}
-                    className={`h-10 rounded-xl px-4 text-sm ${ctaPriorityClass(item.priority)}`}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
               </div>
-            </div>
-          </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {modules.map((module) => {
-              const Icon = module.icon;
-              return (
-                <button
-                  key={module.id}
-                  type="button"
-                  data-action-label={module.actionLabel}
-                  data-action-id={module.actionId}
-                  className="group w-full rounded-2xl border border-[var(--border)] bg-white/90 p-4 text-left transition hover:border-[#c8f0e0] hover:bg-white"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5" />
+              <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[420px]">
+                <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
+                  <div className="fh-inline-action inline-flex items-center rounded-xl border border-[var(--border)] bg-white p-1">
+                    <button
+                      type="button"
+                      onClick={() => setWindowView("7d")}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                        windowView === "7d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      7 days
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setWindowView("30d")}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                        windowView === "30d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      30 days
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setWindowView("term")}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                        windowView === "term" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      This term
+                    </button>
                   </div>
 
-                  <div className="mt-3 text-sm font-semibold text-slate-900">{module.title}</div>
-                  <div className="mt-1 text-xs text-slate-500">{module.description}</div>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mt-4 grid gap-3 lg:grid-cols-3">
-            {progressMetrics.map((metric) => (
-              <DashboardStatCard
-                key={metric.id}
-                label={metric.label}
-                value={metric.value}
-                badge={metric.badge}
-                hint={metric.note}
-                tone={metric.tone}
-                progress={metric.progress}
-              />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        {pulseMetrics.map((metric) => (
-          <Card key={metric.id} className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
-            <CardContent className="p-4">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{metric.label}</div>
-                  <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
+                  {topActions.map((item) => (
+                    <Button
+                      key={item.id}
+                      variant={item.variant}
+                      data-action-label={item.actionLabel}
+                      data-action-id={item.actionId}
+                      className={`fh-interactive-card h-10 rounded-xl px-4 text-sm ${ctaPriorityClass(item.priority)}`}
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
                 </div>
-                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${pulseToneClass(metric.tone)}`}>
-                  {metric.delta}
-                </span>
               </div>
+            </div>
 
-              <div className="mt-3 h-8 rounded-xl bg-slate-100/90 p-1">
-                <div className={`h-full rounded-lg ${pulseBarClass(metric)}`} />
-              </div>
-            </CardContent>
-          </Card>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {modules.map((module, index) => {
+                const Icon = module.icon;
+                return (
+                  <motion.button
+                    key={module.id}
+                    type="button"
+                    data-action-label={module.actionLabel}
+                    data-action-id={module.actionId}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.06 + index * 0.05, duration: 0.28, ease: "easeOut" }}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.996 }}
+                    className="fh-interactive-card fh-subcard group min-h-[146px] w-full rounded-2xl p-4 text-left transition hover:border-[#c8f0e0] hover:bg-white"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5" />
+                    </div>
+
+                    <div className="mt-3 text-base font-semibold leading-tight text-slate-900">{module.title}</div>
+                    <div className="mt-1 text-xs leading-relaxed text-slate-500">{module.description}</div>
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            <div className="mt-4 grid gap-3 md:grid-cols-3">
+              {progressMetrics.map((metric) => (
+                <DashboardStatCard
+                  key={metric.id}
+                  label={metric.label}
+                  value={metric.value}
+                  badge={metric.badge}
+                  hint={metric.note}
+                  tone={metric.tone}
+                  progress={metric.progress}
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.12, duration: 0.35, ease: "easeOut" }}
+        className="grid gap-3 md:grid-cols-2 xl:grid-cols-4"
+      >
+        {pulseMetrics.map((metric, index) => (
+          <motion.div
+            key={metric.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.16 + index * 0.04, duration: 0.24, ease: "easeOut" }}
+          >
+            <Card className="fh-interactive-card fh-surface-card rounded-2xl">
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="fh-label text-slate-400">{metric.label}</div>
+                    <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
+                  </div>
+                  <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${pulseToneClass(metric.tone)}`}>
+                    {metric.delta}
+                  </span>
+                </div>
+
+                <div className="mt-3 h-8 rounded-xl bg-slate-100/90 p-1">
+                  <div className={`h-full rounded-lg ${pulseBarClass(metric)}`} />
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]">
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.19, duration: 0.34, ease: "easeOut" }}
+        className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]"
+      >
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Provider Priorities"
@@ -430,7 +463,7 @@ export default function FaithHubProviderDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Agenda"
@@ -440,7 +473,7 @@ export default function FaithHubProviderDashboard() {
                   type="button"
                   data-action-label="Open scheduler"
                   data-action-id="open-live-schedule"
-                  className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+                  className="fh-inline-action inline-flex items-center rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-600"
                 >
                   <CalendarDays className="mr-1.5 h-3.5 w-3.5" />
                   {copy.ctas.openScheduleInline}
@@ -450,7 +483,7 @@ export default function FaithHubProviderDashboard() {
 
             <div className="space-y-2">
               {agenda.map((item) => (
-                <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white p-3">
+                <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="flex items-start gap-3">
                     <div className="inline-flex h-7 min-w-[2.6rem] items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
                       {item.time}
@@ -464,8 +497,8 @@ export default function FaithHubProviderDashboard() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Completion</div>
+            <div className="fh-subcard-muted mt-3 rounded-xl p-3">
+              <div className="fh-label text-slate-400">Completion</div>
               <div className="mt-1 text-2xl font-bold text-slate-900">58%</div>
               <div className="mt-2 h-1.5 rounded-full bg-slate-200">
                 <div className="h-full w-[58%] rounded-full bg-[#03cd8c]" />
@@ -475,7 +508,7 @@ export default function FaithHubProviderDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -491,9 +524,9 @@ export default function FaithHubProviderDashboard() {
               }
             />
 
-            <div className="rounded-xl border border-[var(--border)] bg-slate-50 p-3">
+            <div className="fh-subcard-muted rounded-xl p-3">
               <div className="mb-2 flex items-center justify-between gap-2">
-                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Highlights</div>
+                <div className="fh-label text-slate-400">Highlights</div>
                 <MessageSquare className="h-4 w-4 text-slate-400" />
               </div>
 
@@ -511,8 +544,8 @@ export default function FaithHubProviderDashboard() {
               </div>
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insight</div>
+            <div className="fh-subcard-accent mt-3 rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Practical signals for better decisions</div>
               <p className="mt-1 text-xs text-slate-600">
                 Funnel optimization improves when attendee reminders are sent within 20 minutes.
@@ -520,9 +553,14 @@ export default function FaithHubProviderDashboard() {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.25, duration: 0.32, ease: "easeOut" }}
+        className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <DashboardStatCard
           label="Trust queue"
           value="14"
@@ -551,8 +589,7 @@ export default function FaithHubProviderDashboard() {
           tone="slate"
           icon={<Wallet className="h-4 w-4" />}
         />
-      </div>
+      </motion.div>
     </div>
   );
 }
-

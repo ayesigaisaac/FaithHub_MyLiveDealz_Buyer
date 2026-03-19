@@ -81,13 +81,13 @@ export default function FaithHubSettings() {
   const [offlineMode, setOfflineMode] = useState(true);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -119,7 +119,7 @@ export default function FaithHubSettings() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -179,14 +179,14 @@ export default function FaithHubSettings() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Core preferences"
                   subtitle="Language, notification posture, and download behavior."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.46fr_0.54fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Language</div>
                     <div className="flex flex-wrap gap-2">
                       {languages.map((item) => (
@@ -256,7 +256,7 @@ export default function FaithHubSettings() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Per-segment notification controls"
@@ -295,7 +295,7 @@ export default function FaithHubSettings() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Child-mode and family safety"
@@ -325,7 +325,7 @@ export default function FaithHubSettings() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Blocked users"
@@ -334,7 +334,7 @@ export default function FaithHubSettings() {
                 />
                 <div className="space-y-3">
                   {blockedUsers.map((user) => (
-                    <div key={user.name} className="flex items-center justify-between gap-3 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={user.name} className="flex items-center justify-between gap-3 fh-subcard rounded-[24px] p-4">
                       <div className="min-w-0 flex items-center gap-3">
                         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200">
                           <UserMinus className="h-4 w-4" />
@@ -353,7 +353,7 @@ export default function FaithHubSettings() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Advanced parental layer"
@@ -361,20 +361,20 @@ export default function FaithHubSettings() {
                   action="Preview"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="fh-subcard-warm rounded-[24px] p-4">
                     Approval requirements for child-joined groups, premium content, or sensitive event registration.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="fh-subcard-warm rounded-[24px] p-4">
                     Download controls for minors and review visibility restrictions for youth-facing environments.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="fh-subcard-warm rounded-[24px] p-4">
                     Per-segment notification management for parents following childrens church, youth faith groups, or family events.
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Sync and data posture"
@@ -382,13 +382,13 @@ export default function FaithHubSettings() {
                   action="Diagnostics"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Language, privacy, download, and notification settings can be updated while offline and synchronized later.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Guarded child-mode changes can remain pending until the platform completes any required validation or guardian confirmation.
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                  <div className="fh-subcard-accent rounded-[24px] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <MoonStar className="h-4 w-4 text-[#03cd8c]" /> Calm persistence
                     </div>

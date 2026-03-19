@@ -98,13 +98,13 @@ export default function FaithHubChannelsRegistryDeliverability() {
   }, [selectedFilter, query]);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -133,7 +133,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -174,7 +174,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Allowed channel types"
@@ -182,7 +182,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
                 />
                 <div className="space-y-3">
                   {channelTypes.map((item) => (
-                    <div key={item.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.name} className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-base font-semibold text-slate-900">{item.name}</div>
                         <div className="flex gap-2">
@@ -207,7 +207,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Global templates and status"
@@ -257,7 +257,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Sender reputation metrics"
@@ -266,7 +266,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
                 />
                 <div className="space-y-3">
                   {senderMetrics.map((item) => (
-                    <div key={item.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.name} className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-2 flex items-center justify-between gap-2">
                         <div className="text-sm font-semibold text-slate-900">{item.name}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.reputation === "Healthy" ? "bg-[#ecfff8] text-[#03cd8c]" : item.reputation === "Watch" ? "bg-[#fff8ef] text-[#f77f00]" : "bg-slate-900 text-white"}`}>
@@ -283,7 +283,7 @@ export default function FaithHubChannelsRegistryDeliverability() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Enterprise deliverability service"
@@ -302,13 +302,13 @@ export default function FaithHubChannelsRegistryDeliverability() {
                   </button>
                   <div className="space-y-3">
                     {templateAlerts.map((item) => (
-                      <div key={item.title} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                      <div key={item.title} className="fh-subcard-warm rounded-[24px] p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                         <div className="text-sm text-slate-600">{item.detail}</div>
                       </div>
                     ))}
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                  <div className="fh-subcard-accent rounded-[24px] p-4 text-sm text-slate-700">
                     Enterprise deliverability extends into sender reputation defense, template monitoring, and campaign-quality protection before failures scale.
                   </div>
                 </div>

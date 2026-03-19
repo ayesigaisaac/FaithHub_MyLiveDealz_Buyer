@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 type Tone = "emerald" | "orange" | "slate" | "rose";
@@ -43,13 +43,13 @@ export function DashboardStatCard({
 
   return (
     <Card
-      className={`fh-panel-card rounded-2xl ${className}`.trim()}
+      className={`fh-interactive-card fh-surface-card rounded-2xl ${className}`.trim()}
     >
       <CardContent className="p-4">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{label}</div>
-            <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{value}</div>
+            <div className="fh-label text-slate-400">{label}</div>
+            <div className="fh-stat-value mt-2 text-3xl font-bold tracking-tight text-slate-900">{value}</div>
           </div>
 
           {badge ? (
@@ -72,7 +72,7 @@ export function DashboardStatCard({
         </div>
 
         {normalizedProgress !== undefined ? (
-          <div className="mt-3 h-1.5 rounded-full bg-slate-200/90">
+          <div className="mt-3 h-1.5 rounded-full bg-slate-200/85">
             <div
               className={`h-full rounded-full ${progressToneClass(tone)} transition-[width] duration-500`}
               style={{ width: `${normalizedProgress}%` }}
@@ -80,7 +80,7 @@ export function DashboardStatCard({
           </div>
         ) : null}
 
-        {hint ? <p className="mt-2 text-xs leading-relaxed text-slate-500">{hint}</p> : null}
+        {hint ? <p className="mt-2 text-sm leading-relaxed text-slate-500">{hint}</p> : null}
       </CardContent>
     </Card>
   );

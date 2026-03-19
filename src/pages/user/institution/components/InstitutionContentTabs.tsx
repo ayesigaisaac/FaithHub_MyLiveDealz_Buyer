@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { BookOpen, Ticket } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ type InstitutionContentTabsProps = {
 
 export default function InstitutionContentTabs({ series, events }: InstitutionContentTabsProps) {
   return (
-    <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
       <CardContent className="fh-pad-panel">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
@@ -25,7 +25,7 @@ export default function InstitutionContentTabs({ series, events }: InstitutionCo
         </div>
 
         <div className="grid gap-4 xl:grid-cols-2">
-          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="fh-subcard rounded-[24px] p-4">
             <div className="mb-3 text-sm font-semibold text-slate-900">Teaching series</div>
             <div className="space-y-3">
               {series.map((seriesItem) => (
@@ -48,7 +48,7 @@ export default function InstitutionContentTabs({ series, events }: InstitutionCo
             </Button>
           </div>
 
-          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="fh-subcard rounded-[24px] p-4">
             <div className="mb-3 text-sm font-semibold text-slate-900">Faith events</div>
             <div className="space-y-3">
               {events.map((eventItem) => (

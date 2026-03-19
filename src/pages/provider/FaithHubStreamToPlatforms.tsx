@@ -97,13 +97,13 @@ export default function FaithHubStreamToPlatforms() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -133,7 +133,7 @@ export default function FaithHubStreamToPlatforms() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="fh-eyebrow text-[#8ef0ca]">Distribution posture</div>
@@ -174,7 +174,7 @@ export default function FaithHubStreamToPlatforms() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Per-destination profiles</div>
@@ -198,7 +198,7 @@ export default function FaithHubStreamToPlatforms() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -240,7 +240,7 @@ export default function FaithHubStreamToPlatforms() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -253,7 +253,7 @@ export default function FaithHubStreamToPlatforms() {
                 </div>
                 <div className="space-y-3">
                   {platforms.map((platform) => (
-                    <div key={platform.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={platform.name} className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="text-base font-semibold text-slate-900">{platform.name}</div>
                         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${platform.connected ? "bg-[#ecfff8] text-[#03cd8c]" : "bg-slate-100 text-slate-700"}`}>
@@ -272,14 +272,14 @@ export default function FaithHubStreamToPlatforms() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Scheduled broadcast creation</div>
                   <div className="space-y-3 text-sm text-slate-600">
-                    <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div className="fh-subcard-muted rounded-[24px] p-4">
                       Pre-create destination broadcasts so titles, privacy, thumbnails, and timing align before going live.
                     </div>
-                    <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div className="fh-subcard-muted rounded-[24px] p-4">
                       Store per-platform broadcast references and reuse them for repeat series episodes or recurring events.
                     </div>
                     <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
@@ -289,7 +289,7 @@ export default function FaithHubStreamToPlatforms() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Premium cross-posting packages</div>
                   <div className="space-y-3">
@@ -313,7 +313,7 @@ export default function FaithHubStreamToPlatforms() {
                     </button>
                     <div className="space-y-2">
                       {clipPackages.map((item) => (
-                        <div key={item} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                        <div key={item} className="fh-subcard-warm rounded-[24px] p-4 text-sm text-slate-600">
                           {item}
                         </div>
                       ))}

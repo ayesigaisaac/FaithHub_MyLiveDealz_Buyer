@@ -88,7 +88,7 @@ export default function FaithHubEntry() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -160,7 +160,7 @@ export default function FaithHubEntry() {
               </div>
 
               <div className="grid gap-4 xl:grid-cols-[1fr_0.95fr]">
-                <Card className="rounded-[28px] border-white/65 bg-white/88 shadow-xl shadow-black/5 backdrop-blur">
+                <Card className="fh-interactive-card rounded-[28px] border-white/65 bg-white/88 shadow-xl shadow-black/5 backdrop-blur">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
@@ -244,7 +244,7 @@ export default function FaithHubEntry() {
                 </Card>
 
                 <div className="flex flex-col gap-4">
-                  <Card className="rounded-[28px] border-white/70 bg-slate-950/90 text-white shadow-xl shadow-black/15">
+                  <Card className="fh-interactive-card rounded-[28px] border-white/70 bg-slate-950/90 text-white shadow-xl shadow-black/15">
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-start justify-between gap-3">
                         <div>
@@ -276,7 +276,7 @@ export default function FaithHubEntry() {
                     </CardContent>
                   </Card>
 
-                  <Card className="rounded-[28px] border border-white/70 bg-white/90 shadow-xl shadow-black/5">
+                  <Card className="fh-interactive-card rounded-[28px] border border-white/70 bg-white/90 shadow-xl shadow-black/5">
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
@@ -325,7 +325,7 @@ export default function FaithHubEntry() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="flex flex-col gap-4"
           >
-            <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-white/90 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.35)]">
+            <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/60 bg-white/90 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.35)]">
               <CardContent className="p-0">
                 <div className="border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4">
                   <div className="flex items-center justify-between gap-3">
@@ -350,7 +350,7 @@ export default function FaithHubEntry() {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.06, duration: 0.35 }}
-                        className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
+                        className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
                       >
                         <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
                           <Icon className="h-5 w-5" />
@@ -364,7 +364,7 @@ export default function FaithHubEntry() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-slate-900 text-white shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card rounded-[32px] border border-white/60 bg-slate-900 text-white shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>

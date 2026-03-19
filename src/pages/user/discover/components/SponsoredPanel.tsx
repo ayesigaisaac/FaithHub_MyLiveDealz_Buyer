@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { ShieldCheck, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function SponsoredPanel() {
   return (
-    <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+    <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
       <CardContent className="fh-pad-panel">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
@@ -22,7 +22,7 @@ export default function SponsoredPanel() {
           </Badge>
         </div>
 
-        <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+        <div className="fh-subcard-warm rounded-[24px] p-4 shadow-sm">
           <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
             <Sparkles className="h-4 w-4 text-[#f77f00]" />
             FaithHub Global Chapel

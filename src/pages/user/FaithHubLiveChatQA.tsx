@@ -155,13 +155,13 @@ export default function FaithHubLiveChatQA() {
   }, [search]);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -191,7 +191,7 @@ export default function FaithHubLiveChatQA() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -254,7 +254,7 @@ export default function FaithHubLiveChatQA() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Pinned messages and live chat"
@@ -264,7 +264,7 @@ export default function FaithHubLiveChatQA() {
 
                 <div className="mb-4 grid gap-3 lg:grid-cols-2">
                   {pinnedMessages.map((item) => (
-                    <div key={item.title} className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                    <div key={item.title} className="fh-subcard-accent rounded-[24px] p-4">
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Pin className="h-4 w-4 text-[#03cd8c]" /> {item.title}
                       </div>
@@ -285,7 +285,7 @@ export default function FaithHubLiveChatQA() {
 
                 <div className="space-y-3">
                   {filteredMessages.map((item) => (
-                    <div key={item.id} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div key={item.id} className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-2 flex flex-wrap items-center gap-2">
                         <div className="text-sm font-semibold text-slate-900">{item.author}</div>
                         <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${item.priority ? "bg-[#ecfff8] text-[#03cd8c]" : "bg-slate-100 text-slate-600"}`}>
@@ -339,7 +339,7 @@ export default function FaithHubLiveChatQA() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Q&A queue"
@@ -369,7 +369,7 @@ export default function FaithHubLiveChatQA() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -407,7 +407,7 @@ export default function FaithHubLiveChatQA() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Moderation assist"
@@ -421,7 +421,7 @@ export default function FaithHubLiveChatQA() {
                     </div>
                   ))}
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-2 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Gauge className="h-4 w-4 text-[#03cd8c]" /> Toxicity assist signal

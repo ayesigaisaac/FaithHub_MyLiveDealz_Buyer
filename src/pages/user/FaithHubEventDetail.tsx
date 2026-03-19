@@ -66,13 +66,13 @@ export default function FaithHubEventDetail() {
   const [chatEnabled, setChatEnabled] = useState(true);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -104,7 +104,7 @@ export default function FaithHubEventDetail() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -159,14 +159,14 @@ export default function FaithHubEventDetail() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Schedule and speakers"
                   subtitle="A structured event view for planning and attendance confidence."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.56fr_0.44fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Event schedule</div>
                     <div className="space-y-3">
                       {schedule.map((item) => (
@@ -178,7 +178,7 @@ export default function FaithHubEventDetail() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Speakers and facilitators</div>
                     <div className="space-y-3">
                       {speakers.map((speaker) => (
@@ -194,14 +194,14 @@ export default function FaithHubEventDetail() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Venue and event chat"
                   subtitle="Location clarity, event communication, and safety readiness in one place."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.5fr_0.5fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Venue</div>
                     <div className="mb-4 h-48 rounded-[22px] bg-gradient-to-br from-slate-100 to-slate-200" />
                     <div className="space-y-3 text-sm text-slate-600">
@@ -213,7 +213,7 @@ export default function FaithHubEventDetail() {
                     </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 flex items-center justify-between gap-3">
                       <div className="text-sm font-semibold text-slate-900">Event chat channel</div>
                       <Button
@@ -249,7 +249,7 @@ export default function FaithHubEventDetail() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Tickets and FaithMart links"
@@ -271,7 +271,7 @@ export default function FaithHubEventDetail() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -289,7 +289,7 @@ export default function FaithHubEventDetail() {
                 <div className="space-y-3">
                   {vipPreview ? (
                     merchBundles.map((item) => (
-                      <div key={item.title} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                      <div key={item.title} className="fh-subcard-warm rounded-[24px] p-4 shadow-sm">
                         <div className="mb-1 flex items-center gap-2 text-sm font-semibold text-slate-900">
                           <ShoppingBag className="h-4 w-4 text-[#f77f00]" /> {item.title}
                         </div>
@@ -305,7 +305,7 @@ export default function FaithHubEventDetail() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Safety guidance and waivers"
@@ -314,7 +314,7 @@ export default function FaithHubEventDetail() {
                 />
                 <div className="space-y-3 text-sm text-slate-600">
                   {waivers.map((item) => (
-                    <div key={item} className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div key={item} className="fh-subcard-muted rounded-[24px] p-4">
                       {item}
                     </div>
                   ))}
@@ -335,7 +335,7 @@ export default function FaithHubEventDetail() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline pass and wallet cache"
@@ -343,13 +343,13 @@ export default function FaithHubEventDetail() {
                   action="Details"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Event passes can be stored into wallet cache so the user can still show their access token when connectivity is unstable.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Ticket validation can use a short-lived offline token for venue-side confirmation before the device reconnects.
                   </div>
-                  <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                  <div className="fh-subcard-accent rounded-[24px] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                       <FileCheck2 className="h-4 w-4 text-[#03cd8c]" /> Wallet-ready pass status
                     </div>

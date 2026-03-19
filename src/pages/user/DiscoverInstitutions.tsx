@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Compass,
   MapPin,
@@ -61,7 +61,7 @@ export default function DiscoverInstitutions() {
 
   return (
     <div className="space-y-4">
-      <Card className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(109deg,rgba(14,165,233,0.12),rgba(248,251,252,0.94)_35%,rgba(3,205,140,0.1))] shadow-[var(--shadow-soft)]">
+      <Card className="fh-interactive-card overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(109deg,rgba(14,165,233,0.12),rgba(248,251,252,0.94)_35%,rgba(3,205,140,0.1))] shadow-[var(--shadow-soft)]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
@@ -193,7 +193,7 @@ export default function DiscoverInstitutions() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.2fr_1fr_1fr]">
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Institution Results"
@@ -241,7 +241,7 @@ export default function DiscoverInstitutions() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Discovery Map"
@@ -274,7 +274,7 @@ export default function DiscoverInstitutions() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -309,8 +309,8 @@ export default function DiscoverInstitutions() {
               />
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insight</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Nearby verified communities get higher replay completion</div>
               <p className="mt-1 text-xs text-slate-600">
                 Users who start from verified profiles are more likely to continue into live and events.

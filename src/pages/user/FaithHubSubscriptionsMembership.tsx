@@ -188,7 +188,7 @@ export default function FaithHubSubscriptionsMembership() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -246,7 +246,7 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <div>
@@ -292,7 +292,7 @@ export default function FaithHubSubscriptionsMembership() {
                   ))}
                 </div>
 
-                <div className="mt-5 rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                <div className="mt-5 fh-subcard-muted rounded-[24px] p-4">
                   <div className="mb-2 text-sm font-semibold text-slate-900">Proration preview</div>
                   <div className="text-sm text-slate-600">{prorationLabel}</div>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -305,7 +305,7 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -353,7 +353,7 @@ export default function FaithHubSubscriptionsMembership() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -382,7 +382,7 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -414,7 +414,7 @@ export default function FaithHubSubscriptionsMembership() {
                   </button>
 
                   {groupMembershipPreview ? (
-                    <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard-warm rounded-[24px] p-4 shadow-sm">
                       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Building2 className="h-4 w-4 text-[#f77f00]" /> Enterprise group memberships
                       </div>
@@ -431,7 +431,7 @@ export default function FaithHubSubscriptionsMembership() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -445,7 +445,7 @@ export default function FaithHubSubscriptionsMembership() {
 
                 <div className="space-y-3">
                   {billingTimeline.map((item) => (
-                    <div key={item.title} className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                    <div key={item.title} className="fh-subcard-muted rounded-[24px] p-4">
                       <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                       <div className="text-sm text-slate-600">{item.detail}</div>
                       <div className="mt-2 text-xs text-slate-500">{item.time}</div>
@@ -453,7 +453,7 @@ export default function FaithHubSubscriptionsMembership() {
                   ))}
                 </div>
 
-                <div className="mt-4 rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                <div className="mt-4 fh-subcard rounded-[24px] p-4">
                   <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                     <Download className="h-4 w-4 text-[#03cd8c]" /> Offline entitlement cache
                   </div>

@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Bell,
   CalendarDays,
@@ -201,7 +201,7 @@ export default function FaithHubLiveHub() {
 
   return (
     <div className="space-y-4">
-      <Card className="fh-hero-card overflow-hidden rounded-[24px]">
+      <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[24px]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
@@ -315,7 +315,7 @@ export default function FaithHubLiveHub() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.2fr_1fr_1fr]">
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Now Live"
@@ -333,7 +333,7 @@ export default function FaithHubLiveHub() {
 
             <div className="space-y-2">
               {filteredLiveNow.map((item) => (
-                <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white p-3 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
+                <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="mb-2 flex items-start justify-between gap-2">
                     <div>
                       <div className="text-sm font-semibold text-slate-900">{item.title}</div>
@@ -363,7 +363,7 @@ export default function FaithHubLiveHub() {
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Upcoming Sessions"
@@ -382,7 +382,7 @@ export default function FaithHubLiveHub() {
 
             <div className="space-y-2">
               {filteredUpcoming.map((item) => (
-                <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white p-3 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
+                <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="text-sm font-semibold text-slate-900">{item.title}</div>
                   <div className="mt-1 text-xs text-slate-500">{item.institution} · {item.series}</div>
                   <div className="mt-1 text-xs text-slate-600">{item.time} · {item.audience}</div>
@@ -404,15 +404,15 @@ export default function FaithHubLiveHub() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Next launch</div>
+            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Next launch</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">{filteredUpcoming[0]?.title || "No upcoming sessions"}</div>
               <div className="mt-1 text-xs text-slate-500">{filteredUpcoming[0]?.time || "Check filters"}</div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -447,8 +447,8 @@ export default function FaithHubLiveHub() {
               />
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Live insight</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Live insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Early waiting-room entry improves completion and chat participation</div>
               <p className="mt-1 text-xs text-slate-600">
                 Users entering before start time stay longer and return for replay at higher rates.
@@ -459,7 +459,7 @@ export default function FaithHubLiveHub() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader title="Replay Library" subtitle="Continue from recent sessions" />
             <div className="space-y-2">
@@ -475,7 +475,7 @@ export default function FaithHubLiveHub() {
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader title="Session Signals" subtitle="Readiness and trust posture" />
             <div className="grid grid-cols-2 gap-2">
@@ -543,7 +543,7 @@ function SelectFilter({
 
 function SignalCard({ title, value, icon }: { title: string; value: string; icon: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-slate-50 p-3">
+    <div className="fh-subcard-muted rounded-xl p-3">
       <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
         {icon}
         {title}

@@ -65,13 +65,13 @@ export default function FaithHubEventsManager() {
   const linkedTicketCount = useMemo(() => tickets.filter((ticket) => ticket.linked).length, []);
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -100,7 +100,7 @@ export default function FaithHubEventsManager() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -142,7 +142,7 @@ export default function FaithHubEventsManager() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.5fr_0.5fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4 text-lg font-semibold text-slate-900">Event basics</div>
                   <div className="space-y-4">
@@ -189,12 +189,12 @@ export default function FaithHubEventsManager() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4 text-lg font-semibold text-slate-900">FaithMart ticket links</div>
                   <div className="space-y-3">
                     {tickets.map((ticket) => (
-                      <div key={ticket.sku} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={ticket.sku} className="fh-subcard rounded-[24px] p-4">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{ticket.title}</div>
                         <div className="text-xs text-slate-500">{ticket.sku}</div>
                         <div className="mt-2 flex items-center justify-between gap-3">
@@ -213,7 +213,7 @@ export default function FaithHubEventsManager() {
               </Card>
             </div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Multi-session agenda and volunteers"
@@ -222,7 +222,7 @@ export default function FaithHubEventsManager() {
                 <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
                   <div className="space-y-3">
                     {agendaItems.map((item) => (
-                      <div key={item.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={item.title} className="fh-subcard rounded-[24px] p-4">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{item.title}</div>
                         <div className="text-xs text-slate-500">{item.time}</div>
                         <div className="mt-1 text-sm text-slate-600">{item.type}</div>
@@ -231,7 +231,7 @@ export default function FaithHubEventsManager() {
                   </div>
                   <div className="space-y-3">
                     {volunteers.map((person) => (
-                      <div key={person.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                      <div key={person.name} className="fh-subcard rounded-[24px] p-4">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{person.name}</div>
                         <div className="text-xs text-slate-500">{person.role}</div>
                         <div className="mt-2 inline-flex rounded-full bg-[#ecfff8] px-3 py-1 text-xs font-semibold text-[#03cd8c]">
@@ -251,7 +251,7 @@ export default function FaithHubEventsManager() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Check-in mode"
@@ -284,7 +284,7 @@ export default function FaithHubEventsManager() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Premium routing and ticket rules"
@@ -312,7 +312,7 @@ export default function FaithHubEventsManager() {
                   </button>
                   <div className="space-y-3">
                     {venues.map((venue) => (
-                      <div key={venue.name} className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                      <div key={venue.name} className="fh-subcard-warm rounded-[24px] p-4 shadow-sm">
                         <div className="mb-1 text-sm font-semibold text-slate-900">{venue.name}</div>
                         <div className="text-xs text-slate-500">{venue.routing}</div>
                         <div className="mt-2 inline-flex rounded-full bg-[#fff8ef] px-3 py-1 text-xs font-semibold text-[#f77f00]">
@@ -325,7 +325,7 @@ export default function FaithHubEventsManager() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Monetization posture"
@@ -333,10 +333,10 @@ export default function FaithHubEventsManager() {
                   action="Revenue"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Ticket fees can be collected through linked FaithMart SKUs while booth access and event merchandise expand revenue options.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Marketplace Days can connect event registration directly to vendor merchandise and booth purchases.
                   </div>
                   <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">

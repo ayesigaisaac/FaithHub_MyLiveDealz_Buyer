@@ -136,13 +136,13 @@ export default function FaithHubAudienceNotifications() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -172,7 +172,7 @@ export default function FaithHubAudienceNotifications() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -215,7 +215,7 @@ export default function FaithHubAudienceNotifications() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Notification plan builder"
@@ -267,7 +267,7 @@ export default function FaithHubAudienceNotifications() {
                     </div>
                     <div className="space-y-3">
                       {automationSteps.map((step) => (
-                        <div key={step.title} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                        <div key={step.title} className="fh-subcard rounded-[24px] p-4">
                           <div className="mb-1 text-sm font-semibold text-slate-900">{step.title}</div>
                           <div className="text-xs text-slate-500">{step.time}</div>
                           <div className="mt-1 text-sm text-slate-600">{step.note}</div>
@@ -286,7 +286,7 @@ export default function FaithHubAudienceNotifications() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Localized templates"
@@ -329,14 +329,14 @@ export default function FaithHubAudienceNotifications() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Smart send and delivery dashboard"
                   subtitle="See the best send window and what happened after launch."
                 />
                 <div className="grid gap-4 lg:grid-cols-[0.44fr_0.56fr]">
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <Sparkles className="h-4 w-4 text-[#03cd8c]" /> Smart send time
                     </div>
@@ -356,7 +356,7 @@ export default function FaithHubAudienceNotifications() {
                     </Button>
                   </div>
 
-                  <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                  <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                       <BarChart3 className="h-4 w-4 text-[#03cd8c]" /> Delivery status
                     </div>
@@ -376,7 +376,7 @@ export default function FaithHubAudienceNotifications() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -395,7 +395,7 @@ export default function FaithHubAudienceNotifications() {
                     </div>
                     <div>{journeyAutomation ? "Pre-live, live-now, and replay journeys are automated." : "Manual sends only."}</div>
                   </button>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="fh-subcard-warm rounded-[24px] p-4">
                     Enterprise messaging programs can apply per-message cost models and deeper delivery automation.
                   </div>
                   <Button className="w-full rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">

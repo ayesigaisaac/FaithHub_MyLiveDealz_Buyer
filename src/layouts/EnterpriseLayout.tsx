@@ -88,7 +88,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
         id: "tenant",
         label: "Tenant",
         value: activeTenant?.name || "Platform-wide",
-        hint: activeTenant ? `${activeTenant.region} · ${activeTenant.plan}` : "Cross-tenant visibility",
+        hint: activeTenant ? `${activeTenant.region} Â· ${activeTenant.plan}` : "Cross-tenant visibility",
         icon: Bell,
         tone: "orange",
       },
@@ -249,7 +249,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                 ) : null}
               </div>
 
-              <Card className="fh-panel-card overflow-hidden rounded-2xl">
+              <Card className="fh-surface-card overflow-hidden rounded-2xl">
                 <CardContent className="p-2">
                   {filteredNavItems.map((item) => {
                     const Icon = item.icon;
@@ -295,7 +295,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
 
       <div className="mx-auto flex max-w-[1860px] gap-4 px-3 pb-10 pt-4 sm:px-4 lg:px-5">
         <aside className="hidden w-[310px] shrink-0 lg:block">
-          <Card className="fh-panel-card overflow-hidden rounded-[26px]">
+          <Card className="fh-surface-card overflow-hidden rounded-[26px]">
             <CardContent className="p-3">
               <div className="fh-hero-card rounded-2xl p-4">
                 <div className="fh-label text-emerald-700">Workspace</div>
@@ -303,7 +303,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                   {activeTenant ? activeTenant.name : "Platform scope"}
                 </div>
                 <div className="mt-1 text-xs text-slate-600">
-                  {activeTenant ? `${activeTenant.region} · ${activeTenant.plan}` : "Global cross-tenant visibility"}
+                  {activeTenant ? `${activeTenant.region} Â· ${activeTenant.plan}` : "Global cross-tenant visibility"}
                 </div>
               </div>
 
@@ -396,7 +396,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
 
 function EnterpriseMetricCard({ metric }: { metric: StatusMetric }) {
   return (
-    <Card className="fh-panel-card rounded-2xl">
+    <Card className="fh-surface-card rounded-2xl">
       <CardContent className="p-4">
         <div className="flex items-center justify-between gap-2">
           <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{metric.label}</div>

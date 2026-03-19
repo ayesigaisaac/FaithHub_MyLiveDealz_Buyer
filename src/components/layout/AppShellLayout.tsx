@@ -90,9 +90,7 @@ function getSectionIcon(sectionLabel: string): LucideIcon {
 }
 
 function compactModuleLabel(sectionLabel: string) {
-  const clean = sectionLabel.includes("·")
-    ? sectionLabel.split("·").slice(-1)[0]?.trim() || sectionLabel
-    : sectionLabel;
+  const clean = sectionLabel.split(" - ").slice(-1)[0]?.trim() || sectionLabel;
   return clean.length > 18 ? `${clean.slice(0, 18)}...` : clean;
 }
 
@@ -128,7 +126,7 @@ export default function AppShellLayout() {
     const keyFor = (page: PageRegistryItem) => {
       if (!adminAllAccess) return getSectionLabel(routeRole, page.section);
       const roleLabel = page.role === "provider" ? "Provider" : page.role === "admin" ? "Admin" : "User";
-      return `${roleLabel} · ${getSectionLabel(page.role, page.section)}`;
+      return `${roleLabel} - ${getSectionLabel(page.role, page.section)}`;
     };
     return filteredPages.reduce((acc, page) => {
       const key = keyFor(page);
@@ -186,7 +184,7 @@ export default function AppShellLayout() {
   }, [profileHintOpen]);
 
   return (
-    <div className="flex h-[100dvh] flex-col overflow-hidden overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
+    <div className="fh-page-canvas flex h-[100dvh] flex-col overflow-hidden overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
       <div className="fh-shell-topbar z-30 shrink-0 border-b border-[var(--border)] shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur">
         <div className="mx-auto max-w-[1860px] px-3 py-3 sm:px-4 lg:px-5">
           <div className="flex items-center gap-2 sm:gap-3">
@@ -202,16 +200,6 @@ export default function AppShellLayout() {
 
             <button
               type="button"
-              aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-              aria-pressed={sidebarCollapsed}
-              onClick={() => setSidebarCollapsed((prev) => !prev)}
-              className="fh-shell-control hidden h-11 w-11 items-center justify-center rounded-2xl text-slate-700 xl:inline-flex"
-            >
-              {sidebarCollapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}
-            </button>
-
-            <button
-              type="button"
               aria-label="Go to FaithHub landing page"
               onClick={() => navigate("/")}
               className="fh-shell-control inline-flex h-12 min-w-0 items-center rounded-2xl px-3"
@@ -223,18 +211,15 @@ export default function AppShellLayout() {
               />
             </button>
 
-            <label className="fh-shell-control hidden min-w-0 flex-1 items-center gap-2 rounded-2xl px-3 py-2 md:flex">
+            <label className="fh-search-shell fh-shell-control hidden min-w-0 flex-1 items-center gap-2 rounded-2xl px-3 py-2 md:flex">
               <Search className="h-4 w-4 shrink-0 text-slate-500" />
               <input
                 type="search"
                 value={navQuery}
                 onChange={(event) => setNavQuery(event.target.value)}
-                placeholder="Search modules"
-                className="h-8 w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                placeholder="Search pages and modules"
+                className="h-8 w-full border-0 bg-transparent text-base text-slate-700 outline-none placeholder:text-slate-400"
               />
-              <span className="inline-flex h-7 min-w-[2rem] items-center justify-center rounded-full bg-slate-100 px-2 text-xs font-semibold text-slate-600">
-                {filteredPages.length}
-              </span>
             </label>
 
             <div className="ml-auto flex items-center gap-2">
@@ -243,14 +228,14 @@ export default function AppShellLayout() {
                   type="button"
                   aria-label="Open profile options"
                   onClick={() => setProfileHintOpen((prev) => !prev)}
-                  className="fh-shell-control inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-left"
+                  className="fh-shell-control fh-interactive-card inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-left"
                 >
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#111827] text-[11px] font-semibold text-white">
                     BM
                   </span>
                   <span className="leading-tight">
-                    <span className="block text-xs font-semibold text-slate-900">Brian M.</span>
-                    <span className="block text-[11px] text-slate-500">Greenhill Community - Member</span>
+                    <span className="block text-sm font-semibold text-slate-900">Brian M.</span>
+                    <span className="block text-xs text-slate-500">Greenhill Community - Member</span>
                   </span>
                   <ChevronDown className="h-4 w-4 text-slate-500" />
                 </button>
@@ -273,7 +258,7 @@ export default function AppShellLayout() {
               <button
                 type="button"
                 aria-label="Open alerts"
-                className="fh-shell-control relative inline-flex h-11 w-11 items-center justify-center rounded-2xl text-slate-700"
+                className="fh-shell-control fh-interactive-card relative inline-flex h-11 w-11 items-center justify-center rounded-2xl text-slate-700"
               >
                 <Bell className="h-5 w-5" />
                 <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--accent)]" />
@@ -281,18 +266,15 @@ export default function AppShellLayout() {
             </div>
           </div>
 
-          <label className="fh-shell-control mt-3 flex items-center gap-2 rounded-2xl px-3 py-2 md:hidden">
+          <label className="fh-search-shell fh-shell-control mt-3 flex items-center gap-2 rounded-2xl px-3 py-2 md:hidden">
             <Search className="h-4 w-4 shrink-0 text-slate-500" />
             <input
               type="search"
               value={navQuery}
               onChange={(event) => setNavQuery(event.target.value)}
-              placeholder="Search modules"
-              className="h-8 w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+              placeholder="Search pages and modules"
+              className="h-8 w-full border-0 bg-transparent text-base text-slate-700 outline-none placeholder:text-slate-400"
             />
-            <span className="inline-flex h-7 min-w-[2rem] items-center justify-center rounded-full bg-slate-100 px-2 text-xs font-semibold text-slate-600">
-              {filteredPages.length}
-            </span>
           </label>
         </div>
       </div>
@@ -344,7 +326,7 @@ export default function AppShellLayout() {
             />
           </div>
         </Drawer>
-        <main className="fh-scroll-region min-h-0 min-w-0 flex-1 space-y-4 overflow-y-auto pr-1" onClickCapture={handlePageAction}>
+        <main className="fh-scroll-region min-h-0 min-w-0 flex-1 overflow-y-auto pr-1" onClickCapture={handlePageAction}>
           <Outlet />
         </main>
       </div>
@@ -364,14 +346,14 @@ function RoleSwitcher({ role, onChange }: { role: RoleKey; onChange: (role: Role
             key={item}
             aria-pressed={active}
             onClick={() => onChange(item)}
-            className={`rounded-xl px-3 py-1.5 text-sm font-semibold transition ${
+            className={`rounded-xl px-3.5 py-1.5 text-base font-semibold ${
               active
                 ? item === "provider"
                   ? "bg-[#fff3e8] text-[#cc6500]"
                   : item === "admin"
                     ? "bg-slate-800 text-white"
                     : "bg-[#ecfff8] text-[#049e6d]"
-                : "text-slate-500 hover:bg-[var(--surface)] hover:text-slate-700"
+                : "text-slate-500"
             }`}
           >
             {item === "user" ? "User" : item === "provider" ? "Provider" : "Admin"}
@@ -417,7 +399,7 @@ function SidebarPanel({
   }, [activeSectionId]);
 
   return (
-    <Card className="h-full overflow-hidden rounded-[22px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_24px_48px_rgba(2,8,20,0.28)]">
+    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[22px]">
       <CardContent
         className={`flex min-h-0 flex-col gap-2.5 overflow-hidden p-2.5 ${
           compactHeight ? "max-h-[74vh]" : "h-full"
@@ -425,9 +407,9 @@ function SidebarPanel({
       >
         <div className="flex items-start justify-between gap-3 px-0.5">
           <div className="min-w-0">
-            <div className="text-sm font-semibold text-[var(--fh-nav-title)]">Navigation</div>
-            <div className="text-xs text-[var(--fh-nav-muted)]">Modules</div>
-            <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-kicker)]">
+            <div className="text-base font-semibold text-[var(--fh-nav-title)]">Navigation</div>
+            <div className="text-sm text-[var(--fh-nav-muted)]">Modules</div>
+            <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-kicker)]">
               {role === "admin" ? "Control" : role === "provider" ? "Operations" : "FaithHub"}
             </div>
           </div>
@@ -436,7 +418,7 @@ function SidebarPanel({
               type="button"
               aria-label="Minimize sidebar"
               onClick={onCollapse}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] transition hover:bg-[color:var(--fh-nav-ghost-btn-hover)]"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)]"
             >
               <PanelLeftClose className="h-4 w-4" />
             </button>
@@ -448,7 +430,7 @@ function SidebarPanel({
             const SectionIcon = section.icon;
             const expanded = openSectionId === section.id;
             return (
-              <div key={section.id} className="rounded-xl border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]">
+              <div key={section.id} className="fh-interactive-card rounded-xl border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]">
                 <button
                   type="button"
                   onClick={() => setOpenSectionId((prev) => (prev === section.id ? "" : section.id))}
@@ -458,7 +440,7 @@ function SidebarPanel({
                     <SectionIcon className="h-4 w-4" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-muted)]">
+                    <span className="block truncate text-xs font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-muted)]">
                       {compactModuleLabel(section.label)}
                     </span>
                   </span>
@@ -476,10 +458,10 @@ function SidebarPanel({
                           key={item.id}
                           aria-current={active ? "page" : undefined}
                           onClick={() => onNavigate(item.path)}
-                          className={`group flex w-full items-center gap-2 rounded-xl border px-2.5 py-2 text-left transition ${
+                          className={`fh-interactive-card flex w-full items-center gap-2 rounded-xl border px-2.5 py-2 text-left ${
                             active
                               ? "border-[var(--fh-nav-item-active-border)] bg-[color:var(--fh-nav-item-active-bg)]"
-                              : "border-transparent bg-[color:var(--fh-nav-item-bg)] hover:border-[var(--fh-nav-item-hover-border)] hover:bg-[color:var(--fh-nav-item-hover)]"
+                              : "border-transparent bg-[color:var(--fh-nav-item-bg)]"
                           }`}
                         >
                           <span
@@ -492,10 +474,9 @@ function SidebarPanel({
                             <ItemIcon className="h-3.5 w-3.5" />
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="block truncate text-sm font-semibold text-[var(--fh-nav-item-title)]">{item.label}</span>
-                            <span className="block truncate text-xs text-[var(--fh-nav-item-sub)]">{item.navTag}</span>
+                            <span className="block truncate text-base font-semibold text-[var(--fh-nav-item-title)]">{item.label}</span>
                           </span>
-                          <ChevronRight className="h-4 w-4 shrink-0 text-[var(--fh-nav-item-chevron)] transition group-hover:text-[var(--fh-nav-item-sub)]" />
+                          <ChevronRight className="h-4 w-4 shrink-0 text-[var(--fh-nav-item-chevron)]" />
                         </button>
                       );
                     })}
@@ -528,13 +509,13 @@ function SidebarRail({
   );
 
   return (
-    <Card className="h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_24px_48px_rgba(2,8,20,0.28)]">
+    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[20px]">
       <CardContent className="flex h-full min-h-0 flex-col items-center gap-1.5 p-1.5">
         <button
           type="button"
           aria-label="Expand sidebar"
           onClick={onExpand}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] transition hover:bg-[color:var(--fh-nav-ghost-btn-hover)]"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)]"
         >
           <PanelLeftOpen className="h-4 w-4" />
         </button>
@@ -552,10 +533,10 @@ function SidebarRail({
                 title={section.label}
                 aria-label={section.label}
                 onClick={() => onNavigate(targetPath)}
-                className={`inline-flex h-10 w-10 items-center justify-center rounded-xl border transition ${
+                className={`fh-interactive-card inline-flex h-10 w-10 items-center justify-center rounded-xl border ${
                   active
                     ? "border-[var(--fh-nav-rail-active-border)] bg-[color:var(--fh-nav-rail-active-bg)] text-[var(--fh-nav-rail-active-fg)]"
-                    : "border-[var(--fh-nav-rail-icon-border)] bg-[color:var(--fh-nav-rail-icon-bg)] text-[var(--fh-nav-rail-icon-fg)] hover:border-[var(--fh-nav-item-hover-border)] hover:bg-[color:var(--fh-nav-ghost-btn-hover)]"
+                    : "border-[var(--fh-nav-rail-icon-border)] bg-[color:var(--fh-nav-rail-icon-bg)] text-[var(--fh-nav-rail-icon-fg)]"
                 }`}
               >
                 <Icon className="h-4 w-4" />

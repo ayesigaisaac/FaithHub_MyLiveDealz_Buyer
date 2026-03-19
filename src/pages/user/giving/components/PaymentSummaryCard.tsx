@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import DonationModeToggle from "@/pages/user/giving/components/DonationModeToggle";
@@ -24,7 +24,7 @@ export default function PaymentSummaryCard({
   onReceiptEmailChange,
 }: PaymentSummaryCardProps) {
   return (
-    <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
       <CardContent className="fh-pad-panel">
         <div className="mb-4">
           <div className="text-lg font-semibold text-slate-900 sm:text-xl">Give now</div>
@@ -34,7 +34,7 @@ export default function PaymentSummaryCard({
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="fh-subcard rounded-[24px] p-4">
             <div className="mb-3 text-sm font-semibold text-slate-900">Selected fund</div>
             <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-4">
               <div className="text-base font-semibold text-slate-900">{selectedFund.title}</div>
@@ -55,7 +55,7 @@ export default function PaymentSummaryCard({
             </div>
           </div>
 
-          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="fh-subcard rounded-[24px] p-4">
             <div className="mb-3 text-sm font-semibold text-slate-900">Receipts</div>
             <label className="block space-y-2">
               <span className="text-sm font-medium text-slate-700">Receipt email</span>

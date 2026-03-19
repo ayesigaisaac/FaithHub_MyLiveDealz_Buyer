@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { CheckCircle2, ShieldCheck, Star, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ export default function GivingTrustPanel({
 }: GivingTrustPanelProps) {
   return (
     <>
-      <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+      <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
         <CardContent className="fh-pad-panel">
           <div className="mb-4">
             <div className="text-lg font-semibold text-white sm:text-xl">Donor trust and visibility</div>
@@ -41,7 +41,7 @@ export default function GivingTrustPanel({
         </CardContent>
       </Card>
 
-      <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+      <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
         <CardContent className="fh-pad-panel">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
@@ -64,13 +64,13 @@ export default function GivingTrustPanel({
           <div className="space-y-3 text-sm text-slate-600">
             {supporterTier ? (
               <>
-                <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4 shadow-sm">
+                <div className="fh-subcard-warm rounded-[24px] p-4 shadow-sm">
                   <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                     <Star className="h-4 w-4 text-[#f77f00]" /> Supporter perk
                   </div>
                   Members-only series and selected premium study resources.
                 </div>
-                <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4">
+                <div className="fh-subcard-accent rounded-[24px] p-4">
                   <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
                     <CheckCircle2 className="h-4 w-4 text-[#03cd8c]" />
                     Membership clarity
@@ -87,7 +87,7 @@ export default function GivingTrustPanel({
         </CardContent>
       </Card>
 
-      <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+      <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
         <CardContent className="fh-pad-panel">
           <div className="mb-4">
             <div className="text-lg font-semibold text-slate-900 sm:text-xl">
@@ -97,7 +97,7 @@ export default function GivingTrustPanel({
               Giving intent can queue, but payment capture waits for connectivity.
             </div>
           </div>
-          <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-600">
+          <div className="fh-subcard-accent rounded-[24px] p-4 text-sm text-slate-600">
             <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
               <ShieldCheck className="h-4 w-4 text-[#03cd8c]" />
               Safe intent handling

@@ -1,4 +1,5 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
   CalendarDays,
@@ -271,140 +272,172 @@ export default function FaithHubHome() {
   );
 
   return (
-    <div className="space-y-4">
-      <Card className="fh-hero-card overflow-hidden rounded-[24px]">
-        <CardContent className="p-4 sm:p-5 lg:p-6">
-          <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-            <div className="min-w-0">
-              <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
-              <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">{copy.hero.title}</h2>
-              <p className="mt-2 text-sm text-slate-600">{copy.hero.subtitle}</p>
+    <div className="space-y-5">
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.42, ease: "easeOut" }}
+      >
+        <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[26px]">
+          <CardContent className="p-4 sm:p-6 lg:p-7">
+            <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+              <div className="min-w-0">
+                <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
+                <h2 className="mt-2 text-[1.9rem] font-bold leading-tight tracking-tight text-slate-900 sm:text-[2.35rem]">
+                  {copy.hero.title}
+                </h2>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-[0.95rem]">
+                  {copy.hero.subtitle}
+                </p>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Badge className="fh-pill fh-pill-emerald hover:bg-emerald-50">
-                  {copy.badges.primary}
-                </Badge>
-                <Badge className="fh-pill fh-pill-slate hover:bg-slate-100">
-                  {copy.badges.secondary}
-                </Badge>
-                <Badge className="fh-pill fh-pill-slate hover:bg-white">
-                  {copy.badges.tertiary}
-                </Badge>
-              </div>
-            </div>
-
-            <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[420px]">
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                <div className="fh-inline-action inline-flex items-center rounded-xl p-1">
-                  <button
-                    type="button"
-                    onClick={() => setWindowView("today")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "today" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    Today
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setWindowView("week")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "week" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    This week
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setWindowView("month")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "month" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-                    }`}
-                  >
-                    This month
-                  </button>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Badge className="fh-pill fh-pill-emerald hover:bg-emerald-50">
+                    {copy.badges.primary}
+                  </Badge>
+                  <Badge className="fh-pill fh-pill-slate hover:bg-slate-100">
+                    {copy.badges.secondary}
+                  </Badge>
+                  <Badge className="fh-pill fh-pill-slate hover:bg-white">
+                    {copy.badges.tertiary}
+                  </Badge>
                 </div>
-
-                {topActions.map((item) => (
-                  <Button
-                    key={item.id}
-                    variant={item.variant}
-                    data-action-label={item.actionLabel}
-                    data-action-id={item.actionId}
-                    className={`h-10 rounded-xl px-4 text-sm ${ctaPriorityClass(item.priority)}`}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
               </div>
-            </div>
-          </div>
 
-          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {modules.map((module) => {
-              const Icon = module.icon;
-              return (
-                <button
-                  key={module.id}
-                  type="button"
-                  data-action-label={module.actionLabel}
-                  data-action-id={module.actionId}
-                    className="group w-full rounded-2xl border border-[var(--border)] bg-white/90 p-4 text-left transition hover:-translate-y-[1px] hover:border-[#c8f0e0] hover:bg-white"
-                  >
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <Sparkles className="h-4 w-4 text-slate-400 transition group-hover:text-[#049e6d]" />
+              <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[420px]">
+                <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
+                  <div className="fh-inline-action inline-flex items-center rounded-xl p-1">
+                    <button
+                      type="button"
+                      onClick={() => setWindowView("today")}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                        windowView === "today" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      Today
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setWindowView("week")}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                        windowView === "week" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      This week
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setWindowView("month")}
+                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
+                        windowView === "month" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      }`}
+                    >
+                      This month
+                    </button>
                   </div>
 
-                  <div className="mt-3 text-sm font-semibold text-slate-900">{module.title}</div>
-                  <div className="mt-1 text-xs text-slate-500">{module.description}</div>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="mt-4 grid gap-3 lg:grid-cols-3">
-            {focusMetrics.map((metric) => (
-              <DashboardStatCard
-                key={metric.id}
-                label={metric.label}
-                value={metric.value}
-                badge={metric.badge}
-                hint={metric.note}
-                tone={metric.tone}
-                progress={metric.progress}
-              />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-        {signalMetrics.map((metric) => (
-          <Card key={metric.id} className="fh-panel-card rounded-2xl">
-            <CardContent className="p-4">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{metric.label}</div>
-                  <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
+                  {topActions.map((item) => (
+                    <Button
+                      key={item.id}
+                      variant={item.variant}
+                      data-action-label={item.actionLabel}
+                      data-action-id={item.actionId}
+                      className={`fh-interactive-card h-10 rounded-xl px-4 text-sm ${ctaPriorityClass(item.priority)}`}
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
                 </div>
-                <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${signalToneClass(metric.tone)}`}>
-                  {metric.delta}
-                </span>
               </div>
+            </div>
 
-              <div className="mt-3 h-8 rounded-xl bg-slate-100/90 p-1">
-                <div className={`h-full rounded-lg ${signalBarClass(metric)}`} />
-              </div>
-            </CardContent>
-          </Card>
+            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {modules.map((module, index) => {
+                const Icon = module.icon;
+                return (
+                  <motion.button
+                    key={module.id}
+                    type="button"
+                    data-action-label={module.actionLabel}
+                    data-action-id={module.actionId}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.06 + index * 0.05, duration: 0.28, ease: "easeOut" }}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.996 }}
+                    className="fh-interactive-card fh-subcard group min-h-[146px] w-full rounded-2xl p-4 text-left transition hover:border-[#c8f0e0] hover:bg-white"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <Sparkles className="h-4 w-4 text-slate-400 transition group-hover:text-[#049e6d]" />
+                    </div>
+
+                    <div className="mt-3 text-base font-semibold leading-tight text-slate-900">{module.title}</div>
+                    <div className="mt-1 text-xs leading-relaxed text-slate-500">{module.description}</div>
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            <div className="mt-4 grid gap-3 md:grid-cols-3">
+              {focusMetrics.map((metric) => (
+                <DashboardStatCard
+                  key={metric.id}
+                  label={metric.label}
+                  value={metric.value}
+                  badge={metric.badge}
+                  hint={metric.note}
+                  tone={metric.tone}
+                  progress={metric.progress}
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.14, duration: 0.35, ease: "easeOut" }}
+        className="grid gap-3 md:grid-cols-2 xl:grid-cols-4"
+      >
+        {signalMetrics.map((metric, index) => (
+          <motion.div
+            key={metric.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18 + index * 0.04, duration: 0.24, ease: "easeOut" }}
+          >
+            <Card className="fh-interactive-card fh-surface-card rounded-2xl">
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="fh-label text-slate-400">{metric.label}</div>
+                    <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
+                  </div>
+                  <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${signalToneClass(metric.tone)}`}>
+                    {metric.delta}
+                  </span>
+                </div>
+
+                <div className="mt-3 h-8 rounded-xl bg-slate-100/90 p-1">
+                  <div className={`h-full rounded-lg ${signalBarClass(metric)}`} />
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]">
-        <Card className="fh-panel-card rounded-2xl">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.34, ease: "easeOut" }}
+        className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]"
+      >
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Your Priorities"
@@ -437,7 +470,7 @@ export default function FaithHubHome() {
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Today's Agenda"
@@ -457,7 +490,7 @@ export default function FaithHubHome() {
 
             <div className="space-y-2">
               {agenda.map((item) => (
-                <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white p-3 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
+                <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="flex items-start gap-3">
                     <div className="inline-flex h-7 min-w-[2.6rem] items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
                       {item.time}
@@ -471,8 +504,8 @@ export default function FaithHubHome() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Completion</div>
+            <div className="fh-subcard-muted mt-3 rounded-xl p-3">
+              <div className="fh-label text-slate-400">Completion</div>
               <div className="mt-1 text-2xl font-bold text-slate-900">61%</div>
               <div className="mt-2 h-1.5 rounded-full bg-slate-200">
                 <div className="h-full w-[61%] rounded-full bg-[#03cd8c]" />
@@ -482,7 +515,7 @@ export default function FaithHubHome() {
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -498,9 +531,9 @@ export default function FaithHubHome() {
               }
             />
 
-            <div className="rounded-xl border border-[var(--border)] bg-slate-50 p-3">
+            <div className="fh-subcard-muted rounded-xl p-3">
               <div className="mb-2 flex items-center justify-between gap-2">
-                <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Highlights</div>
+                <div className="fh-label text-slate-400">Highlights</div>
                 <MessageSquare className="h-4 w-4 text-slate-400" />
               </div>
 
@@ -518,8 +551,8 @@ export default function FaithHubHome() {
               </div>
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insight</div>
+            <div className="fh-subcard-accent mt-3 rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Live sessions with early joiners retain higher engagement</div>
               <p className="mt-1 text-xs text-slate-600">
                 Joining a waiting room 10 minutes early increases completion and chat participation.
@@ -527,9 +560,14 @@ export default function FaithHubHome() {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.26, duration: 0.32, ease: "easeOut" }}
+        className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
+      >
         <DashboardStatCard
           label="Live sessions"
           value="7"
@@ -558,7 +596,7 @@ export default function FaithHubHome() {
           tone="emerald"
           icon={<HeartHandshake className="h-4 w-4" />}
         />
-      </div>
+      </motion.div>
 
       <UserActionBar
         actions={[
@@ -586,11 +624,3 @@ export default function FaithHubHome() {
     </div>
   );
 }
-
-
-
-
-
-
-
-

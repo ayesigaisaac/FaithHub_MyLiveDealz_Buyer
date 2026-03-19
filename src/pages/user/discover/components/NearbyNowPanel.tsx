@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { CheckCircle2, Clock3 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ type NearbyNowPanelProps = {
 
 export default function NearbyNowPanel({ institutions }: NearbyNowPanelProps) {
   return (
-    <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+    <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
       <CardContent className="fh-pad-panel">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>

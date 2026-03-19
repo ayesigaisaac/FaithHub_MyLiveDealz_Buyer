@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Building2,
   CalendarDays,
@@ -84,7 +84,7 @@ export default function InstitutionProfile() {
 
   return (
     <div className="space-y-4">
-      <Card className="fh-hero-card overflow-hidden rounded-[24px]">
+      <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[24px]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
@@ -217,7 +217,7 @@ export default function InstitutionProfile() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.2fr_1fr_1fr]">
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="About & Leaders"
@@ -235,7 +235,7 @@ export default function InstitutionProfile() {
 
             <div className="space-y-2">
               {leaders.map((leader) => (
-                <div key={leader.name} className="rounded-xl border border-[var(--border)] bg-white p-3 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
+                <div key={leader.name} className="fh-subcard rounded-xl p-3">
                   <div className="text-sm font-semibold text-slate-900">{leader.name}</div>
                   <div className="mt-1 text-xs text-slate-500">{leader.role}</div>
                   <div className="mt-1 text-xs text-slate-600">{leader.specialty}</div>
@@ -245,7 +245,7 @@ export default function InstitutionProfile() {
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Service Schedule"
@@ -264,7 +264,7 @@ export default function InstitutionProfile() {
 
             <div className="space-y-2">
               {serviceSchedule.map((item) => (
-                <div key={`${item.day}-${item.time}`} className="rounded-xl border border-[var(--border)] bg-white p-3 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
+                <div key={`${item.day}-${item.time}`} className="fh-subcard rounded-xl p-3">
                   <div className="text-sm font-semibold text-slate-900">{item.day}</div>
                   <div className="mt-1 text-xs text-slate-500">{item.time}</div>
                   <div className="mt-1 text-xs text-slate-600">{item.note}</div>
@@ -272,15 +272,15 @@ export default function InstitutionProfile() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Next service</div>
+            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Next service</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">{nextService.day}</div>
               <div className="mt-1 text-xs text-slate-500">{nextService.time}</div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -325,8 +325,8 @@ export default function InstitutionProfile() {
               />
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Trust insight</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Trust insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Verified leadership and clear schedules improve live participation</div>
               <p className="mt-1 text-xs text-slate-600">
                 Communities with transparent timing and leader profiles retain more returning users.
@@ -337,7 +337,7 @@ export default function InstitutionProfile() {
       </div>
 
       <div className="grid gap-3 md:grid-cols-2">
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader title="Series Highlights" subtitle="Current institution content pathways" />
             <div className="space-y-2">
@@ -353,7 +353,7 @@ export default function InstitutionProfile() {
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader title="Event Highlights" subtitle="Institution events and access details" />
             <div className="space-y-2">
@@ -409,13 +409,13 @@ function ModuleCard({
     <button
       type="button"
       data-action-label={actionLabel}
-      className="group w-full rounded-2xl border border-[var(--border)] bg-white/90 p-4 text-left transition hover:-translate-y-[1px] hover:border-[#c8f0e0] hover:bg-white"
+      className="fh-interactive-card fh-subcard group w-full rounded-2xl p-4 text-left"
     >
       <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
         {icon}
       </div>
-      <div className="mt-3 text-sm font-semibold text-slate-900">{title}</div>
-      <div className="mt-1 text-xs text-slate-500">{description}</div>
+      <div className="mt-3 text-sm font-semibold tracking-tight text-slate-900">{title}</div>
+      <div className="mt-1 fh-body-tight text-slate-500">{description}</div>
     </button>
   );
 }

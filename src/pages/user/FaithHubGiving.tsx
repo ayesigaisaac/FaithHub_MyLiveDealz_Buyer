@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   CheckCircle2,
   HeartHandshake,
@@ -61,7 +61,7 @@ export default function FaithHubGiving() {
 
   return (
     <div className="space-y-4">
-      <Card className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(247,127,0,0.12),rgba(248,251,252,0.94)_34%,rgba(3,205,140,0.12))] shadow-[var(--shadow-soft)]">
+      <Card className="fh-interactive-card overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(247,127,0,0.12),rgba(248,251,252,0.94)_34%,rgba(3,205,140,0.12))] shadow-[var(--shadow-soft)]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
@@ -158,7 +158,7 @@ export default function FaithHubGiving() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]">
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Fund Selector"
@@ -200,7 +200,7 @@ export default function FaithHubGiving() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Payment Summary"
@@ -256,7 +256,7 @@ export default function FaithHubGiving() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Trust & Actions"
@@ -296,8 +296,8 @@ export default function FaithHubGiving() {
               />
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Trust insight</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Trust insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Transparent funds improve recurring commitment</div>
               <p className="mt-1 text-xs text-slate-600">
                 Users who review fund progress before payment are more likely to continue monthly support.

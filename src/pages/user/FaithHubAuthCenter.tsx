@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -102,7 +102,7 @@ export default function FaithHubAuthCenter() {
   const isPasskey = method === "passkey";
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -172,7 +172,7 @@ export default function FaithHubAuthCenter() {
               </div>
 
               <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
-                <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-white shadow-sm">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-3">
                       <div>
@@ -225,7 +225,7 @@ export default function FaithHubAuthCenter() {
                       )}
 
                       {(tab === "signin" || tab === "recovery") && !isPasskey && (
-                        <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                        <div className="fh-subcard-muted rounded-[24px] p-4">
                           <div className="mb-3 flex items-center justify-between gap-3">
                             <div>
                               <div className="text-sm font-semibold text-slate-900">One-time passcode</div>
@@ -334,7 +334,7 @@ export default function FaithHubAuthCenter() {
                 </Card>
 
                 <div className="space-y-4">
-                  <Card className="rounded-[28px] border-slate-200 bg-slate-950 text-white shadow-sm">
+                  <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-slate-950 text-white shadow-sm">
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
@@ -359,7 +359,7 @@ export default function FaithHubAuthCenter() {
                     </CardContent>
                   </Card>
 
-                  <Card className="rounded-[28px] border-slate-200 bg-white shadow-sm">
+                  <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-white shadow-sm">
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
@@ -385,7 +385,7 @@ export default function FaithHubAuthCenter() {
                   </Card>
 
                   {offlineLibraryEnabled && (
-                    <Card className="rounded-[28px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
+                    <Card className="fh-interactive-card rounded-[28px] border border-[#f77f00]/15 bg-[#fffaf3] shadow-sm">
                       <CardContent className="fh-pad-panel">
                         <div className="mb-3 flex items-center gap-3">
                           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#f77f00]/10 text-[#f77f00]">
@@ -413,7 +413,7 @@ export default function FaithHubAuthCenter() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="flex flex-col gap-4"
           >
-            <Card className="overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#22d39f] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#22d39f] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="mb-5 max-w-xl space-y-3 text-white">
                   <div className="fh-eyebrow text-white/90">Accessible and premium-ready</div>
@@ -447,7 +447,7 @@ export default function FaithHubAuthCenter() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/90 shadow-sm">
+            <Card className="fh-interactive-card rounded-[32px] border border-white/60 bg-white/90 shadow-sm">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>

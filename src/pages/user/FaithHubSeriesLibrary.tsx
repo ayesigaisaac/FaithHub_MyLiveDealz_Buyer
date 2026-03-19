@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Bell,
   BookOpen,
@@ -179,42 +179,42 @@ export default function FaithHubSeriesLibrary() {
 
   return (
     <div className="space-y-4">
-      <Card className="fh-hero-card overflow-hidden rounded-[24px]">
+      <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[24px]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
               <div className="fh-label text-slate-500">Series Library</div>
               <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">FaithHub Series</h2>
-              <p className="mt-2 text-sm text-slate-600">Discover and continue structured teaching journeys across institutions.</p>
+              <p className="mt-2 text-base text-slate-600">Discover and continue structured teaching journeys across institutions.</p>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                <Badge className="fh-pill fh-pill-emerald hover:bg-emerald-50">
+                <Badge className="fh-pill fh-pill-emerald">
                   {filteredSeries.length} series visible
                 </Badge>
-                <Badge className="fh-pill fh-pill-slate hover:bg-slate-100">
+                <Badge className="fh-pill fh-pill-slate">
                   {premiumCount} premium
                 </Badge>
-                <Badge className="fh-pill fh-pill-orange hover:bg-white">
+                <Badge className="fh-pill fh-pill-orange">
                   {sponsoredCount} sponsored
                 </Badge>
               </div>
             </div>
 
             <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[430px]">
-              <label className="flex min-h-[42px] items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3 text-sm text-slate-500">
+              <label className="flex min-h-[42px] items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3 text-base text-slate-500">
                 <Search className="h-4 w-4 shrink-0" />
                 <input
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Search series or institution"
-                  className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                  className="w-full border-0 bg-transparent text-base text-slate-700 outline-none placeholder:text-slate-400"
                 />
               </label>
 
               <div className="flex flex-wrap items-center justify-end gap-2">
                 <Button
                   variant="outline"
-                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-base text-slate-700"
                   onClick={() => setSmartReminders((prev) => !prev)}
                 >
                   <CalendarDays className="mr-1.5 h-4 w-4" />
@@ -222,7 +222,7 @@ export default function FaithHubSeriesLibrary() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-base text-slate-700"
                   onClick={() => setOfflineMode((prev) => !prev)}
                 >
                   <Download className="mr-1.5 h-4 w-4" />
@@ -230,7 +230,7 @@ export default function FaithHubSeriesLibrary() {
                 </Button>
                 <Button
                   data-action-label="Open series"
-                  className="h-10 rounded-xl bg-[#03cd8c] px-4 text-sm text-white hover:bg-[#03cd8c]"
+                  className="h-10 rounded-xl bg-[#03cd8c] px-4 text-base text-white"
                 >
                   Open series
                 </Button>
@@ -278,7 +278,7 @@ export default function FaithHubSeriesLibrary() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.25fr_0.95fr_1fr]">
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Series Results"
@@ -287,7 +287,7 @@ export default function FaithHubSeriesLibrary() {
                 <button
                   type="button"
                   data-action-label="Open series"
-                  className="text-sm font-semibold text-slate-500 transition hover:text-slate-800"
+                  className="text-base font-semibold text-slate-500"
                 >
                   Open series
                 </button>
@@ -296,11 +296,11 @@ export default function FaithHubSeriesLibrary() {
 
             <div className="grid gap-2 sm:grid-cols-2">
               {filteredSeries.map((item) => (
-                <div key={item.id} className="rounded-xl border border-[var(--border)] bg-white p-3 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
+                <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="mb-2 flex items-start justify-between gap-2">
                     <div>
-                      <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                      <div className="mt-1 text-xs text-slate-500">{item.institution}</div>
+                      <div className="text-base font-semibold text-slate-900">{item.title}</div>
+                      <div className="mt-1 text-sm text-slate-500">{item.institution}</div>
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       {item.premium ? (
@@ -312,13 +312,13 @@ export default function FaithHubSeriesLibrary() {
                     </div>
                   </div>
 
-                  <div className="text-xs text-slate-500">{item.topic} · {item.language} · {item.audience}</div>
-                  <div className="mt-1 text-xs text-slate-600">{item.updated}</div>
+                  <div className="text-sm text-slate-500">{item.topic} - {item.language} - {item.audience}</div>
+                  <div className="mt-1 text-sm text-slate-600">{item.updated}</div>
 
                   <div className="mt-2 h-1.5 rounded-full bg-slate-200">
                     <div className="h-full rounded-full bg-[#03cd8c]" style={{ width: `${item.progress}%` }} />
                   </div>
-                  <div className="mt-1 text-xs text-slate-500">Progress {item.progress}% · {item.episodes} episodes</div>
+                  <div className="mt-1 text-sm text-slate-500">Progress {item.progress}% - {item.episodes} episodes</div>
 
                   <div className="mt-2 flex flex-wrap gap-1.5 text-[11px]">
                     {item.trailer ? (
@@ -336,7 +336,7 @@ export default function FaithHubSeriesLibrary() {
                   <div className="mt-3 flex items-center justify-between gap-2">
                     <Button
                       data-action-label="Open series"
-                      className="h-9 rounded-xl bg-[#03cd8c] px-3 text-xs font-semibold text-white hover:bg-[#03cd8c]"
+                      className="h-9 rounded-xl bg-[#03cd8c] px-3 text-sm font-semibold text-white"
                     >
                       Open series
                     </Button>
@@ -354,7 +354,7 @@ export default function FaithHubSeriesLibrary() {
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Downloaded Assets"
@@ -363,29 +363,29 @@ export default function FaithHubSeriesLibrary() {
 
             <div className="space-y-2">
               {downloadedAssets.map((item) => (
-                <div key={item} className="rounded-xl border border-[var(--border)] bg-white p-3 shadow-[0_1px_0_rgba(15,23,42,0.03)]">
+                <div key={item} className="fh-subcard rounded-xl p-3">
                   <div className="flex items-start gap-2">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
                       <Download className="h-4 w-4" />
                     </span>
                     <div>
-                      <div className="text-sm font-semibold text-slate-900">{item}</div>
-                      <div className="mt-1 text-xs text-slate-500">Offline ready · Cached successfully</div>
+                      <div className="text-base font-semibold text-slate-900">{item}</div>
+                      <div className="mt-1 text-sm text-slate-500">Offline ready - Cached successfully</div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Smart reminders</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">{smartReminders ? "Enabled" : "Disabled"}</div>
-              <div className="mt-1 text-xs text-slate-500">Get nudges based on your watch progression and reading plan checkpoints.</div>
+            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Smart reminders</div>
+              <div className="mt-1 text-base font-semibold text-slate-900">{smartReminders ? "Enabled" : "Disabled"}</div>
+              <div className="mt-1 text-sm text-slate-500">Get nudges based on your watch progression and reading plan checkpoints.</div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="fh-panel-card rounded-2xl">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -425,10 +425,10 @@ export default function FaithHubSeriesLibrary() {
               />
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Insight</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">Series with reading plans retain more returning viewers</div>
-              <p className="mt-1 text-xs text-slate-600">
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Insight</div>
+              <div className="mt-1 text-base font-semibold text-slate-900">Series with reading plans retain more returning viewers</div>
+              <p className="mt-1 text-sm text-slate-600">
                 Enabling reminders around reading checkpoints improves replay completion.
               </p>
             </div>
@@ -503,12 +503,12 @@ function SelectFilter({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+    <label className="rounded-xl border border-[var(--border)] bg-white px-3 py-2 fh-label text-slate-500">
       {label}
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-2 w-full rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-sm font-medium tracking-normal text-slate-700"
+        className="mt-2 w-full rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-base font-medium tracking-normal text-slate-700"
       >
         {options.map((option) => (
           <option key={option} value={option}>

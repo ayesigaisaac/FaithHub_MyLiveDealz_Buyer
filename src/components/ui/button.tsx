@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 import type { SxProps, Theme } from "@mui/material/styles";
 
@@ -21,9 +21,9 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
         boxShadow: "none",
         backgroundColor: "var(--surface)",
         "&:hover": {
-          borderColor: "var(--accent)",
-          backgroundColor: "var(--accent-soft)",
-          boxShadow: "var(--shadow-soft)",
+          borderColor: "var(--border)",
+          backgroundColor: "var(--surface)",
+          boxShadow: "none",
         },
       },
     };
@@ -36,8 +36,8 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
         textTransform: "none",
         color: "var(--text-secondary)",
         "&:hover": {
-          backgroundColor: "var(--accent-soft)",
-          color: "var(--text-primary)",
+          backgroundColor: "transparent",
+          color: "var(--text-secondary)",
         },
       },
     };
@@ -52,8 +52,8 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
       color: "#ffffff",
       "&:hover": {
         backgroundColor: "var(--accent)",
-        filter: "brightness(0.98)",
-        boxShadow: "0 8px 18px rgba(16, 185, 129, 0.18)",
+        filter: "none",
+        boxShadow: "var(--shadow-soft)",
       },
     },
   };
@@ -62,24 +62,24 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
 function resolveSize(uiSize: UiSize): SxProps<Theme> {
   if (uiSize === "sm") {
     return {
-      minHeight: 40,
-      paddingInline: "14px",
-      fontSize: "0.88rem",
+      minHeight: { xs: 42, sm: 40 },
+      px: { xs: 1.5, sm: 1.75 },
+      fontSize: { xs: "0.84rem", sm: "0.88rem" },
     };
   }
 
   if (uiSize === "lg") {
     return {
-      minHeight: 50,
-      paddingInline: "20px",
-      fontSize: "0.98rem",
+      minHeight: { xs: 50, sm: 50 },
+      px: { xs: 2.25, sm: 2.5 },
+      fontSize: { xs: "0.94rem", sm: "0.98rem" },
     };
   }
 
   return {
-    minHeight: 44,
-    paddingInline: "16px",
-    fontSize: "0.93rem",
+    minHeight: { xs: 46, sm: 44 },
+    px: { xs: 1.75, sm: 2 },
+    fontSize: { xs: "0.89rem", sm: "0.93rem" },
   };
 }
 
@@ -104,6 +104,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
           lineHeight: 1.2,
           whiteSpace: "nowrap",
           transition: "all 180ms ease",
+          "@media (max-width:640px)": {
+            borderRadius: "11px",
+          },
         },
         sizeStyles,
         resolved.sx,

@@ -52,12 +52,12 @@ const qaQueue = [
 
 function SectionHeader({ title, subtitle, action = "See all" }) {
   return (
-    <div className="mb-4 flex items-center justify-between gap-3">
+    <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
         <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
-      <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button variant="ghost" className="shrink-0 rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}
       </Button>
     </div>
@@ -84,13 +84,13 @@ export default function FaithHubLivePlayer() {
   const ConnectionIcon = connectionIcon;
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -120,7 +120,12 @@ export default function FaithHubLivePlayer() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08, duration: 0.34, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-hero-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -132,7 +137,7 @@ export default function FaithHubLivePlayer() {
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
                     <div className="space-y-4">
                       <div className="fh-kicker text-white/90">Youth Impact Night  Live now</div>
-                      <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                      <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         A full live faith experience with playback control, translation, interaction, moderation, clips, and premium engagement lanes.
                       </h1>
                       <p className="max-w-2xl fh-body text-white/90 sm:text-base">
@@ -156,7 +161,7 @@ export default function FaithHubLivePlayer() {
                     </div>
 
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-40 rounded-[22px] bg-white/20" />
+                      <div className="mb-4 h-36 rounded-[22px] bg-white/20 sm:h-40" />
                       <div className="mb-3 text-sm font-semibold text-white">Quick playback state</div>
                       <div className="space-y-2 text-sm text-white/85">
                         <div className="flex items-center justify-between"><span>Quality</span><span>{quality}</span></div>
@@ -169,8 +174,14 @@ export default function FaithHubLivePlayer() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.14, duration: 0.34, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Player and controls"
@@ -178,8 +189,8 @@ export default function FaithHubLivePlayer() {
                 />
 
                 <div className="space-y-4">
-                  <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="mb-4 h-[360px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                  <div className="fh-subcard rounded-[28px] p-4">
+                    <div className="mb-4 h-[240px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200 sm:h-[300px] lg:h-[360px]" />
                     <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
                       <select
                         value={quality}
@@ -246,7 +257,7 @@ export default function FaithHubLivePlayer() {
                   </div>
 
                   <div className="grid gap-4 lg:grid-cols-[0.52fr_0.48fr]">
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <MessageSquare className="h-4 w-4 text-[#03cd8c]" /> Live chat
                       </div>
@@ -267,7 +278,7 @@ export default function FaithHubLivePlayer() {
                       </div>
                     </div>
 
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <BadgeCheck className="h-4 w-4 text-[#03cd8c]" /> Member-only Q&A queue
                       </div>
@@ -300,6 +311,7 @@ export default function FaithHubLivePlayer() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -308,7 +320,12 @@ export default function FaithHubLivePlayer() {
             transition={{ delay: 0.12, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18, duration: 0.32, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="AI highlights and takeaways"
@@ -339,10 +356,16 @@ export default function FaithHubLivePlayer() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.22, duration: 0.32, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
-                <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <div className="fh-eyebrow text-[#f77f00]">Premium engagement</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Badges, member lanes, and ticket validation</div>
@@ -350,17 +373,23 @@ export default function FaithHubLivePlayer() {
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Monetized live layer</Badge>
                 </div>
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="fh-subcard-warm rounded-[24px] p-4">
                     Paid membership badges can visually identify supporters and subscribers in chat without disrupting the main stream experience.
                   </div>
-                  <div className="rounded-[24px] border border-[#f77f00]/15 bg-white p-4">
+                  <div className="fh-subcard-warm rounded-[24px] p-4">
                     Ticket validation and member-only Q&A lanes help support more structured premium or event-based live experiences.
                   </div>
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.26, duration: 0.32, ease: "easeOut" }}
+            >
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Auto-retry and fallback"
@@ -368,10 +397,10 @@ export default function FaithHubLivePlayer() {
                   action="Diagnostics"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     If the connection drops, the player should auto-retry, reduce bitrate, and preserve the current state where possible.
                   </div>
-                  <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                  <div className="fh-subcard-muted rounded-[24px] p-4">
                     Users should be able to switch into audio-only mode at any time without leaving the session.
                   </div>
                   <div className="grid gap-3 sm:grid-cols-3">
@@ -400,6 +429,7 @@ export default function FaithHubLivePlayer() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </motion.div>
         </div>
       </div>

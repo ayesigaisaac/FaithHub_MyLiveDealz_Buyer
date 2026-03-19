@@ -15,7 +15,7 @@ export default function HomeHero({
   recommendationCount,
 }: HomeHeroProps) {
   return (
-    <Card className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-gradient-to-br from-[#f8fafc] via-[#f5f7fa] to-[#edf6f2] shadow-[0_16px_40px_-24px_rgba(15,23,42,0.28)]">
+    <Card className="fh-interactive-card fh-hero-card relative overflow-hidden rounded-[28px]">
       <CardContent className="fh-pad-hero">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.1),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(16,185,129,0.08),transparent_28%)]" />
 
@@ -34,7 +34,7 @@ export default function HomeHero({
               <Sparkles className="h-4 w-4 text-[#0ea5e9]" />
               FaithHub Home
             </div>
-            <h1 className="max-w-[22ch] break-normal text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
+            <h1 className="max-w-[22ch] break-normal text-4xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-5xl">
               Continue your faith journey from one clear, action-ready home.
             </h1>
             <p className="max-w-2xl fh-body text-slate-600 sm:text-base">
@@ -43,12 +43,12 @@ export default function HomeHero({
             </p>
           </div>
 
-          <div className="mt-6 rounded-[20px] border border-slate-200 bg-white p-4 shadow-[0_4px_12px_rgba(15,23,42,0.04)]">
-            <div className="fh-eyebrow text-slate-500">
+          <div className="fh-subcard mt-6 rounded-[20px] p-4">
+            <div className="fh-label text-slate-500">
               Current focus
             </div>
             <div className="mt-2 text-xl font-semibold text-slate-900">{activeIntentTitle}</div>
-            <div className="mt-1 text-sm text-slate-600">{activeIntentDescription}</div>
+            <div className="mt-1 fh-body-tight text-slate-600">{activeIntentDescription}</div>
           </div>
         </div>
       </CardContent>

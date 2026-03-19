@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -71,6 +71,23 @@
   --fh-scroll-track: #dde7ef;
   --fh-scroll-thumb: #6f859b;
   --fh-scroll-thumb-hover: #546b82;
+  --fh-page-canvas-grad:
+    radial-gradient(circle at 4% -6%, rgba(3, 205, 140, 0.09), transparent 34%),
+    radial-gradient(circle at 96% -6%, rgba(247, 127, 0, 0.1), transparent 30%),
+    linear-gradient(180deg, #f4f7fa 0%, #edf3f7 100%);
+  --fh-page-header-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 251, 253, 0.9));
+  --fh-page-header-border: rgba(216, 225, 233, 0.9);
+  --fh-page-header-shadow: 0 14px 34px rgba(15, 23, 42, 0.09);
+  --fh-surface-card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(248, 251, 253, 0.96));
+  --fh-surface-card-border: rgba(215, 224, 233, 0.92);
+  --fh-surface-card-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+  --fh-surface-card-shadow-hover: 0 24px 52px rgba(15, 23, 42, 0.13);
+  --fh-surface-subtle-bg: #f8fafd;
+  --fh-surface-subtle-border: #d9e2ec;
+  --fh-surface-accent-bg: #ecfff8;
+  --fh-surface-accent-border: rgba(3, 205, 140, 0.2);
+  --fh-surface-warm-bg: #fffaf3;
+  --fh-surface-warm-border: rgba(247, 127, 0, 0.2);
 
   /* Legacy vars used throughout the codebase. */
   --faithhub-page-bg: var(--bg);
@@ -90,7 +107,7 @@
   --fh-eyebrow-soft-track: 0.12em;
   --fh-text-eyebrow-wide: 0.68rem;
   --fh-eyebrow-wide-track: 0.22em;
-  --fh-text-label: 0.688rem;
+  --fh-text-label: 0.76rem;
   --fh-label-track: 0.14em;
   --fh-text-kicker: 0.9rem;
   --fh-kicker-track: 0.24em;
@@ -102,10 +119,15 @@
   --fh-kicker-wide-track: 0.28em;
   --fh-text-kicker-xl: 1rem;
   --fh-kicker-xl-track: 0.18em;
-  --fh-text-body: 0.95rem;
-  --fh-text-body-tight: 0.92rem;
+  --fh-text-body: 1rem;
+  --fh-text-body-tight: 0.98rem;
   --fh-body-leading: 1.75;
   --fh-body-tight-leading: 1.62;
+  --fh-motion-fast: 180ms;
+  --fh-motion-base: 260ms;
+  --fh-motion-slow: 420ms;
+  --fh-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --fh-ease-emphasis: cubic-bezier(0.2, 0.85, 0.32, 1.08);
 }
 
 html,
@@ -292,14 +314,31 @@ li {
   line-height: var(--fh-body-tight-leading);
 }
 
+.fh-section-title {
+  font-size: clamp(1.05rem, 0.98rem + 0.48vw, 1.32rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.fh-section-subtitle {
+  font-size: 0.98rem;
+  line-height: 1.58;
+}
+
+.fh-stat-value {
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
 .fh-shell-topbar {
   background: var(--fh-shell-topbar);
 }
 
 .fh-shell-control {
-  border: 1px solid var(--border);
-  background: var(--card);
-  box-shadow: var(--shadow-soft);
+  border: 1px solid color-mix(in srgb, var(--border) 86%, #ffffff 14%);
+  background: color-mix(in srgb, var(--card) 92%, #ffffff 8%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
@@ -308,11 +347,10 @@ li {
 }
 
 .fh-shell-control:hover {
-  background: var(--surface);
-  transform: translateY(-1px);
+  transform: none;
 }
 
-.fh-panel-card {
+.fh-surface-card {
   border: 1px solid var(--border);
   background: var(--card);
   box-shadow: var(--fh-shadow-card);
@@ -322,9 +360,9 @@ li {
     border-color 0.2s ease;
 }
 
-.fh-panel-card:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--fh-shadow-card-hover);
+.fh-surface-card:hover {
+  transform: none;
+  box-shadow: var(--fh-shadow-card);
 }
 
 .fh-hero-card {
@@ -369,8 +407,230 @@ li {
 }
 
 .fh-inline-action:hover {
-  background: var(--surface);
-  transform: translateY(-1px);
+  background: var(--card);
+  transform: none;
+}
+
+@keyframes fh-fade-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fh-soft-sheen {
+  0% {
+    opacity: 0;
+    transform: translate3d(-18%, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fh-enter {
+  animation: fh-fade-rise var(--fh-motion-slow) var(--fh-ease-standard) both;
+}
+
+.fh-enter-delay-1 {
+  animation-delay: 70ms;
+}
+
+.fh-enter-delay-2 {
+  animation-delay: 130ms;
+}
+
+.fh-enter-delay-3 {
+  animation-delay: 190ms;
+}
+
+.fh-stagger > * {
+  opacity: 0;
+  animation: fh-fade-rise var(--fh-motion-slow) var(--fh-ease-standard) both;
+}
+
+.fh-stagger > :nth-child(1) {
+  animation-delay: 35ms;
+}
+
+.fh-stagger > :nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.fh-stagger > :nth-child(3) {
+  animation-delay: 125ms;
+}
+
+.fh-stagger > :nth-child(4) {
+  animation-delay: 170ms;
+}
+
+.fh-stagger > :nth-child(5) {
+  animation-delay: 215ms;
+}
+
+.fh-stagger > :nth-child(6) {
+  animation-delay: 260ms;
+}
+
+.fh-interactive-card {
+  position: relative;
+  transition:
+    transform var(--fh-motion-base) var(--fh-ease-emphasis),
+    box-shadow var(--fh-motion-base) var(--fh-ease-standard),
+    border-color var(--fh-motion-fast) var(--fh-ease-standard),
+    background-color var(--fh-motion-fast) var(--fh-ease-standard);
+  will-change: transform;
+}
+
+.fh-interactive-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity var(--fh-motion-fast) var(--fh-ease-standard);
+}
+
+.fh-interactive-card:hover {
+  transform: none;
+}
+
+.fh-interactive-card:hover::after {
+  opacity: 0;
+  animation: none;
+}
+
+.fh-interactive-card:active {
+  transform: translateY(0) scale(0.997);
+}
+
+.fh-page-canvas {
+  background: var(--fh-page-canvas-grad);
+}
+
+.fh-page-header {
+  border: 1px solid var(--fh-page-header-border);
+  background: var(--fh-page-header-bg);
+  box-shadow: var(--fh-page-header-shadow);
+  backdrop-filter: blur(14px);
+}
+
+.fh-surface-card {
+  border: 1px solid var(--fh-surface-card-border);
+  background: var(--fh-surface-card-bg);
+  box-shadow: var(--fh-surface-card-shadow);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+.fh-surface-card:hover {
+  transform: none;
+  box-shadow: var(--fh-surface-card-shadow);
+}
+
+.fh-surface-dark {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(52, 211, 153, 0.16), transparent 42%),
+    linear-gradient(168deg, #0f172a 0%, #0d1628 65%, #0c1524 100%);
+  box-shadow: 0 26px 64px -28px rgba(15, 23, 42, 0.62);
+}
+
+.fh-surface-warm {
+  border: 1px solid var(--fh-surface-warm-border);
+  background:
+    radial-gradient(circle at top right, rgba(247, 127, 0, 0.16), transparent 36%),
+    linear-gradient(180deg, color-mix(in srgb, var(--fh-surface-warm-bg) 88%, #ffffff 12%), var(--fh-surface-warm-bg));
+  box-shadow: 0 16px 36px rgba(180, 93, 18, 0.11);
+}
+
+.fh-subcard {
+  border: 1px solid var(--fh-surface-subtle-border);
+  background: color-mix(in srgb, var(--card) 94%, #ffffff 6%);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+  transition:
+    transform var(--fh-motion-base) var(--fh-ease-emphasis),
+    box-shadow var(--fh-motion-base) var(--fh-ease-standard),
+    border-color var(--fh-motion-fast) var(--fh-ease-standard),
+    background-color var(--fh-motion-fast) var(--fh-ease-standard);
+}
+
+.fh-subcard:hover {
+  transform: none;
+  border-color: var(--fh-surface-subtle-border);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+}
+
+.fh-subcard-muted {
+  border: 1px solid var(--fh-surface-subtle-border);
+  background: var(--fh-surface-subtle-bg);
+  transition:
+    border-color var(--fh-motion-fast) var(--fh-ease-standard),
+    background-color var(--fh-motion-fast) var(--fh-ease-standard),
+    box-shadow var(--fh-motion-base) var(--fh-ease-standard),
+    transform var(--fh-motion-base) var(--fh-ease-emphasis);
+}
+
+.fh-subcard-muted:hover {
+  transform: none;
+  border-color: var(--fh-surface-subtle-border);
+  box-shadow: none;
+}
+
+.fh-subcard-accent {
+  border: 1px solid var(--fh-surface-accent-border);
+  background: var(--fh-surface-accent-bg);
+  transition:
+    border-color var(--fh-motion-fast) var(--fh-ease-standard),
+    box-shadow var(--fh-motion-base) var(--fh-ease-standard),
+    transform var(--fh-motion-base) var(--fh-ease-emphasis);
+}
+
+.fh-subcard-accent:hover {
+  transform: none;
+  border-color: var(--fh-surface-accent-border);
+  box-shadow: none;
+}
+
+.fh-subcard-warm {
+  border: 1px solid var(--fh-surface-warm-border);
+  background: color-mix(in srgb, var(--fh-surface-warm-bg) 82%, #ffffff 18%);
+  transition:
+    border-color var(--fh-motion-fast) var(--fh-ease-standard),
+    box-shadow var(--fh-motion-base) var(--fh-ease-standard),
+    transform var(--fh-motion-base) var(--fh-ease-emphasis);
+}
+
+.fh-subcard-warm:hover {
+  transform: none;
+  border-color: var(--fh-surface-warm-border);
+  box-shadow: none;
+}
+
+.fh-search-shell {
+  border-color: color-mix(in srgb, var(--border) 72%, var(--accent) 28%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card) 90%, #ffffff 10%), var(--card));
+}
+
+.fh-nav-shell-card {
+  border: 1px solid color-mix(in srgb, var(--fh-nav-shell-border) 88%, #ffffff 12%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--fh-nav-shell-bg) 94%, #ffffff 6%), var(--fh-nav-shell-bg));
+  box-shadow: 0 22px 48px rgba(2, 8, 20, 0.2);
+}
+
+.fh-nav-shell-card:hover {
+  box-shadow: 0 22px 48px rgba(2, 8, 20, 0.2);
 }
 
 @media (min-width: 640px) {
@@ -394,7 +654,29 @@ li {
   }
 
   body {
-    font-size: 14px;
+    font-size: 15px;
+  }
+
+  .fh-pad-panel {
+    padding: 1.05rem;
+  }
+
+  .fh-pad-hero {
+    padding: 1.1rem;
+  }
+
+  .fh-pad-surface {
+    padding: 1.1rem;
+  }
+
+  .fh-pill {
+    padding: 0.26rem 0.56rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.07em;
+  }
+
+  .fh-label {
+    letter-spacing: 0.11em;
   }
 
   h1 {
@@ -403,6 +685,17 @@ li {
 
   h2 {
     line-height: 1.1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -474,6 +767,48 @@ li {
   --fh-scroll-track: #152338;
   --fh-scroll-thumb: #5f7fa1;
   --fh-scroll-thumb-hover: #7d9fc2;
+  --fh-page-canvas-grad:
+    radial-gradient(circle at 8% -8%, rgba(52, 211, 153, 0.16), transparent 30%),
+    radial-gradient(circle at 90% -10%, rgba(247, 127, 0, 0.12), transparent 28%),
+    linear-gradient(180deg, #0f1726 0%, #0d141f 100%);
+  --fh-page-header-bg: linear-gradient(180deg, rgba(24, 35, 53, 0.96), rgba(18, 29, 43, 0.92));
+  --fh-page-header-border: rgba(49, 71, 98, 0.82);
+  --fh-page-header-shadow: 0 20px 44px rgba(0, 0, 0, 0.42);
+  --fh-surface-card-bg: linear-gradient(180deg, rgba(27, 41, 61, 0.96), rgba(22, 34, 51, 0.95));
+  --fh-surface-card-border: rgba(52, 76, 106, 0.88);
+  --fh-surface-card-shadow: 0 20px 44px rgba(0, 0, 0, 0.42);
+  --fh-surface-card-shadow-hover: 0 28px 58px rgba(0, 0, 0, 0.56);
+  --fh-surface-subtle-bg: #17263b;
+  --fh-surface-subtle-border: #2f496a;
+  --fh-surface-accent-bg: rgba(14, 207, 156, 0.2);
+  --fh-surface-accent-border: rgba(22, 210, 162, 0.35);
+  --fh-surface-warm-bg: rgba(247, 127, 0, 0.12);
+  --fh-surface-warm-border: rgba(247, 127, 0, 0.32);
+}
+
+[data-theme="dark"] .fh-page-header {
+  border-color: var(--fh-page-header-border);
+  background: var(--fh-page-header-bg);
+}
+
+[data-theme="dark"] .fh-search-shell {
+  border-color: color-mix(in srgb, var(--border) 64%, var(--accent) 36%);
+  background: linear-gradient(180deg, rgba(23, 38, 57, 0.95), rgba(20, 34, 52, 0.92));
+}
+
+[data-theme="dark"] .fh-surface-dark {
+  border-color: rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle at 8% 2%, rgba(52, 211, 153, 0.2), transparent 38%),
+    linear-gradient(170deg, #0d1627 0%, #0c1322 100%);
+}
+
+[data-theme="dark"] .fh-surface-warm {
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+}
+
+[data-theme="dark"] .fh-subcard {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 /* Dark-mode mapping for existing Tailwind utility usage across pages. */

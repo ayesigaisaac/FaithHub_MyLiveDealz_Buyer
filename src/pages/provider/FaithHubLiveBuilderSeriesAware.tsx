@@ -67,13 +67,13 @@ export default function FaithHubLiveBuilderSeriesAware() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -102,7 +102,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="fh-eyebrow text-[#8ef0ca]">Session mode</div>
@@ -131,7 +131,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Premium live controls</div>
@@ -167,7 +167,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -208,7 +208,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.5fr_0.5fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Session setup</div>
@@ -266,7 +266,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
               </Card>
 
               <div className="space-y-4">
-                <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+                <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-4">
                       <div className="text-lg font-semibold text-slate-900">Run of show and speaker roster</div>
@@ -281,7 +281,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
                           ))}
                         </select>
                       </label>
-                      <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-4">
+                      <div className="fh-subcard-muted rounded-[24px] p-4">
                         <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
                           <ClipboardList className="h-4 w-4 text-[#03cd8c]" /> Active run of show
                         </div>
@@ -289,7 +289,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
                       </div>
                       <div className="space-y-3">
                         {speakers.map((speaker) => (
-                          <div key={speaker.name} className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                          <div key={speaker.name} className="fh-subcard rounded-[24px] p-4">
                             <div className="text-sm font-semibold text-slate-900">{speaker.name}</div>
                             <div className="text-xs text-slate-500">{speaker.role}</div>
                             <div className="mt-1 text-sm text-slate-600">{speaker.status}</div>
@@ -303,7 +303,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
             </div>
 
             <div className="grid gap-4 lg:grid-cols-[0.5fr_0.5fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Stream-to-platforms presets</div>
@@ -328,7 +328,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+              <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Monetization and advanced targeting</div>
@@ -353,7 +353,7 @@ export default function FaithHubLiveBuilderSeriesAware() {
                       </div>
                       <div className="text-sm text-slate-600">{subscriptionOnly ? "Only eligible subscribed members may enter this session." : "Session remains open to standard audience rules."}</div>
                     </button>
-                    <div className="rounded-[24px] border border-[#03cd8c]/15 bg-[#ecfff8] p-4 text-sm text-slate-700">
+                    <div className="fh-subcard-accent rounded-[24px] p-4 text-sm text-slate-700">
                       Advanced targeting can combine audience groups, segment rules, language targets, and supporter tiers for higher-precision live distribution.
                     </div>
                     <div className="grid gap-3 sm:grid-cols-2">

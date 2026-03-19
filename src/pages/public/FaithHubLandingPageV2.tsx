@@ -947,7 +947,7 @@ export default function FaithHubLandingPageV2() {
               <div className="fh-scroll-region max-h-[calc(76vh-122px)] space-y-4 overflow-y-auto px-3 py-3">
                 {roleSwitcherGroups.map((group) => (
                   <div key={group.section}>
-                    <div className="px-1 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{group.section}</div>
+                    <div className="px-1 fh-label text-slate-500">{group.section}</div>
                     <div className="mt-2 space-y-2">
                       {group.roles.map((role) => {
                         const active = role.id === activeOperatorRole.id;
@@ -1219,7 +1219,7 @@ export default function FaithHubLandingPageV2() {
           </section>
 
           <section className="grid gap-3 xl:grid-cols-[1.05fr_1.05fr_1fr]">
-            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+            <Card className="fh-interactive-card rounded-2xl border-slate-200 bg-[color:var(--card)]">
               <CardContent className="p-4">
                 <div className="mb-3 flex items-center justify-between">
                   <div>
@@ -1249,7 +1249,7 @@ export default function FaithHubLandingPageV2() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+            <Card className="fh-interactive-card rounded-2xl border-slate-200 bg-[color:var(--card)]">
               <CardContent className="p-4">
                 <div className="mb-3 flex items-center justify-between">
                   <div>
@@ -1322,8 +1322,8 @@ export default function FaithHubLandingPageV2() {
                   ))}
                 </div>
 
-                <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insights</div>
+                <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+                  <div className="fh-label text-emerald-700">Smart insights</div>
                   <div className="mt-1 text-sm font-semibold text-slate-900">Practical signals for better decisions</div>
                   <div className="mt-1 text-xs text-slate-600">{topHighlights[0].text}</div>
                 </div>
@@ -1372,7 +1372,7 @@ export default function FaithHubLandingPageV2() {
           </section>
 
           <section id="platform" className="grid gap-3 xl:grid-cols-2">
-            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+            <Card className="fh-interactive-card rounded-2xl border-slate-200 bg-[color:var(--card)]">
               <CardContent className="p-4">
                 <div className="mb-3 text-lg font-semibold text-slate-900">Platform architecture</div>
                 <div className="space-y-2">
@@ -1427,7 +1427,7 @@ export default function FaithHubLandingPageV2() {
           </section>
 
           <section id="faq" className="grid gap-3 xl:grid-cols-[1.1fr_0.9fr]">
-            <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+            <Card className="fh-interactive-card rounded-2xl border-slate-200 bg-[color:var(--card)]">
               <CardContent className="p-4">
                 <div className="mb-3 text-lg font-semibold text-slate-900">FAQ</div>
                 <div className="space-y-2">
@@ -1468,7 +1468,7 @@ export default function FaithHubLandingPageV2() {
                 </div>
 
                 <div className="mt-3 rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
-                  <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Device readiness</div>
+                  <div className="fh-label text-slate-500">Device readiness</div>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {deviceTabs.map((item) => (
                       <button
@@ -1509,7 +1509,7 @@ export default function FaithHubLandingPageV2() {
             </Card>
           </section>
 
-          <Card className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
+          <Card className="fh-interactive-card rounded-2xl border-slate-200 bg-[color:var(--card)]">
             <CardContent className="p-4">
               <div className="mb-3 text-lg font-semibold text-slate-900">Current focus context</div>
               <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-4">
@@ -1555,7 +1555,7 @@ function LandingSidebarPanel({
   compactHeight?: boolean;
 }) {
   return (
-    <Card className="h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_20px_40px_rgba(2,8,20,0.18)]">
+    <Card className="fh-interactive-card h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_20px_40px_rgba(2,8,20,0.18)]">
       <CardContent
         className={`flex min-h-0 flex-col gap-2.5 p-2.5 ${compactHeight ? "max-h-[78vh]" : "h-full"}`}
       >
@@ -1640,7 +1640,7 @@ function LandingSidebarRail({
   onExpand: () => void;
 }) {
   return (
-    <Card className="h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_20px_40px_rgba(2,8,20,0.18)]">
+    <Card className="fh-interactive-card h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_20px_40px_rgba(2,8,20,0.18)]">
       <CardContent className="flex h-full min-h-0 flex-col items-center gap-1.5 p-1.5">
         <button
           type="button"

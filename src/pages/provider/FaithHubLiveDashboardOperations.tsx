@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Bell,
   CheckCircle2,
@@ -232,7 +232,7 @@ export default function FaithHubLiveDashboardOperations() {
 
   return (
     <div className="space-y-4">
-      <Card className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(110deg,rgba(3,205,140,0.2),rgba(248,251,252,0.94)_36%,rgba(14,165,233,0.14))] shadow-[var(--shadow-soft)]">
+      <Card className="fh-interactive-card overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(110deg,rgba(3,205,140,0.2),rgba(248,251,252,0.94)_36%,rgba(14,165,233,0.14))] shadow-[var(--shadow-soft)]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
@@ -383,7 +383,7 @@ export default function FaithHubLiveDashboardOperations() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.2fr_1fr_1fr]">
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Ingest and Encoder Health"
@@ -417,15 +417,15 @@ export default function FaithHubLiveDashboardOperations() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Session</div>
+            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Session</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Evening Prayer Revival</div>
               <div className="mt-1 text-xs text-slate-500">Status: live and stable. Backup route still pending heartbeat.</div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Ops Agenda"
@@ -458,8 +458,8 @@ export default function FaithHubLiveDashboardOperations() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Completion</div>
+            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Completion</div>
               <div className="mt-1 text-2xl font-bold text-slate-900">58%</div>
               <div className="mt-2 h-1.5 rounded-full bg-slate-200">
                 <div className="h-full w-[58%] rounded-full bg-[#03cd8c]" />
@@ -469,7 +469,7 @@ export default function FaithHubLiveDashboardOperations() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -497,8 +497,8 @@ export default function FaithHubLiveDashboardOperations() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insight</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Backup route health impacts conversion during spikes</div>
               <p className="mt-1 text-xs text-slate-600">Sessions with armed redundancy show lower drop-off and fewer moderation escalations.</p>
             </div>
@@ -507,7 +507,7 @@ export default function FaithHubLiveDashboardOperations() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Stream Key and Ingest Access"
@@ -523,8 +523,8 @@ export default function FaithHubLiveDashboardOperations() {
               }
             />
 
-            <div className="rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Stream key</div>
+            <div className="fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Stream key</div>
               <div className="mt-1 font-mono text-sm font-semibold text-slate-900">{streamKey}</div>
               <div className="mt-2 grid gap-2 sm:grid-cols-2">
                 <Button
@@ -577,7 +577,7 @@ export default function FaithHubLiveDashboardOperations() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Reliability Pulse"
@@ -613,8 +613,8 @@ export default function FaithHubLiveDashboardOperations() {
               />
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Operational confidence</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Operational confidence</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Most systems are stable with one backup-path risk</div>
               <p className="mt-1 text-xs text-slate-600">Arm backup and keep moderation queue below 5 urgent items for green posture.</p>
             </div>

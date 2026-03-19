@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { roleDisplayName } from "@/config/permissions";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,7 +21,7 @@ export default function EnterpriseModulePlaceholder({ role }: EnterpriseModulePl
   const section = params.module || "overview";
 
   return (
-    <Card className="rounded-3xl border border-slate-200 bg-white shadow-sm">
+    <Card className="fh-interactive-card rounded-3xl border border-slate-200 bg-white shadow-sm">
       <CardContent className="p-6">
         <div className="fh-eyebrow text-slate-500">{roleDisplayName[role]} Module</div>
         <div className="mt-2 text-2xl font-semibold text-slate-900">{toTitleCase(section)}</div>

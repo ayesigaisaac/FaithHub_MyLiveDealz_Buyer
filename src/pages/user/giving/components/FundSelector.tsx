@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { GivingFund } from "@/pages/user/giving/types";
 
@@ -14,7 +14,7 @@ export default function FundSelector({
   onSelectFund,
 }: FundSelectorProps) {
   return (
-    <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+    <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
       <CardContent className="fh-pad-panel">
         <div className="mb-4">
           <div className="text-lg font-semibold text-slate-900 sm:text-xl">Donation funds</div>

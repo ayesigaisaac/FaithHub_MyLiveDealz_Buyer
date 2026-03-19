@@ -69,13 +69,13 @@ export default function FaithHubProviderOnboarding() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f2f2f2] text-slate-900">
+    <div className="fh-page-canvas min-h-screen text-slate-900">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
+          className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
@@ -105,7 +105,7 @@ export default function FaithHubProviderOnboarding() {
             transition={{ delay: 0.05, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="rounded-[32px] border border-white/60 bg-slate-950 text-white shadow-[0_24px_80px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="fh-eyebrow text-[#8ef0ca]">Onboarding flow</div>
@@ -139,7 +139,7 @@ export default function FaithHubProviderOnboarding() {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+            <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
                   <div className="text-lg font-semibold text-slate-900">Live onboarding posture</div>
@@ -178,7 +178,7 @@ export default function FaithHubProviderOnboarding() {
             transition={{ delay: 0.08, duration: 0.35 }}
             className="space-y-4"
           >
-            <Card className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
                 <div className="relative z-10 text-white">
@@ -228,7 +228,7 @@ export default function FaithHubProviderOnboarding() {
             </Card>
 
             <div className="grid gap-4 lg:grid-cols-[0.54fr_0.46fr]">
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Institution profile and verification</div>
@@ -265,7 +265,7 @@ export default function FaithHubProviderOnboarding() {
                         </select>
                       </label>
                     </div>
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-900">
                         <Upload className="h-4 w-4 text-[#03cd8c]" /> Upload verification documents
                       </div>
@@ -278,14 +278,14 @@ export default function FaithHubProviderOnboarding() {
                 </CardContent>
               </Card>
 
-              <Card className="rounded-[32px] border border-white/60 bg-white/92 shadow-sm">
+              <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
                 <CardContent className="fh-pad-panel">
                   <div className="mb-4">
                     <div className="text-lg font-semibold text-slate-900">Locations and staff</div>
                     <div className="text-sm text-slate-500">Map campuses, assign administrators, and invite operational teams.</div>
                   </div>
                   <div className="space-y-4">
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 text-sm font-semibold text-slate-900">Locations</div>
                       <div className="space-y-3">
                         {campuses.map((campus) => (
@@ -297,7 +297,7 @@ export default function FaithHubProviderOnboarding() {
                         ))}
                       </div>
                     </div>
-                    <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+                    <div className="fh-subcard rounded-[24px] p-4">
                       <div className="mb-3 flex items-center justify-between gap-3">
                         <div className="text-sm font-semibold text-slate-900">Staff and roles</div>
                         <Button variant="outline" className="rounded-full border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]">
@@ -321,7 +321,7 @@ export default function FaithHubProviderOnboarding() {
               </Card>
             </div>
 
-            <Card className="rounded-[32px] border border-[#f77f00]/20 bg-[#fffaf3] shadow-sm">
+            <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
@@ -359,7 +359,7 @@ export default function FaithHubProviderOnboarding() {
                     <div className="text-sm text-slate-600">{customDomain ? "Branded domain mapping is enabled for this institution." : "Default FaithHub routing in use."}</div>
                   </button>
                 </div>
-                <div className="mt-4 rounded-[24px] border border-[#f77f00]/15 bg-white p-4 text-sm text-slate-600">
+                <div className="mt-4 fh-subcard-warm rounded-[24px] p-4 text-sm text-slate-600">
                   Enabling premium onboarding options prepares the institution for broader enterprise deployments, branded rollouts, advanced governance, and payout-ready operations.
                 </div>
               </CardContent>

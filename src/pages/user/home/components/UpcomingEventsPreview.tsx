@@ -10,14 +10,14 @@ type UpcomingEventsPreviewProps = {
 
 export default function UpcomingEventsPreview({ items }: UpcomingEventsPreviewProps) {
   return (
-    <Card className="rounded-[20px] border border-slate-200 bg-white text-slate-900 shadow-sm">
+    <Card className="fh-interactive-card fh-surface-card rounded-[24px] text-slate-900">
       <CardContent className="p-6">
         <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <div className="text-2xl font-semibold leading-tight text-slate-900 sm:text-[2rem]">
+            <div className="text-2xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-[2rem]">
               Upcoming sessions
             </div>
-            <div className="mt-1 text-base leading-7 text-slate-500">
+            <div className="mt-1 fh-body text-slate-500">
               From followed institutions and audience groups.
             </div>
           </div>
@@ -35,12 +35,12 @@ export default function UpcomingEventsPreview({ items }: UpcomingEventsPreviewPr
           {items.map((item) => (
             <div
               key={item.id}
-              className="rounded-[20px] border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-[0_14px_36px_-24px_rgba(16,185,129,0.45)]"
+              className="fh-interactive-card fh-subcard rounded-[20px] p-5"
             >
               <div className="mb-1 text-[1.4rem] font-semibold leading-tight tracking-[-0.02em] text-slate-900">
                 {item.title}
               </div>
-              <div className="text-sm text-slate-500">{item.institution}</div>
+              <div className="fh-body-tight text-slate-500">{item.institution}</div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600">
                 <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 ring-1 ring-emerald-100">

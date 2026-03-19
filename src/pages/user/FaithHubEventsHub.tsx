@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   CalendarDays,
   Clock3,
@@ -107,7 +107,7 @@ export default function FaithHubEventsHub() {
 
   return (
     <div className="space-y-4">
-      <Card className="overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(3,205,140,0.1),rgba(248,251,252,0.94)_34%,rgba(247,127,0,0.12))] shadow-[var(--shadow-soft)]">
+      <Card className="fh-interactive-card overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(3,205,140,0.1),rgba(248,251,252,0.94)_34%,rgba(247,127,0,0.12))] shadow-[var(--shadow-soft)]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
@@ -239,7 +239,7 @@ export default function FaithHubEventsHub() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.2fr_1fr_1fr]">
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title={showMap ? "Event Map Markers" : "Event Feed"}
@@ -306,7 +306,7 @@ export default function FaithHubEventsHub() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Event Timeline"
@@ -325,7 +325,7 @@ export default function FaithHubEventsHub() {
 
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-2">
               {calendarDays.map((day) => (
-                <div key={day.day} className="rounded-xl border border-[var(--border)] bg-slate-50 p-3">
+                <div key={day.day} className="fh-subcard-muted rounded-xl p-3">
                   <div className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">Day</div>
                   <div className="mt-1 text-xl font-bold text-slate-900">{day.day}</div>
                   <div className="mt-1 text-xs text-slate-500">{day.label}</div>
@@ -333,8 +333,8 @@ export default function FaithHubEventsHub() {
               ))}
             </div>
 
-            <div className="mt-3 rounded-xl border border-[var(--border)] bg-slate-50 p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">Session readiness</div>
+            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+              <div className="fh-label text-slate-400">Session readiness</div>
               <div className="mt-1 text-2xl font-bold text-slate-900">67%</div>
               <div className="mt-2 h-1.5 rounded-full bg-slate-200">
                 <div className="h-full w-[67%] rounded-full bg-[#03cd8c]" />
@@ -344,7 +344,7 @@ export default function FaithHubEventsHub() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border border-[var(--border)] bg-[color:var(--card)] shadow-[var(--shadow-soft)]">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Action Center"
@@ -379,8 +379,8 @@ export default function FaithHubEventsHub() {
               />
             </div>
 
-            <div className="mt-3 rounded-xl border border-emerald-100 bg-[#ecfff8] p-3">
-              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700">Smart insight</div>
+            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+              <div className="fh-label text-emerald-700">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Events with reminders see stronger attendance completion</div>
               <p className="mt-1 text-xs text-slate-600">
                 Sending reminders within 45 minutes of start time increases confirmed attendance.
