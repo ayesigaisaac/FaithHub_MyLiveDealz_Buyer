@@ -88,7 +88,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
         id: "tenant",
         label: "Tenant",
         value: activeTenant?.name || "Platform-wide",
-        hint: activeTenant ? `${activeTenant.region} Â· ${activeTenant.plan}` : "Cross-tenant visibility",
+        hint: activeTenant ? `${activeTenant.region} - ${activeTenant.plan}` : "Cross-tenant visibility",
         icon: Bell,
         tone: "orange",
       },
@@ -117,7 +117,6 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
               </div>
 
               <div className="mt-2 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">{title}</div>
-              <p className="mt-1 text-sm text-slate-600">{subtitle}</p>
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
@@ -264,7 +263,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                         className={`mb-1 flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left transition last:mb-0 ${
                           active
                             ? "border-emerald-100 bg-emerald-50"
-                            : "border-transparent bg-transparent hover:-translate-y-[1px] hover:border-slate-200 hover:bg-slate-50"
+                            : "border-transparent bg-transparent"
                         }`}
                       >
                         <div
@@ -276,10 +275,10 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                         </div>
 
                         <div className="min-w-0 flex-1">
-                          <div className={`truncate text-sm ${active ? "font-semibold text-emerald-800" : "font-medium text-slate-800"}`}>
+                          <div className={`break-words text-[0.95rem] leading-snug ${active ? "font-semibold text-emerald-800" : "font-medium text-slate-800"}`}>
                             {item.label}
                           </div>
-                          <div className="truncate text-xs text-slate-500">{item.route}</div>
+                          <div className="break-all text-xs text-slate-500">{item.route}</div>
                         </div>
 
                         <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -303,7 +302,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                   {activeTenant ? activeTenant.name : "Platform scope"}
                 </div>
                 <div className="mt-1 text-xs text-slate-600">
-                  {activeTenant ? `${activeTenant.region} Â· ${activeTenant.plan}` : "Global cross-tenant visibility"}
+                  {activeTenant ? `${activeTenant.region} - ${activeTenant.plan}` : "Global cross-tenant visibility"}
                 </div>
               </div>
 
@@ -321,24 +320,24 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                       className={`group flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left transition ${
                         active
                           ? "border-emerald-100 bg-emerald-50"
-                          : "border-transparent bg-transparent hover:-translate-y-[1px] hover:border-slate-200 hover:bg-slate-50"
+                          : "border-transparent bg-transparent"
                       }`}
                     >
                       <div
                         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
                           active
                             ? "bg-emerald-100 text-emerald-700"
-                            : "bg-slate-100 text-slate-500 group-hover:bg-white"
+                            : "bg-slate-100 text-slate-500"
                         }`}
                       >
                         <Icon className="h-4 w-4" />
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <div className={`truncate text-sm ${active ? "font-semibold text-emerald-800" : "font-medium text-slate-900"}`}>
+                        <div className={`break-words text-[0.95rem] leading-snug ${active ? "font-semibold text-emerald-800" : "font-medium text-slate-900"}`}>
                           {item.label}
                         </div>
-                        <div className="truncate text-xs text-slate-500">{item.route}</div>
+                        <div className="break-all text-xs text-slate-500">{item.route}</div>
                       </div>
 
                       {item.badge ? (
@@ -359,9 +358,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
             <CardContent className="p-5 sm:p-6">
               <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <div className="min-w-0">
-                  <div className="fh-eyebrow text-[#03cd8c]">Enterprise Command Surface</div>
                   <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">{title}</h1>
-                  <p className="mt-2 max-w-3xl text-sm text-slate-600">{subtitle}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
@@ -370,7 +367,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                       key={item.id}
                       type="button"
                       onClick={() => navigate(item.route)}
-                      className="inline-flex min-h-[42px] items-center rounded-xl bg-[#ecfff8] px-4 text-sm font-semibold text-[#049e6d] transition hover:-translate-y-[1px] hover:bg-[#ddf9ef]"
+                      className="inline-flex min-h-[42px] items-center rounded-xl bg-[#ecfff8] px-4 text-sm font-semibold text-[#049e6d]"
                     >
                       <item.icon className="mr-2 h-4 w-4" />
                       {item.label}
@@ -419,4 +416,5 @@ function EnterpriseMetricCard({ metric }: { metric: StatusMetric }) {
     </Card>
   );
 }
+
 

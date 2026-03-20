@@ -65,7 +65,7 @@ export default function GivingHero({ offlineMode, onToggleOfflineMode }: GivingH
                   Offline mode stores intent only and does not capture payment.
                 </div>
               </div>
-              <div className="mt-4 grid gap-2 sm:grid-cols-2">
+              <div className="mt-4 fh-actions-grid">
                 <Button
                   className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90"
                   data-action-label="Continue to payment"

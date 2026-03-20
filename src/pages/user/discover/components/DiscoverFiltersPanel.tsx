@@ -48,7 +48,7 @@ export default function DiscoverFiltersPanel({
       <CardContent className="fh-pad-panel">
         <div className="mb-5 flex items-center justify-between gap-3">
           <div>
-            <div className="fh-eyebrow text-[#03cd8c]">
+            <div className="hidden text-[#03cd8c]">
               Filters
             </div>
             <div className="mt-2 text-xl font-semibold text-slate-900">Refine discovery</div>

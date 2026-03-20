@@ -57,7 +57,7 @@ export default function FaithHubLiveSchedule() {
               <CalendarDays className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Schedule</div>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function FaithHubLiveSchedule() {
                         <div className="mt-1 text-2xl font-semibold text-white">Evening Prayer Revival</div>
                         <div className="mt-2 text-sm text-white/80">Crew confirmation closes in 2 hours.</div>
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" onClick={() => navigate("/app/provider/live-builder")}>
                           Open live builder
                         </Button>
@@ -155,7 +155,7 @@ export default function FaithHubLiveSchedule() {
                     >
                       <div>
                         <div className="text-base font-semibold text-slate-900">{session.title}</div>
-                        <div className="mt-1 text-sm text-slate-500">{session.time} Â· {session.lane}</div>
+                        <div className="mt-1 text-sm text-slate-500">{session.time} - {session.lane}</div>
                         <div className="mt-2 text-sm text-slate-600">{session.team}</div>
                       </div>
                       <ChevronRight className="h-5 w-5 text-slate-400" />

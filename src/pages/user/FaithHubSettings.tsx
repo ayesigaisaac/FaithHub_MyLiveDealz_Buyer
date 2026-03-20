@@ -58,7 +58,6 @@ function SectionHeader({ title, subtitle, action = "Manage" }) {
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}
@@ -94,7 +93,7 @@ export default function FaithHubSettings() {
               <SlidersHorizontal className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Settings</div>
             </div>
           </div>
@@ -163,7 +162,7 @@ export default function FaithHubSettings() {
                           {offlineMode ? "Changes will sync when connection returns." : "All settings are current across devices."}
                         </div>
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Save now</Button>
                         <Button
                           variant="outline"
@@ -340,7 +339,7 @@ export default function FaithHubSettings() {
                           <UserMinus className="h-4 w-4" />
                         </div>
                         <div className="min-w-0">
-                          <div className="truncate text-sm font-semibold text-slate-900">{user.name}</div>
+                          <div className="text-sm font-semibold text-slate-900">{user.name}</div>
                           <div className="text-xs text-slate-500">{user.reason}</div>
                         </div>
                       </div>

@@ -79,7 +79,7 @@ export default function FaithHubEventDetail() {
               <Ticket className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Event Detail</div>
             </div>
           </div>
@@ -143,7 +143,7 @@ export default function FaithHubEventDetail() {
                       <div className="mb-3 h-40 rounded-[22px] bg-white/20" />
                       <div className="mb-2 text-sm font-semibold text-white">Your event status</div>
                       <div className="mb-3 text-2xl font-semibold text-white">{rsvp}</div>
-                      <div className="grid gap-2 sm:grid-cols-2">
+                      <div className="fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">RSVP</Button>
                         <Button
                           variant="outline"
@@ -275,7 +275,7 @@ export default function FaithHubEventDetail() {
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#f77f00]">Premium upsells</div>
+                    <div className="hidden text-[#f77f00]">Premium upsells</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">VIP tickets and merch bundles</div>
                   </div>
                   <Button
@@ -373,7 +373,6 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}

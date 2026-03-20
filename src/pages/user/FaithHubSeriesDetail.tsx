@@ -48,14 +48,13 @@ const merchAndTickets = [
 
 const shareOptions = ["Message", "Status card", "Story card", "Institution invite", "Copy deep link"];
 
-function SectionHeader({ title, subtitle, action = "See all" }) {
+function SectionHeader({ title, action = "See all" }) {
   return (
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
-      <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button variant="ghost" className="rounded-full text-[#03cd8c]">
         {action}
       </Button>
     </div>
@@ -82,7 +81,7 @@ export default function FaithHubSeriesDetail() {
               <BookOpen className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Series Detail</div>
             </div>
           </div>
@@ -112,8 +111,8 @@ export default function FaithHubSeriesDetail() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Series overview</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Calendar + share + merch</Badge>
+                    <Badge className="rounded-full bg-white/90 text-[#03cd8c]">Series overview</Badge>
+                    <Badge className="rounded-full bg-slate-900/85 text-white">Calendar + share + merch</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -149,16 +148,16 @@ export default function FaithHubSeriesDetail() {
                       <div className="h-2 rounded-full bg-white/20">
                         <div className="h-2 rounded-full bg-white" style={{ width: "57%" }} />
                       </div>
-                      <div className="mt-4 flex gap-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button
-                          className="flex-1 rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90"
+                          className="w-full rounded-2xl bg-white text-[#03cd8c]"
                           onClick={() => setFollowing((prev) => !prev)}
                         >
                           {following ? "Following" : "Follow series"}
                         </Button>
                         <Button
                           variant="outline"
-                          className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
+                          className="w-full rounded-2xl border-white/20 bg-white/10 text-white"
                           onClick={() => setOfflineMode((prev) => !prev)}
                         >
                           {offlineMode ? "Online" : "Offline"}
@@ -174,14 +173,13 @@ export default function FaithHubSeriesDetail() {
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Episode journey"
-                  subtitle="Track progress episode by episode across replays, live checkpoints, and future releases."
                   action="Open library"
                 />
                 <div className="space-y-3">
                   {episodes.map((episode) => (
                     <div
                       key={episode.id}
-                      className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
+                      className="fh-subcard rounded-[24px] p-4"
                     >
                       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="min-w-0 flex-1">
@@ -198,15 +196,15 @@ export default function FaithHubSeriesDetail() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           {episode.replay ? (
-                            <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">Open episode</Button>
+                            <Button className="rounded-2xl bg-[#03cd8c]">Open episode</Button>
                           ) : (
-                            <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]">
+                            <Button variant="outline" className="rounded-2xl border-slate-200 bg-white">
                               Set reminder
                             </Button>
                           )}
-                          <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+                          <Button variant="ghost" className="rounded-full text-[#03cd8c]">
                             <ChevronRight className="h-4 w-4" />
                           </Button>
                         </div>
@@ -221,7 +219,6 @@ export default function FaithHubSeriesDetail() {
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Series actions"
-                  subtitle="Calendar sync, share card, and series communication tools."
                 />
                 <div className="grid gap-3 md:grid-cols-3">
                   {ctaLinks.map((item) => {
@@ -233,7 +230,7 @@ export default function FaithHubSeriesDetail() {
                         </div>
                         <div className="text-base font-semibold text-slate-900">{item.title}</div>
                         <div className="mt-1 fh-body-tight text-slate-600">{item.subtitle}</div>
-                        <Button variant="ghost" className="mt-4 rounded-full px-0 text-[#03cd8c] hover:bg-transparent hover:text-[#03cd8c]">
+                        <Button variant="ghost" className="mt-4 rounded-full px-0 text-[#03cd8c]">
                           Open action
                         </Button>
                       </div>
@@ -254,21 +251,20 @@ export default function FaithHubSeriesDetail() {
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Share series card"
-                  subtitle="Invite others with a beautiful, branded snapshot of the series."
                   action="Customize"
                 />
                 <div className="rounded-[28px] border border-white/10 bg-white/5 p-4 backdrop-blur">
                   <div className="mb-4 h-48 rounded-[24px] bg-gradient-to-br from-white/20 to-white/10" />
                   <div className="mb-3 text-lg font-semibold text-white">Walking in Wisdom</div>
                   <div className="text-sm text-white/70">5 of 8 episodes complete  Next live episode tonight</div>
-                  <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                  <div className="mt-4 fh-actions-grid">
                     {shareOptions.map((item) => (
                       <div key={item} className="rounded-2xl border border-white/10 bg-slate-950/20 px-3 py-2 text-sm text-white/85">
                         {item}
                       </div>
                     ))}
                   </div>
-                  <Button className="mt-4 w-full rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
+                  <Button className="mt-4 w-full rounded-2xl bg-white text-[#03cd8c]">
                     <Share2 className="mr-2 h-4 w-4" />
                     Create share card
                   </Button>
@@ -278,14 +274,14 @@ export default function FaithHubSeriesDetail() {
 
             <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
-                <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#f77f00]">Premium series access</div>
+                    <div className="hidden text-[#f77f00]">Premium series access</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Unlock deeper study and bundled experiences</div>
                   </div>
                   <Button
                     variant="outline"
-                    className="rounded-full border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                    className="w-full rounded-full border-slate-200 bg-white sm:w-auto"
                     onClick={() => setPremiumUnlocked((prev) => !prev)}
                   >
                     {premiumUnlocked ? "Premium preview on" : "Preview paywall"}
@@ -301,9 +297,9 @@ export default function FaithHubSeriesDetail() {
                     <div className="mx-auto max-w-md fh-body-tight text-slate-600">
                       Some series can be gated at the series level, unlocking exclusive attachments, guided plans, bonus sessions, and bundled institution offerings.
                     </div>
-                    <div className="mt-5 flex justify-center gap-2">
-                      <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">Unlock premium</Button>
-                      <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]">
+                    <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-center">
+                      <Button className="w-full rounded-2xl bg-[#03cd8c] sm:w-auto">Unlock premium</Button>
+                      <Button variant="outline" className="w-full rounded-2xl border-slate-200 bg-white sm:w-auto">
                         View bundle options
                       </Button>
                     </div>
@@ -339,7 +335,6 @@ export default function FaithHubSeriesDetail() {
               <CardContent className="fh-pad-panel">
                 <SectionHeader
                   title="Offline and queue behavior"
-                  subtitle="Metadata stays visible and replay downloads can queue safely."
                   action="Downloads"
                 />
                 <div className="space-y-3 text-sm text-slate-600">
@@ -351,7 +346,7 @@ export default function FaithHubSeriesDetail() {
                   </div>
                   <Button
                     variant="outline"
-                    className="w-full rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                    className="w-full rounded-2xl border-slate-200 bg-white"
                     onClick={() => setDownloadQueued((prev) => !prev)}
                   >
                     <Download className="mr-2 h-4 w-4 text-[#03cd8c]" />

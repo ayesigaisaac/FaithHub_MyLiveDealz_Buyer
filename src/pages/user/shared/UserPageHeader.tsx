@@ -5,6 +5,7 @@ type UserPageHeaderProps = {
   icon: React.ReactNode;
   title: string;
   subtitle?: string;
+  showSubtitle?: boolean;
   offline?: boolean;
   offlineLabel?: string;
 };
@@ -12,10 +13,13 @@ type UserPageHeaderProps = {
 export default function UserPageHeader({
   icon,
   title,
-  subtitle = "EVzone Super App",
+  subtitle,
+  showSubtitle = false,
   offline = false,
   offlineLabel = "Cached mode",
 }: UserPageHeaderProps) {
+  const shouldShowSubtitle = Boolean(showSubtitle && subtitle);
+
   return (
     <div className="fh-page-header mb-4 flex flex-wrap items-center justify-between gap-2.5 rounded-[24px] px-3 py-2.5 sm:gap-3 sm:rounded-[28px] sm:px-4 sm:py-3">
       <div className="flex items-center gap-3">
@@ -23,9 +27,7 @@ export default function UserPageHeader({
           {icon}
         </div>
         <div>
-          <div className="fh-eyebrow text-[#03cd8c]">
-            {subtitle}
-          </div>
+          {shouldShowSubtitle ? <div className="fh-eyebrow text-[#03cd8c]">{subtitle}</div> : null}
           <div className="text-base font-semibold sm:text-lg">{title}</div>
         </div>
       </div>

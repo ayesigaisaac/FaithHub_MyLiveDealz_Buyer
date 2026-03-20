@@ -84,7 +84,7 @@ export default function FaithHubLiveWaitingRoom() {
               <TimerReset className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Waiting Room</div>
             </div>
           </div>
@@ -112,58 +112,58 @@ export default function FaithHubLiveWaitingRoom() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.34, ease: "easeOut" }}
             >
-            <Card className="fh-interactive-card fh-hero-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card fh-hero-card relative overflow-hidden rounded-[32px] border border-[#9de8cf] bg-gradient-to-br from-[#a8ebd4] via-[#d8f5ea] to-[#f4fdf8] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.24)]">
               <CardContent className="fh-pad-hero">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
-                <div className="relative z-10 text-white">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.06),transparent_24%)]" />
+                <div className="relative z-10 text-slate-900">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Session starts soon</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Waiting room + audience prep</Badge>
+                    <Badge className="rounded-full bg-white text-[#049e6d]">Session starts soon</Badge>
+                    <Badge className="rounded-full bg-slate-900/90 text-white">Waiting room + audience prep</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.62fr_0.38fr]">
                     <div className="space-y-4">
-                      <div className="fh-kicker text-white/90">Youth Impact Night</div>
+                      <div className="fh-kicker text-[#147a59]">Youth Impact Night</div>
                       <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                         Gather early, review the agenda, test the connection, and prepare your language and accessibility settings before the live session begins.
                       </h1>
-                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-slate-700 sm:text-base">
                         The waiting room is the bridge between discovery and participation. Users can see countdowns, session rules, pre-chat, polls, prayer requests, sharing tools, and donation prompts before the stream opens.
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-slate-700">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#bfe8d7] bg-white/85 px-3 py-1">
                           <Users className="h-4 w-4" />
                           1.1k already waiting
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#bfe8d7] bg-white/85 px-3 py-1">
                           <Radio className="h-4 w-4" />
                           Youth Church audience
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#bfe8d7] bg-white/85 px-3 py-1">
                           <ShieldCheck className="h-4 w-4" />
                           Moderated session
                         </span>
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-3 text-sm font-semibold text-white">Countdown</div>
+                    <div className="rounded-[28px] border border-[#bfe8d7] bg-white/85 p-4 backdrop-blur">
+                      <div className="mb-3 text-sm font-semibold text-slate-900">Countdown</div>
                       <div className="grid grid-cols-1 gap-3 text-center min-[420px]:grid-cols-3">
                         {[
                           { label: "Hours", value: countdown.hours },
                           { label: "Minutes", value: countdown.minutes },
                           { label: "Seconds", value: countdown.seconds },
                         ].map((item) => (
-                          <div key={item.label} className="rounded-2xl border border-white/15 bg-white/10 px-3 py-4">
-                            <div className="text-3xl font-semibold text-white">{item.value}</div>
-                            <div className="mt-1 fh-kicker-muted text-white/70">{item.label}</div>
+                          <div key={item.label} className="rounded-2xl border border-[#cfe9de] bg-[#f8fdfb] px-3 py-4">
+                            <div className="text-3xl font-semibold text-slate-900">{item.value}</div>
+                            <div className="mt-1 fh-kicker-muted text-slate-500">{item.label}</div>
                           </div>
                         ))}
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Enter session</Button>
-                        <Button variant="outline" className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15">
+                      <div className="mt-4 fh-actions-grid">
+                        <Button className="rounded-2xl bg-[#03cd8c] text-white">Enter session</Button>
+                        <Button variant="outline" className="rounded-2xl border-slate-200 bg-white text-slate-700">
                           <Share2 className="mr-2 h-4 w-4" /> Share link
                         </Button>
                       </div>
@@ -298,6 +298,7 @@ export default function FaithHubLiveWaitingRoom() {
                   title="Language, captions, and connection"
                   subtitle="Tune accessibility and bandwidth before playback starts."
                   action="Advanced"
+                  inverse
                 />
 
                 <div className="space-y-4">
@@ -307,7 +308,7 @@ export default function FaithHubLiveWaitingRoom() {
                     </div>
                     <div className="grid gap-3 sm:grid-cols-2">
                       <label className="block space-y-2">
-                        <span className="fh-eyebrow text-white/60">Captions</span>
+                        <span className="hidden text-white/60">Captions</span>
                         <select
                           value={captionsLanguage}
                           onChange={(e) => setCaptionsLanguage(e.target.value)}
@@ -319,7 +320,7 @@ export default function FaithHubLiveWaitingRoom() {
                         </select>
                       </label>
                       <label className="block space-y-2">
-                        <span className="fh-eyebrow text-white/60">Live translation</span>
+                        <span className="hidden text-white/60">Live translation</span>
                         <select
                           value={translationLanguage}
                           onChange={(e) => setTranslationLanguage(e.target.value)}
@@ -386,7 +387,7 @@ export default function FaithHubLiveWaitingRoom() {
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#f77f00]">Supporter layer</div>
+                    <div className="hidden text-[#f77f00]">Supporter layer</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Early-access chat and supporter upsell</div>
                   </div>
                   <Button
@@ -467,14 +468,13 @@ export default function FaithHubLiveWaitingRoom() {
   );
 }
 
-function SectionHeader({ title, subtitle, action = "See all" }) {
+function SectionHeader({ title, subtitle, action = "See all", inverse = false }) {
   return (
     <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
       <div>
-        <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
+        <div className={`text-lg font-semibold sm:text-xl ${inverse ? "text-white" : "text-slate-900"}`}>{title}</div>
       </div>
-      <Button variant="ghost" className="shrink-0 rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button variant="ghost" className={`shrink-0 rounded-full ${inverse ? "text-white" : "text-[#03cd8c]"}`}>
         {action}
       </Button>
     </div>

@@ -34,10 +34,8 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
       variant: "text",
       sx: {
         textTransform: "none",
-        color: "var(--text-secondary)",
         "&:hover": {
           backgroundColor: "transparent",
-          color: "var(--text-secondary)",
         },
       },
     };
@@ -101,8 +99,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
           borderRadius: "12px",
           fontWeight: 700,
           letterSpacing: "0.01em",
-          lineHeight: 1.2,
-          whiteSpace: "nowrap",
+          lineHeight: 1.25,
+          whiteSpace: "normal",
+          textAlign: "center",
+          wordBreak: "normal",
+          overflowWrap: "normal",
+          hyphens: "none",
+          minWidth: 96,
           transition: "all 180ms ease",
           "@media (max-width:640px)": {
             borderRadius: "11px",

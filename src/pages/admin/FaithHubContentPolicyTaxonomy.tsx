@@ -130,7 +130,6 @@ function SectionHeader({ title, subtitle, action = "Manage" }) {
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}
@@ -167,7 +166,7 @@ export default function FaithHubContentPolicyTaxonomy() {
               <Tags className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Content Policy & Taxonomy</div>
             </div>
           </div>
@@ -214,7 +213,7 @@ export default function FaithHubContentPolicyTaxonomy() {
                         <div className="mt-1 text-2xl font-semibold text-white">{selectedLocale}</div>
                         <div className="mt-2 text-sm text-white/80">Override region: {selectedCountry}</div>
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Edit policy</Button>
                         <Button
                           variant="outline"

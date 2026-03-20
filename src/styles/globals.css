@@ -11,7 +11,7 @@
   --panel: #f4f7f9;
   --border: #d9e1e8;
   --text-primary: #0f172a;
-  --text-secondary: #5b6676;
+  --text-secondary: #4f5d6f;
   --accent: #03cd8c;
   --accent-soft: rgba(3, 205, 140, 0.12);
   --warning: #f77f00;
@@ -119,10 +119,10 @@
   --fh-kicker-wide-track: 0.28em;
   --fh-text-kicker-xl: 1rem;
   --fh-kicker-xl-track: 0.18em;
-  --fh-text-body: 1rem;
-  --fh-text-body-tight: 0.98rem;
-  --fh-body-leading: 1.75;
-  --fh-body-tight-leading: 1.62;
+  --fh-text-body: 1.03rem;
+  --fh-text-body-tight: 1.01rem;
+  --fh-body-leading: 1.78;
+  --fh-body-tight-leading: 1.68;
   --fh-motion-fast: 180ms;
   --fh-motion-base: 260ms;
   --fh-motion-slow: 420ms;
@@ -153,6 +153,7 @@ body {
   color: var(--text-primary);
   line-height: 1.5;
   letter-spacing: 0.01em;
+  font-size: 16px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -217,6 +218,18 @@ span,
 div,
 li {
   overflow-wrap: break-word;
+}
+
+/* App shell pages should use the full available content width. */
+.fh-app-content .max-w-7xl,
+.fh-app-content .max-w-6xl,
+.fh-app-content .max-w-5xl,
+.fh-app-content .max-w-4xl,
+.fh-app-content .max-w-3xl,
+.fh-app-content .max-w-2xl,
+.fh-app-content .max-w-xl {
+  max-width: none !important;
+  width: 100%;
 }
 
 /* Shared spacing and typography utilities for premium visual consistency */
@@ -326,9 +339,23 @@ li {
   line-height: 1.58;
 }
 
+/* Global clean pass: remove compact subtitle helper lines project-wide. */
+.fh-eyebrow,
+.fh-eyebrow-soft,
+.fh-eyebrow-wide,
+.fh-section-subtitle {
+  display: none !important;
+}
+
 .fh-stat-value {
   letter-spacing: -0.03em;
   line-height: 1;
+}
+
+.fh-card-base {
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow-soft);
 }
 
 .fh-shell-topbar {
@@ -366,9 +393,78 @@ li {
 }
 
 .fh-hero-card {
+  position: relative;
   border: 1px solid var(--fh-hero-border);
   background: var(--fh-hero-grad);
   box-shadow: var(--fh-shadow-card);
+}
+
+.fh-hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(132deg, rgba(5, 55, 40, 0.22), rgba(5, 55, 40, 0.08) 44%, rgba(5, 55, 40, 0.14));
+}
+
+.fh-hero-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fh-hero-card [class*="text-white/"] {
+  text-shadow: 0 2px 10px rgba(15, 23, 42, 0.45);
+}
+
+.fh-hero-card [class~="text-white"] {
+  text-shadow: 0 2px 10px rgba(15, 23, 42, 0.5);
+}
+
+/* Readability guardrail for legacy mint hero gradients that still use white copy. */
+:is(
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eafcf6]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfcf6]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfbf4]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#e9fbf3]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eef6f2]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#edf6f2]"]
+  ) {
+  background-image: linear-gradient(
+    132deg,
+    rgba(5, 128, 92, 0.96) 0%,
+    rgba(7, 148, 108, 0.93) 44%,
+    rgba(16, 86, 82, 0.96) 100%
+  ) !important;
+  border-color: rgba(4, 118, 86, 0.5) !important;
+}
+
+:is(
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eafcf6]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfcf6]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfbf4]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#e9fbf3]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eef6f2]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#edf6f2]"]
+  )
+  [class~="text-white"],
+:is(
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eafcf6]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfcf6]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfbf4]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#e9fbf3]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eef6f2]"],
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#edf6f2]"]
+  )
+  [class*="text-white/"] {
+  color: #ffffff !important;
+  text-shadow: 0 2px 12px rgba(15, 23, 42, 0.45);
+}
+
+.fh-actions-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
 .fh-pill {
@@ -547,6 +643,27 @@ li {
   box-shadow: 0 26px 64px -28px rgba(15, 23, 42, 0.62);
 }
 
+.fh-surface-dark [class*="text-slate-900"],
+.fh-surface-dark [class*="text-slate-800"],
+.fh-surface-dark [class*="text-slate-700"] {
+  color: #f8fafc !important;
+}
+
+.fh-surface-dark [class*="text-slate-600"],
+.fh-surface-dark [class*="text-slate-500"],
+.fh-surface-dark [class*="text-slate-400"] {
+  color: rgba(241, 245, 249, 0.82) !important;
+}
+
+.fh-surface-dark .MuiButton-root.MuiButton-text {
+  color: inherit;
+}
+
+.fh-surface-dark .MuiButton-root.MuiButton-text:hover {
+  color: inherit;
+  background-color: transparent;
+}
+
 .fh-surface-warm {
   border: 1px solid var(--fh-surface-warm-border);
   background:
@@ -654,7 +771,7 @@ li {
   }
 
   body {
-    font-size: 15px;
+    font-size: 15.5px;
   }
 
   .fh-pad-panel {

@@ -528,7 +528,7 @@ function TopBar({
               <Sparkles className="h-5 w-5" />
             </div>
             <div className="hidden sm:block">
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-base font-semibold text-slate-900">FaithHub AppShell</div>
             </div>
           </div>
@@ -608,7 +608,7 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
         <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/70 bg-white/92 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.25)]">
           <CardContent className="p-3">
             <div className="mb-3 rounded-[24px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-4 text-white">
-              <div className="fh-eyebrow text-white/90">{roleData.label} role</div>
+              <div className="hidden text-white/90">{roleData.label} role</div>
               {!sidebarCollapsed && (
                 <>
                   <div className="mt-2 text-xl font-semibold">{roleData.workspace}</div>
@@ -621,7 +621,7 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
               {roleData.sections.map((section) => (
                 <div key={section.title} className="space-y-2">
                   {!sidebarCollapsed && (
-                    <div className="px-2 fh-eyebrow text-slate-500">
+                    <div className="px-2 hidden text-slate-500">
                       {section.title}
                     </div>
                   )}
@@ -690,7 +690,7 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
           <div className="rounded-[28px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-5 text-white">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="fh-eyebrow text-white/90">FaithHub AppShell</div>
+                <div className="hidden text-white/90">FaithHub AppShell</div>
                 <div className="mt-2 text-xl font-semibold">{roleData.workspace}</div>
               </div>
               <button onClick={close} className="rounded-2xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white">
@@ -704,7 +704,7 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
 
           {roleData.sections.map((section) => (
             <div key={section.title} className="space-y-2">
-              <div className="px-2 fh-eyebrow text-slate-500">{section.title}</div>
+              <div className="px-2 hidden text-slate-500">{section.title}</div>
               {section.items.map((item) => {
                 const Icon = item.icon;
                 const active = item.id === currentPageId;
@@ -745,7 +745,7 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
                 <Badge className={`rounded-full px-3 py-1 hover:bg-transparent ${getRoleBadge(role)}`}>{roleData.label} lane active</Badge>
               </div>
               <div>
-                <div className="fh-eyebrow text-white/90">FaithHub foundation</div>
+                <div className="hidden text-white/90">FaithHub foundation</div>
                 <h1 className="mt-2 max-w-3xl text-4xl font-semibold leading-tight sm:text-5xl">
                   {roleData.heroTitle}
                 </h1>
@@ -782,7 +782,7 @@ function HeroShellCard({ role, roleData, currentPage, currentSection, handleRole
                 <div className="mb-2 text-sm font-semibold">Active page</div>
                 <div className="text-2xl font-semibold">{currentPage?.label}</div>
                 <div className="mt-2 text-sm text-white/80">{currentPage?.description}</div>
-                <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                <div className="mt-4 fh-actions-grid">
                   <div className="rounded-2xl bg-white/10 px-3 py-3 text-sm">Role-aware top bar</div>
                   <div className="rounded-2xl bg-white/10 px-3 py-3 text-sm">Pinned context rail</div>
                   <div className="rounded-2xl bg-white/10 px-3 py-3 text-sm">Responsive navigation</div>
@@ -803,7 +803,7 @@ function StatsGrid({ stats, role }) {
       {stats.map((item) => (
         <Card key={item.label} className="rounded-[28px] border border-white/70 bg-white/92 shadow-sm">
           <CardContent className="p-5">
-            <div className={`fh-eyebrow-wide ${getRoleAccent(role)}`}>{item.label}</div>
+            <div className={`hidden ${getRoleAccent(role)}`}>{item.label}</div>
             <div className="mt-2 text-3xl font-semibold text-slate-900">{item.value}</div>
             <div className="mt-2 text-sm text-slate-500">{item.note}</div>
           </CardContent>
@@ -833,7 +833,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
               </div>
               <div className="text-2xl font-semibold text-slate-900">{currentPage?.label}</div>
               <div className="mt-2 fh-body text-slate-600">{currentPage?.description}</div>
-              <div className="mt-4 grid gap-2 sm:grid-cols-2">
+              <div className="mt-4 fh-actions-grid">
                 <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">Breadcrumbs + route identity</div>
                 <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">Primary and secondary page actions</div>
                 <div className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">Top filters and search hooks</div>
@@ -1125,7 +1125,7 @@ function CommandPalette({ query, setQuery, results, close, goToPage }) {
           </div>
         </div>
         <div className="max-h-[72vh] overflow-y-auto p-4 sm:p-5">
-          <div className="mb-3 fh-eyebrow-wide text-slate-500">
+          <div className="mb-3 hidden text-slate-500">
             {results.length} results
           </div>
           <div className="grid gap-3">
@@ -1167,7 +1167,6 @@ function SectionHeader({ title, subtitle, action = "Explore" }) {
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}

@@ -110,7 +110,7 @@ export default function FaithHubStreamToPlatforms() {
               <Share2 className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Stream-to-Platforms</div>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function FaithHubStreamToPlatforms() {
             <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
-                  <div className="fh-eyebrow text-[#8ef0ca]">Distribution posture</div>
+                  <div className="hidden text-[#8ef0ca]">Distribution posture</div>
                   <div className="mt-2 text-xl font-semibold">Connect, map, and broadcast outward</div>
                 </div>
                 <div className="space-y-3">
@@ -222,7 +222,7 @@ export default function FaithHubStreamToPlatforms() {
                       <div className="h-2 rounded-full bg-white/20">
                         <div className="h-2 rounded-full bg-white" style={{ width: `${(connectedCount / platforms.length) * 100}%` }} />
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" disabled={offlineMode}>
                           Connect new
                         </Button>

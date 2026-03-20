@@ -82,7 +82,7 @@ export default function FaithHubLiveStudio() {
               <MonitorPlay className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Studio</div>
             </div>
           </div>
@@ -129,7 +129,7 @@ export default function FaithHubLiveStudio() {
                         <div className="mt-1 text-3xl font-semibold text-white">{interactiveMode ? "Real-time" : "Standard"}</div>
                         <div className="mt-2 text-sm text-white/80">{interactiveMode ? "Low-latency interactive mode active for faster audience response." : "Standard studio latency mode active."}</div>
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90" disabled={offlineMode}>
                           Go live
                         </Button>

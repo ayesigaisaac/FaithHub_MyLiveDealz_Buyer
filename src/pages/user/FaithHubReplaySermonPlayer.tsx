@@ -126,8 +126,8 @@ export default function FaithHubReplaySermonPlayer() {
               <PlayCircle className="h-5 w-5" />
             </div>
             <div className="min-w-0">
-              <div className="fh-eyebrow text-emerald-600">EVzone Super App</div>
-              <div className="truncate text-lg font-semibold text-slate-900">Replay & Sermon Player</div>
+              <div className="hidden text-emerald-600">EVzone Super App</div>
+              <div className="text-lg font-semibold text-slate-900">Replay & Sermon Player</div>
             </div>
           </div>
 
@@ -361,7 +361,7 @@ export default function FaithHubReplaySermonPlayer() {
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#f77f00]">Premium study layer</div>
+                    <div className="hidden text-[#f77f00]">Premium study layer</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Offline video and premium study guide</div>
                   </div>
                   <Button
@@ -435,7 +435,6 @@ function SectionHeader({ title, subtitle, action = "See all" }: SectionHeaderPro
     <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
       <div className="min-w-0">
         <div className="break-normal text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}

@@ -108,7 +108,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
               <BadgeCheck className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Institution Verification & Compliance</div>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
                         <div className="mt-1 text-3xl font-semibold text-white">6</div>
                         <div className="mt-2 text-sm text-white/80">Providers, badges, and disputes currently awaiting review.</div>
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Open review queue</Button>
                         <Button
                           variant="outline"
@@ -338,7 +338,6 @@ function SectionHeader({ title, subtitle, action = "View all" }) {
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}

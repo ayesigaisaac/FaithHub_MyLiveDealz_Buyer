@@ -50,14 +50,13 @@ const qaQueue = [
   { question: "Can this clip be saved into our family study playlist?", tier: "Supporter lane" },
 ];
 
-function SectionHeader({ title, subtitle, action = "See all" }) {
+function SectionHeader({ title, subtitle, action = "See all", inverse = false }) {
   return (
     <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
       <div>
-        <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
+        <div className={`text-lg font-semibold sm:text-xl ${inverse ? "text-white" : "text-slate-900"}`}>{title}</div>
       </div>
-      <Button variant="ghost" className="shrink-0 rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button variant="ghost" className={`shrink-0 rounded-full ${inverse ? "text-white" : "text-[#03cd8c]"}`}>
         {action}
       </Button>
     </div>
@@ -85,35 +84,35 @@ export default function FaithHubLivePlayer() {
 
   return (
     <div className="fh-page-canvas min-h-screen text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-6 xl:px-7">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="fh-page-header mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] px-4 py-3"
+          className="fh-page-header mb-3 flex min-h-[64px] flex-wrap items-center justify-between gap-2.5 rounded-[24px] px-4 py-2"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
-              <PlayCircle className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+              <PlayCircle className="h-4 w-4" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
-              <div className="text-lg font-semibold">Live Player</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
+              <div className="text-base font-semibold sm:text-lg">Live Player</div>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 md:flex">
+            <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[13px] font-medium text-slate-600 md:flex">
               <ConnectionIcon className={`h-4 w-4 ${networkState === "Stable" ? "text-[#03cd8c]" : networkState === "Low" ? "text-[#f77f00]" : "text-rose-500"}`} />
               {networkState === "Stable" ? "Stable connection" : networkState === "Low" ? "Lower bitrate recommended" : "Reconnect in progress"}
             </div>
-            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
-              <Bell className="h-5 w-5" />
+            <button className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
+              <Bell className="h-4 w-4" />
             </button>
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
+        <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_304px] xl:gap-4 2xl:grid-cols-[minmax(0,1fr)_320px]">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -125,49 +124,91 @@ export default function FaithHubLivePlayer() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.34, ease: "easeOut" }}
             >
-            <Card className="fh-interactive-card fh-hero-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
-              <CardContent className="fh-pad-hero">
+            <Card className="fh-interactive-card fh-hero-card relative overflow-hidden rounded-[30px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_22px_66px_-30px_rgba(3,205,140,0.45)]">
+              <CardContent className="p-4 sm:p-5">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.1),transparent_22%)]" />
                 <div className="relative z-10 text-white">
-                  <div className="mb-5 flex flex-wrap items-center gap-2">
+                  <div className="mb-4 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Live playback experience</Badge>
                     <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chat, captions, translation, clips</Badge>
+                    <Badge className="rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/10">
+                      LIVE NOW
+                    </Badge>
                   </div>
 
-                  <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
-                    <div className="space-y-4">
-                      <div className="fh-kicker text-white/90">Youth Impact Night  Live now</div>
-                      <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
-                        A full live faith experience with playback control, translation, interaction, moderation, clips, and premium engagement lanes.
-                      </h1>
-                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
-                        The live player is where FaithHub becomes truly interactive. Users can tune quality, captions, translation, reactions, reporting, donations, membership lanes, and AI-powered highlights while the stream continues in real time.
-                      </p>
+                  <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
+                    <div className="space-y-3">
+                      <div className="aspect-video overflow-hidden rounded-[22px] border border-white/20 bg-slate-950/80 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]">
+                        <div className="relative h-full w-full bg-[radial-gradient(circle_at_top,rgba(52,211,153,0.22),transparent_38%),linear-gradient(160deg,#111827_0%,#0b1220_70%,#0f172a_100%)]">
+                          <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-rose-300/35 bg-rose-500/20 px-2.5 py-1 text-[11px] font-semibold tracking-[0.08em] text-rose-100">
+                            <span className="h-2 w-2 rounded-full bg-rose-300" />
+                            LIVE NOW
+                          </div>
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent p-3.5">
+                            <div className="flex items-end justify-between gap-3">
+                              <div>
+                                <div className="text-base font-semibold text-white">Youth Impact Night</div>
+                                <div className="mt-1 text-xs text-slate-200">1,245 watching now</div>
+                              </div>
+                              <Button uiSize="sm" className="rounded-xl bg-[#03cd8c] px-3 text-white hover:bg-[#02b67c]">
+                                <PlayCircle className="mr-1.5 h-4 w-4" /> Play
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
-                          <Zap className="h-4 w-4" />
-                          {lowLatency ? "Low-latency mode on" : "Standard latency"}
-                        </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
-                          <Users className="h-4 w-4" />
-                          3.8k viewers
-                        </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
-                          <Ticket className="h-4 w-4" />
-                          Ticket validated
-                        </span>
+                      <div className="grid gap-2 sm:grid-cols-3">
+                        <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2.5 text-sm text-white/90">
+                          <div className="text-xs text-white/70">Connection</div>
+                          <div className="mt-1 font-semibold">Stable</div>
+                        </div>
+                        <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2.5 text-sm text-white/90">
+                          <div className="text-xs text-white/70">Quality</div>
+                          <div className="mt-1 font-semibold">{quality}</div>
+                        </div>
+                        <div className="rounded-2xl border border-white/15 bg-white/10 px-3 py-2.5 text-sm text-white/90">
+                          <div className="text-xs text-white/70">Latency</div>
+                          <div className="mt-1 font-semibold">{lowLatency ? "Low" : "Standard"}</div>
+                        </div>
+                      </div>
+
+                      <div className="fh-actions-grid">
+                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
+                          <MessageSquare className="mr-2 h-4 w-4" /> Open chat
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="rounded-2xl border-white/25 bg-white/10 text-white hover:bg-white/15"
+                          onClick={() => setAudioOnly((prev) => !prev)}
+                        >
+                          <Volume2 className="mr-2 h-4 w-4" />
+                          {audioOnly ? "Audio-only on" : "Audio only"}
+                        </Button>
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-36 rounded-[22px] bg-white/20 sm:h-40" />
-                      <div className="mb-3 text-sm font-semibold text-white">Quick playback state</div>
-                      <div className="space-y-2 text-sm text-white/85">
-                        <div className="flex items-center justify-between"><span>Quality</span><span>{quality}</span></div>
-                        <div className="flex items-center justify-between"><span>Captions</span><span>{captions ? "On" : "Off"}</span></div>
+                    <div className="rounded-[22px] border border-white/15 bg-white/12 p-3.5 backdrop-blur">
+                      <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/70">
+                        Live context
+                      </div>
+                      <div className="space-y-2 text-sm text-white/90">
+                        <div className="flex items-center justify-between"><span>Event</span><span>Youth Impact Night</span></div>
+                        <div className="flex items-center justify-between"><span>Viewers</span><span>1,245</span></div>
                         <div className="flex items-center justify-between"><span>Translation</span><span>{translation}</span></div>
-                        <div className="flex items-center justify-between"><span>Audio-only</span><span>{audioOnly ? "Enabled" : "Off"}</span></div>
+                        <div className="flex items-center justify-between"><span>Captions</span><span>{captions ? "On" : "Off"}</span></div>
+                      </div>
+                      <div className="mt-3 fh-actions-grid">
+                        <Button
+                          variant="outline"
+                          className="rounded-xl border-white/25 bg-white/10 text-white hover:bg-white/15"
+                          onClick={() => setLowLatency((prev) => !prev)}
+                        >
+                          {lowLatency ? "Low latency on" : "Enable low latency"}
+                        </Button>
+                        <Button variant="outline" className="rounded-xl border-white/25 bg-white/10 text-white hover:bg-white/15">
+                          <Clapperboard className="mr-2 h-4 w-4" /> Studio handoff
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -189,8 +230,8 @@ export default function FaithHubLivePlayer() {
                 />
 
                 <div className="space-y-4">
-                  <div className="fh-subcard rounded-[28px] p-4">
-                    <div className="mb-4 h-[240px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200 sm:h-[300px] lg:h-[360px]" />
+                    <div className="fh-subcard rounded-[28px] p-4">
+                    <div className="mb-4 h-[210px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200 sm:h-[260px] lg:h-[300px]" />
                     <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
                       <select
                         value={quality}
@@ -326,28 +367,32 @@ export default function FaithHubLivePlayer() {
               transition={{ delay: 0.18, duration: 0.32, ease: "easeOut" }}
             >
             <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
-              <CardContent className="fh-pad-panel">
+              <CardContent className="p-4">
                 <SectionHeader
                   title="AI highlights and takeaways"
                   subtitle="Subscriber-grade summary intelligence during live or replay playback."
                   action="Expand"
+                  inverse
                 />
                 <div className="space-y-3">
-                  {aiPanelOpen ? (
-                    aiHighlights.map((item) => (
-                      <div key={item} className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/80 backdrop-blur">
-                        <div className="mb-2 flex items-center gap-2 font-semibold text-white">
-                          <Sparkles className="h-4 w-4 text-[#8ef0ca]" /> AI highlight
+                  <div className="fh-scroll-region max-h-[400px] space-y-2.5 overflow-y-auto pr-1">
+                    {aiPanelOpen ? (
+                      aiHighlights.map((item) => (
+                        <div key={item} className="rounded-[20px] border border-white/10 bg-white/5 p-3.5 text-sm text-white/80 backdrop-blur">
+                          <div className="mb-2 flex items-center gap-2 font-semibold text-white">
+                            <Sparkles className="h-4 w-4 text-[#8ef0ca]" /> AI highlight
+                          </div>
+                          {item}
                         </div>
-                        {item}
+                      ))
+                    ) : (
+                      <div className="rounded-[20px] border border-white/10 bg-white/5 p-3.5 text-sm text-white/75 backdrop-blur">
+                        AI highlights are collapsed. Open them again for live or post-session takeaways.
                       </div>
-                    ))
-                  ) : (
-                    <div className="rounded-[24px] border border-white/10 bg-white/5 p-4 text-sm text-white/75 backdrop-blur">
-                      AI highlights are collapsed. Open them again for live or post-session takeaways.
-                    </div>
-                  )}
+                    )}
+                  </div>
                   <Button
+                    uiSize="sm"
                     className="w-full rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90"
                     onClick={() => setAiPanelOpen((prev) => !prev)}
                   >
@@ -364,10 +409,10 @@ export default function FaithHubLivePlayer() {
               transition={{ delay: 0.22, duration: 0.32, ease: "easeOut" }}
             >
             <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
-              <CardContent className="fh-pad-panel">
+              <CardContent className="p-4">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#f77f00]">Premium engagement</div>
+                    <div className="hidden text-[#f77f00]">Premium engagement</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Badges, member lanes, and ticket validation</div>
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">Monetized live layer</Badge>
@@ -390,7 +435,7 @@ export default function FaithHubLivePlayer() {
               transition={{ delay: 0.26, duration: 0.32, ease: "easeOut" }}
             >
             <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
-              <CardContent className="fh-pad-panel">
+              <CardContent className="p-4">
                 <SectionHeader
                   title="Auto-retry and fallback"
                   subtitle="The live player should keep serving the user even when the connection weakens."

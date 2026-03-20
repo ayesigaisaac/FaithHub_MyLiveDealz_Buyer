@@ -45,7 +45,7 @@ export default function GivingTrustPanel({
         <CardContent className="fh-pad-panel">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <div className="fh-eyebrow text-[#f77f00]">
+              <div className="hidden text-[#f77f00]">
                 Supporter subscription tier
               </div>
               <div className="mt-2 text-xl font-semibold text-slate-900">

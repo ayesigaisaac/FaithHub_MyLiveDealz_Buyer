@@ -90,8 +90,7 @@ function getSectionIcon(sectionLabel: string): LucideIcon {
 }
 
 function compactModuleLabel(sectionLabel: string) {
-  const clean = sectionLabel.split(" - ").slice(-1)[0]?.trim() || sectionLabel;
-  return clean.length > 18 ? `${clean.slice(0, 18)}...` : clean;
+  return sectionLabel.split(" - ").slice(-1)[0]?.trim() || sectionLabel;
 }
 
 export default function AppShellLayout() {
@@ -186,7 +185,7 @@ export default function AppShellLayout() {
   return (
     <div className="fh-page-canvas flex h-[100dvh] flex-col overflow-hidden overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
       <div className="fh-shell-topbar z-30 shrink-0 border-b border-[var(--border)] shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur">
-        <div className="mx-auto max-w-[1860px] px-3 py-3 sm:px-4 lg:px-5">
+        <div className="w-full px-3 py-2.5 sm:px-4 lg:px-5">
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               type="button"
@@ -279,8 +278,8 @@ export default function AppShellLayout() {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-[1860px] min-h-0 min-w-0 flex-1 gap-4 overflow-hidden px-3 pb-3 pt-4 sm:px-4 lg:px-5">
-        <aside className={`hidden min-h-0 shrink-0 xl:block ${sidebarCollapsed ? "w-[96px]" : "w-[332px]"}`}>
+      <div className="flex w-full min-h-0 min-w-0 flex-1 gap-3 overflow-hidden px-3 pb-3 pt-2 sm:px-4 lg:px-5">
+        <aside className={`hidden min-h-0 shrink-0 xl:block ${sidebarCollapsed ? "w-[96px]" : "w-[240px]"}`}>
           <div className="h-full">
             {sidebarCollapsed ? (
               <SidebarRail
@@ -326,7 +325,7 @@ export default function AppShellLayout() {
             />
           </div>
         </Drawer>
-        <main className="fh-scroll-region min-h-0 min-w-0 flex-1 overflow-y-auto pr-1" onClickCapture={handlePageAction}>
+        <main className="fh-scroll-region fh-app-content min-h-0 min-w-0 flex-1 overflow-y-auto pr-1" onClickCapture={handlePageAction}>
           <Outlet />
         </main>
       </div>
@@ -399,9 +398,9 @@ function SidebarPanel({
   }, [activeSectionId]);
 
   return (
-    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[22px]">
+    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[20px]">
       <CardContent
-        className={`flex min-h-0 flex-col gap-2.5 overflow-hidden p-2.5 ${
+        className={`flex min-h-0 flex-col gap-2 overflow-hidden p-2 ${
           compactHeight ? "max-h-[74vh]" : "h-full"
         }`}
       >
@@ -431,24 +430,24 @@ function SidebarPanel({
             const expanded = openSectionId === section.id;
             return (
               <div key={section.id} className="fh-interactive-card rounded-xl border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]">
-                <button
-                  type="button"
-                  onClick={() => setOpenSectionId((prev) => (prev === section.id ? "" : section.id))}
-                  className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left"
-                >
-                  <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)]">
+              <button
+                type="button"
+                onClick={() => setOpenSectionId((prev) => (prev === section.id ? "" : section.id))}
+                className="flex w-full items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-left"
+              >
+                  <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)]">
                     <SectionIcon className="h-4 w-4" />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-xs font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-muted)]">
+                    <span className="block break-words text-sm font-semibold leading-snug tracking-[0.03em] text-[var(--fh-nav-muted)]">
                       {compactModuleLabel(section.label)}
                     </span>
                   </span>
-                  <ChevronDown className={`h-4 w-4 shrink-0 text-[var(--fh-nav-item-chevron)] transition ${expanded ? "rotate-180" : ""}`} />
+                  <ChevronDown className={`h-3.5 w-3.5 shrink-0 text-[var(--fh-nav-item-chevron)] transition ${expanded ? "rotate-180" : ""}`} />
                 </button>
 
                 {expanded ? (
-                  <div className="space-y-1 border-t border-[var(--fh-nav-section-divider)] px-2 pb-2 pt-2">
+                  <div className="space-y-1 border-t border-[var(--fh-nav-section-divider)] px-1.5 pb-1.5 pt-1.5">
                     {section.items.map((item) => {
                       const ItemIcon = item.icon;
                       const active = item.path === currentPath;
@@ -458,14 +457,14 @@ function SidebarPanel({
                           key={item.id}
                           aria-current={active ? "page" : undefined}
                           onClick={() => onNavigate(item.path)}
-                          className={`fh-interactive-card flex w-full items-center gap-2 rounded-xl border px-2.5 py-2 text-left ${
+                          className={`fh-interactive-card flex w-full items-center gap-1.5 rounded-xl border px-2 py-1.5 text-left ${
                             active
                               ? "border-[var(--fh-nav-item-active-border)] bg-[color:var(--fh-nav-item-active-bg)]"
                               : "border-transparent bg-[color:var(--fh-nav-item-bg)]"
                           }`}
                         >
                           <span
-                            className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
+                            className={`inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md ${
                               active
                                 ? "bg-[color:var(--fh-nav-item-active-icon-bg)] text-[var(--fh-nav-item-active-icon-fg)]"
                                 : "bg-[color:var(--fh-nav-item-icon-bg)] text-[var(--fh-nav-item-icon-fg)]"
@@ -474,9 +473,9 @@ function SidebarPanel({
                             <ItemIcon className="h-3.5 w-3.5" />
                           </span>
                           <span className="min-w-0 flex-1">
-                            <span className="block truncate text-base font-semibold text-[var(--fh-nav-item-title)]">{item.label}</span>
+                            <span className="block break-words text-sm font-semibold leading-snug text-[var(--fh-nav-item-title)]">{item.label}</span>
                           </span>
-                          <ChevronRight className="h-4 w-4 shrink-0 text-[var(--fh-nav-item-chevron)]" />
+                          <ChevronRight className="h-3.5 w-3.5 shrink-0 text-[var(--fh-nav-item-chevron)]" />
                         </button>
                       );
                     })}

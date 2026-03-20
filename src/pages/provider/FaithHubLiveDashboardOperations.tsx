@@ -526,7 +526,7 @@ export default function FaithHubLiveDashboardOperations() {
             <div className="fh-subcard-muted rounded-xl p-3">
               <div className="fh-label text-slate-400">Stream key</div>
               <div className="mt-1 font-mono text-sm font-semibold text-slate-900">{streamKey}</div>
-              <div className="mt-2 grid gap-2 sm:grid-cols-2">
+              <div className="mt-2 fh-actions-grid">
                 <Button
                   className="h-10 rounded-xl bg-[#03cd8c] text-white hover:bg-[#03cd8c]"
                   onClick={copyKey}
@@ -544,7 +544,7 @@ export default function FaithHubLiveDashboardOperations() {
               </div>
             </div>
 
-            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            <div className="mt-3 fh-actions-grid">
               <ToggleCard
                 label="Multi-stream routing"
                 description="Route program feed to multiple destinations."

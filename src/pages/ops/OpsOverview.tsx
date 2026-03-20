@@ -21,7 +21,7 @@ export default function OpsOverview() {
         {opsCards.map((item) => (
           <Card key={item.label} className="rounded-3xl border border-slate-200 bg-white shadow-sm">
             <CardContent className="p-5">
-              <div className="fh-eyebrow text-slate-500">{item.label}</div>
+              <div className="hidden text-slate-500">{item.label}</div>
               <div className="mt-2 text-2xl font-semibold text-slate-900">{item.value}</div>
               <div className="mt-1 text-sm text-slate-500">{item.note}</div>
             </CardContent>

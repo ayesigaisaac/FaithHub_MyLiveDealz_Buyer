@@ -165,8 +165,7 @@ export default function FaithHubSubscriptionsMembership() {
               <Crown className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
-              <div className="text-lg font-semibold">Subscriptions & Membership</div>
+              <div className="text-[1.95rem] font-semibold leading-tight text-slate-900">Subscriptions & Membership</div>
             </div>
           </div>
 
@@ -175,7 +174,7 @@ export default function FaithHubSubscriptionsMembership() {
               {offlineMode ? <WifiOff className="h-4 w-4 text-[#f77f00]" /> : <Wifi className="h-4 w-4 text-[#03cd8c]" />}
               {offlineMode ? "Entitlement cache in use" : "Billing and entitlements synced"}
             </div>
-            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
+            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700">
               <Bell className="h-5 w-5" />
             </button>
           </div>
@@ -188,53 +187,47 @@ export default function FaithHubSubscriptionsMembership() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-[#bdeedb] bg-gradient-to-br from-[#e9fbf4] via-[#f3fdf9] to-white shadow-[0_20px_54px_-34px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
-                <div className="relative z-10 text-white">
-                  <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Plan comparison + entitlements</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Family sharing + enterprise group paths</Badge>
-                  </div>
-
+                <div className="relative z-10 text-slate-900">
                   <div className="grid gap-5 lg:grid-cols-[0.65fr_0.35fr]">
                     <div className="space-y-4">
-                      <div className="fh-kicker text-white/90">Membership made clear</div>
-                      <h1 className="text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
+                      <h1 className="text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl lg:text-[2.6rem]">
                         Compare plans, manage billing, understand entitlements, and prepare for family or institution-wide membership in one calm experience.
                       </h1>
-                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
+                      <p className="max-w-2xl text-base leading-relaxed text-slate-600">
                         This page is built for clarity around subscriptions and memberships. Users can compare plans, see entitlement effects, understand proration, and view cached access when offline.
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#cfe9de] bg-white px-3 py-1">
                           <CreditCard className="h-4 w-4" />
                           Platform billing ready
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#cfe9de] bg-white px-3 py-1">
                           <Layers3 className="h-4 w-4" />
                           Entitlement-aware UI
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#cfe9de] bg-white px-3 py-1">
                           <Users className="h-4 w-4" />
                           Family and group models
                         </span>
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-3 text-sm font-semibold text-white">Current plan</div>
-                      <div className="rounded-[24px] border border-white/15 bg-white/10 p-4">
-                        <div className="mb-1 fh-kicker-muted text-white/70">Active</div>
-                        <div className="text-2xl font-semibold text-white">{currentPlanData?.name}</div>
-                        <div className="mt-2 text-sm text-white/80">{annualBilling ? "Annual billing" : "Monthly billing"}</div>
+                    <div className="rounded-[28px] border border-[#cde8dd] bg-white/90 p-4">
+                      <div className="mb-3 text-sm font-semibold text-slate-700">Current plan</div>
+                      <div className="rounded-[24px] border border-[#d8e7df] bg-[#f8fdfb] p-4">
+                        <div className="mb-1 text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">Active</div>
+                        <div className="text-2xl font-semibold text-slate-900">{currentPlanData?.name}</div>
+                        <div className="mt-2 text-sm text-slate-600">{annualBilling ? "Annual billing" : "Monthly billing"}</div>
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Manage plan</Button>
+                      <div className="mt-4 grid gap-2 sm:grid-cols-1">
+                        <Button className="w-full rounded-2xl bg-[#03cd8c] text-white">Manage plan</Button>
                         <Button
                           variant="outline"
-                          className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
+                          className="w-full rounded-2xl border-slate-200 bg-white text-slate-700"
                           onClick={() => setOfflineMode((prev) => !prev)}
                         >
                           {offlineMode ? "Online sync" : "Offline cache"}
@@ -248,14 +241,13 @@ export default function FaithHubSubscriptionsMembership() {
 
             <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
-                <div className="mb-5 flex items-center justify-between gap-3">
+                <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Available plans</div>
-                    <div className="text-sm text-slate-500">View plans, switch billing cadence, and understand what each one unlocks.</div>
                   </div>
                   <Button
                     variant="outline"
-                    className="rounded-full border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                    className="w-full rounded-full border-slate-200 bg-white sm:w-auto"
                     onClick={() => setAnnualBilling((prev) => !prev)}
                   >
                     {annualBilling ? "Annual billing" : "Monthly billing"}
@@ -267,7 +259,7 @@ export default function FaithHubSubscriptionsMembership() {
                     <button
                       key={plan.id}
                       onClick={() => setSelectedPlan(plan.id)}
-                      className={`rounded-[24px] border p-4 text-left shadow-sm transition ${selectedPlan === plan.id ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10" : plan.tone}`}
+                      className={`rounded-[24px] border p-4 text-left shadow-sm ${selectedPlan === plan.id ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10" : plan.tone}`}
                     >
                       <div className="mb-2 flex items-center gap-2">
                         <div className="text-base font-semibold text-slate-900">{plan.name}</div>
@@ -296,8 +288,8 @@ export default function FaithHubSubscriptionsMembership() {
                   <div className="mb-2 text-sm font-semibold text-slate-900">Proration preview</div>
                   <div className="text-sm text-slate-600">{prorationLabel}</div>
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">Subscribe / Switch</Button>
-                    <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]">
+                    <Button className="rounded-2xl bg-[#03cd8c]">Subscribe / Switch</Button>
+                    <Button variant="outline" className="rounded-2xl border-slate-200 bg-white">
                       Cancel membership
                     </Button>
                   </div>
@@ -310,9 +302,8 @@ export default function FaithHubSubscriptionsMembership() {
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Plan comparison</div>
-                    <div className="text-sm text-slate-500">Compare benefits before a user commits.</div>
                   </div>
-                  <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">
+                  <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c]">
                     <Blocks className="mr-1 h-3.5 w-3.5" /> Structured view
                   </Badge>
                 </div>
@@ -358,9 +349,8 @@ export default function FaithHubSubscriptionsMembership() {
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-white sm:text-xl">Entitlements</div>
-                    <div className="text-sm text-white/70">Show the user what is active right now, even if offline.</div>
                   </div>
-                  <Button variant="outline" className="rounded-full border-white/20 bg-white/10 text-white hover:bg-white/15">
+                  <Button variant="outline" className="rounded-full border-white/20 bg-white/10 text-white">
                     <RefreshCw className="mr-2 h-4 w-4" /> Refresh
                   </Button>
                 </div>
@@ -384,14 +374,13 @@ export default function FaithHubSubscriptionsMembership() {
 
             <Card className="fh-interactive-card fh-surface-warm rounded-[32px]">
               <CardContent className="fh-pad-panel">
-                <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Family and group memberships</div>
-                    <div className="text-sm text-slate-500">Where supported, extend access beyond a single individual.</div>
                   </div>
                   <Button
                     variant="outline"
-                    className="rounded-full border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                    className="w-full rounded-full border-slate-200 bg-white sm:w-auto"
                     onClick={() => setGroupMembershipPreview((prev) => !prev)}
                   >
                     {groupMembershipPreview ? "Preview on" : "Preview off"}
@@ -401,8 +390,8 @@ export default function FaithHubSubscriptionsMembership() {
                 <div className="space-y-3">
                   <button
                     onClick={() => setFamilySharing((prev) => !prev)}
-                    className={`w-full rounded-[24px] border p-4 text-left transition ${
-                      familySharing ? "border-[#03cd8c]/20 bg-[#ecfff8]" : "border-slate-200 bg-white hover:border-[#03cd8c]/35"
+                    className={`w-full rounded-[24px] border p-4 text-left ${
+                      familySharing ? "border-[#03cd8c]/20 bg-[#ecfff8]" : "border-slate-200 bg-white"
                     }`}
                   >
                     <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-900">
@@ -433,12 +422,11 @@ export default function FaithHubSubscriptionsMembership() {
 
             <Card className="fh-interactive-card fh-surface-card rounded-[32px]">
               <CardContent className="fh-pad-panel">
-                <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <div className="text-lg font-semibold text-slate-900 sm:text-xl">Billing state and sync history</div>
-                    <div className="text-sm text-slate-500">Keep the user informed when entitlements are cached or pending sync.</div>
                   </div>
-                  <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">
+                  <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c]">
                     <ShieldCheck className="mr-1 h-3.5 w-3.5" /> Safe cache
                   </Badge>
                 </div>

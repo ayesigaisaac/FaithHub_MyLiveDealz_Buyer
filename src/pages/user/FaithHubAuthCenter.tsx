@@ -115,7 +115,7 @@ export default function FaithHubAuthCenter() {
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">
+              <div className="hidden text-[#03cd8c]">
                 EVzone Super App
               </div>
               <div className="text-lg font-semibold">FaithHub Authentication Center</div>
@@ -153,11 +153,10 @@ export default function FaithHubAuthCenter() {
               </div>
 
               <div className="mb-6 max-w-2xl space-y-3">
-                <div className="fh-eyebrow text-[#03cd8c]">
+                <div className="hidden text-[#03cd8c]">
                   FH-U-002
                 </div>
                 <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">{title}</h1>
-                <p className="max-w-2xl fh-body text-slate-600 sm:text-base">{subtitle}</p>
               </div>
 
               <div className="mb-6 grid gap-3 md:grid-cols-3">
@@ -338,7 +337,7 @@ export default function FaithHubAuthCenter() {
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
-                          <div className="fh-eyebrow text-[#8ef0ca]">
+                          <div className="hidden text-[#8ef0ca]">
                             Enterprise-ready
                           </div>
                           <div className="mt-2 text-xl font-semibold">SSO and organization access</div>
@@ -363,7 +362,7 @@ export default function FaithHubAuthCenter() {
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
-                          <div className="fh-eyebrow text-[#03cd8c]">
+                          <div className="hidden text-[#03cd8c]">
                             Trust and continuity
                           </div>
                           <div className="mt-2 text-xl font-semibold text-slate-900">What this page protects</div>
@@ -416,7 +415,7 @@ export default function FaithHubAuthCenter() {
             <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#22d39f] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
                 <div className="mb-5 max-w-xl space-y-3 text-white">
-                  <div className="fh-eyebrow text-white/90">Accessible and premium-ready</div>
+                  <div className="hidden text-white/90">Accessible and premium-ready</div>
                   <h2 className="text-3xl font-semibold leading-tight">Authentication that feels calm, clear, and trustworthy.</h2>
                   <p className="fh-body text-white/85 sm:text-base">
                     FaithHub avoids confusing puzzles, keeps labels visible, and balances convenience with protection across members, providers, and enterprise organizations.
@@ -451,7 +450,7 @@ export default function FaithHubAuthCenter() {
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#03cd8c]">Assistive details</div>
+                    <div className="hidden text-[#03cd8c]">Assistive details</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Accessibility notes</div>
                   </div>
                   <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">No cognitive puzzles</Badge>

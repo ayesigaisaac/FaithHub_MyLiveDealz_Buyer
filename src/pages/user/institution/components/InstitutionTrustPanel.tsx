@@ -17,7 +17,7 @@ export default function InstitutionTrustPanel({
       <CardContent className="fh-pad-panel">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <div className="fh-eyebrow text-[#03cd8c]">
+            <div className="hidden text-[#03cd8c]">
               Members-only area
             </div>
             <div className="mt-2 text-xl font-semibold text-slate-900">Private institution section</div>

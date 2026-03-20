@@ -125,7 +125,6 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
     <div className="mb-4 flex items-center justify-between gap-3">
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
-        <div className="text-sm text-slate-500">{subtitle}</div>
       </div>
       <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
         {action}
@@ -168,7 +167,7 @@ export default function FaithHubLiveChatQA() {
               <MessageCircle className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Live Chat & Q&A</div>
             </div>
           </div>
@@ -373,7 +372,7 @@ export default function FaithHubLiveChatQA() {
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#f77f00]">Premium interaction controls</div>
+                    <div className="hidden text-[#f77f00]">Premium interaction controls</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Anonymous moderator route and priority handling</div>
                   </div>
                   <Badge className="rounded-full bg-[#f77f00]/10 text-[#f77f00] hover:bg-[#f77f00]/10">No pay-to-speak abuse</Badge>

@@ -88,7 +88,7 @@ export default function FaithHubEpisodeBuilder() {
               <FileText className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">EVzone Super App</div>
+              <div className="hidden text-[#03cd8c]">EVzone Super App</div>
               <div className="text-lg font-semibold">Episode Builder</div>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function FaithHubEpisodeBuilder() {
             <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4">
-                  <div className="fh-eyebrow text-[#8ef0ca]">Builder flow</div>
+                  <div className="hidden text-[#8ef0ca]">Builder flow</div>
                   <div className="mt-2 text-xl font-semibold">Episode construction with resource and live linking</div>
                 </div>
                 <div className="space-y-3">
@@ -204,7 +204,7 @@ export default function FaithHubEpisodeBuilder() {
                       <div className="h-2 rounded-full bg-white/20">
                         <div className="h-2 rounded-full bg-white" style={{ width: "68%" }} />
                       </div>
-                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                      <div className="mt-4 fh-actions-grid">
                         <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">
                           <Save className="mr-2 h-4 w-4" /> Save
                         </Button>

@@ -101,7 +101,7 @@ export default function FaithHubEntry() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div>
-              <div className="fh-eyebrow text-[#03cd8c]">
+              <div className="hidden text-[#03cd8c]">
                 EVzone Super App
               </div>
               <div className="text-lg font-semibold">FaithHub Entry</div>
@@ -164,7 +164,7 @@ export default function FaithHubEntry() {
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
                       <div>
-                        <div className="fh-eyebrow text-[#03cd8c]">
+                        <div className="hidden text-[#03cd8c]">
                           Entry actions
                         </div>
                         <h2 className="mt-2 text-2xl font-semibold text-slate-900">Choose how you want to enter</h2>
@@ -248,7 +248,7 @@ export default function FaithHubEntry() {
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-start justify-between gap-3">
                         <div>
-                          <div className="fh-eyebrow text-[#03cd8c]">
+                          <div className="hidden text-[#03cd8c]">
                             Smart entry state
                           </div>
                           <h3 className="mt-2 text-xl font-semibold">Adaptive onboarding</h3>
@@ -280,7 +280,7 @@ export default function FaithHubEntry() {
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-center justify-between gap-3">
                         <div>
-                          <div className="fh-eyebrow text-[#03cd8c]">
+                          <div className="hidden text-[#03cd8c]">
                             Data aware experience
                           </div>
                           <div className="mt-2 text-xl font-semibold text-slate-900">Low-data mode prompt</div>
@@ -330,7 +330,7 @@ export default function FaithHubEntry() {
                 <div className="border-b border-slate-100 bg-gradient-to-r from-[#ecfff8] to-white px-5 py-4">
                   <div className="flex items-center justify-between gap-3">
                     <div>
-                      <div className="fh-eyebrow text-[#03cd8c]">
+                      <div className="hidden text-[#03cd8c]">
                         Experience preview
                       </div>
                       <div className="mt-1 text-xl font-semibold text-slate-900">What opens next</div>
@@ -368,7 +368,7 @@ export default function FaithHubEntry() {
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>
-                    <div className="fh-eyebrow text-[#8ef0ca]">
+                    <div className="hidden text-[#8ef0ca]">
                       Offline and continuity
                     </div>
                     <div className="mt-2 text-xl font-semibold">FaithHub never starts cold</div>

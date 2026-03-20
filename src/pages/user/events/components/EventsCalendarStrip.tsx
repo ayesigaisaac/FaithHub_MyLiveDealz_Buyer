@@ -19,7 +19,7 @@ export default function EventsCalendarStrip({ days }: EventsCalendarStripProps) 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {days.map((day) => (
             <div key={day.day} className="rounded-[20px] border border-slate-200 bg-[#f8fafc] p-4">
-              <div className="fh-eyebrow text-slate-500">
+              <div className="hidden text-slate-500">
                 Day
               </div>
               <div className="mt-1 text-2xl font-semibold text-slate-900">{day.day}</div>
