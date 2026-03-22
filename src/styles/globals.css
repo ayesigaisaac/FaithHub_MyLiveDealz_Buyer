@@ -214,20 +214,26 @@ h4 {
 }
 
 p,
-span,
 div,
 li {
   overflow-wrap: break-word;
 }
 
-/* App shell pages should use the full available content width. */
-.fh-app-content .max-w-7xl,
-.fh-app-content .max-w-6xl,
-.fh-app-content .max-w-5xl,
-.fh-app-content .max-w-4xl,
-.fh-app-content .max-w-3xl,
-.fh-app-content .max-w-2xl,
-.fh-app-content .max-w-xl {
+span {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+button,
+a,
+[role="button"] {
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+/* App shell pages should use the full available content width at the top-level wrapper. */
+.fh-app-content > .mx-auto[class*="max-w-"],
+.fh-app-content > .w-full[class*="max-w-"] {
   max-width: none !important;
   width: 100%;
 }
@@ -461,10 +467,29 @@ li {
   text-shadow: 0 2px 12px rgba(15, 23, 42, 0.45);
 }
 
+/* Stronger readability guardrail for legacy mint hero gradients across pages. */
+:is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"]) {
+  background-image: linear-gradient(
+    132deg,
+    rgba(5, 112, 82, 0.98) 0%,
+    rgba(8, 131, 97, 0.96) 45%,
+    rgba(12, 57, 66, 0.98) 100%
+  ) !important;
+  border-color: rgba(8, 96, 74, 0.48) !important;
+}
+
+:is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"])
+  [class~="text-white"],
+:is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"])
+  [class*="text-white/"] {
+  color: #f8fcff !important;
+  text-shadow: 0 2px 14px rgba(3, 14, 28, 0.42);
+}
+
 .fh-actions-grid {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
 }
 
 .fh-pill {

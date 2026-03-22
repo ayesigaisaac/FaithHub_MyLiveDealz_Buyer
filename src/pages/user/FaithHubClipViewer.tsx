@@ -123,7 +123,16 @@ export default function FaithHubClipViewer() {
                     </div>
 
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-40 rounded-[22px] bg-white/20" />
+                      <div className="mb-4 aspect-video rounded-[22px] border border-white/20 bg-slate-950/35 p-3">
+                        <div className="mb-3 flex items-center justify-between text-sm text-white/85">
+                          <span>Clip preview</span>
+                          <span>00:38</span>
+                        </div>
+                        <div className="mb-2 h-1.5 rounded-full bg-white/20">
+                          <div className="h-full w-[64%] rounded-full bg-emerald-300" />
+                        </div>
+                        <div className="text-xs text-white/70">Family application highlight</div>
+                      </div>
                       <div className="mb-3 text-sm font-semibold text-white">Clip state</div>
                       <div className="space-y-2 text-sm text-white/85">
                         <div className="flex items-center justify-between"><span>Caption burn-in</span><span>{captionBurnIn ? "On" : "Off"}</span></div>
@@ -144,7 +153,24 @@ export default function FaithHubClipViewer() {
                 />
                 <div className="space-y-4">
                   <div className="rounded-[28px] border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="mb-4 h-[360px] rounded-[24px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                    <div className="mb-4 aspect-video overflow-hidden rounded-[24px] border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-200">
+                      <div className="relative h-full w-full bg-[radial-gradient(circle_at_top,rgba(3,205,140,0.12),transparent_42%),linear-gradient(160deg,#f8fafc_0%,#e8eef5_100%)]">
+                        <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
+                          Clip canvas
+                        </div>
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/55 to-transparent p-3.5">
+                          <div className="flex items-center justify-between gap-3 text-white">
+                            <div>
+                              <div className="text-sm font-semibold">Family application highlight</div>
+                              <div className="text-xs text-white/85">Ready for share export</div>
+                            </div>
+                            <Button uiSize="sm" className="rounded-xl bg-[#03cd8c] text-white hover:bg-[#02b67c]">
+                              <PlayCircle className="mr-1.5 h-4 w-4" /> Preview
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
                       <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
                         <Share2 className="mr-2 h-4 w-4" /> Share clip

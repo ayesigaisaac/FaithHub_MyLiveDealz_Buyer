@@ -248,7 +248,7 @@ export default function DiscoverInstitutions() {
               subtitle="Visual location context for nearby communities"
             />
 
-            <div className="relative h-[360px] overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(145deg,#f8fbfc,#eef3f7)]">
+            <div className="relative h-[280px] overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(145deg,#f8fbfc,#eef3f7)] sm:h-[320px]">
               <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:34px_34px]" />
 
               {filteredInstitutions.map((institution) => (

@@ -174,7 +174,24 @@ export default function FaithHubLiveStudio() {
                       </div>
                       <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">Live control</Badge>
                     </div>
-                    <div className="mb-4 h-[340px] rounded-[28px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                    <div className="mb-4 aspect-video overflow-hidden rounded-[28px] border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-200">
+                      <div className="relative h-full w-full bg-[radial-gradient(circle_at_top,rgba(3,205,140,0.12),transparent_42%),linear-gradient(160deg,#f8fafc_0%,#e8eef5_100%)]">
+                        <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
+                          Program monitor
+                        </div>
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/55 to-transparent p-3.5">
+                          <div className="flex items-center justify-between gap-3 text-white">
+                            <div>
+                              <div className="text-sm font-semibold">Main camera • Live studio</div>
+                              <div className="text-xs text-white/85">Host feed and overlays ready</div>
+                            </div>
+                            <Button uiSize="sm" className="rounded-xl bg-[#03cd8c] text-white hover:bg-[#02b67c]">
+                              <PlayCircle className="mr-1.5 h-4 w-4" /> Program
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-4">
                       <button
                         onClick={() => setCameraOn((prev) => !prev)}

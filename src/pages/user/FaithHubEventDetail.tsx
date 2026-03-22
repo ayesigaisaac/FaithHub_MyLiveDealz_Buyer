@@ -140,7 +140,17 @@ export default function FaithHubEventDetail() {
                     </div>
 
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-3 h-40 rounded-[22px] bg-white/20" />
+                      <div className="mb-3 aspect-video overflow-hidden rounded-[22px] border border-white/20 bg-slate-950/45">
+                        <div className="relative h-full w-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.2),transparent_40%),linear-gradient(152deg,rgba(15,23,42,0.75),rgba(15,23,42,0.34))]">
+                          <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                            Event spotlight
+                          </div>
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 to-transparent px-3 pb-3 pt-5">
+                            <div className="text-sm font-semibold text-white">Youth Worship Camp</div>
+                            <div className="text-xs text-white/80">12 to 15 Aug, Entebbe</div>
+                          </div>
+                        </div>
+                      </div>
                       <div className="mb-2 text-sm font-semibold text-white">Your event status</div>
                       <div className="mb-3 text-2xl font-semibold text-white">{rsvp}</div>
                       <div className="fh-actions-grid">
@@ -203,7 +213,16 @@ export default function FaithHubEventDetail() {
                 <div className="grid gap-4 lg:grid-cols-[0.5fr_0.5fr]">
                   <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Venue</div>
-                    <div className="mb-4 h-48 rounded-[22px] bg-gradient-to-br from-slate-100 to-slate-200" />
+                    <div className="mb-4 aspect-[16/10] overflow-hidden rounded-[22px] border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-200">
+                      <div className="relative h-full w-full bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.14),transparent_45%),linear-gradient(150deg,#f8fafc_0%,#e8eef5_100%)]">
+                        <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700 ring-1 ring-slate-200">
+                          Venue map preview
+                        </div>
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/20 to-transparent px-3 pb-3 pt-6 text-xs text-slate-700">
+                          Lake Victoria Retreat Centre
+                        </div>
+                      </div>
+                    </div>
                     <div className="space-y-3 text-sm text-slate-600">
                       <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-3">Lake Victoria Retreat Centre, Entebbe</div>
                       <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-3">Parking, check-in gate, and accessible entry points shown in the in-app map.</div>

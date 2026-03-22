@@ -9,7 +9,7 @@ type InstitutionMapProps = {
 export default function InstitutionMap({ institutions }: InstitutionMapProps) {
   return (
     <div className="rounded-[28px] border border-slate-200 bg-[#f8fafc] p-4 sm:p-5">
-      <div className="relative h-[520px] overflow-hidden rounded-[24px] border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="relative h-[320px] overflow-hidden rounded-[24px] border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100 sm:h-[420px]">
         <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute left-6 top-6 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
           Kampala and nearby areas

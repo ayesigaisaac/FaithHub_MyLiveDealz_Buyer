@@ -163,7 +163,17 @@ export default function FaithHubEpisodeDetail() {
                     </div>
 
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-4 h-36 rounded-[20px] bg-white/20" />
+                      <div className="mb-4 aspect-video overflow-hidden rounded-[20px] border border-white/20 bg-slate-950/45">
+                        <div className="relative h-full w-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_42%),linear-gradient(160deg,rgba(15,23,42,0.72),rgba(15,23,42,0.35))]">
+                          <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                            Episode preview
+                          </div>
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 to-transparent px-3 pb-3 pt-5">
+                            <div className="text-sm font-semibold text-white">Guarding the Heart</div>
+                            <div className="text-xs text-white/80">Chapter markers enabled</div>
+                          </div>
+                        </div>
+                      </div>
                       <div className="mb-3 text-sm font-semibold text-white">Playback behavior</div>
                       <div className="space-y-3 text-sm text-white/85">
                         <button

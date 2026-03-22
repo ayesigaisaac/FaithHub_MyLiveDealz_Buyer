@@ -5,6 +5,7 @@ import {
   Bell,
   BookOpen,
   BriefcaseBusiness,
+  Check,
   ChevronDown,
   ChevronRight,
   Clock3,
@@ -29,6 +30,7 @@ import {
   type PageRegistryItem,
   type RoleKey,
 } from "@/config/pageRegistry";
+import { routes } from "@/constants/routes";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
@@ -105,8 +107,8 @@ export default function AppShellLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navQuery, setNavQuery] = useState("");
-  const [profileHintOpen, setProfileHintOpen] = useState(false);
-  const profileHintRef = useRef<HTMLDivElement | null>(null);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLDivElement | null>(null);
 
   const pages = useMemo(
     () => (adminAllAccess ? pageRegistry : pagesByRole[routeRole] || []),
@@ -139,6 +141,28 @@ export default function AppShellLayout() {
 
   const navigateToPath = (path: string) => navigate(withAdminAccess(path, adminAllAccess));
 
+  const quickActions = useMemo(() => {
+    if (shellRole === "provider") {
+      return {
+        profile: routes.app.provider.onboarding,
+        settings: routes.app.provider.dashboard,
+        notifications: routes.app.provider.notifications,
+      };
+    }
+    if (shellRole === "admin") {
+      return {
+        profile: routes.app.admin.overview,
+        settings: routes.app.admin.security,
+        notifications: routes.app.admin.channels,
+      };
+    }
+    return {
+      profile: routes.app.user.profile,
+      settings: routes.app.user.settings,
+      notifications: routes.app.user.liveChat,
+    };
+  }, [shellRole]);
+
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement | null;
     const button = target?.closest("button");
@@ -157,21 +181,15 @@ export default function AppShellLayout() {
   };
 
   useEffect(() => {
-    if (!profileHintOpen) return;
-    const timeoutId = window.setTimeout(() => setProfileHintOpen(false), 2400);
-    return () => window.clearTimeout(timeoutId);
-  }, [profileHintOpen]);
-
-  useEffect(() => {
-    if (!profileHintOpen) return;
+    if (!profileMenuOpen) return;
     const handlePointerDown = (event: MouseEvent) => {
-      if (!profileHintRef.current?.contains(event.target as Node)) {
-        setProfileHintOpen(false);
+      if (!profileMenuRef.current?.contains(event.target as Node)) {
+        setProfileMenuOpen(false);
       }
     };
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setProfileHintOpen(false);
+        setProfileMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", handlePointerDown);
@@ -180,7 +198,7 @@ export default function AppShellLayout() {
       document.removeEventListener("mousedown", handlePointerDown);
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [profileHintOpen]);
+  }, [profileMenuOpen]);
 
   return (
     <div className="fh-page-canvas flex h-[100dvh] flex-col overflow-hidden overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
@@ -222,35 +240,103 @@ export default function AppShellLayout() {
             </label>
 
             <div className="ml-auto flex items-center gap-2">
-              <div ref={profileHintRef} className="relative hidden xl:block">
+              <div ref={profileMenuRef} className="relative hidden md:block">
                 <button
                   type="button"
                   aria-label="Open profile options"
-                  onClick={() => setProfileHintOpen((prev) => !prev)}
-                  className="fh-shell-control fh-interactive-card inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-left"
+                  onClick={() => setProfileMenuOpen((prev) => !prev)}
+                  className="fh-shell-control fh-interactive-card inline-flex h-11 items-center gap-2 rounded-2xl px-3.5 text-left"
                 >
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#111827] text-[11px] font-semibold text-white">
                     BM
                   </span>
                   <span className="leading-tight">
                     <span className="block text-sm font-semibold text-slate-900">Brian M.</span>
-                    <span className="block text-xs text-slate-500">Greenhill Community - Member</span>
+                    <span className="block text-xs text-slate-500">Greenhill Community</span>
                   </span>
-                  <ChevronDown className="h-4 w-4 text-slate-500" />
+                  <ChevronDown className={`h-4 w-4 text-slate-500 transition ${profileMenuOpen ? "rotate-180" : ""}`} />
                 </button>
-                {profileHintOpen ? (
-                  <div className="pointer-events-none absolute left-1/2 top-[calc(100%+8px)] z-10 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
-                    <span className="absolute left-1/2 top-[-4px] h-2 w-2 -translate-x-1/2 rotate-45 bg-slate-900" />
-                    Community: Greenhill Community
+                {profileMenuOpen ? (
+                  <div className="absolute right-0 top-[calc(100%+10px)] z-30 w-[280px] rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_20px_44px_rgba(15,23,42,0.16)]">
+                    <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                      <div className="text-sm font-semibold text-slate-900">Brian M.</div>
+                      <div className="text-xs text-slate-500">Greenhill Community</div>
+                    </div>
+
+                    <div className="px-2 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
+                      Switch Role
+                    </div>
+                    {(["user", "provider", "admin"] as RoleKey[]).map((item) => {
+                      const active = shellRole === item;
+                      return (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => {
+                            navigate(withAdminAccess(defaultPageForRole[item], adminAllAccess || item === "admin"));
+                            setProfileMenuOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-medium ${
+                            active ? "bg-[#ecfff8] text-[#049e6d]" : "text-slate-700 hover:bg-slate-50"
+                          }`}
+                        >
+                          <span>{item === "user" ? "User" : item === "provider" ? "Provider" : "Admin"}</span>
+                          {active ? <Check className="h-4 w-4" /> : null}
+                        </button>
+                      );
+                    })}
+
+                    <div className="mx-2 my-2 h-px bg-slate-200" />
+
+                    <div className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
+                      Quick Actions
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigateToPath(quickActions.profile);
+                        setProfileMenuOpen(false);
+                      }}
+                      className="w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-slate-700 hover:bg-slate-50"
+                    >
+                      Profile
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigateToPath(quickActions.settings);
+                        setProfileMenuOpen(false);
+                      }}
+                      className="w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-slate-700 hover:bg-slate-50"
+                    >
+                      Settings
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigateToPath(quickActions.notifications);
+                        setProfileMenuOpen(false);
+                      }}
+                      className="w-full rounded-xl px-3 py-2 text-left text-sm font-medium text-slate-700 hover:bg-slate-50"
+                    >
+                      Notifications
+                    </button>
+
+                    <div className="mx-2 my-2 h-px bg-slate-200" />
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate(routes.public.landing);
+                        setProfileMenuOpen(false);
+                      }}
+                      className="w-full rounded-xl px-3 py-2 text-left text-sm font-semibold text-rose-600 hover:bg-rose-50"
+                    >
+                      Logout
+                    </button>
                   </div>
                 ) : null}
               </div>
-              <RoleSwitcher
-                role={shellRole}
-                onChange={(nextRole) =>
-                  navigate(withAdminAccess(defaultPageForRole[nextRole], adminAllAccess || nextRole === "admin"))
-                }
-              />
               <div className="hidden xl:block">
                 <ColorModeToggle className="h-11 w-11 rounded-2xl" />
               </div>
@@ -333,35 +419,6 @@ export default function AppShellLayout() {
   );
 }
 
-function RoleSwitcher({ role, onChange }: { role: RoleKey; onChange: (role: RoleKey) => void }) {
-  const roles: RoleKey[] = ["user", "provider", "admin"];
-  return (
-    <div className="fh-shell-control hidden h-11 items-center gap-1 rounded-2xl p-1 md:flex">
-      {roles.map((item) => {
-        const active = role === item;
-        return (
-          <button
-            type="button"
-            key={item}
-            aria-pressed={active}
-            onClick={() => onChange(item)}
-            className={`rounded-xl px-3.5 py-1.5 text-base font-semibold ${
-              active
-                ? item === "provider"
-                  ? "bg-[#fff3e8] text-[#cc6500]"
-                  : item === "admin"
-                    ? "bg-slate-800 text-white"
-                    : "bg-[#ecfff8] text-[#049e6d]"
-                : "text-slate-500"
-            }`}
-          >
-            {item === "user" ? "User" : item === "provider" ? "Provider" : "Admin"}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
 function SidebarPanel({
   role,
   grouped,
@@ -430,11 +487,11 @@ function SidebarPanel({
             const expanded = openSectionId === section.id;
             return (
               <div key={section.id} className="fh-interactive-card rounded-xl border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]">
-              <button
-                type="button"
-                onClick={() => setOpenSectionId((prev) => (prev === section.id ? "" : section.id))}
-                className="flex w-full items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-left"
-              >
+                <button
+                  type="button"
+                  onClick={() => setOpenSectionId((prev) => (prev === section.id ? "" : section.id))}
+                  className="flex w-full items-center gap-1.5 rounded-xl px-2.5 py-1.5 text-left"
+                >
                   <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)]">
                     <SectionIcon className="h-4 w-4" />
                   </span>

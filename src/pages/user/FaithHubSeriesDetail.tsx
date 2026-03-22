@@ -142,7 +142,17 @@ export default function FaithHubSeriesDetail() {
                     </div>
 
                     <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-3 h-36 rounded-[20px] bg-white/20" />
+                      <div className="mb-3 aspect-video overflow-hidden rounded-[20px] border border-white/20 bg-slate-950/45">
+                        <div className="relative h-full w-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_42%),linear-gradient(154deg,rgba(15,23,42,0.72),rgba(15,23,42,0.3))]">
+                          <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                            Series cover
+                          </div>
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 to-transparent px-3 pb-3 pt-5">
+                            <div className="text-sm font-semibold text-white">Walking in Wisdom</div>
+                            <div className="text-xs text-white/80">5 of 8 completed</div>
+                          </div>
+                        </div>
+                      </div>
                       <div className="mb-2 text-sm font-semibold text-white">Your series progress</div>
                       <div className="mb-2 text-2xl font-semibold text-white">57%</div>
                       <div className="h-2 rounded-full bg-white/20">
@@ -254,7 +264,17 @@ export default function FaithHubSeriesDetail() {
                   action="Customize"
                 />
                 <div className="rounded-[28px] border border-white/10 bg-white/5 p-4 backdrop-blur">
-                  <div className="mb-4 h-48 rounded-[24px] bg-gradient-to-br from-white/20 to-white/10" />
+                  <div className="mb-4 aspect-[16/10] overflow-hidden rounded-[24px] border border-white/15 bg-slate-950/25">
+                    <div className="relative h-full w-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.22),transparent_40%),linear-gradient(150deg,rgba(15,23,42,0.82),rgba(15,23,42,0.35))]">
+                      <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white/85">
+                        Share preview
+                      </div>
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 to-transparent px-4 pb-4 pt-6">
+                        <div className="text-base font-semibold text-white">Walking in Wisdom</div>
+                        <div className="mt-1 text-xs text-white/75">Progress snapshot for social cards</div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="mb-3 text-lg font-semibold text-white">Walking in Wisdom</div>
                   <div className="text-sm text-white/70">5 of 8 episodes complete  Next live episode tonight</div>
                   <div className="mt-4 fh-actions-grid">

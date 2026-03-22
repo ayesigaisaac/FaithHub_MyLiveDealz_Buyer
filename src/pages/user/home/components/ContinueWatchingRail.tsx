@@ -34,7 +34,17 @@ export default function ContinueWatchingRail({ items }: ContinueWatchingRailProp
               key={item.id}
               className="fh-interactive-card fh-subcard min-w-0 rounded-[18px] p-5"
             >
-              <div className="mb-4 h-40 rounded-[20px] bg-gradient-to-br from-slate-100 to-slate-200" />
+              <div className="mb-4 aspect-video overflow-hidden rounded-[20px] border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-200">
+                <div className="relative h-full w-full bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.14),transparent_45%),linear-gradient(150deg,#f8fafc_0%,#e8eef5_100%)]">
+                  <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700 ring-1 ring-slate-200">
+                    Replay preview
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/20 to-transparent px-3 pb-3 pt-5">
+                    <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                    <div className="text-xs text-slate-600">{item.duration}</div>
+                  </div>
+                </div>
+              </div>
               <div className="mb-1 text-base font-semibold tracking-tight text-slate-900">{item.title}</div>
               <div className="fh-body-tight text-slate-500">
                 {item.institution} - {item.duration}

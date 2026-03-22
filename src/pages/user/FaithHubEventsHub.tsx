@@ -256,7 +256,7 @@ export default function FaithHubEventsHub() {
             />
 
             {showMap ? (
-              <div className="relative h-[380px] overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(145deg,#f8fbfc,#eef3f7)]">
+              <div className="relative h-[300px] overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(145deg,#f8fbfc,#eef3f7)] sm:h-[340px]">
                 <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:34px_34px]" />
 
                 {filteredEvents.map((event, index) => (
