@@ -230,9 +230,9 @@ export default function FaithHubAdminOverview() {
   const copy = faithHubToneCopy.adminOverview;
 
   return (
-    <div className="space-y-4">
-      <Card className="fh-interactive-card overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(112deg,rgba(14,165,233,0.11),rgba(248,251,252,0.94)_38%,rgba(3,205,140,0.12))] shadow-[var(--shadow-soft)]">
-        <CardContent className="p-4 sm:p-5 lg:p-6">
+    <div className="space-y-4 sm:space-y-5">
+      <Card className="fh-interactive-card overflow-hidden rounded-[28px] border border-[var(--border)] bg-[linear-gradient(112deg,rgba(14,165,233,0.11),rgba(248,251,252,0.94)_38%,rgba(3,205,140,0.12))] shadow-[var(--shadow-soft)]">
+        <CardContent className="fh-pad-hero">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
               <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
@@ -252,8 +252,8 @@ export default function FaithHubAdminOverview() {
               </div>
             </div>
 
-            <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[420px]">
-              <div className="flex flex-wrap items-center justify-end gap-2">
+            <div className="flex w-full min-w-0 flex-col gap-3 xl:w-auto xl:min-w-[420px]">
+              <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
                 <div className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white p-1">
                   <button
                     type="button"
@@ -288,7 +288,7 @@ export default function FaithHubAdminOverview() {
                   variant="outline"
                   data-action-label="Open security"
                   data-action-id="open-admin-security"
-                  className={`h-10 rounded-xl px-4 text-sm ${ctaPriorityClass("secondary")}`}
+                  className={`hidden h-10 rounded-xl px-4 text-sm sm:inline-flex ${ctaPriorityClass("secondary")}`}
                 >
                   {copy.ctas.openSecurity}
                 </Button>
@@ -296,14 +296,14 @@ export default function FaithHubAdminOverview() {
                   variant="outline"
                   data-action-label="Moderation console"
                   data-action-id="open-admin-live-moderation"
-                  className={`h-10 rounded-xl px-4 text-sm ${ctaPriorityClass("secondary")}`}
+                  className={`hidden h-10 rounded-xl px-4 text-sm sm:inline-flex ${ctaPriorityClass("secondary")}`}
                 >
                   {copy.ctas.openModeration}
                 </Button>
                 <Button
                   data-action-label="Open incident desk"
                   data-action-id="open-admin-live-moderation"
-                  className={`h-10 rounded-xl px-4 text-sm ${ctaPriorityClass("primary")}`}
+                  className={`inline-flex h-10 w-full rounded-xl px-4 text-sm sm:w-auto ${ctaPriorityClass("primary")}`}
                 >
                   {copy.ctas.openIncidentDesk}
                 </Button>
@@ -318,7 +318,7 @@ export default function FaithHubAdminOverview() {
                 type="button"
                 data-action-label={module.actionLabel}
                 data-action-id={module.actionId}
-                className="fh-interactive-card fh-subcard group w-full rounded-2xl p-4 text-left"
+                className="fh-interactive-card fh-subcard group min-h-[128px] w-full rounded-2xl p-3.5 text-left sm:min-h-[136px] sm:p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
@@ -349,11 +349,11 @@ export default function FaithHubAdminOverview() {
 
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {signalCards.map((card) => (
-          <Card key={card.id} className="fh-interactive-card fh-surface-card rounded-2xl">
-            <CardContent className="p-4">
+          <Card key={card.id} className="fh-interactive-card fh-surface-card rounded-[24px]">
+            <CardContent className="p-3.5 sm:p-4">
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <div className="fh-label text-slate-400">{card.label}</div>
+                  <div className="fh-label text-slate-500">{card.label}</div>
                   <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{card.value}</div>
                 </div>
                 <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${deltaToneClass(card.tone)}`}>
@@ -370,8 +370,8 @@ export default function FaithHubAdminOverview() {
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]">
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
             <DashboardSectionHeader
               title="Priority Queue"
               subtitle="Highest-impact admin actions for this window"
@@ -387,7 +387,7 @@ export default function FaithHubAdminOverview() {
               }
             />
 
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {priorities.map((item) => (
                 <DashboardActionItem
                   key={item.id}
@@ -402,8 +402,8 @@ export default function FaithHubAdminOverview() {
           </CardContent>
         </Card>
 
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
             <DashboardSectionHeader
               title="Ops Agenda"
               subtitle="Platform timeline and escalation checkpoints"
@@ -420,7 +420,7 @@ export default function FaithHubAdminOverview() {
               }
             />
 
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {timeline.map((item) => (
                 <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="flex items-start gap-3">
@@ -447,8 +447,8 @@ export default function FaithHubAdminOverview() {
           </CardContent>
         </Card>
 
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
             <DashboardSectionHeader
               title="Action Center"
               subtitle="Fast cross-module actions"
@@ -469,7 +469,7 @@ export default function FaithHubAdminOverview() {
                 <MessageSquare className="h-4 w-4 text-slate-400" />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {actionItems.map((item) => (
                   <DashboardActionItem
                     key={item.id}

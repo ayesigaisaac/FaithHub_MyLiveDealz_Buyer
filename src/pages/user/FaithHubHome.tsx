@@ -272,14 +272,14 @@ export default function FaithHubHome() {
   );
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 sm:space-y-5">
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.42, ease: "easeOut" }}
       >
-        <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[26px]">
-          <CardContent className="p-4 sm:p-6 lg:p-7">
+        <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[28px]">
+          <CardContent className="fh-pad-hero">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
               <div className="min-w-0">
                 <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
@@ -303,7 +303,7 @@ export default function FaithHubHome() {
                 </div>
               </div>
 
-              <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[420px]">
+              <div className="flex w-full min-w-0 flex-col gap-3 xl:w-auto xl:min-w-[420px]">
                 <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
                   <div className="fh-inline-action inline-flex items-center rounded-xl p-1">
                     <button
@@ -341,7 +341,9 @@ export default function FaithHubHome() {
                       variant={item.variant}
                       data-action-label={item.actionLabel}
                       data-action-id={item.actionId}
-                      className={`fh-interactive-card h-10 rounded-xl px-4 text-sm ${ctaPriorityClass(item.priority)}`}
+                      className={`fh-interactive-card h-10 rounded-xl px-4 text-sm ${
+                        item.priority === "secondary" ? "hidden sm:inline-flex" : "inline-flex w-full sm:w-auto"
+                      } ${ctaPriorityClass(item.priority)}`}
                     >
                       {item.label}
                     </Button>
@@ -364,7 +366,7 @@ export default function FaithHubHome() {
                     transition={{ delay: 0.06 + index * 0.05, duration: 0.28, ease: "easeOut" }}
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.996 }}
-                    className="fh-interactive-card fh-subcard group min-h-[146px] w-full rounded-2xl p-4 text-left transition hover:border-[#c8f0e0] hover:bg-white"
+                    className="fh-interactive-card fh-subcard group min-h-[132px] w-full rounded-2xl p-3.5 text-left transition hover:border-[#c8f0e0] hover:bg-white sm:min-h-[146px] sm:p-4"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
@@ -410,11 +412,11 @@ export default function FaithHubHome() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.18 + index * 0.04, duration: 0.24, ease: "easeOut" }}
           >
-            <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-              <CardContent className="p-4">
+            <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+              <CardContent className="p-3.5 sm:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <div className="fh-label text-slate-400">{metric.label}</div>
+                    <div className="fh-label text-slate-500">{metric.label}</div>
                     <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
                   </div>
                   <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${signalToneClass(metric.tone)}`}>
@@ -437,8 +439,8 @@ export default function FaithHubHome() {
         transition={{ delay: 0.2, duration: 0.34, ease: "easeOut" }}
         className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]"
       >
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
             <DashboardSectionHeader
               title="Your Priorities"
               subtitle="What needs your attention today"
@@ -454,7 +456,7 @@ export default function FaithHubHome() {
               }
             />
 
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {priorities.map((item) => (
                 <DashboardActionItem
                   key={item.id}
@@ -470,8 +472,8 @@ export default function FaithHubHome() {
           </CardContent>
         </Card>
 
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
             <DashboardSectionHeader
               title="Today's Agenda"
               subtitle="Timeline of worship and community moments"
@@ -488,17 +490,19 @@ export default function FaithHubHome() {
               }
             />
 
-            <div className="space-y-2">
+            <div className="fh-data-grid">
+              <div className="fh-data-grid-head hidden grid-cols-[78px_minmax(0,1fr)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-white sm:grid">
+                <div>Time</div>
+                <div>Session</div>
+              </div>
               {agenda.map((item) => (
-                <div key={item.id} className="fh-subcard rounded-xl p-3">
-                  <div className="flex items-start gap-3">
-                    <div className="inline-flex h-7 min-w-[2.6rem] items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
-                      {item.time}
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                      <div className="mt-1 text-xs text-slate-500">{item.detail}</div>
-                    </div>
+                <div key={item.id} className="fh-data-grid-row grid gap-2 px-3 py-3 sm:grid-cols-[78px_minmax(0,1fr)] sm:items-start">
+                  <div className="inline-flex h-7 w-fit items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
+                    {item.time}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                    <div className="mt-1 text-xs text-slate-500">{item.detail}</div>
                   </div>
                 </div>
               ))}
@@ -515,8 +519,8 @@ export default function FaithHubHome() {
           </CardContent>
         </Card>
 
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
             <DashboardSectionHeader
               title="Action Center"
               subtitle="Fast actions and guided next steps"
@@ -537,7 +541,7 @@ export default function FaithHubHome() {
                 <MessageSquare className="h-4 w-4 text-slate-400" />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {actionItems.map((item) => (
                   <DashboardActionItem
                     key={item.id}

@@ -918,6 +918,42 @@ a,
   border-top: none;
 }
 
+.fh-app-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--fh-surface-subtle-border);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.fh-app-content table thead th {
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  padding: 0.68rem 0.8rem;
+  text-align: left;
+}
+
+.fh-app-content table tbody td {
+  border-top: 1px solid color-mix(in srgb, var(--fh-surface-subtle-border) 80%, #ffffff 20%);
+  padding: 0.72rem 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.fh-app-content :is(
+    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"],
+    [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"],
+    .fh-hero-card
+  )
+  :is(h1, h2) {
+  letter-spacing: -0.025em;
+}
+
 @media (min-width: 640px) {
   .fh-pad-panel {
     padding: var(--fh-space-panel-lg);
@@ -935,6 +971,13 @@ a,
 @media (max-width: 960px) {
   .fh-actions-grid {
     grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  }
+
+  .fh-app-content [class*="xl:min-w-["],
+  .fh-app-content [class*="lg:min-w-["] {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 
@@ -1008,6 +1051,54 @@ a,
   .fh-app-content .fh-section-subtitle {
     font-size: 0.86rem;
     line-height: 1.45;
+  }
+
+  .fh-app-content .fh-inline-action {
+    width: 100%;
+  }
+
+  .fh-app-content .fh-inline-action > button {
+    flex: 1 1 0%;
+    min-width: 0;
+  }
+
+  .fh-app-content table {
+    border-radius: 0.9rem;
+  }
+
+  .fh-app-content table thead {
+    display: none;
+  }
+
+  .fh-app-content table tbody,
+  .fh-app-content table tr,
+  .fh-app-content table td {
+    display: block;
+    width: 100%;
+  }
+
+  .fh-app-content table tr {
+    border-top: 1px solid color-mix(in srgb, var(--fh-surface-subtle-border) 78%, #ffffff 22%);
+    padding: 0.25rem 0;
+  }
+
+  .fh-app-content table tr:first-child {
+    border-top: none;
+  }
+
+  .fh-app-content table td {
+    border-top: none;
+    padding: 0.38rem 0.72rem;
+  }
+
+  .fh-app-content :is(
+      [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"],
+      [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"],
+      .fh-hero-card
+    )
+    :is(h1, h2) {
+    font-size: clamp(1.58rem, 7.4vw, 2.14rem) !important;
+    line-height: 1.12 !important;
   }
 
   .fh-data-grid {
@@ -1176,6 +1267,20 @@ a,
 
 [data-theme="dark"] .fh-data-grid-row {
   border-top-color: #334155;
+}
+
+[data-theme="dark"] .fh-app-content table {
+  border-color: var(--fh-surface-subtle-border);
+  background: color-mix(in srgb, var(--card) 92%, #0f172a 8%);
+}
+
+[data-theme="dark"] .fh-app-content table thead th {
+  background: #0b1220;
+}
+
+[data-theme="dark"] .fh-app-content table tbody td {
+  border-top-color: #334155;
+  color: var(--text-secondary);
 }
 
 [data-theme="dark"] .fh-surface-dark {
