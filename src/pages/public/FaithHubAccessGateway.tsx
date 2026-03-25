@@ -46,7 +46,7 @@ const accessCards = [
 export default function FaithHubAccessGateway() {
   return (
     <div className="min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)] px-4 py-8 text-slate-900 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
+      <div className="w-full max-w-none">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link to="/" className="flex min-w-0 items-center gap-3 text-left">
             <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />

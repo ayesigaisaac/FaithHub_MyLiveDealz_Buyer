@@ -124,7 +124,7 @@ export default function FaithHubProfilePreferences() {
 
   return (
     <div className="fh-page-canvas min-h-screen text-slate-900">
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-4 py-4 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen w-full max-w-none flex-col px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

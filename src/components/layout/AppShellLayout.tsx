@@ -210,7 +210,7 @@ export default function AppShellLayout() {
         </div>
       </header>
 
-      <div className="relative flex w-full min-h-0 min-w-0 flex-1 gap-3 overflow-hidden px-2 py-2 sm:px-3 lg:px-4 lg:pb-4">
+      <div className="relative flex w-full min-h-0 min-w-0 flex-1 gap-2 overflow-hidden px-1 py-1.5 sm:px-2 lg:px-2.5 lg:pb-3">
         <aside className={`hidden min-h-0 shrink-0 lg:block ${sidebarCollapsed ? "w-[92px]" : "w-[284px]"}`}>
           <div className="h-full">
             <Sidebar

@@ -84,7 +84,7 @@ export default function FaithHubLivePlayer() {
 
   return (
     <div className="fh-page-canvas min-h-screen text-slate-900">
-      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-6 xl:px-7">
+      <div className="w-full max-w-none px-4 py-3 sm:px-6 lg:px-6 xl:px-7">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

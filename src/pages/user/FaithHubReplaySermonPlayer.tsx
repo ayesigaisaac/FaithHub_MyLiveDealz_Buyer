@@ -114,7 +114,7 @@ export default function FaithHubReplaySermonPlayer() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
-      <div className="mx-auto w-full max-w-[1680px] px-4 py-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-none px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

@@ -985,7 +985,7 @@ export default function FaithHubLandingPageV2() {
         ) : null}
       </header>
 
-      <div className="flex w-full min-h-0 flex-1 gap-3 overflow-hidden px-2 pb-3 pt-3 sm:px-3 lg:px-4">
+      <div className="flex w-full min-h-0 flex-1 gap-2 overflow-hidden px-1 pb-2.5 pt-2.5 sm:px-2 lg:px-2.5">
         <aside className={`hidden min-h-0 shrink-0 lg:block ${sidebarCollapsed ? "w-[84px]" : "w-[248px]"}`}>
           <div className="h-full">
             {sidebarCollapsed ? (
@@ -1038,7 +1038,7 @@ export default function FaithHubLandingPageV2() {
           </div>
         ) : null}
 
-        <main className="fh-scroll-region min-h-0 min-w-0 flex-1 space-y-3 overflow-y-auto pr-1">
+        <main className="fh-scroll-region min-h-0 min-w-0 flex-1 space-y-3 overflow-y-auto pr-0.5 sm:pr-1">
           <section
             id="overview"
             className="overflow-hidden rounded-[24px] border border-[color:var(--fh-hero-border)] shadow-[0_18px_34px_rgba(15,23,42,0.1)]"
