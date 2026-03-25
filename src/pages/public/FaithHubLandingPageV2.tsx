@@ -862,7 +862,6 @@ export default function FaithHubLandingPageV2() {
                 <ChevronDown className={`h-4 w-4 text-slate-500 transition ${operatorMenuOpen ? "rotate-180" : ""}`} />
               </button>
             </div>
-            <TopChip icon={Landmark} label="SMC" className="hidden lg:inline-flex" />
             <div ref={profileHintRef} className="relative hidden sm:block">
               <button
                 type="button"
