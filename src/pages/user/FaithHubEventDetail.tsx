@@ -75,7 +75,7 @@ export default function FaithHubEventDetail() {
           className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 shadow-[0_12px_24px_rgba(15,23,42,0.08)]">
               <Ticket className="h-5 w-5" />
             </div>
             <div>
@@ -91,7 +91,7 @@ export default function FaithHubEventDetail() {
                 Wallet pass cached
               </div>
             )}
-            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
+            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:text-slate-900">
               <Bell className="h-5 w-5" />
             </button>
           </div>
@@ -104,43 +104,42 @@ export default function FaithHubEventDetail() {
             transition={{ delay: 0.05, duration: 0.4 }}
             className="space-y-4"
           >
-            <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#1fd29d] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
+            <Card className="fh-interactive-card fh-surface-card overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_18px_44px_rgba(15,23,42,0.08)]">
               <CardContent className="fh-pad-hero">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
-                <div className="relative z-10 text-white">
+                <div className="space-y-5 text-slate-900">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
-                    <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Faith event + FaithMart commerce</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Schedule, speakers, tickets, waivers</Badge>
+                    <Badge className="rounded-full border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-100">Faith event + FaithMart commerce</Badge>
+                    <Badge className="rounded-full border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-100">Schedule, speakers, tickets, waivers</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.65fr_0.35fr]">
                     <div className="space-y-4">
-                      <div className="fh-kicker text-white/90">Youth Worship Camp</div>
+                      <div className="fh-kicker text-slate-700">Youth Worship Camp</div>
                       <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                         A full event detail page with RSVP, venue context, ticketing, chat, waivers, and offline-ready pass handling.
                       </h1>
-                      <p className="max-w-2xl fh-body text-white/90 sm:text-base">
+                      <p className="max-w-2xl fh-body text-slate-600 sm:text-base">
                         This page helps a user move from understanding the event to booking, preparing, chatting, and entering with confidence. It brings together venue intelligence, schedule, speakers, FaithMart ticketing, and event safety guidance.
                       </p>
 
-                      <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-slate-700">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-slate-700">
                           <CalendarDays className="h-4 w-4" />
                           1215 Aug
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-slate-700">
                           <MapPin className="h-4 w-4" />
                           Entebbe
                         </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-slate-700">
                           <Users className="h-4 w-4" />
                           Youth Church audience
                         </span>
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-white/15 bg-white/12 p-4 backdrop-blur">
-                      <div className="mb-3 aspect-video overflow-hidden rounded-[22px] border border-white/20 bg-slate-950/45">
+                    <div className="rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.96))] p-4 shadow-[0_12px_30px_rgba(15,23,42,0.08)]">
+                      <div className="mb-3 aspect-video overflow-hidden rounded-[22px] border border-slate-200 bg-white">
                         <div className="relative h-full w-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.2),transparent_40%),linear-gradient(152deg,rgba(15,23,42,0.75),rgba(15,23,42,0.34))]">
                           <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
                             Event spotlight
@@ -151,13 +150,13 @@ export default function FaithHubEventDetail() {
                           </div>
                         </div>
                       </div>
-                      <div className="mb-2 text-sm font-semibold text-white">Your event status</div>
-                      <div className="mb-3 text-2xl font-semibold text-white">{rsvp}</div>
+                      <div className="mb-2 text-sm font-semibold text-slate-700">Your event status</div>
+                      <div className="mb-3 text-2xl font-semibold text-slate-900">{rsvp}</div>
                       <div className="fh-actions-grid">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">RSVP</Button>
+                        <Button className="rounded-2xl bg-[#059669] text-white hover:bg-[#047857]">RSVP</Button>
                         <Button
                           variant="outline"
-                          className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"
+                          className="rounded-2xl border-slate-200 bg-white text-slate-700 hover:border-[#059669]/25 hover:bg-slate-50"
                           onClick={() => setOfflineMode((prev) => !prev)}
                         >
                           {offlineMode ? "Online mode" : "Offline pass"}
@@ -181,7 +180,7 @@ export default function FaithHubEventDetail() {
                     <div className="space-y-3">
                       {schedule.map((item) => (
                         <div key={item.time} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-[#f8fafc] p-3">
-                          <div className="rounded-full bg-[#03cd8c]/10 px-3 py-1 text-xs font-semibold text-[#03cd8c]">{item.time}</div>
+                          <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">{item.time}</div>
                           <div className="fh-body-tight text-slate-700">{item.title}</div>
                         </div>
                       ))}
@@ -214,7 +213,7 @@ export default function FaithHubEventDetail() {
                   <div className="fh-subcard rounded-[24px] p-4">
                     <div className="mb-3 text-sm font-semibold text-slate-900">Venue</div>
                     <div className="mb-4 aspect-[16/10] overflow-hidden rounded-[22px] border border-slate-200 bg-gradient-to-br from-slate-100 to-slate-200">
-                      <div className="relative h-full w-full bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.14),transparent_45%),linear-gradient(150deg,#f8fafc_0%,#e8eef5_100%)]">
+                      <div className="relative h-full w-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.72),transparent_45%),linear-gradient(150deg,#f8fafc_0%,#e8eef5_100%)]">
                         <div className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700 ring-1 ring-slate-200">
                           Venue map preview
                         </div>
@@ -226,8 +225,8 @@ export default function FaithHubEventDetail() {
                     <div className="space-y-3 text-sm text-slate-600">
                       <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-3">Lake Victoria Retreat Centre, Entebbe</div>
                       <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-3">Parking, check-in gate, and accessible entry points shown in the in-app map.</div>
-                      <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]">
-                        <MapPin className="mr-2 h-4 w-4 text-[#03cd8c]" /> Get directions
+                      <Button variant="outline" className="rounded-2xl border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50">
+                        <MapPin className="mr-2 h-4 w-4 text-slate-700" /> Get directions
                       </Button>
                     </div>
                   </div>
@@ -237,7 +236,7 @@ export default function FaithHubEventDetail() {
                       <div className="text-sm font-semibold text-slate-900">Event chat channel</div>
                       <Button
                         variant="outline"
-                        className="rounded-full border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                        className="rounded-full border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
                         onClick={() => setChatEnabled((prev) => !prev)}
                       >
                         {chatEnabled ? "Channel on" : "Preview off"}
@@ -341,12 +340,12 @@ export default function FaithHubEventDetail() {
                     onClick={() => setWaiverAccepted((prev) => !prev)}
                     className={`w-full rounded-2xl border px-4 py-3 text-left font-semibold transition ${
                       waiverAccepted
-                        ? "border-[#03cd8c]/20 bg-[#ecfff8] text-slate-900"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35"
+                        ? "border-slate-200 bg-slate-50 text-slate-900"
+                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      {waiverAccepted ? <CheckCircle2 className="h-4 w-4 text-[#03cd8c]" /> : <AlertTriangle className="h-4 w-4 text-[#f77f00]" />}
+                      {waiverAccepted ? <CheckCircle2 className="h-4 w-4 text-slate-700" /> : <AlertTriangle className="h-4 w-4 text-[#f77f00]" />}
                       {waiverAccepted ? "Waiver acknowledged" : "Acknowledge waiver"}
                     </div>
                   </button>
@@ -370,7 +369,7 @@ export default function FaithHubEventDetail() {
                   </div>
                   <div className="fh-subcard-accent rounded-[24px] p-4">
                     <div className="mb-2 flex items-center gap-2 font-semibold text-slate-900">
-                      <FileCheck2 className="h-4 w-4 text-[#03cd8c]" /> Wallet-ready pass status
+                      <FileCheck2 className="h-4 w-4 text-slate-700" /> Wallet-ready pass status
                     </div>
                     <div>Pass cached with event title, attendee name, access class, and a time-limited validation token.</div>
                   </div>
@@ -393,7 +392,7 @@ function SectionHeader({ title, subtitle, action = "See all" }) {
       <div>
         <div className="text-lg font-semibold text-slate-900 sm:text-xl">{title}</div>
       </div>
-      <Button variant="ghost" className="rounded-full text-[#03cd8c] hover:bg-[#03cd8c]/10 hover:text-[#03cd8c]">
+      <Button variant="ghost" className="rounded-full text-slate-700 hover:bg-slate-100 hover:text-slate-900">
         {action}
       </Button>
     </div>

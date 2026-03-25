@@ -5,7 +5,7 @@ export function evzoneTheme(mode: "light" | "dark") {
   return createTheme({
     palette: {
       mode,
-      primary: { main: dark ? "#34d399" : "#03cd8c", contrastText: "#ffffff" },
+      primary: { main: dark ? "#10b981" : "#059669", contrastText: "#ffffff" },
       secondary: { main: "#f77f00", contrastText: "#ffffff" },
       text: { primary: dark ? "#e8eef8" : "#0f172a", secondary: dark ? "#9fb0c5" : "#5b6676" },
       background: { default: dark ? "#0d141f" : "#eff3f4", paper: dark ? "#162233" : "#ffffff" },

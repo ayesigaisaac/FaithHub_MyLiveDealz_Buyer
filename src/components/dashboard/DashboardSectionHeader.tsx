@@ -21,14 +21,14 @@ export function DashboardSectionHeader({
   const shouldShowSubtitle = Boolean(showSubtitle && subtitle);
 
   return (
-    <div className={`mb-4 flex flex-wrap items-start justify-between gap-3 ${className}`.trim()}>
+    <div className={`mb-3 flex flex-wrap items-start justify-between gap-2.5 sm:mb-4 sm:gap-3 ${className}`.trim()}>
       <div className={`min-w-0 ${shouldShowSubtitle ? "space-y-1" : ""}`.trim()}>
-        <h3 className={`fh-section-title ${inverse ? "text-white" : "text-slate-900"}`}>
+        <h3 className={`fh-section-title text-[1.08rem] sm:text-[1.2rem] ${inverse ? "text-white" : "text-slate-900"}`}>
           {title}
         </h3>
         {shouldShowSubtitle ? <p className={`fh-section-subtitle ${inverse ? "text-white/75" : "text-slate-500"}`}>{subtitle}</p> : null}
       </div>
-      {action ? <div className="shrink-0">{action}</div> : null}
+      {action ? <div className="shrink-0 self-center">{action}</div> : null}
     </div>
   );
 }

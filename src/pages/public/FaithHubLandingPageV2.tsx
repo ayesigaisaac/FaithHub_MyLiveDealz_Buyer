@@ -380,9 +380,6 @@ const operatorRoles: OperatorRole[] = [
   },
 ];
 
-const cockpitTabs = ["7 days", "30 days", "This term"] as const;
-type CockpitTab = (typeof cockpitTabs)[number];
-
 const moduleShortcutCards = [
   { label: "Live Dashboard", icon: Radio, target: "/app/provider/live-ops" },
   { label: "Series Builder", icon: Layers3, target: "/app/provider/series-builder" },
@@ -715,7 +712,6 @@ export default function FaithHubLandingPageV2() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [openModule, setOpenModule] = useState(fallbackOperatorRole.modules[0]?.id || "");
   const [operatorMenuOpen, setOperatorMenuOpen] = useState(false);
-  const [selectedWindow, setSelectedWindow] = useState<CockpitTab>("7 days");
   const [profileHintOpen, setProfileHintOpen] = useState(false);
   const operatorMenuRef = useRef<HTMLDivElement | null>(null);
   const operatorTriggerRef = useRef<HTMLButtonElement | null>(null);
@@ -752,8 +748,6 @@ export default function FaithHubLandingPageV2() {
       .slice(0, 4);
     return roleCards.length > 0 ? roleCards : moduleShortcutCards;
   }, [activeSidebarModules]);
-  const viewingLabel = `Viewing as ${activeOperatorRole.viewingAs}`;
-
   useEffect(() => {
     if (!profileHintOpen) return;
     const timeoutId = window.setTimeout(() => setProfileHintOpen(false), 2400);
@@ -830,7 +824,7 @@ export default function FaithHubLandingPageV2() {
   return (
     <div className="flex h-[100dvh] flex-col overflow-hidden bg-[color:var(--bg)] text-[color:var(--text-primary)]">
       <header className="fh-shell-topbar z-40 shrink-0 border-b border-[color:var(--border)]">
-        <div className="mx-auto flex max-w-[1860px] items-center gap-2 px-2 py-3 sm:px-4 lg:px-5">
+        <div className="flex w-full items-center gap-2 px-2 py-3 sm:px-4 lg:px-5">
           <button
             type="button"
             onClick={() => setMobileSidebarOpen(true)}
@@ -1039,7 +1033,7 @@ export default function FaithHubLandingPageV2() {
         ) : null}
       </header>
 
-      <div className="mx-auto flex max-w-[1860px] min-h-0 flex-1 gap-3 overflow-hidden px-2 pb-3 pt-3 sm:px-3 lg:px-4">
+      <div className="flex w-full min-h-0 flex-1 gap-3 overflow-hidden px-2 pb-3 pt-3 sm:px-3 lg:px-4">
         <aside className={`hidden min-h-0 shrink-0 lg:block ${sidebarCollapsed ? "w-[84px]" : "w-[248px]"}`}>
           <div className="h-full">
             {sidebarCollapsed ? (
@@ -1122,23 +1116,6 @@ export default function FaithHubLandingPageV2() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2 xl:justify-end">
-                  <TopChip icon={Users} label={viewingLabel} />
-                  <div className="inline-flex rounded-xl border border-slate-200 bg-[color:var(--card)] p-1">
-                    {cockpitTabs.map((windowLabel) => (
-                      <button
-                        key={windowLabel}
-                        type="button"
-                        onClick={() => setSelectedWindow(windowLabel)}
-                        className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
-                          selectedWindow === windowLabel
-                            ? "bg-slate-900 text-white"
-                            : "text-slate-600 hover:bg-[color:var(--surface)]"
-                        }`}
-                      >
-                        {windowLabel}
-                      </button>
-                    ))}
-                  </div>
                   <TopChip icon={MessageSquare} label={copy.hero.openMessages} />
                   <Button
                     className={`h-9 rounded-xl px-4 text-xs font-semibold ${ctaPriorityClass("primary")}`}

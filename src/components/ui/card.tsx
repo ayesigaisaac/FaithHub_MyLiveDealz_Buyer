@@ -13,7 +13,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
   return (
     <div
       ref={ref}
-      className={`fh-card-base rounded-[16px] ${className}`.trim()}
+      className={`fh-card-base min-w-0 max-w-full rounded-[14px] sm:rounded-[16px] ${className}`.trim()}
       style={{
         transition:
           "transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease",

@@ -60,24 +60,24 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
 function resolveSize(uiSize: UiSize): SxProps<Theme> {
   if (uiSize === "sm") {
     return {
-      minHeight: { xs: 42, sm: 40 },
-      px: { xs: 1.5, sm: 1.75 },
-      fontSize: { xs: "0.84rem", sm: "0.88rem" },
+      minHeight: { xs: 40, sm: 40 },
+      px: { xs: 1.4, sm: 1.75 },
+      fontSize: { xs: "0.84rem", sm: "0.9rem" },
     };
   }
 
   if (uiSize === "lg") {
     return {
-      minHeight: { xs: 50, sm: 50 },
+      minHeight: { xs: 48, sm: 50 },
       px: { xs: 2.25, sm: 2.5 },
       fontSize: { xs: "0.94rem", sm: "0.98rem" },
     };
   }
 
   return {
-    minHeight: { xs: 46, sm: 44 },
+    minHeight: { xs: 44, sm: 44 },
     px: { xs: 1.75, sm: 2 },
-    fontSize: { xs: "0.89rem", sm: "0.93rem" },
+    fontSize: { xs: "0.9rem", sm: "0.94rem" },
   };
 }
 
@@ -100,13 +100,22 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
           fontWeight: 700,
           letterSpacing: "0.01em",
           lineHeight: 1.25,
-          whiteSpace: "normal",
+          whiteSpace: "nowrap",
           textAlign: "center",
-          wordBreak: "normal",
+          wordBreak: "keep-all",
           overflowWrap: "normal",
           hyphens: "none",
-          minWidth: 96,
+          minWidth: { xs: 104, sm: 96 },
+          maxWidth: "100%",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          flexWrap: "nowrap",
+          gap: "0.45rem",
           transition: "all 180ms ease",
+          "& .MuiButton-startIcon, & .MuiButton-endIcon": {
+            margin: 0,
+            flexShrink: 0,
+          },
           "@media (max-width:640px)": {
             borderRadius: "11px",
           },

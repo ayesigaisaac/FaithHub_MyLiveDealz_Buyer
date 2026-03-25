@@ -104,7 +104,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
   return (
     <div className="min-h-screen overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
       <div className="fh-shell-topbar sticky top-0 z-30 border-b border-[var(--border)] shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur">
-        <div className="mx-auto max-w-[1860px] px-3 py-3 sm:px-4 lg:px-5">
+        <div className="w-full px-3 py-2.5 sm:px-4 lg:px-5">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
@@ -142,7 +142,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
           </div>
 
           <div className="mt-3 hidden flex-wrap items-center gap-2 lg:flex">
-            <label className="fh-shell-control flex min-h-[44px] min-w-[280px] flex-1 items-center gap-2 rounded-2xl px-3 text-sm text-slate-500">
+            <label className="fh-shell-control flex min-h-[44px] min-w-[220px] flex-1 items-center gap-2 rounded-2xl px-3 text-sm text-slate-500">
               <Search className="h-4 w-4 shrink-0" />
               <input
                 type="search"
@@ -278,7 +278,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                           <div className={`break-words text-[0.95rem] leading-snug ${active ? "font-semibold text-emerald-800" : "font-medium text-slate-800"}`}>
                             {item.label}
                           </div>
-                          <div className="break-all text-xs text-slate-500">{item.route}</div>
+                          <div className="truncate text-xs text-slate-500">{item.route}</div>
                         </div>
 
                         <ChevronRight className="h-4 w-4 shrink-0 text-slate-400" />
@@ -292,8 +292,8 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-[1860px] gap-4 px-3 pb-10 pt-4 sm:px-4 lg:px-5">
-        <aside className="hidden w-[310px] shrink-0 lg:block">
+      <div className="flex w-full gap-3 px-3 pb-8 pt-3 sm:gap-4 sm:px-4 lg:px-5">
+        <aside className="hidden w-[272px] shrink-0 lg:block xl:w-[288px]">
           <Card className="fh-surface-card overflow-hidden rounded-[26px]">
             <CardContent className="p-3">
               <div className="fh-hero-card rounded-2xl p-4">
@@ -337,7 +337,7 @@ export default function EnterpriseLayout({ role, title, subtitle }: EnterpriseLa
                         <div className={`break-words text-[0.95rem] leading-snug ${active ? "font-semibold text-emerald-800" : "font-medium text-slate-900"}`}>
                           {item.label}
                         </div>
-                        <div className="break-all text-xs text-slate-500">{item.route}</div>
+                        <div className="truncate text-xs text-slate-500">{item.route}</div>
                       </div>
 
                       {item.badge ? (

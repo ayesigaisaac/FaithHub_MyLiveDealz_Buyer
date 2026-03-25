@@ -408,7 +408,7 @@ export default function FaithHubMultiRoleAppShell() {
         handleRoleSwitch={handleRoleSwitch}
       />
 
-      <div className="mx-auto flex max-w-[1800px] gap-4 px-3 pb-24 pt-2 sm:px-4 lg:px-5">
+      <div className="flex w-full gap-3 px-3 pb-24 pt-2 sm:gap-4 sm:px-4 lg:px-5">
         <DesktopSidebar
           role={role}
           roleData={roleData}
@@ -509,7 +509,7 @@ function TopBar({
 }) {
   return (
     <div className="sticky top-0 z-30 border-b border-white/70 bg-[#f2f2f2]/90 backdrop-blur">
-      <div className="mx-auto flex max-w-[1800px] items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-5">
+      <div className="flex w-full items-center justify-between gap-3 px-3 py-3 sm:px-4 lg:px-5">
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setMobileNavOpen(true)}
@@ -601,67 +601,142 @@ function RoleToggle({ role, handleRoleSwitch, compact = false }) {
   );
 }
 
-function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToPage, togglePin, pinned }) {
-  return (
-    <aside className={`hidden lg:block ${sidebarCollapsed ? "w-[92px]" : "w-[320px]"}`}>
-      <div className="sticky top-[88px] space-y-4">
-        <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/70 bg-white/92 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.25)]">
-          <CardContent className="p-3">
-            <div className="mb-3 rounded-[24px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-4 text-white">
-              <div className="hidden text-white/90">{roleData.label} role</div>
-              {!sidebarCollapsed && (
-                <>
-                  <div className="mt-2 text-xl font-semibold">{roleData.workspace}</div>
-                  <div className="mt-1 text-sm text-white/85">{roleData.subtitle}</div>
-                </>
-              )}
-            </div>
+const previewSectionLabelMap = {
+  user: {
+    "Start & Identity": "Account",
+    "Discovery & Institutions": "Home",
+    "Series & Content": "Series",
+    "Live Sessionz": "Live",
+    "Events, Giving & Membership": "Community",
+    "Trust & Settings": "Settings",
+  },
+  provider: {
+    "Onboarding & Core HQ": "Dashboard",
+    "Content Studio": "Content",
+    "Live Operations": "Live",
+    "Audience & Distribution": "Audience",
+    "Commerce, Funds & Trust": "Funds",
+  },
+  admin: {
+    "Global Control": "Control",
+    "Verification & Trust": "Control",
+    "Finance & Channels": "Finance",
+    "Security & Evidence": "Security",
+  },
+};
 
-            <div className="space-y-3">
-              {roleData.sections.map((section) => (
-                <div key={section.title} className="space-y-2">
-                  {!sidebarCollapsed && (
-                    <div className="px-2 hidden text-slate-500">
-                      {section.title}
+const previewNavLabelById = {
+  "u-discover": "Discover",
+  "u-institution": "Institution",
+  "u-membership": "Membership",
+  "p-onboarding": "Onboarding",
+  "p-dashboard": "Dashboard",
+  "p-post-live": "Post-live",
+  "p-live-ops": "Live Dashboard",
+  "p-stream-platforms": "Stream Platforms",
+  "p-notifications": "Notifications",
+  "p-contacts": "Contact Manager",
+  "p-funds": "Funds",
+  "p-reviews-mod": "Moderation",
+  "a-verification": "Verification",
+  "a-live-mod": "Moderation",
+  "a-policy": "Policy & Taxonomy",
+  "a-finance": "Finance",
+  "a-channels": "Channels",
+  "a-security": "Security",
+};
+
+function getPreviewSectionLabel(role, title) {
+  return previewSectionLabelMap[role]?.[title] || title;
+}
+
+function getPreviewItemLabel(item) {
+  return previewNavLabelById[item.id] || item.label;
+}
+
+function getPreviewSections(role, sections) {
+  return sections.reduce((acc, section) => {
+    const label = getPreviewSectionLabel(role, section.title);
+    const existing = acc.find((item) => item.label === label);
+    if (existing) {
+      existing.items.push(...section.items);
+      return acc;
+    }
+    acc.push({ label, items: [...section.items] });
+    return acc;
+  }, []);
+}
+
+function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToPage, togglePin, pinned }) {
+  const sections = useMemo(() => getPreviewSections(role, roleData.sections), [role, roleData.sections]);
+
+  return (
+    <aside className={`hidden lg:block ${sidebarCollapsed ? "w-16" : "w-60"}`}>
+      <div className="sticky top-[88px]">
+        <Card className="fh-interactive-card overflow-hidden rounded-[26px] border border-white/70 bg-white/92 shadow-[0_18px_44px_-28px_rgba(15,23,42,0.22)]">
+          <CardContent className="p-2">
+            {!sidebarCollapsed ? (
+              <div className="px-1 pb-3">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">{roleData.label}</div>
+                <div className="mt-1 text-sm font-semibold text-slate-900">{roleData.workspace}</div>
+              </div>
+            ) : null}
+
+            <div className="space-y-4">
+              {sections.map((section) => (
+                <div key={section.label} className="space-y-1">
+                  {!sidebarCollapsed ? (
+                    <div className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
+                      {section.label}
                     </div>
-                  )}
-                  <div className="space-y-1">
+                  ) : null}
+                  <div className="space-y-0.5">
                     {section.items.map((item) => {
                       const active = item.id === currentPageId;
                       const Icon = item.icon;
                       const isPinned = pinned.includes(item.id);
                       return (
-                        <button
-                          key={item.id}
-                          onClick={() => goToPage(role, item.id)}
-                          className={`group flex w-full items-center gap-3 rounded-[24px] border px-3 py-3 text-left transition ${
-                            active
-                              ? "border-[#03cd8c]/15 bg-[#ecfff8]"
-                              : "border-transparent bg-white hover:border-slate-200 hover:bg-[#f8fafc]"
-                          }`}
-                        >
-                          <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${active ? "bg-[#03cd8c] text-white" : "bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200"}`}>
-                            <Icon className="h-5 w-5" />
-                          </div>
-                          {!sidebarCollapsed && (
-                            <>
-                              <div className="min-w-0 flex-1">
-                                <div className="truncate text-sm font-semibold text-slate-900">{item.label}</div>
-                                <div className="truncate text-xs text-slate-500">{item.route}</div>
-                              </div>
+                        <div key={item.id} className={`group ${sidebarCollapsed ? "flex justify-center" : ""}`}>
+                          <div className={`flex items-center gap-2 ${sidebarCollapsed ? "" : "pr-1"}`}>
+                            <button
+                              type="button"
+                              title={item.label}
+                              onClick={() => goToPage(role, item.id)}
+                              className={`relative flex items-center rounded-md text-left transition ${
+                                sidebarCollapsed ? "h-10 w-10 justify-center px-0" : "h-10 min-w-0 flex-1 px-3"
+                              } ${
+                                active
+                                  ? "border border-slate-200 bg-slate-50 text-slate-900 shadow-[0_0_0_1px_rgba(148,163,184,0.12)]"
+                                  : "text-slate-700 hover:bg-[#f3f7f9]"
+                              }`}
+                            >
+                              <Icon className={`h-4 w-4 shrink-0 ${active ? "text-slate-700" : "text-slate-500"}`} />
+                              {!sidebarCollapsed ? (
+                                <span className="ml-2 min-w-0 flex-1 truncate text-sm font-medium">
+                                  {getPreviewItemLabel(item)}
+                                </span>
+                              ) : (
+                                <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-slate-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-lg transition group-hover:opacity-100">
+                                  {getPreviewItemLabel(item)}
+                                </span>
+                              )}
+                            </button>
+                            {!sidebarCollapsed ? (
                               <button
                                 type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  togglePin(item.id);
-                                }}
-                                className={`rounded-full p-2 ${isPinned ? "text-[#f77f00]" : "text-slate-400 opacity-0 group-hover:opacity-100"}`}
+                                aria-label={isPinned ? `Unpin ${item.label}` : `Pin ${item.label}`}
+                                onClick={() => togglePin(item.id)}
+                                className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition ${
+                                  isPinned
+                                    ? "text-[#f77f00]"
+                                    : "text-slate-400 opacity-0 group-hover:opacity-100 hover:bg-slate-100"
+                                }`}
                               >
                                 <Pin className="h-4 w-4" />
                               </button>
-                            </>
-                          )}
-                        </button>
+                            ) : null}
+                          </div>
+                        </div>
                       );
                     })}
                   </div>
@@ -676,6 +751,8 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
 }
 
 function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch, goToPage }) {
+  const sections = useMemo(() => getPreviewSections(role, roleData.sections), [role, roleData.sections]);
+
   return (
     <div className="fixed inset-0 z-40 lg:hidden">
       <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm" onClick={close} />
@@ -687,13 +764,13 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
         className="absolute left-0 top-0 h-full w-[88vw] max-w-[360px] overflow-y-auto border-r border-white/60 bg-white"
       >
         <div className="space-y-4 p-4">
-          <div className="rounded-[28px] bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] p-5 text-white">
+          <div className="rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.96))] p-5 text-slate-900 shadow-[0_12px_30px_rgba(15,23,42,0.08)]">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="hidden text-white/90">FaithHub AppShell</div>
+                <div className="hidden text-slate-500">FaithHub AppShell</div>
                 <div className="mt-2 text-xl font-semibold">{roleData.workspace}</div>
               </div>
-              <button onClick={close} className="rounded-2xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-semibold text-white">
+              <button onClick={close} className="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700">
                 Close
               </button>
             </div>
@@ -702,9 +779,9 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
             </div>
           </div>
 
-          {roleData.sections.map((section) => (
-            <div key={section.title} className="space-y-2">
-              <div className="px-2 hidden text-slate-500">{section.title}</div>
+          {sections.map((section) => (
+            <div key={section.label} className="space-y-1">
+              <div className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">{section.label}</div>
               {section.items.map((item) => {
                 const Icon = item.icon;
                 const active = item.id === currentPageId;
@@ -712,15 +789,14 @@ function MobileSidebar({ role, roleData, currentPageId, close, handleRoleSwitch,
                   <button
                     key={item.id}
                     onClick={() => goToPage(role, item.id)}
-                    className={`flex w-full items-center gap-3 rounded-[24px] border px-3 py-3 text-left ${active ? "border-[#03cd8c]/15 bg-[#ecfff8]" : "border-slate-200 bg-white"}`}
+                    className={`flex h-10 w-full items-center gap-2 rounded-md px-3 text-left transition ${
+                      active
+                        ? "border border-slate-200 bg-slate-50 text-slate-900 shadow-[0_0_0_1px_rgba(148,163,184,0.12)]"
+                        : "text-slate-700 hover:bg-[#f3f7f9]"
+                    }`}
                   >
-                    <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${active ? "bg-[#03cd8c] text-white" : "bg-[#f8fafc] text-slate-600 ring-1 ring-slate-200"}`}>
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="truncate text-sm font-semibold text-slate-900">{item.label}</div>
-                      <div className="truncate text-xs text-slate-500">{item.route}</div>
-                    </div>
+                    <Icon className={`h-4 w-4 shrink-0 ${active ? "text-slate-700" : "text-slate-500"}`} />
+                    <div className="min-w-0 flex-1 truncate text-sm font-medium">{getPreviewItemLabel(item)}</div>
                   </button>
                 );
               })}

@@ -45,11 +45,11 @@ export function DashboardStatCard({
     <Card
       className={`fh-interactive-card fh-surface-card rounded-2xl ${className}`.trim()}
     >
-      <CardContent className="p-4">
+      <CardContent className="p-3.5 sm:p-4">
         <div className="flex items-start justify-between gap-3">
-          <div>
+          <div className="min-w-0">
             <div className="fh-label text-slate-400">{label}</div>
-            <div className="fh-stat-value mt-2 text-3xl font-bold tracking-tight text-slate-900">{value}</div>
+            <div className="fh-stat-value mt-2 text-[1.75rem] font-bold tracking-tight text-slate-900 sm:text-3xl">{value}</div>
           </div>
 
           {badge ? (
@@ -80,7 +80,7 @@ export function DashboardStatCard({
           </div>
         ) : null}
 
-        {hint ? <p className="mt-2 text-sm leading-relaxed text-slate-500">{hint}</p> : null}
+        {hint ? <p className="mt-2 text-sm leading-relaxed text-slate-500 sm:text-[0.92rem]">{hint}</p> : null}
       </CardContent>
     </Card>
   );
