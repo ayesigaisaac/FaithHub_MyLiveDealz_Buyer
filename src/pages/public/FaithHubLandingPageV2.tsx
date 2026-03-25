@@ -712,10 +712,8 @@ export default function FaithHubLandingPageV2() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [openModule, setOpenModule] = useState(fallbackOperatorRole.modules[0]?.id || "");
   const [operatorMenuOpen, setOperatorMenuOpen] = useState(false);
-  const [profileHintOpen, setProfileHintOpen] = useState(false);
   const operatorMenuRef = useRef<HTMLDivElement | null>(null);
   const operatorTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const profileHintRef = useRef<HTMLDivElement | null>(null);
 
   const currentRole = useMemo(() => roleCards.find((item) => item.role === activeRole), [activeRole]);
   const currentDevice = useMemo(() => deviceTabs.find((item) => item.key === activeDevice), [activeDevice]);
@@ -749,36 +747,10 @@ export default function FaithHubLandingPageV2() {
     return roleCards.length > 0 ? roleCards : moduleShortcutCards;
   }, [activeSidebarModules]);
   useEffect(() => {
-    if (!profileHintOpen) return;
-    const timeoutId = window.setTimeout(() => setProfileHintOpen(false), 2400);
-    return () => window.clearTimeout(timeoutId);
-  }, [profileHintOpen]);
-
-  useEffect(() => {
     if (!activeSidebarModules.some((module) => module.id === openModule)) {
       setOpenModule(activeSidebarModules[0]?.id || "");
     }
   }, [activeSidebarModules, openModule]);
-
-  useEffect(() => {
-    if (!profileHintOpen) return;
-    const handlePointerDown = (event: MouseEvent) => {
-      if (!profileHintRef.current?.contains(event.target as Node)) {
-        setProfileHintOpen(false);
-      }
-    };
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setProfileHintOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handlePointerDown);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [profileHintOpen]);
 
   useEffect(() => {
     if (!operatorMenuOpen) return;
@@ -861,29 +833,6 @@ export default function FaithHubLandingPageV2() {
                 <span>{activeOperatorRole.label}</span>
                 <ChevronDown className={`h-4 w-4 text-slate-500 transition ${operatorMenuOpen ? "rotate-180" : ""}`} />
               </button>
-            </div>
-            <div ref={profileHintRef} className="relative hidden sm:block">
-              <button
-                type="button"
-                aria-label="Open profile options"
-                onClick={() => setProfileHintOpen((prev) => !prev)}
-                className="fh-shell-control inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-left"
-              >
-                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#111827] text-[11px] font-semibold text-white">
-                  BM
-                </span>
-                <span className="leading-tight">
-                  <span className="block text-xs font-semibold text-slate-900">Brian M.</span>
-                  <span className="block text-[11px] text-slate-500">Greenhill Community - Member</span>
-                </span>
-                <ChevronDown className="h-4 w-4 text-slate-500" />
-              </button>
-              {profileHintOpen ? (
-                <div className="pointer-events-none absolute left-1/2 top-[calc(100%+8px)] z-10 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white shadow-lg">
-                  <span className="absolute left-1/2 top-[-4px] h-2 w-2 -translate-x-1/2 rotate-45 bg-slate-900" />
-                  Community: Greenhill Community
-                </div>
-              ) : null}
             </div>
             <label className="fh-shell-control hidden h-11 items-center gap-2 rounded-2xl px-3 xl:flex">
               <Search className="h-4 w-4 text-slate-500" />
