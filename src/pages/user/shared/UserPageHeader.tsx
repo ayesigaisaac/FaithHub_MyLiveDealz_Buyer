@@ -14,7 +14,7 @@ export default function UserPageHeader({
   icon,
   title,
   subtitle,
-  showSubtitle = false,
+  showSubtitle = true,
   offline = false,
   offlineLabel = "Cached mode",
 }: UserPageHeaderProps) {

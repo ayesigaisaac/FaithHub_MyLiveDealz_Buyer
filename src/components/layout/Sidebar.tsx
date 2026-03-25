@@ -1,4 +1,5 @@
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { ChevronDown, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import type { RoleKey } from "@/config/pageRegistry";
 import type { SidebarSection } from "@/config/sidebar";
@@ -17,6 +18,11 @@ interface SidebarProps {
   onNavigate: (path: string) => void;
   onToggleCollapse?: () => void;
   compactHeight?: boolean;
+}
+
+function isPathActive(itemPath: string, currentPath: string) {
+  if (itemPath === currentPath) return true;
+  return currentPath.startsWith(`${itemPath}/`);
 }
 
 export default function Sidebar({
@@ -66,66 +72,108 @@ function SidebarPanel({
   onToggleCollapse?: () => void;
   compactHeight: boolean;
 }) {
+  const [openSectionIds, setOpenSectionIds] = useState<string[]>(() => sections.map((section) => section.id));
+
+  useEffect(() => {
+    setOpenSectionIds((prev) => {
+      const validIds = new Set(sections.map((section) => section.id));
+      const retained = prev.filter((id) => validIds.has(id));
+      const appended = sections.map((section) => section.id).filter((id) => !retained.includes(id));
+      return [...retained, ...appended];
+    });
+  }, [sections]);
+
+  const openSectionSet = useMemo(() => new Set(openSectionIds), [openSectionIds]);
+
+  const toggleSection = (sectionId: string) => {
+    setOpenSectionIds((prev) =>
+      prev.includes(sectionId) ? prev.filter((id) => id !== sectionId) : [...prev, sectionId],
+    );
+  };
+
   return (
-    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[20px]">
+    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[24px]">
       <CardContent
-        className={`flex min-h-0 flex-col gap-2 overflow-hidden p-2 ${
-          compactHeight ? "max-h-[74vh]" : "h-full"
+        className={`flex min-h-0 flex-col gap-2 overflow-hidden ${
+          compactHeight ? "max-h-[76vh] p-2" : "h-full p-2.5"
         }`}
       >
-        <div className="flex items-start justify-between gap-3 px-0.5">
+        <div className="flex items-center justify-between gap-3 px-1">
           <div className="min-w-0">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--fh-nav-kicker)]">
+            <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
               {roleLabelMap[role]}
             </div>
-            <div className="mt-1 text-sm font-semibold text-[var(--fh-nav-title)]">Navigation</div>
+            <div className="mt-1 text-sm font-semibold text-zinc-900">Navigation</div>
           </div>
           {onToggleCollapse ? (
             <button
               type="button"
               aria-label="Minimize sidebar"
               onClick={onToggleCollapse}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] transition duration-200 ease-out hover:bg-[var(--fh-nav-item-hover)]"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 transition duration-200 ease-out hover:bg-zinc-50"
             >
               <PanelLeftClose className="h-4 w-4" />
             </button>
           ) : null}
         </div>
 
-        <div className="fh-scroll-region min-h-0 flex-1 space-y-4 overflow-y-auto pr-1">
+        <div className={`fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 ${compactHeight ? "pb-1" : ""}`}>
           {sections.map((section) => (
-            <div key={section.id} className="space-y-1">
-              <div className="flex items-center gap-2 px-3 pb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-kicker)]">
-                <section.icon className="h-3.5 w-3.5 text-[var(--fh-nav-item-chevron)]" />
-                <span className="truncate">{section.label}</span>
-              </div>
-              <div className="space-y-0.5">
-                {section.items.map((item) => {
-                  const active = item.path === currentPath;
-                  const ItemIcon = item.icon;
-                  return (
-                    <button
-                      type="button"
-                      key={item.id}
-                      title={item.title}
-                      aria-current={active ? "page" : undefined}
-                      onClick={() => onNavigate(item.path)}
-                      className={`fh-interactive-card flex h-10 w-full items-center gap-2 rounded-md border px-3 text-left text-sm transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
-                        active
-                          ? "border-[color:var(--fh-nav-item-active-border)] bg-[color:var(--fh-nav-item-active-bg)] text-[color:var(--fh-nav-item-active-fg)] shadow-[var(--fh-nav-active-shadow)]"
-                          : "border-transparent text-[var(--fh-nav-item-title)] hover:bg-[color:var(--fh-nav-item-hover)]"
-                      }`}
-                    >
-                      <ItemIcon
-                        className={`h-4 w-4 shrink-0 ${
-                          active ? "text-[color:var(--fh-nav-item-active-fg)]" : "text-[var(--fh-nav-item-icon-fg)]"
+            <div key={section.id} className="overflow-hidden rounded-2xl border border-zinc-200 bg-white/80">
+              <button
+                type="button"
+                onClick={() => toggleSection(section.id)}
+                className={`flex w-full items-center justify-between gap-2 hover:bg-zinc-50 ${
+                  compactHeight ? "px-2 py-1.5" : "px-2.5 py-2"
+                }`}
+              >
+                <span className="flex min-w-0 items-center gap-2">
+                  <span className="grid h-8 w-8 place-items-center rounded-xl bg-zinc-100 text-zinc-700">
+                    <section.icon className="h-4 w-4" />
+                  </span>
+                  <span className="truncate text-[11px] font-semibold uppercase tracking-[0.11em] text-zinc-500">
+                    {section.label}
+                  </span>
+                </span>
+                <ChevronDown
+                  className={`h-4 w-4 text-zinc-500 transition ${
+                    openSectionSet.has(section.id) ? "rotate-0" : "-rotate-90"
+                  }`}
+                />
+              </button>
+              {openSectionSet.has(section.id) ? (
+                <div className={`space-y-1 px-2 ${compactHeight ? "pb-1.5" : "pb-2"}`}>
+                  {section.items.map((item) => {
+                    const active = isPathActive(item.path, currentPath);
+                    const ItemIcon = item.icon;
+                    return (
+                      <button
+                        type="button"
+                        key={item.id}
+                        title={item.title}
+                        aria-current={active ? "page" : undefined}
+                        onClick={() => onNavigate(item.path)}
+                        className={`flex w-full items-center gap-2 rounded-2xl border px-2.5 text-left text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
+                          compactHeight ? "h-9" : "h-10"
+                        } ${
+                          active
+                            ? "border-transparent bg-zinc-900 text-white shadow-sm"
+                            : "border-zinc-200/80 bg-white text-zinc-700 hover:bg-zinc-50"
                         }`}
-                      />
-                      <span className="min-w-0 flex-1 truncate font-medium">{item.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
+                      >
+                        <span
+                          className={`grid h-8 w-8 place-items-center rounded-xl ${
+                            active ? "bg-white/15 text-white" : "bg-zinc-100 text-zinc-700"
+                          }`}
+                        >
+                          <ItemIcon className="h-4 w-4 shrink-0" />
+                        </span>
+                        <span className="min-w-0 flex-1 truncate font-semibold">{item.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : null}
             </div>
           ))}
         </div>
@@ -146,14 +194,14 @@ function SidebarRail({
   onToggleCollapse?: () => void;
 }) {
   return (
-    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[20px]">
-      <CardContent className="flex h-full min-h-0 flex-col items-center gap-2 p-1.5">
+    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[24px]">
+      <CardContent className="flex h-full min-h-0 flex-col items-center gap-2 p-2">
         {onToggleCollapse ? (
           <button
             type="button"
             aria-label="Expand sidebar"
             onClick={onToggleCollapse}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] transition duration-200 ease-out hover:bg-[var(--fh-nav-item-hover)]"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 transition duration-200 ease-out hover:bg-zinc-50"
           >
             <PanelLeftOpen className="h-4 w-4" />
           </button>
@@ -161,8 +209,9 @@ function SidebarRail({
 
         <div className="mt-1 flex w-full flex-col items-center gap-1">
           {sections.map((section) => {
-            const targetPath = section.items.find((item) => item.path === currentPath)?.path || section.items[0]?.path;
-            const active = section.items.some((item) => item.path === currentPath);
+            const targetPath =
+              section.items.find((item) => isPathActive(item.path, currentPath))?.path || section.items[0]?.path;
+            const active = section.items.some((item) => isPathActive(item.path, currentPath));
 
             if (!targetPath) return null;
 
@@ -172,14 +221,14 @@ function SidebarRail({
                 type="button"
                 aria-label={section.label}
                 onClick={() => onNavigate(targetPath)}
-                className={`group relative fh-interactive-card inline-flex h-10 w-10 items-center justify-center rounded-lg transition duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
+                className={`group relative inline-flex h-10 w-10 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
                   active
-                    ? "border border-[color:var(--fh-nav-item-active-border)] bg-[color:var(--fh-nav-item-active-bg)] text-[color:var(--fh-nav-rail-active-fg)] shadow-[var(--fh-nav-active-shadow)]"
-                    : "text-[var(--fh-nav-rail-icon-fg)] hover:bg-[color:var(--fh-nav-item-hover)]"
+                    ? "border-transparent bg-zinc-900 text-white shadow-sm"
+                    : "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
                 }`}
               >
                 <section.icon className="h-4 w-4" />
-                <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-slate-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-lg transition duration-200 ease-out group-hover:opacity-100 group-focus-visible:opacity-100">
+                <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-zinc-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-lg transition duration-200 ease-out group-hover:opacity-100 group-focus-visible:opacity-100">
                   {section.label}
                 </span>
               </button>

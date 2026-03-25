@@ -307,15 +307,15 @@ export default function FaithHubSubscriptionsMembership() {
                     <Blocks className="mr-1 h-3.5 w-3.5" /> Structured view
                   </Badge>
                 </div>
-                <div className="overflow-hidden rounded-[24px] border border-slate-200">
-                  <div className="hidden grid-cols-4 bg-slate-900 px-4 py-3 text-sm font-semibold text-white sm:grid">
+                <div className="fh-data-grid">
+                  <div className="fh-data-grid-head hidden grid-cols-4 px-4 py-3 text-sm font-semibold text-white sm:grid">
                     <div>Feature</div>
                     <div>Free</div>
                     <div>Supporter</div>
                     <div>Family</div>
                   </div>
                   {compareRows.map((row, index) => (
-                    <div key={row.label} className={`grid gap-3 px-4 py-4 text-sm sm:grid-cols-4 sm:gap-0 sm:py-3 ${index % 2 === 0 ? "bg-white" : "bg-[#f8fafc]"}`}>
+                    <div key={row.label} className={`fh-data-grid-row grid gap-3 px-4 py-4 text-sm sm:grid-cols-4 sm:gap-0 sm:py-3 ${index % 2 === 0 ? "bg-white" : "bg-[#f8fafc]"}`}>
                       <div className="font-medium text-slate-900">{row.label}</div>
                       <div className="grid gap-2 sm:contents">
                         <div className="flex items-center justify-between rounded-2xl bg-[#f8fafc] px-3 py-2 sm:block sm:rounded-none sm:bg-transparent sm:px-0 sm:py-0">

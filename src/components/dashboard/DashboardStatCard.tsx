@@ -43,13 +43,13 @@ export function DashboardStatCard({
 
   return (
     <Card
-      className={`fh-interactive-card fh-surface-card rounded-2xl ${className}`.trim()}
+      className={`fh-interactive-card fh-surface-card rounded-[24px] ${className}`.trim()}
     >
-      <CardContent className="p-3.5 sm:p-4">
+      <CardContent className="p-3 sm:p-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="fh-label text-slate-400">{label}</div>
-            <div className="fh-stat-value mt-2 text-[1.75rem] font-bold tracking-tight text-slate-900 sm:text-3xl">{value}</div>
+            <div className="fh-label text-slate-500">{label}</div>
+            <div className="fh-stat-value mt-2 text-[1.6rem] font-bold tracking-tight text-slate-900 sm:text-3xl">{value}</div>
           </div>
 
           {badge ? (
@@ -72,7 +72,7 @@ export function DashboardStatCard({
         </div>
 
         {normalizedProgress !== undefined ? (
-          <div className="mt-3 h-1.5 rounded-full bg-slate-200/85">
+          <div className="mt-3.5 h-1.5 rounded-full bg-slate-200/85">
             <div
               className={`h-full rounded-full ${progressToneClass(tone)} transition-[width] duration-500`}
               style={{ width: `${normalizedProgress}%` }}
@@ -80,7 +80,7 @@ export function DashboardStatCard({
           </div>
         ) : null}
 
-        {hint ? <p className="mt-2 text-sm leading-relaxed text-slate-500 sm:text-[0.92rem]">{hint}</p> : null}
+        {hint ? <p className="mt-2.5 text-sm leading-relaxed text-slate-500 sm:text-[0.92rem]">{hint}</p> : null}
       </CardContent>
     </Card>
   );

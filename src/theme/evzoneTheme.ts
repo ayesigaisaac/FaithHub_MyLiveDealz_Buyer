@@ -14,7 +14,7 @@ export function evzoneTheme(mode: "light" | "dark") {
     shape: { borderRadius: 16 },
     typography: {
       fontFamily:
-        '"Manrope", "Plus Jakarta Sans", "Segoe UI Variable", "Trebuchet MS", sans-serif',
+        '"Inter", "Manrope", "Plus Jakarta Sans", "Segoe UI Variable", "Trebuchet MS", sans-serif',
       h1: { fontWeight: 700, letterSpacing: "-0.02em" },
       h2: { fontWeight: 700, letterSpacing: "-0.02em" },
       h3: { fontWeight: 700, letterSpacing: "-0.015em" },
