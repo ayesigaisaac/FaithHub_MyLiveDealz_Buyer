@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import AppIcon from "@/components/ui/app-icon";
 
 type Tone = "emerald" | "orange" | "slate" | "rose";
 
@@ -26,6 +27,13 @@ function progressToneClass(tone: Tone) {
   if (tone === "rose") return "bg-gradient-to-r from-rose-500 to-rose-400";
   if (tone === "slate") return "bg-gradient-to-r from-slate-500 to-slate-400";
   return "bg-gradient-to-r from-[#03cd8c] to-[#14b8a6]";
+}
+
+function iconTone(tone: Tone): "neutral" | "orange" | "green" {
+  if (tone === "orange") return "orange";
+  if (tone === "rose") return "neutral";
+  if (tone === "slate") return "neutral";
+  return "green";
 }
 
 export function DashboardStatCard({
@@ -55,19 +63,9 @@ export function DashboardStatCard({
           {badge ? (
             <span className={toneClass(tone)}>{badge}</span>
           ) : icon ? (
-            <span
-              className={`inline-flex h-8 w-8 items-center justify-center rounded-lg ${
-                tone === "orange"
-                  ? "bg-[#fff3e8] text-[#cc6500]"
-                  : tone === "rose"
-                    ? "bg-rose-50 text-rose-600"
-                    : tone === "slate"
-                      ? "bg-slate-100 text-slate-700"
-                      : "bg-[#ecfff8] text-[#049e6d]"
-              }`}
-            >
+            <AppIcon size="sm" tone={iconTone(tone)}>
               {icon}
-            </span>
+            </AppIcon>
           ) : null}
         </div>
 

@@ -98,7 +98,7 @@ export default function FaithHubEpisodeDetail() {
           className="fh-page-header mb-4 flex items-center justify-between rounded-[28px] px-4 py-3"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 shadow-sm">
               <PlayCircle className="h-5 w-5" />
             </div>
             <div>
@@ -114,7 +114,7 @@ export default function FaithHubEpisodeDetail() {
                 Offline notes available
               </div>
             )}
-            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
+            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:text-slate-900">
               <Bell className="h-5 w-5" />
             </button>
           </div>
@@ -213,7 +213,7 @@ export default function FaithHubEpisodeDetail() {
                     const Icon = item.icon;
                     return (
                       <div key={item.title} className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10">
-                        <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
+                        <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700">
                           <Icon className="h-5 w-5" />
                         </div>
                         <div className="text-base font-semibold text-slate-900">{item.title}</div>

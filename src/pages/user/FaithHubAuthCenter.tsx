@@ -66,7 +66,7 @@ function MethodCard({ active, label, helper, icon: Icon, onClick }) {
           : "border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-slate-50"
       }`}
     >
-      <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c]/10 text-[#03cd8c]">
+      <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700">
         <Icon className="h-5 w-5" />
       </div>
       <div className="text-base font-semibold text-slate-900">{label}</div>
@@ -111,7 +111,7 @@ export default function FaithHubAuthCenter() {
           className="mb-4 flex items-center justify-between rounded-[28px] border border-white/70 bg-white/85 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 shadow-sm">
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
@@ -126,7 +126,7 @@ export default function FaithHubAuthCenter() {
             <Badge className="hidden rounded-full bg-[#f77f00]/10 px-3 py-1 text-[#f77f00] hover:bg-[#f77f00]/10 sm:flex">
               Accessible auth by design
             </Badge>
-            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
+            <button className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:text-slate-900">
               <Bell className="h-5 w-5" />
             </button>
           </div>

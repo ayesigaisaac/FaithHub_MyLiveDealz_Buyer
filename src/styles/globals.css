@@ -606,6 +606,11 @@ a,
   background: #ea580c;
 }
 
+.fh-app-icon > svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
 @keyframes fh-fade-rise {
   from {
     opacity: 0;

@@ -1,5 +1,6 @@
 import React from "react";
 import { Bell, Wifi, WifiOff } from "lucide-react";
+import AppIcon from "@/components/ui/app-icon";
 
 type UserPageHeaderProps = {
   icon: React.ReactNode;
@@ -23,9 +24,9 @@ export default function UserPageHeader({
   return (
     <div className="fh-page-header mb-4 flex flex-wrap items-center justify-between gap-2.5 rounded-[24px] px-3 py-2.5 sm:gap-3 sm:rounded-[28px] sm:px-4 sm:py-3">
       <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20 sm:h-11 sm:w-11 sm:rounded-2xl">
+        <AppIcon size="lg" className="h-10 w-10 rounded-xl sm:h-11 sm:w-11 sm:rounded-2xl">
           {icon}
-        </div>
+        </AppIcon>
         <div>
           {shouldShowSubtitle ? <div className="fh-eyebrow text-[#03cd8c]">{subtitle}</div> : null}
           <div className="text-base font-semibold sm:text-lg">{title}</div>
@@ -45,9 +46,11 @@ export default function UserPageHeader({
           type="button"
           aria-label="Open alerts"
           data-action-label="Open alerts"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c] sm:h-11 sm:w-11 sm:rounded-2xl"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:text-slate-900 sm:h-11 sm:w-11 sm:rounded-2xl"
         >
-          <Bell className="h-5 w-5" />
+          <AppIcon size="sm" className="h-8 w-8 rounded-xl border-slate-200 bg-slate-100 text-slate-700 shadow-none">
+            <Bell className="h-4 w-4" />
+          </AppIcon>
         </button>
       </div>
     </div>

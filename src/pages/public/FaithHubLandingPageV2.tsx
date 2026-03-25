@@ -36,6 +36,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import AppIcon from "@/components/ui/app-icon";
 import { ctaPriorityClass } from "@/constants/ctaStyles";
 import { faithHubToneCopy } from "@/constants/faithHubTone";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
@@ -1093,9 +1094,9 @@ export default function FaithHubLandingPageV2() {
                     className="group flex items-center justify-between rounded-xl border border-slate-200 bg-[color:var(--card)] px-3 py-2 text-left transition hover:-translate-y-[1px]"
                   >
                     <span className="inline-flex min-w-0 items-center gap-2">
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-700">
+                      <AppIcon size="sm">
                         <item.icon className="h-4 w-4" />
-                      </span>
+                      </AppIcon>
                       <span className="truncate text-sm font-semibold text-slate-900">{item.label}</span>
                     </span>
                     <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:text-slate-600" />
@@ -1130,9 +1131,9 @@ export default function FaithHubLandingPageV2() {
               <Card key={item.title} className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
                 <CardContent className="p-3">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
+                    <AppIcon size="sm">
                       <item.icon className="h-4 w-4" />
-                    </span>
+                    </AppIcon>
                     <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${pillToneClass(item.tone)}`}>
                       {item.trend}
                     </span>
@@ -1229,7 +1230,9 @@ export default function FaithHubLandingPageV2() {
                     type="button"
                     className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-[color:var(--card)] text-slate-600"
                   >
-                    <Sparkles className="h-4 w-4" />
+                    <AppIcon size="sm" className="h-7 w-7 rounded-lg border-slate-200 bg-slate-100 text-slate-700 shadow-none">
+                      <Sparkles className="h-4 w-4" />
+                    </AppIcon>
                   </button>
                 </div>
 
@@ -1241,9 +1244,9 @@ export default function FaithHubLandingPageV2() {
                       className="group flex w-full items-center justify-between rounded-xl border border-slate-200 bg-[color:var(--surface)] px-3 py-2 text-left"
                     >
                       <span className="inline-flex items-center gap-2">
-                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
+                        <AppIcon size="sm" className="h-7 w-7 rounded-lg">
                           <item.icon className="h-4 w-4" />
-                        </span>
+                        </AppIcon>
                         <span className="text-sm font-semibold text-slate-900">{item.label}</span>
                       </span>
                       <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:text-slate-600" />
@@ -1265,9 +1268,9 @@ export default function FaithHubLandingPageV2() {
               <Card key={role.role} className="rounded-2xl border-slate-200 bg-[color:var(--card)]">
                 <CardContent className="p-4">
                   <div className="mb-3 flex items-center justify-between">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#03cd8c]">
+                    <AppIcon>
                       <role.icon className="h-5 w-5" />
-                    </span>
+                    </AppIcon>
                     <span className={`rounded-full px-3 py-1 text-xs font-semibold ${role.badgeTone}`}>{role.role}</span>
                   </div>
                   <div className="text-xl font-semibold text-slate-900">{role.title}</div>
@@ -1462,7 +1465,9 @@ function TopChip({ icon: Icon, label, className = "" }: { icon: LucideIcon; labe
       type="button"
       className={`fh-shell-control inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-xs font-semibold text-slate-700 ${className}`}
     >
-      <Icon className="h-4 w-4" />
+      <AppIcon size="sm" className="h-7 w-7 rounded-lg border-slate-200 bg-slate-100 text-slate-700 shadow-none">
+        <Icon className="h-4 w-4" />
+      </AppIcon>
       {label}
     </button>
   );
@@ -1500,7 +1505,12 @@ function LandingSidebarPanel({
               onClick={onCollapse}
               className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)]"
             >
-              <ChevronLeft className="h-4 w-4" />
+              <AppIcon
+                size="sm"
+                className="h-7 w-7 rounded-lg border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] shadow-none"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </AppIcon>
             </button>
           ) : null}
         </div>
@@ -1515,9 +1525,12 @@ function LandingSidebarPanel({
                   onClick={() => onModuleToggle(expanded ? "" : module.id)}
                   className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-left"
                 >
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)]">
+                  <AppIcon
+                    size="sm"
+                    className="h-7 w-7 rounded-lg border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)] shadow-none"
+                  >
                     <module.icon className="h-4 w-4" />
-                  </span>
+                  </AppIcon>
                   <span className="min-w-0 flex-1 truncate text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-muted)]">
                     {module.label}
                   </span>
@@ -1577,7 +1590,12 @@ function LandingSidebarRail({
           onClick={onExpand}
           className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)]"
         >
-          <ChevronRight className="h-4 w-4" />
+          <AppIcon
+            size="sm"
+            className="h-8 w-8 rounded-xl border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] shadow-none"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </AppIcon>
         </button>
 
         <div className="mt-0.5 flex w-full flex-col items-center gap-1.5">
@@ -1594,7 +1612,17 @@ function LandingSidebarRail({
                   : "border-[var(--fh-nav-rail-icon-border)] bg-[color:var(--fh-nav-rail-icon-bg)] text-[var(--fh-nav-rail-icon-fg)]"
               }`}
             >
-              <module.icon className="h-4 w-4" />
+              <AppIcon
+                size="sm"
+                tone={activeModule === module.id ? "dark" : "soft"}
+                className={`h-8 w-8 rounded-xl shadow-none ${
+                  activeModule === module.id
+                    ? "border-[var(--fh-nav-rail-active-border)] bg-[color:var(--fh-nav-rail-active-bg)] text-[var(--fh-nav-rail-active-fg)]"
+                    : "border-[var(--fh-nav-rail-icon-border)] bg-[color:var(--fh-nav-rail-icon-bg)] text-[var(--fh-nav-rail-icon-fg)]"
+                }`}
+              >
+                <module.icon className="h-4 w-4" />
+              </AppIcon>
             </button>
           ))}
         </div>
@@ -1616,9 +1644,9 @@ function FocusTile({
 }) {
   return (
     <div className="rounded-xl border border-slate-200 bg-[color:var(--surface)] p-3">
-      <div className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
+      <AppIcon size="sm" className="mb-2">
         <Icon className="h-4 w-4" />
-      </div>
+      </AppIcon>
       <div className="text-xs text-slate-500">{label}</div>
       <div className="text-sm font-semibold text-slate-900">{value}</div>
       <div className="text-xs text-slate-600">{detail}</div>

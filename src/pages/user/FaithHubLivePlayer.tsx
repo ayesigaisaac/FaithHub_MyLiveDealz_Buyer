@@ -92,7 +92,7 @@ export default function FaithHubLivePlayer() {
           className="fh-page-header mb-3 flex min-h-[64px] flex-wrap items-center justify-between gap-2.5 rounded-[24px] px-4 py-2"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-700 shadow-sm">
               <PlayCircle className="h-4 w-4" />
             </div>
             <div>
@@ -106,7 +106,7 @@ export default function FaithHubLivePlayer() {
               <ConnectionIcon className={`h-4 w-4 ${networkState === "Stable" ? "text-[#03cd8c]" : networkState === "Low" ? "text-[#f77f00]" : "text-rose-500"}`} />
               {networkState === "Stable" ? "Stable connection" : networkState === "Low" ? "Lower bitrate recommended" : "Reconnect in progress"}
             </div>
-            <button className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-[#03cd8c]/30 hover:text-[#03cd8c]">
+            <button className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:text-slate-900">
               <Bell className="h-4 w-4" />
             </button>
           </div>

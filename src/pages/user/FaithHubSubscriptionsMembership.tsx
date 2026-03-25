@@ -161,7 +161,7 @@ export default function FaithHubSubscriptionsMembership() {
           className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-[28px] border border-white/70 bg-white/90 px-4 py-3 shadow-sm backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 shadow-sm">
               <Crown className="h-5 w-5" />
             </div>
             <div>

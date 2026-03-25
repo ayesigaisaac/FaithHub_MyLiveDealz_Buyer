@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ChevronDown, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import AppIcon from "@/components/ui/app-icon";
 import type { RoleKey } from "@/config/pageRegistry";
 import type { SidebarSection } from "@/config/sidebar";
 
@@ -128,9 +129,9 @@ function SidebarPanel({
                 }`}
               >
                 <span className="flex min-w-0 items-center gap-2">
-                  <span className="grid h-8 w-8 place-items-center rounded-xl bg-zinc-100 text-zinc-700">
+                  <AppIcon size="sm" className="border-zinc-200 bg-zinc-100 text-zinc-700">
                     <section.icon className="h-4 w-4" />
-                  </span>
+                  </AppIcon>
                   <span className="truncate text-[11px] font-semibold uppercase tracking-[0.11em] text-zinc-500">
                     {section.label}
                   </span>
@@ -161,13 +162,17 @@ function SidebarPanel({
                             : "border-zinc-200/80 bg-white text-zinc-700 hover:bg-zinc-50"
                         }`}
                       >
-                        <span
-                          className={`grid h-8 w-8 place-items-center rounded-xl ${
-                            active ? "bg-white/15 text-white" : "bg-zinc-100 text-zinc-700"
-                          }`}
+                        <AppIcon
+                          size="sm"
+                          tone={active ? "dark" : "neutral"}
+                          className={
+                            active
+                              ? "border-white/15 bg-white/15 text-white shadow-none"
+                              : "border-zinc-200 bg-zinc-100 text-zinc-700"
+                          }
                         >
                           <ItemIcon className="h-4 w-4 shrink-0" />
-                        </span>
+                        </AppIcon>
                         <span className="min-w-0 flex-1 truncate font-semibold">{item.label}</span>
                       </button>
                     );
