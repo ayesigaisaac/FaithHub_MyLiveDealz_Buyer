@@ -5,8 +5,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        evgreen: "#03cd8c",
-        evorange: "#f77f00",
+        primary: "#16a34a",
+        accent: "#f97316",
+        dark: "#111827",
+        light: "#f8fafc",
+        card: "#ffffff",
+        evgreen: "#16a34a",
+        evorange: "#f97316",
         evgray: "#a6a6a6",
         evlight: "#f2f2f2",
       },

@@ -5,28 +5,26 @@
 :root {
   color-scheme: light;
   font-family: "Inter", "Manrope", "Plus Jakarta Sans", "Segoe UI Variable", "Trebuchet MS", sans-serif;
-  --bg: #f4f6f8;
+  --primary: #16a34a;
+  --primary-strong: #15803d;
+  --accent-orange: #f97316;
+  --bg: #f8fafc;
   --surface: #ffffff;
   --card: #ffffff;
-  --panel: #f4f4f5;
-  --border: #e4e4e7;
-  --text-primary: #0f172a;
-  --text-secondary: #52525b;
-  --accent: #059669;
-  --accent-soft: rgba(5, 150, 105, 0.12);
-  --accent-strong: #047857;
-  --warning: #f77f00;
-  --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
-  --fh-shadow-card: 0 14px 34px rgba(15, 23, 42, 0.08);
-  --fh-shadow-card-hover: 0 22px 44px rgba(15, 23, 42, 0.13);
-  --fh-shell-topbar: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96));
-  --fh-hero-grad: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(248, 250, 252, 0.97) 68%,
-    rgba(241, 245, 249, 0.98) 100%
-  );
-  --fh-hero-border: rgba(148, 163, 184, 0.18);
+  --panel: #eff4f9;
+  --border: #dfe7f1;
+  --text-primary: #111827;
+  --text-secondary: #475569;
+  --accent: var(--primary);
+  --accent-soft: rgba(22, 163, 74, 0.14);
+  --accent-strong: var(--primary-strong);
+  --warning: var(--accent-orange);
+  --shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.08);
+  --fh-shadow-card: 0 12px 28px rgba(15, 23, 42, 0.08);
+  --fh-shadow-card-hover: 0 18px 36px rgba(15, 23, 42, 0.12);
+  --fh-shell-topbar: linear-gradient(120deg, rgba(236, 253, 243, 0.92), rgba(255, 255, 255, 0.96) 40%, rgba(255, 244, 235, 0.92));
+  --fh-hero-grad: linear-gradient(120deg, #eaf9ef 0%, #ffffff 52%, #fff2e8 100%);
+  --fh-hero-border: rgba(22, 163, 74, 0.2);
   --fh-nav-shell-bg: #f8fafc;
   --fh-nav-shell-border: #d8e1ea;
   --fh-nav-title: #0f172a;
@@ -75,23 +73,23 @@
   --fh-scroll-thumb: #6f859b;
   --fh-scroll-thumb-hover: #546b82;
   --fh-page-canvas-grad:
-    radial-gradient(circle at 14% -8%, rgba(3, 205, 140, 0.12), transparent 42%),
-    radial-gradient(circle at 88% -10%, rgba(247, 127, 0, 0.1), transparent 46%),
-    radial-gradient(circle at 45% 108%, rgba(59, 130, 246, 0.08), transparent 56%),
-    linear-gradient(180deg, #f8fafc 0%, #f4f6f8 100%);
-  --fh-page-header-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94));
-  --fh-page-header-border: rgba(216, 225, 233, 0.9);
-  --fh-page-header-shadow: 0 14px 34px rgba(15, 23, 42, 0.09);
-  --fh-surface-card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(248, 250, 252, 0.97));
-  --fh-surface-card-border: rgba(215, 224, 233, 0.92);
-  --fh-surface-card-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
-  --fh-surface-card-shadow-hover: 0 20px 44px rgba(15, 23, 42, 0.11);
-  --fh-surface-subtle-bg: #f8fafd;
-  --fh-surface-subtle-border: #d9e2ec;
-  --fh-surface-accent-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(248, 250, 252, 0.97));
-  --fh-surface-accent-border: rgba(148, 163, 184, 0.18);
-  --fh-surface-warm-bg: #fffaf3;
-  --fh-surface-warm-border: rgba(247, 127, 0, 0.2);
+    radial-gradient(circle at 8% -2%, rgba(22, 163, 74, 0.14), transparent 38%),
+    radial-gradient(circle at 94% 2%, rgba(249, 115, 22, 0.14), transparent 42%),
+    radial-gradient(circle at 52% 110%, rgba(14, 165, 233, 0.08), transparent 56%),
+    linear-gradient(180deg, #f8fafc 0%, #f2f7fb 100%);
+  --fh-page-header-bg: linear-gradient(120deg, rgba(236, 253, 243, 0.78), rgba(255, 255, 255, 0.94) 44%, rgba(255, 244, 235, 0.74));
+  --fh-page-header-border: rgba(205, 223, 213, 0.9);
+  --fh-page-header-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  --fh-surface-card-bg: #ffffff;
+  --fh-surface-card-border: rgba(222, 230, 240, 0.98);
+  --fh-surface-card-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  --fh-surface-card-shadow-hover: 0 16px 34px rgba(15, 23, 42, 0.1);
+  --fh-surface-subtle-bg: #f7fafd;
+  --fh-surface-subtle-border: #dfe7f1;
+  --fh-surface-accent-bg: linear-gradient(120deg, rgba(236, 253, 243, 0.46), rgba(255, 255, 255, 0.92) 55%, rgba(255, 244, 235, 0.42));
+  --fh-surface-accent-border: rgba(22, 163, 74, 0.22);
+  --fh-surface-warm-bg: #fff7ef;
+  --fh-surface-warm-border: rgba(249, 115, 22, 0.26);
 
   /* Legacy vars used throughout the codebase. */
   --faithhub-page-bg: var(--bg);
@@ -385,9 +383,9 @@ a,
 }
 
 .fh-shell-topbar {
-  background: rgb(255 255 255 / 0.86);
-  border-color: rgb(228 228 231 / 0.88);
-  backdrop-filter: blur(14px);
+  background: var(--fh-shell-topbar);
+  border-color: rgb(223 231 241 / 0.92);
+  backdrop-filter: blur(16px);
 }
 
 .fh-shell-control {
@@ -408,7 +406,7 @@ a,
 
 .fh-shell-control:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(3, 205, 140, 0.2), 0 10px 26px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 0 0 2px var(--accent-soft), 0 10px 26px rgba(15, 23, 42, 0.08);
 }
 
 .fh-surface-card {
@@ -439,7 +437,7 @@ a,
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(132deg, rgba(5, 55, 40, 0.22), rgba(5, 55, 40, 0.08) 44%, rgba(5, 55, 40, 0.14));
+  background: linear-gradient(132deg, rgba(22, 163, 74, 0.1), rgba(255, 255, 255, 0.04) 44%, rgba(249, 115, 22, 0.1));
 }
 
 .fh-hero-card > * {
@@ -455,101 +453,44 @@ a,
   text-shadow: 0 2px 10px rgba(15, 23, 42, 0.5);
 }
 
-/* Readability guardrail for legacy mint hero gradients that still use white copy. */
-:is(
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eafcf6]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfcf6]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfbf4]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#e9fbf3]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eef6f2]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#edf6f2]"]
-  ) {
-  background-image: linear-gradient(
-    132deg,
-    rgba(5, 128, 92, 0.96) 0%,
-    rgba(7, 148, 108, 0.93) 44%,
-    rgba(16, 86, 82, 0.96) 100%
-  ) !important;
-  border-color: rgba(4, 118, 86, 0.5) !important;
-}
-
-:is(
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eafcf6]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfcf6]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfbf4]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#e9fbf3]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eef6f2]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#edf6f2]"]
-  )
-  [class~="text-white"],
-:is(
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eafcf6]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfcf6]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#ebfbf4]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#e9fbf3]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#eef6f2]"],
-    [class*="bg-gradient-to-br"][class*="from-[#03cd8c]"][class*="to-[#edf6f2]"]
-  )
-  [class*="text-white/"] {
-  color: #ffffff !important;
-  text-shadow: 0 2px 12px rgba(15, 23, 42, 0.45);
-}
-
-/* Stronger readability guardrail for legacy mint hero gradients across pages. */
+/* Brand guardrail for legacy mint gradients so they match the EVzone green/orange system. */
 :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"]) {
-  background-image: linear-gradient(
-    132deg,
-    rgba(5, 112, 82, 0.98) 0%,
-    rgba(8, 131, 97, 0.96) 45%,
-    rgba(12, 57, 66, 0.98) 100%
-  ) !important;
-  border-color: rgba(8, 96, 74, 0.48) !important;
+  background-image: linear-gradient(120deg, #eaf9ef 0%, #ffffff 52%, #fff2e8 100%) !important;
+  border-color: rgba(22, 163, 74, 0.2) !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09) !important;
 }
 
 :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"])
   [class~="text-white"],
 :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"])
   [class*="text-white/"] {
-  color: #f8fcff !important;
-  text-shadow: 0 2px 14px rgba(3, 14, 28, 0.42);
-}
-
-/* In light mode, legacy mint hero cards should read as calm panels, not loud fills. */
-[data-theme="light"]
-  :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"]) {
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.96) 100%) !important;
-  border-color: rgba(148, 163, 184, 0.18) !important;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08) !important;
-}
-
-[data-theme="light"]
-  :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"])
-  [class~="text-white"],
-[data-theme="light"]
-  :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"])
-  [class*="text-white/"] {
-  color: #0f172a !important;
+  color: #111827 !important;
   text-shadow: none !important;
-}
-
-[data-theme="light"]
-  :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"])
-  [class*="bg-white/"] {
-  background-color: rgba(255, 255, 255, 0.82) !important;
-  border-color: rgba(148, 163, 184, 0.24) !important;
 }
 
 [data-theme="light"] [class*="text-[#03cd8c]"],
 [data-theme="light"] [class*="text-emerald-600"],
 [data-theme="light"] [class*="text-emerald-700"],
 [data-theme="light"] [class*="text-emerald-800"] {
-  color: #047857 !important;
+  color: #166534 !important;
+}
+
+[data-theme="light"] [class*="text-[#f77f00]"],
+[data-theme="light"] [class*="text-orange-600"],
+[data-theme="light"] [class*="text-orange-700"] {
+  color: #c2410c !important;
 }
 
 [data-theme="light"] [class~="bg-[#03cd8c]"],
 [data-theme="light"] [class*="bg-emerald-500"],
 [data-theme="light"] [class*="bg-emerald-600"] {
-  background-color: #059669 !important;
+  background-color: #16a34a !important;
+}
+
+[data-theme="light"] [class*="bg-[#f77f00]"],
+[data-theme="light"] [class*="bg-orange-500"],
+[data-theme="light"] [class*="bg-orange-600"] {
+  background-color: #f97316 !important;
 }
 
 [data-theme="light"] [class*="bg-[#ecfff8]"],
@@ -557,28 +498,37 @@ a,
 [data-theme="light"] [class*="bg-[#03cd8c]/15"],
 [data-theme="light"] [class*="bg-[#03cd8c]/20"],
 [data-theme="light"] [class*="bg-emerald-50"] {
-  background-color: #f8fafc !important;
+  background-color: #ecfdf3 !important;
 }
 
 [data-theme="light"] [class*="border-[#03cd8c]"],
 [data-theme="light"] [class*="border-emerald-100"],
 [data-theme="light"] [class*="border-emerald-200"] {
-  border-color: rgba(148, 163, 184, 0.18) !important;
+  border-color: rgba(22, 163, 74, 0.24) !important;
+}
+
+[data-theme="light"] [class*="border-[#f77f00]"],
+[data-theme="light"] [class*="border-orange-200"] {
+  border-color: rgba(249, 115, 22, 0.28) !important;
 }
 
 [data-theme="light"] [class*="bg-[linear-gradient(135deg,#ecfdf5_0%,#f8fafc_100%)]"] {
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96)) !important;
-  border-color: rgba(148, 163, 184, 0.18) !important;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08) !important;
+  background-image: linear-gradient(120deg, #eaf9ef 0%, #ffffff 52%, #fff2e8 100%) !important;
+  border-color: rgba(22, 163, 74, 0.2) !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09) !important;
 }
 
 [data-theme="light"] [class*="shadow-[#03cd8c]/"],
 [data-theme="light"] [class*="shadow-emerald-500/"] {
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.24) !important;
 }
 
 [data-theme="light"] [class*="hover:bg-[#02b67c]"]:hover {
-  background-color: #047857 !important;
+  background-color: #15803d !important;
+}
+
+[data-theme="light"] [class*="hover:bg-[#e56f00]"]:hover {
+  background-color: #ea580c !important;
 }
 
 .fh-actions-grid {
@@ -598,15 +548,15 @@ a,
 }
 
 .fh-pill-emerald {
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  background: #f8fafc;
-  color: #334155;
+  border: 1px solid rgba(22, 163, 74, 0.24);
+  background: #ecfdf3;
+  color: #166534;
 }
 
 .fh-pill-orange {
-  border: 1px solid rgba(247, 127, 0, 0.28);
-  background: rgba(247, 127, 0, 0.12);
-  color: #b45309;
+  border: 1px solid rgba(249, 115, 22, 0.28);
+  background: rgba(249, 115, 22, 0.12);
+  color: #c2410c;
 }
 
 .fh-pill-slate {
@@ -626,6 +576,34 @@ a,
 .fh-inline-action:hover {
   background: var(--card);
   transform: none;
+}
+
+/* Global utility classes for consistent EVzone-inspired styling. */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+  background: var(--primary-strong);
+}
+
+.btn-accent {
+  background: var(--accent-orange);
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.btn-accent:hover {
+  background: #ea580c;
 }
 
 @keyframes fh-fade-rise {
@@ -1487,14 +1465,14 @@ a,
 }
 
 .fh-scroll-region::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--fh-scroll-thumb), color-mix(in srgb, var(--fh-scroll-thumb) 72%, #059669 28%));
+  background: linear-gradient(180deg, var(--fh-scroll-thumb), color-mix(in srgb, var(--fh-scroll-thumb) 72%, var(--accent) 28%));
   border-radius: 999px;
   border: 1px solid var(--fh-scroll-track);
   min-height: 28px;
 }
 
 .fh-scroll-region::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--fh-scroll-thumb-hover), color-mix(in srgb, var(--fh-scroll-thumb-hover) 74%, #059669 26%));
+  background: linear-gradient(180deg, var(--fh-scroll-thumb-hover), color-mix(in srgb, var(--fh-scroll-thumb-hover) 74%, var(--accent) 26%));
 }
 
 .fh-scroll-region::-webkit-scrollbar-corner {
