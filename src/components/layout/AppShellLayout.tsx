@@ -3,12 +3,9 @@ import { matchPath, Outlet, useLocation, useNavigate, useSearchParams } from "re
 import Drawer from "@mui/material/Drawer";
 import {
   Bell,
-  ChevronDown,
-  Landmark,
+  CircleUserRound,
   Menu,
   Search,
-  ShieldCheck,
-  Users,
   X,
 } from "lucide-react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -46,10 +43,10 @@ const mobileLabelByItemId: Record<string, string> = {
   "a-security": "Security",
 };
 
-const roleTriggerMeta: Record<RoleKey, { label: string; icon: React.ComponentType<{ className?: string }> }> = {
-  user: { label: "Faith Member", icon: Users },
-  provider: { label: "Provider Workspace", icon: Landmark },
-  admin: { label: "Platform Admin", icon: ShieldCheck },
+const roleTriggerLabel: Record<RoleKey, string> = {
+  user: "Faith Member",
+  provider: "Provider Workspace",
+  admin: "Platform Admin",
 };
 
 function getMobileNavLabel(item: { id: string; label: string }) {
@@ -121,8 +118,7 @@ export default function AppShellLayout() {
 
   const currentPage = pageRegistry.find((page) => matchesPagePath(page, location.pathname));
   const activeNavPath = currentPage?.path || location.pathname;
-  const roleMeta = roleTriggerMeta[shellRole];
-  const RoleIcon = roleMeta.icon;
+  const currentRoleLabel = roleTriggerLabel[shellRole];
 
   const navigateToPath = (path: string) => navigate(withAdminAccess(path, adminAllAccess));
 
@@ -226,22 +222,30 @@ export default function AppShellLayout() {
             </div>
 
             <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
+              <div className="hidden xl:block">
+                <ColorModeToggle className="h-10 w-10 rounded-2xl" />
+              </div>
+              <button
+                type="button"
+                aria-label="Open alerts"
+                className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700"
+              >
+                <Bell className="h-5 w-5" />
+                <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-emerald-500 px-1 text-[10px] font-bold text-white">
+                  2
+                </span>
+              </button>
               <div className="relative">
                 <button
                   ref={roleSwitcherTriggerRef}
                   type="button"
-                  aria-label="Switch role"
+                  title={`Switch role (${currentRoleLabel})`}
+                  aria-label={`Switch role. Current role: ${currentRoleLabel}`}
                   aria-expanded={roleSwitcherOpen}
                   onClick={() => setRoleSwitcherOpen((prev) => !prev)}
-                  className="fh-shell-control inline-flex h-10 items-center gap-2 rounded-2xl px-2 text-zinc-700 sm:px-3"
+                  className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700"
                 >
-                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700">
-                    <RoleIcon className="h-4 w-4" />
-                  </span>
-                  <span className="hidden max-w-[10.5rem] truncate text-xs font-semibold lg:inline">{roleMeta.label}</span>
-                  <ChevronDown
-                    className={`h-4 w-4 shrink-0 text-zinc-500 transition ${roleSwitcherOpen ? "rotate-180" : ""}`}
-                  />
+                  <CircleUserRound className="h-5 w-5" />
                 </button>
 
                 {roleSwitcherOpen ? (
@@ -267,17 +271,6 @@ export default function AppShellLayout() {
                   </div>
                 ) : null}
               </div>
-              <div className="hidden xl:block">
-                <ColorModeToggle className="h-10 w-10 rounded-2xl" />
-              </div>
-              <button
-                type="button"
-                aria-label="Open alerts"
-                className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700"
-              >
-                <Bell className="h-5 w-5" />
-                <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--accent)]" />
-              </button>
             </div>
           </div>
 
