@@ -280,7 +280,7 @@ export default function AppShellLayout() {
                 type="button"
                 onClick={() => navigateToPath(item.path)}
                 className={`relative min-w-0 flex flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-1.5 text-[10px] font-semibold leading-tight sm:px-2 ${
-                  active ? "text-[color:var(--accent)]" : "text-zinc-600"
+                  active ? "bg-zinc-100 text-zinc-900" : "text-zinc-600 hover:bg-zinc-50"
                 }`}
                 title={item.label}
               >

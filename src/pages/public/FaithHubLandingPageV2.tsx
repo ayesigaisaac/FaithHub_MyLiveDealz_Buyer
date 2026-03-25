@@ -905,14 +905,14 @@ export default function FaithHubLandingPageV2() {
                             onClick={() => handleOperatorRoleSelect(role.id)}
                             className={`w-full rounded-2xl border px-3 py-3 text-left transition ${
                               active
-                                ? "border-[#a2e2cd] bg-[#ecfff8]"
-                                : "border-[var(--border)] bg-[color:var(--surface)] hover:-translate-y-[1px] hover:border-[#a2e2cd] hover:bg-[#f7fffb]"
+                                ? "border-slate-300 bg-slate-100"
+                                : "border-[var(--border)] bg-[color:var(--surface)] hover:-translate-y-[1px] hover:border-slate-300 hover:bg-slate-50"
                             }`}
                           >
                             <div className="flex items-start gap-3">
                               <span
                                 className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                                  active ? "bg-[#03cd8c] text-white" : "bg-slate-100 text-slate-600"
+                                  active ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600"
                                 }`}
                               >
                                 <role.icon className="h-5 w-5" />
@@ -923,7 +923,7 @@ export default function FaithHubLandingPageV2() {
                                 </span>
                                 <span className="mt-0.5 block text-sm text-slate-600">{role.description}</span>
                               </span>
-                              {active ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#03cd8c]" /> : null}
+                              {active ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-slate-700" /> : null}
                             </div>
                           </button>
                         );
@@ -940,7 +940,7 @@ export default function FaithHubLandingPageV2() {
                     setOperatorMenuOpen(false);
                     navigate("/app/admin/overview");
                   }}
-                  className="inline-flex w-full items-center justify-center rounded-2xl border border-[var(--border)] bg-[color:var(--surface)] px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-[#f7fffb] hover:text-[#049e6d]"
+                  className="inline-flex w-full items-center justify-center rounded-2xl border border-[var(--border)] bg-[color:var(--surface)] px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-900"
                 >
                   Manage roles & permissions
                 </button>
@@ -957,7 +957,7 @@ export default function FaithHubLandingPageV2() {
               className="mb-2 flex w-full items-center justify-between rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] px-3 py-2 text-left text-sm font-semibold"
             >
               <span className="inline-flex items-center gap-2">
-                <activeOperatorRole.icon className="h-4 w-4 text-[#03cd8c]" />
+                <activeOperatorRole.icon className="h-4 w-4 text-slate-600" />
                 {activeOperatorRole.label}
               </span>
               <ChevronRight className="h-4 w-4 text-slate-400" />
@@ -974,7 +974,7 @@ export default function FaithHubLandingPageV2() {
                   className="flex items-center justify-between rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)] px-3 py-2 text-left text-sm font-semibold"
                 >
                   <span className="inline-flex items-center gap-2">
-                    <item.icon className="h-4 w-4 text-[#03cd8c]" />
+                    <item.icon className="h-4 w-4 text-slate-600" />
                     {item.label}
                   </span>
                   <ChevronRight className="h-4 w-4 text-slate-400" />
@@ -1535,7 +1535,7 @@ function LandingSidebarPanel({
                         onClick={() => (entry.target ? onAction(entry.target) : undefined)}
                         className={`w-full rounded-lg border px-2.5 py-2 text-left transition ${
                           entry.highlighted
-                            ? "border-[#69d3b2] bg-[#03cd8c] text-white"
+                            ? "border-slate-300 bg-slate-900 text-white"
                             : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)]"
                         }`}
                       >
