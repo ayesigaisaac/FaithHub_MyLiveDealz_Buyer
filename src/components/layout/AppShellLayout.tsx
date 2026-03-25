@@ -1,13 +1,18 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { matchPath, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
 import {
   Bell,
+  ChevronDown,
+  Landmark,
   Menu,
   Search,
+  ShieldCheck,
+  Users,
   X,
 } from "lucide-react";
 import Sidebar from "@/components/layout/Sidebar";
+import RoleSwitcher from "@/components/layout/RoleSwitcher";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
 import {
   getRoutePatterns,
@@ -39,6 +44,12 @@ const mobileLabelByItemId: Record<string, string> = {
   "a-live-mod": "Live",
   "a-finance": "Finance",
   "a-security": "Security",
+};
+
+const roleTriggerMeta: Record<RoleKey, { label: string; icon: React.ComponentType<{ className?: string }> }> = {
+  user: { label: "Faith Member", icon: Users },
+  provider: { label: "Provider Workspace", icon: Landmark },
+  admin: { label: "Platform Admin", icon: ShieldCheck },
 };
 
 function getMobileNavLabel(item: { id: string; label: string }) {
@@ -78,6 +89,9 @@ export default function AppShellLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navQuery, setNavQuery] = useState("");
+  const [roleSwitcherOpen, setRoleSwitcherOpen] = useState(false);
+  const roleSwitcherRef = useRef<HTMLDivElement | null>(null);
+  const roleSwitcherTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const pages = useMemo(
     () => (adminAllAccess ? pageRegistry : pagesByRole[routeRole] || []),
@@ -107,6 +121,8 @@ export default function AppShellLayout() {
 
   const currentPage = pageRegistry.find((page) => matchesPagePath(page, location.pathname));
   const activeNavPath = currentPage?.path || location.pathname;
+  const roleMeta = roleTriggerMeta[shellRole];
+  const RoleIcon = roleMeta.icon;
 
   const navigateToPath = (path: string) => navigate(withAdminAccess(path, adminAllAccess));
 
@@ -138,6 +154,33 @@ export default function AppShellLayout() {
     event.preventDefault();
     navigateToPath(actionPath);
   };
+
+  useEffect(() => {
+    setRoleSwitcherOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!roleSwitcherOpen) return;
+    const handlePointerDown = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const clickInsideMenu = roleSwitcherRef.current?.contains(target);
+      const clickInsideTrigger = roleSwitcherTriggerRef.current?.contains(target);
+      if (!clickInsideMenu && !clickInsideTrigger) {
+        setRoleSwitcherOpen(false);
+      }
+    };
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setRoleSwitcherOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [roleSwitcherOpen]);
 
   return (
     <div className="fh-page-canvas flex h-[100dvh] flex-col overflow-hidden overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
@@ -183,6 +226,47 @@ export default function AppShellLayout() {
             </div>
 
             <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
+              <div className="relative">
+                <button
+                  ref={roleSwitcherTriggerRef}
+                  type="button"
+                  aria-label="Switch role"
+                  aria-expanded={roleSwitcherOpen}
+                  onClick={() => setRoleSwitcherOpen((prev) => !prev)}
+                  className="fh-shell-control inline-flex h-10 items-center gap-2 rounded-2xl px-2 text-zinc-700 sm:px-3"
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-100 text-zinc-700">
+                    <RoleIcon className="h-4 w-4" />
+                  </span>
+                  <span className="hidden max-w-[10.5rem] truncate text-xs font-semibold lg:inline">{roleMeta.label}</span>
+                  <ChevronDown
+                    className={`h-4 w-4 shrink-0 text-zinc-500 transition ${roleSwitcherOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {roleSwitcherOpen ? (
+                  <div
+                    ref={roleSwitcherRef}
+                    className="fixed inset-x-2 top-[66px] z-[70] sm:absolute sm:right-0 sm:top-[calc(100%+10px)] sm:inset-x-auto"
+                  >
+                    <RoleSwitcher
+                      isOpen={roleSwitcherOpen}
+                      currentPath={location.pathname}
+                      currentRole={shellRole}
+                      onClose={() => setRoleSwitcherOpen(false)}
+                      onSwitch={(path) => {
+                        navigateToPath(path);
+                        setRoleSwitcherOpen(false);
+                      }}
+                      onManageRoles={() => {
+                        navigateToPath("/app/admin/overview");
+                        setRoleSwitcherOpen(false);
+                      }}
+                      className="w-full sm:w-[22rem]"
+                    />
+                  </div>
+                ) : null}
+              </div>
               <div className="hidden xl:block">
                 <ColorModeToggle className="h-10 w-10 rounded-2xl" />
               </div>
