@@ -144,41 +144,45 @@ export default function AppShellLayout() {
       <header className="fh-shell-topbar sticky top-0 z-50 shrink-0 border-b border-zinc-200/80 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur">
         <div className="w-full px-2.5 py-2 sm:px-3 sm:py-3 lg:px-4">
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              aria-label="Open navigation menu"
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen(true)}
-              className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700 lg:hidden"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
+            <div className="flex min-w-0 items-center gap-2">
+              <button
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded={mobileOpen}
+                onClick={() => setMobileOpen(true)}
+                className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700 lg:hidden"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
 
-            <button
-              type="button"
-              aria-label="Go to FaithHub landing page"
-              onClick={() => navigate("/")}
-              className="fh-shell-control inline-flex h-10 min-w-0 items-center rounded-2xl px-2.5 sm:px-3"
-            >
-              <img
-                src={faithmartLogoLandscape}
-                alt="FaithMart"
-                className="h-8 w-auto max-w-[11rem] object-contain sm:h-9 sm:max-w-[12rem]"
-              />
-            </button>
+              <button
+                type="button"
+                aria-label="Go to FaithHub landing page"
+                onClick={() => navigate("/")}
+                className="fh-shell-control inline-flex h-10 min-w-0 items-center rounded-2xl px-2.5 sm:px-3"
+              >
+                <img
+                  src={faithmartLogoLandscape}
+                  alt="FaithMart"
+                  className="h-8 w-auto max-w-[11rem] object-contain sm:h-9 sm:max-w-[12rem]"
+                />
+              </button>
+            </div>
 
-            <label className="fh-search-shell fh-shell-control hidden min-w-0 flex-1 items-center gap-2 rounded-2xl px-3 py-2 md:flex">
-              <Search className="h-4 w-4 shrink-0 text-zinc-500" />
-              <input
-                type="search"
-                value={navQuery}
-                onChange={(event) => setNavQuery(event.target.value)}
-                placeholder="Search pages and modules"
-                className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-zinc-800 outline-none placeholder:text-zinc-400"
-              />
-            </label>
+            <div className="hidden min-w-0 flex-1 px-1 md:flex lg:px-2">
+              <label className="fh-search-shell fh-shell-control mx-auto flex w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3 py-2">
+                <Search className="h-4 w-4 shrink-0 text-zinc-500" />
+                <input
+                  type="search"
+                  value={navQuery}
+                  onChange={(event) => setNavQuery(event.target.value)}
+                  placeholder="Search pages and modules"
+                  className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-zinc-800 outline-none placeholder:text-zinc-400"
+                />
+              </label>
+            </div>
 
-            <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+            <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
               <div className="hidden xl:block">
                 <ColorModeToggle className="h-10 w-10 rounded-2xl" />
               </div>

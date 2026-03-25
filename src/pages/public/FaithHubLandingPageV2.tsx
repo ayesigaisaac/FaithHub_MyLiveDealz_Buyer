@@ -819,29 +819,33 @@ export default function FaithHubLandingPageV2() {
             />
           </button>
 
-          <div className="ml-auto flex items-center gap-2">
-            <div className="relative hidden md:block">
+          <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 md:flex">
+            <div className="relative min-w-0">
               <button
                 ref={operatorTriggerRef}
                 type="button"
                 aria-label="Switch FaithHub operator role"
                 aria-expanded={operatorMenuOpen}
                 onClick={() => setOperatorMenuOpen((prev) => !prev)}
-                className="fh-shell-control inline-flex h-11 items-center gap-2 rounded-2xl px-3 text-xs font-semibold text-slate-700"
+                className="fh-shell-control inline-flex h-11 max-w-[22rem] items-center gap-2 rounded-2xl px-3 text-xs font-semibold text-slate-700"
               >
-                <activeOperatorRole.icon className="h-4 w-4" />
-                <span>{activeOperatorRole.label}</span>
-                <ChevronDown className={`h-4 w-4 text-slate-500 transition ${operatorMenuOpen ? "rotate-180" : ""}`} />
+                <activeOperatorRole.icon className="h-4 w-4 shrink-0" />
+                <span className="truncate">{activeOperatorRole.label}</span>
+                <ChevronDown
+                  className={`h-4 w-4 shrink-0 text-slate-500 transition ${operatorMenuOpen ? "rotate-180" : ""}`}
+                />
               </button>
             </div>
-            <label className="fh-shell-control hidden h-11 items-center gap-2 rounded-2xl px-3 xl:flex">
+            <label className="fh-shell-control hidden h-11 min-w-0 items-center gap-2 rounded-2xl px-3 xl:flex">
               <Search className="h-4 w-4 text-slate-500" />
               <input
                 type="search"
                 placeholder="Search..."
-                className="w-[9rem] border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                className="w-[10rem] border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400 2xl:w-[12rem]"
               />
             </label>
+          </div>
+          <div className="ml-auto flex items-center gap-2 md:ml-0">
             <ColorModeToggle className="h-11 w-11 rounded-2xl" />
             <button
               type="button"
