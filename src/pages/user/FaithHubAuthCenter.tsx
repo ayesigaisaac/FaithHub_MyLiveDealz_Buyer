@@ -47,7 +47,7 @@ function SegmentedTab({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-2xl px-4 py-2 text-sm font-semibold transition ${
         active
-          ? "bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+          ? "bg-white text-slate-900 shadow-sm border border-slate-200"
           : "bg-white text-slate-600 hover:bg-slate-50"
       }`}
     >
@@ -62,7 +62,7 @@ function MethodCard({ active, label, helper, icon: Icon, onClick }) {
       onClick={onClick}
       className={`rounded-[24px] border p-4 text-left transition ${
         active
-          ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10"
+          ? "border-slate-200 bg-white shadow-sm"
           : "border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-slate-50"
       }`}
     >
@@ -250,7 +250,7 @@ export default function FaithHubAuthCenter() {
                       {isPasskey && (
                         <div className="rounded-[24px] border border-[#03cd8c]/20 bg-[#ecfff8] p-5">
                           <div className="mb-4 flex items-center gap-3">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-900 shadow-sm border border-slate-200">
                               <Fingerprint className="h-5 w-5" />
                             </div>
                             <div>
@@ -453,7 +453,7 @@ export default function FaithHubAuthCenter() {
                     <div className="hidden text-[#03cd8c]">Assistive details</div>
                     <div className="mt-2 text-xl font-semibold text-slate-900">Accessibility notes</div>
                   </div>
-                  <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">No cognitive puzzles</Badge>
+                  <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">No cognitive puzzles</Badge>
                 </div>
                 <div className="grid gap-3 text-sm text-slate-600">
                   <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-4">Persistent field labels, high-contrast buttons, generous hit areas, and large OTP cells improve clarity on all devices.</div>

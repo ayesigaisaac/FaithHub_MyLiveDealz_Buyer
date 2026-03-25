@@ -24,7 +24,7 @@ const accessCards = [
     title: "Super Admin",
     description: "Open platform-wide control for tenants, providers, users, incidents, billing, and feature governance.",
     path: "/super-admin/overview?as=super_admin",
-    tone: "bg-slate-900 text-white",
+    tone: "bg-slate-100 text-slate-700",
     icon: Lock,
   },
   {

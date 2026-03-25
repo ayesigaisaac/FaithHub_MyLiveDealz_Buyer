@@ -86,7 +86,7 @@ function Pill({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+          ? "border-slate-200 bg-white text-slate-900 shadow-sm"
           : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
       }`}
     >
@@ -211,9 +211,9 @@ export default function FaithHubProfilePreferences() {
 
                     <div className="grid gap-5 lg:grid-cols-[0.36fr_0.64fr]">
                       <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-5 text-center">
-                        <div className="relative mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] text-white shadow-lg shadow-[#03cd8c]/20">
+                        <div className="relative mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] text-white shadow-sm shadow-[#03cd8c]/20">
                           <UserCircle2 className="h-14 w-14" />
-                          <button className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full border-4 border-white bg-[#f77f00] text-white shadow-lg shadow-[#f77f00]/25">
+                          <button className="absolute -bottom-1 -right-1 flex h-10 w-10 items-center justify-center rounded-full border-4 border-white bg-[#f77f00] text-white shadow-sm shadow-[#f77f00]/25">
                             <Camera className="h-4 w-4" />
                           </button>
                         </div>
@@ -309,7 +309,7 @@ export default function FaithHubProfilePreferences() {
                         </div>
                         <div className="mt-2 text-xl font-semibold text-slate-900">Enrollment preferences and smaller faith communities</div>
                       </div>
-                      <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">Safe defaults enabled</Badge>
+                      <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Safe defaults enabled</Badge>
                     </div>
 
                     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -463,7 +463,7 @@ export default function FaithHubProfilePreferences() {
 
                 <div className="rounded-[28px] border border-white/10 bg-white/5 p-5 backdrop-blur">
                   <div className="mb-4 flex items-center gap-4">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-slate-900 shadow-sm border border-slate-200">
                       <UserCircle2 className="h-9 w-9" />
                     </div>
                     <div>

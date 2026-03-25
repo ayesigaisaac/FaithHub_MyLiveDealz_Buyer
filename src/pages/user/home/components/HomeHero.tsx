@@ -24,7 +24,7 @@ export default function HomeHero({
             <Badge className="rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-slate-50">
               Personalized for you
             </Badge>
-            <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">
+            <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">
               {recommendationCount} suggested actions
             </Badge>
           </div>

@@ -19,9 +19,9 @@
   --accent-soft: rgba(22, 163, 74, 0.14);
   --accent-strong: var(--primary-strong);
   --warning: var(--accent-orange);
-  --shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.08);
-  --fh-shadow-card: 0 12px 28px rgba(15, 23, 42, 0.08);
-  --fh-shadow-card-hover: 0 18px 36px rgba(15, 23, 42, 0.12);
+  --shadow-soft: 0 6px 16px rgba(15, 23, 42, 0.05);
+  --fh-shadow-card: 0 8px 18px rgba(15, 23, 42, 0.05);
+  --fh-shadow-card-hover: 0 12px 24px rgba(15, 23, 42, 0.08);
   --fh-shell-topbar: linear-gradient(120deg, rgba(236, 253, 243, 0.92), rgba(255, 255, 255, 0.96) 40%, rgba(255, 244, 235, 0.92));
   --fh-hero-grad: linear-gradient(120deg, #eaf9ef 0%, #ffffff 52%, #fff2e8 100%);
   --fh-hero-border: rgba(22, 163, 74, 0.2);
@@ -79,11 +79,11 @@
     linear-gradient(180deg, #f8fafc 0%, #f2f7fb 100%);
   --fh-page-header-bg: linear-gradient(120deg, rgba(236, 253, 243, 0.78), rgba(255, 255, 255, 0.94) 44%, rgba(255, 244, 235, 0.74));
   --fh-page-header-border: rgba(205, 223, 213, 0.9);
-  --fh-page-header-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  --fh-page-header-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
   --fh-surface-card-bg: #ffffff;
   --fh-surface-card-border: rgba(222, 230, 240, 0.98);
-  --fh-surface-card-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-  --fh-surface-card-shadow-hover: 0 16px 34px rgba(15, 23, 42, 0.1);
+  --fh-surface-card-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+  --fh-surface-card-shadow-hover: 0 12px 24px rgba(15, 23, 42, 0.08);
   --fh-surface-subtle-bg: #f7fafd;
   --fh-surface-subtle-border: #dfe7f1;
   --fh-surface-accent-bg: linear-gradient(120deg, rgba(236, 253, 243, 0.46), rgba(255, 255, 255, 0.92) 55%, rgba(255, 244, 235, 0.42));
@@ -391,7 +391,7 @@ a,
 .fh-shell-control {
   border: 1px solid rgb(228 228 231 / 0.92);
   background: rgb(255 255 255 / 0.88);
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.05);
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
@@ -406,7 +406,7 @@ a,
 
 .fh-shell-control:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--accent-soft), 0 10px 26px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 0 0 2px var(--accent-soft), 0 6px 14px rgba(15, 23, 42, 0.05);
 }
 
 .fh-surface-card {
@@ -740,23 +740,36 @@ a,
 }
 
 .fh-surface-dark {
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(52, 211, 153, 0.16), transparent 42%),
-    linear-gradient(168deg, #0f172a 0%, #0d1628 65%, #0c1524 100%);
-  box-shadow: 0 26px 64px -28px rgba(15, 23, 42, 0.62);
+  border: 1px solid rgba(222, 230, 240, 0.98);
+  background: linear-gradient(120deg, rgba(236, 253, 243, 0.46), rgba(255, 255, 255, 0.95) 55%, rgba(255, 244, 235, 0.42));
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
 }
 
 .fh-surface-dark [class*="text-slate-900"],
 .fh-surface-dark [class*="text-slate-800"],
 .fh-surface-dark [class*="text-slate-700"] {
-  color: #f8fafc !important;
+  color: #0f172a !important;
 }
 
 .fh-surface-dark [class*="text-slate-600"],
 .fh-surface-dark [class*="text-slate-500"],
 .fh-surface-dark [class*="text-slate-400"] {
-  color: rgba(241, 245, 249, 0.82) !important;
+  color: #475569 !important;
+}
+
+.fh-surface-dark [class*="text-white/"],
+.fh-surface-dark [class~="text-white"] {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+.fh-surface-dark [class*="bg-white/"],
+.fh-surface-dark [class*="bg-white/1"] {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.fh-surface-dark [class*="border-white/"] {
+  border-color: rgba(222, 230, 240, 0.95) !important;
 }
 
 .fh-surface-dark .MuiButton-root.MuiButton-text {
@@ -847,11 +860,11 @@ a,
 .fh-nav-shell-card {
   border: 1px solid rgb(228 228 231 / 0.94);
   background: rgb(255 255 255 / 0.92);
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.09);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
 }
 
 .fh-nav-shell-card:hover {
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.09);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
 }
 
 .fh-mobile-bottom-nav {

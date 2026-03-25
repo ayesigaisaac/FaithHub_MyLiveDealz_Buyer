@@ -310,7 +310,7 @@ export default function FaithHubHome() {
                       type="button"
                       onClick={() => setWindowView("today")}
                       className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "today" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                        windowView === "today" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                       }`}
                     >
                       Today
@@ -319,7 +319,7 @@ export default function FaithHubHome() {
                       type="button"
                       onClick={() => setWindowView("week")}
                       className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "week" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                        windowView === "week" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                       }`}
                     >
                       This week
@@ -328,7 +328,7 @@ export default function FaithHubHome() {
                       type="button"
                       onClick={() => setWindowView("month")}
                       className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "month" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                        windowView === "month" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                       }`}
                     >
                       This month

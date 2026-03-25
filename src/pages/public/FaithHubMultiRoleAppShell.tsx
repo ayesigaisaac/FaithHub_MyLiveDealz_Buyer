@@ -316,7 +316,7 @@ function getRoleAccent(role) {
 
 function getRoleBadge(role) {
   if (role === "provider") return "bg-[#fff8ef] text-[#f77f00]";
-  if (role === "admin") return "bg-slate-900 text-white";
+  if (role === "admin") return "bg-slate-100 text-slate-700";
   return "bg-[#ecfff8] text-[#03cd8c]";
 }
 
@@ -586,7 +586,7 @@ function RoleToggle({ role, handleRoleSwitch, compact = false }) {
                 ? item === "provider"
                   ? "bg-[#fff8ef] text-[#f77f00]"
                   : item === "admin"
-                  ? "bg-slate-900 text-white"
+                  ? "bg-slate-100 text-slate-700"
                   : "bg-[#03cd8c] text-white"
                 : prominent
                 ? "text-slate-600 hover:bg-[#f8fafc]"
@@ -716,7 +716,7 @@ function DesktopSidebar({ role, roleData, currentPageId, sidebarCollapsed, goToP
                                   {getPreviewItemLabel(item)}
                                 </span>
                               ) : (
-                                <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-slate-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-lg transition group-hover:opacity-100">
+                                <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-slate-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition group-hover:opacity-100">
                                   {getPreviewItemLabel(item)}
                                 </span>
                               )}
@@ -905,7 +905,7 @@ function PageSurfacePreview({ role, roleData, currentPage, currentSection, pinne
             <div className="rounded-[28px] border border-slate-200 bg-[#f8fafc] p-5">
               <div className="mb-3 flex flex-wrap items-center gap-2">
                 <Badge className="rounded-full bg-[#ecfff8] text-[#03cd8c] hover:bg-[#ecfff8]">{currentSection?.title}</Badge>
-                <Badge className="rounded-full bg-slate-900 text-white hover:bg-slate-900">{currentPage?.template}</Badge>
+                <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">{currentPage?.template}</Badge>
               </div>
               <div className="text-2xl font-semibold text-slate-900">{currentPage?.label}</div>
               <div className="mt-2 fh-body text-slate-600">{currentPage?.description}</div>

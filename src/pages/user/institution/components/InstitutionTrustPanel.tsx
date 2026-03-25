@@ -33,7 +33,7 @@ export default function InstitutionTrustPanel({
 
         {!memberMode ? (
           <div className="rounded-[28px] border border-dashed border-slate-200 bg-[#f8fafc] p-6 text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-white">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-700">
               <Lock className="h-6 w-6" />
             </div>
             <div className="mb-2 text-lg font-semibold text-slate-900">Members-only resources</div>

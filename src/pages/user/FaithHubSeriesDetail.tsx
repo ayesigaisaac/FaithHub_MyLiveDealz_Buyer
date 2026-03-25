@@ -112,7 +112,7 @@ export default function FaithHubSeriesDetail() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c]">Series overview</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white">Calendar + share + merch</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700">Calendar + share + merch</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
@@ -310,7 +310,7 @@ export default function FaithHubSeriesDetail() {
 
                 {!premiumUnlocked ? (
                   <div className="rounded-[28px] border border-dashed border-[#f77f00]/25 bg-white p-6 text-center">
-                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-white">
+                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-700">
                       <Lock className="h-6 w-6" />
                     </div>
                     <div className="mb-2 text-lg font-semibold text-slate-900">Premium series layer</div>

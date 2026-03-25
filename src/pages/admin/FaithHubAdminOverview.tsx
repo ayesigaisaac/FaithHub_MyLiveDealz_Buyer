@@ -259,7 +259,7 @@ export default function FaithHubAdminOverview() {
                     type="button"
                     onClick={() => setWindowView("7d")}
                     className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "7d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      windowView === "7d" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     7 days
@@ -268,7 +268,7 @@ export default function FaithHubAdminOverview() {
                     type="button"
                     onClick={() => setWindowView("30d")}
                     className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "30d" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      windowView === "30d" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     30 days
@@ -277,7 +277,7 @@ export default function FaithHubAdminOverview() {
                     type="button"
                     onClick={() => setWindowView("term")}
                     className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      windowView === "term" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      windowView === "term" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     This term

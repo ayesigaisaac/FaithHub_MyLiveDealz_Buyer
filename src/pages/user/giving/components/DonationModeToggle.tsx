@@ -20,7 +20,7 @@ export default function DonationModeToggle({ mode, onChange }: DonationModeToggl
             onClick={() => onChange(item)}
             className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
               mode === item
-                ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+                ? "border-slate-200 bg-white text-slate-900 shadow-sm"
                 : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
             }`}
           >

@@ -24,7 +24,7 @@ export default function InstitutionList({ institutions }: InstitutionListProps) 
       {institutions.map((institution) => (
         <div
           key={institution.id}
-          className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
+          className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-sm"
         >
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="min-w-0 flex-1">

@@ -130,7 +130,7 @@ export default function FaithHubLivePlayer() {
                 <div className="relative z-10 text-white">
                   <div className="mb-4 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Live playback experience</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chat, captions, translation, clips</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Chat, captions, translation, clips</Badge>
                     <Badge className="rounded-full border border-white/20 bg-white/10 text-white hover:bg-white/10">
                       LIVE NOW
                     </Badge>

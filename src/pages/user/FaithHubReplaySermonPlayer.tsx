@@ -122,7 +122,7 @@ export default function FaithHubReplaySermonPlayer() {
           className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-[24px] border border-slate-200/80 bg-white/90 px-4 py-3.5 shadow-sm backdrop-blur"
         >
           <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-500/20">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-sm shadow-emerald-500/20">
               <PlayCircle className="h-5 w-5" />
             </div>
             <div className="min-w-0">
@@ -155,7 +155,7 @@ export default function FaithHubReplaySermonPlayer() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Replay-first learning</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chapters, transcript, notes, downloads</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Chapters, transcript, notes, downloads</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.62fr_0.38fr]">
@@ -391,7 +391,7 @@ export default function FaithHubReplaySermonPlayer() {
                 </div>
                 {!premiumUnlocked ? (
                   <div className="rounded-[28px] border border-dashed border-[#f77f00]/25 bg-white p-6 text-center">
-                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-white">
+                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-slate-700">
                       <FileText className="h-6 w-6" />
                     </div>
                     <div className="mb-2 text-lg font-semibold text-slate-900">Premium replay extensions</div>

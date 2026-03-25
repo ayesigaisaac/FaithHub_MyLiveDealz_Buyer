@@ -133,7 +133,7 @@ export default function FaithHubEpisodeDetail() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Episode experience</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Replay + notes + chapters</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Replay + notes + chapters</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
@@ -212,7 +212,7 @@ export default function FaithHubEpisodeDetail() {
                   {attachments.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <div key={item.title} className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10">
+                      <div key={item.title} className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-sm">
                         <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700">
                           <Icon className="h-5 w-5" />
                         </div>
@@ -236,7 +236,7 @@ export default function FaithHubEpisodeDetail() {
                 />
                 <div className="space-y-3">
                   {relatedSessions.map((item) => (
-                    <div key={item.title} className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10">
+                    <div key={item.title} className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-sm">
                       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div className="min-w-0 flex-1">
                           <div className="mb-1 text-base font-semibold text-slate-900">{item.title}</div>

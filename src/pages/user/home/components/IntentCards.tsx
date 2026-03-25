@@ -35,7 +35,7 @@ export default function IntentCards({
               <div
                 className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${
                   active
-                    ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20"
+                    ? "bg-emerald-500 text-white shadow-sm shadow-emerald-500/20"
                     : "bg-[#03cd8c]/10 text-emerald-600"
                 }`}
               >

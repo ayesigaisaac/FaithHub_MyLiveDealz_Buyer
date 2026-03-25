@@ -124,7 +124,7 @@ export default function FaithHubSettings() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Language, privacy, notifications, downloads</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Per-segment controls + parental tools</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Per-segment controls + parental tools</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">
@@ -194,7 +194,7 @@ export default function FaithHubSettings() {
                           onClick={() => setLanguage(item)}
                           className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                             language === item
-                              ? 'border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20'
+                              ? 'border-slate-200 bg-white text-slate-900 shadow-sm'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]'
                           }`}
                         >
@@ -211,7 +211,7 @@ export default function FaithHubSettings() {
                           onClick={() => setDownloadMode(item)}
                           className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                             downloadMode === item
-                              ? 'border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20'
+                              ? 'border-slate-200 bg-white text-slate-900 shadow-sm'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]'
                           }`}
                         >

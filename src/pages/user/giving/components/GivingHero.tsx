@@ -20,7 +20,7 @@ export default function GivingHero({ offlineMode, onToggleOfflineMode }: GivingH
             <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">
               Giving + receipts + supporter tiers
             </Badge>
-            <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">
+            <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">
               One-time, recurring, and transparent funds
             </Badge>
           </div>

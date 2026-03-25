@@ -259,7 +259,7 @@ export default function FaithHubSubscriptionsMembership() {
                     <button
                       key={plan.id}
                       onClick={() => setSelectedPlan(plan.id)}
-                      className={`rounded-[24px] border p-4 text-left shadow-sm ${selectedPlan === plan.id ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10" : plan.tone}`}
+                      className={`rounded-[24px] border p-4 text-left shadow-sm ${selectedPlan === plan.id ? "border-slate-200 bg-white shadow-sm" : plan.tone}`}
                     >
                       <div className="mb-2 flex items-center gap-2">
                         <div className="text-base font-semibold text-slate-900">{plan.name}</div>

@@ -158,7 +158,7 @@ function SidebarPanel({
                           compactHeight ? "h-9" : "h-10"
                         } ${
                           active
-                            ? "border-transparent bg-zinc-900 text-white shadow-sm"
+                            ? "border-zinc-200 bg-white text-zinc-900 shadow-sm"
                             : "border-zinc-200/80 bg-white text-zinc-700 hover:bg-zinc-50"
                         }`}
                       >
@@ -167,7 +167,7 @@ function SidebarPanel({
                           tone={active ? "dark" : "neutral"}
                           className={
                             active
-                              ? "border-white/15 bg-white/15 text-white shadow-none"
+                              ? "border-slate-300 bg-slate-100 text-slate-700 shadow-none"
                               : "border-zinc-200 bg-zinc-100 text-zinc-700"
                           }
                         >
@@ -228,12 +228,12 @@ function SidebarRail({
                 onClick={() => onNavigate(targetPath)}
                 className={`group relative inline-flex h-10 w-10 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
                   active
-                    ? "border-transparent bg-zinc-900 text-white shadow-sm"
+                    ? "border-zinc-200 bg-white text-zinc-900 shadow-sm"
                     : "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
                 }`}
               >
                 <section.icon className="h-4 w-4" />
-                <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-zinc-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-lg transition duration-200 ease-out group-hover:opacity-100 group-focus-visible:opacity-100">
+                <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-zinc-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition duration-200 ease-out group-hover:opacity-100 group-focus-visible:opacity-100">
                   {section.label}
                 </span>
               </button>

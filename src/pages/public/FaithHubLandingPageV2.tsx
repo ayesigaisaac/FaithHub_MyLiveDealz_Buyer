@@ -913,7 +913,7 @@ export default function FaithHubLandingPageV2() {
                             <div className="flex items-start gap-3">
                               <span
                                 className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                                  active ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600"
+                                  active ? "border border-slate-300 bg-white text-slate-800 shadow-sm" : "bg-slate-100 text-slate-600"
                                 }`}
                               >
                                 <role.icon className="h-5 w-5" />
@@ -1409,7 +1409,7 @@ export default function FaithHubLandingPageV2() {
                         onClick={() => setActiveDevice(item.key)}
                         className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${
                           activeDevice === item.key
-                            ? "bg-slate-900 text-white"
+                            ? "bg-white border border-slate-200 text-slate-900 shadow-sm"
                             : "border border-slate-200 bg-[color:var(--card)] text-slate-600"
                         }`}
                       >
@@ -1548,7 +1548,7 @@ function LandingSidebarPanel({
                         onClick={() => (entry.target ? onAction(entry.target) : undefined)}
                         className={`w-full rounded-lg border px-2.5 py-2 text-left transition ${
                           entry.highlighted
-                            ? "border-slate-300 bg-slate-900 text-white"
+                            ? "border-slate-200 bg-white text-slate-900 shadow-sm"
                             : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)]"
                         }`}
                       >

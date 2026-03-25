@@ -57,7 +57,7 @@ function LanguageChip({ active, label, onClick }) {
       onClick={onClick}
       className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
         active
-          ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/25"
+          ? "border-slate-200 bg-white text-slate-900 shadow-sm"
           : "border-white/30 bg-white/70 text-slate-700 hover:border-[#03cd8c]/40 hover:bg-white"
       }`}
     >
@@ -133,7 +133,7 @@ export default function FaithHubEntry() {
                   <Badge className="rounded-full bg-white/90 px-3 py-1 text-[#03cd8c] hover:bg-white">
                     First-run entry experience
                   </Badge>
-                  <Badge className="rounded-full bg-slate-900/85 px-3 py-1 text-white hover:bg-slate-900">
+                  <Badge className="rounded-full bg-slate-100 px-3 py-1 text-slate-700 hover:bg-slate-100">
                     No paywall at entry
                   </Badge>
                 </div>
@@ -175,7 +175,7 @@ export default function FaithHubEntry() {
                     </div>
 
                     <div className="space-y-4">
-                      <Button className="h-14 w-full justify-between rounded-2xl bg-[#03cd8c] px-5 text-base shadow-lg shadow-[#03cd8c]/25 hover:bg-[#02b67c]">
+                      <Button className="h-14 w-full justify-between rounded-2xl bg-[#03cd8c] px-5 text-base shadow-sm shadow-[#03cd8c]/25 hover:bg-[#02b67c]">
                         Continue with EVzone account
                         <ArrowRight className="h-5 w-5" />
                       </Button>
@@ -244,7 +244,7 @@ export default function FaithHubEntry() {
                 </Card>
 
                 <div className="flex flex-col gap-4">
-                  <Card className="fh-interactive-card rounded-[28px] border-white/70 bg-slate-950/90 text-white shadow-xl shadow-black/15">
+                  <Card className="fh-interactive-card rounded-[28px] border-white/70 bg-slate-950/90 text-white shadow-sm">
                     <CardContent className="fh-pad-panel">
                       <div className="mb-4 flex items-start justify-between gap-3">
                         <div>
@@ -350,7 +350,7 @@ export default function FaithHubEntry() {
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.18 + index * 0.06, duration: 0.35 }}
-                        className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-lg hover:shadow-[#03cd8c]/10"
+                        className="fh-subcard rounded-[24px] p-4 transition hover:-translate-y-0.5 hover:border-[#03cd8c]/35 hover:shadow-sm"
                       >
                         <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-100 text-slate-700">
                           <Icon className="h-5 w-5" />
@@ -364,7 +364,7 @@ export default function FaithHubEntry() {
               </CardContent>
             </Card>
 
-            <Card className="fh-interactive-card rounded-[32px] border border-white/60 bg-slate-900 text-white shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)]">
+            <Card className="fh-interactive-card rounded-[32px] border border-white/60 bg-slate-100 text-slate-700 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.55)]">
               <CardContent className="fh-pad-panel">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <div>

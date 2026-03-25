@@ -31,7 +31,7 @@ export default function FundSelector({
               onClick={() => onSelectFund(fund.id)}
               className={`rounded-[24px] border p-4 text-left transition ${
                 selectedFundId === fund.id
-                  ? "border-[#03cd8c] bg-[#ecfff8] shadow-lg shadow-[#03cd8c]/10"
+                  ? "border-slate-200 bg-white shadow-sm"
                   : "border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
               }`}
             >

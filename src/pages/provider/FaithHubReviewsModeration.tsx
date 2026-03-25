@@ -158,7 +158,7 @@ export default function FaithHubReviewsModeration() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Review response and trust operations</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Brigade defense, toxicity assist, appeals</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Brigade defense, toxicity assist, appeals</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
@@ -208,7 +208,7 @@ export default function FaithHubReviewsModeration() {
                     <button
                       key={tab.key}
                       onClick={() => setSelectedTab(tab.key)}
-                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${selectedTab === tab.key ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20" : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
+                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${selectedTab === tab.key ? "border-slate-200 bg-white text-slate-900 shadow-sm" : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"}`}
                     >
                       {tab.label}
                     </button>

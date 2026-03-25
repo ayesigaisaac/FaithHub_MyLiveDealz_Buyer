@@ -27,7 +27,7 @@ export default function EventsHero({
             <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">
               Camps, trips, baptisms, and conferences
             </Badge>
-            <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">
+            <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">
               Calendar + map + RSVP
             </Badge>
           </div>

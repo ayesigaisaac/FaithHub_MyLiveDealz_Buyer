@@ -188,7 +188,7 @@ export default function FaithHubEpisodeBuilder() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Episode setup and publishing</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">AI suggestions, resources, gating, live links</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">AI suggestions, resources, gating, live links</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
@@ -249,7 +249,7 @@ export default function FaithHubEpisodeBuilder() {
                               <div className="text-sm font-semibold text-slate-900">{item.title}</div>
                               <div className="text-xs text-slate-500">{item.type}</div>
                             </div>
-                            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.gated ? "bg-slate-900 text-white" : "bg-[#ecfff8] text-[#03cd8c]"}`}>
+                            <span className={`rounded-full px-3 py-1 text-xs font-semibold ${item.gated ? "bg-slate-100 text-slate-700" : "bg-[#ecfff8] text-[#03cd8c]"}`}>
                               {item.gated ? "Premium" : "Open"}
                             </span>
                           </div>

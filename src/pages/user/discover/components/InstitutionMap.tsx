@@ -24,7 +24,7 @@ export default function InstitutionMap({ institutions }: InstitutionMapProps) {
           >
             <div className="group relative">
               <div
-                className={`flex h-11 w-11 items-center justify-center rounded-full border-4 border-white shadow-lg ${
+                className={`flex h-11 w-11 items-center justify-center rounded-full border-4 border-white shadow-sm ${
                   institution.sponsored
                     ? "bg-[#f77f00]"
                     : institution.verified

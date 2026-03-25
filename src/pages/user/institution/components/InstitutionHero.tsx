@@ -20,7 +20,7 @@ export default function InstitutionHero({ following, onToggleFollow }: Instituti
             <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">
               Verified institution
             </Badge>
-            <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">
+            <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">
               Live + series + events + giving
             </Badge>
           </div>

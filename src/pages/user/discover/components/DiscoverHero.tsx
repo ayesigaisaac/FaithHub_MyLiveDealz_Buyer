@@ -34,7 +34,7 @@ export default function DiscoverHero({
             <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">
               Discover institutions with confidence
             </Badge>
-            <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">
+            <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">
               {resultCount} results
             </Badge>
           </div>

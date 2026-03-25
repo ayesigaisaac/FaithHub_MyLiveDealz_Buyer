@@ -117,7 +117,7 @@ export default function FaithHubPaymentsDonationsDisputes() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Financial oversight command</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Reconciliation, refunds, payouts, disputes, risk</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Reconciliation, refunds, payouts, disputes, risk</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
                     <div className="space-y-4">
@@ -247,7 +247,7 @@ export default function FaithHubPaymentsDonationsDisputes() {
                       <div key={rail.rail} className="fh-subcard-warm rounded-[24px] p-4 shadow-sm">
                         <div className="mb-1 flex items-center justify-between gap-2">
                           <div className="text-sm font-semibold text-slate-900">{rail.rail}</div>
-                          <span className={`rounded-full px-3 py-1 text-xs font-semibold ${rail.state === "Active" ? "bg-[#ecfff8] text-[#03cd8c]" : rail.state === "Premium" ? "bg-slate-900 text-white" : "bg-[#fff8ef] text-[#f77f00]"}`}>
+                          <span className={`rounded-full px-3 py-1 text-xs font-semibold ${rail.state === "Active" ? "bg-[#ecfff8] text-[#03cd8c]" : rail.state === "Premium" ? "bg-slate-100 text-slate-700" : "bg-[#fff8ef] text-[#f77f00]"}`}>
                             {rail.state}
                           </span>
                         </div>

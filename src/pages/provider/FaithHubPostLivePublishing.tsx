@@ -108,7 +108,7 @@ export default function FaithHubPostLivePublishing() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Replay and clip publishing</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Chapters, transcripts, highlights, reposts</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Chapters, transcripts, highlights, reposts</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">

@@ -182,7 +182,7 @@ export default function FaithHubSeriesBuilder() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Builder and publishing flow</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Templates, artwork, localization, premium options</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Templates, artwork, localization, premium options</Badge>
                   </div>
                   <div className="grid gap-5 lg:grid-cols-[0.64fr_0.36fr]">
                     <div className="space-y-4">
@@ -239,7 +239,7 @@ export default function FaithHubSeriesBuilder() {
                             onClick={() => toggleAudience(audience)}
                             className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                               selectedAudience.includes(audience)
-                                ? "border-[#03cd8c] bg-[#03cd8c] text-white shadow-lg shadow-[#03cd8c]/20"
+                                ? "border-slate-200 bg-white text-slate-900 shadow-sm"
                                 : "border-slate-200 bg-white text-slate-700 hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
                             }`}
                           >
@@ -255,7 +255,7 @@ export default function FaithHubSeriesBuilder() {
                       <div className="flex flex-wrap gap-2">
                         <button
                           onClick={() => setPaidSeries((prev) => !prev)}
-                          className={`rounded-full border px-4 py-2 text-sm font-medium transition ${paidSeries ? "border-[#03cd8c] bg-[#03cd8c] text-white" : "border-slate-200 bg-white text-slate-700"}`}
+                          className={`rounded-full border px-4 py-2 text-sm font-medium transition ${paidSeries ? "border-slate-200 bg-white text-slate-900" : "border-slate-200 bg-white text-slate-700"}`}
                         >
                           {paidSeries ? "Paid / premium series" : "Free series"}
                         </button>
@@ -319,13 +319,13 @@ export default function FaithHubSeriesBuilder() {
                     <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => setMultilingual((prev) => !prev)}
-                        className={`rounded-full border px-4 py-2 text-sm font-medium transition ${multilingual ? "border-[#03cd8c] bg-[#03cd8c] text-white" : "border-slate-200 bg-white text-slate-700"}`}
+                        className={`rounded-full border px-4 py-2 text-sm font-medium transition ${multilingual ? "border-slate-200 bg-white text-slate-900" : "border-slate-200 bg-white text-slate-700"}`}
                       >
                         <Languages className="mr-2 inline h-4 w-4" /> {multilingual ? "Multi-language enabled" : "Enable multi-language"}
                       </button>
                       <button
                         onClick={() => setLocalizedLandingPages((prev) => !prev)}
-                        className={`rounded-full border px-4 py-2 text-sm font-medium transition ${localizedLandingPages ? "border-[#03cd8c] bg-[#03cd8c] text-white" : "border-slate-200 bg-white text-slate-700"}`}
+                        className={`rounded-full border px-4 py-2 text-sm font-medium transition ${localizedLandingPages ? "border-slate-200 bg-white text-slate-900" : "border-slate-200 bg-white text-slate-700"}`}
                       >
                         <MonitorSmartphone className="mr-2 inline h-4 w-4" /> {localizedLandingPages ? "Localized landing pages on" : "Enable localized pages"}
                       </button>

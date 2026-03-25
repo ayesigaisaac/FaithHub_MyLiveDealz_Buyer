@@ -99,7 +99,7 @@ export default function DiscoverInstitutions() {
                     type="button"
                     onClick={() => setViewMode("list")}
                     className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      viewMode === "list" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      viewMode === "list" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     List
@@ -108,7 +108,7 @@ export default function DiscoverInstitutions() {
                     type="button"
                     onClick={() => setViewMode("map")}
                     className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      viewMode === "map" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      viewMode === "map" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     Map

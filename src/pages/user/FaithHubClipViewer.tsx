@@ -96,7 +96,7 @@ export default function FaithHubClipViewer() {
                 <div className="relative z-10 text-white">
                   <div className="mb-5 flex flex-wrap items-center gap-2">
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Short-form clip experience</Badge>
-                    <Badge className="rounded-full bg-slate-900/85 text-white hover:bg-slate-900">Share, report, return to replay</Badge>
+                    <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Share, report, return to replay</Badge>
                   </div>
 
                   <div className="grid gap-5 lg:grid-cols-[0.66fr_0.34fr]">

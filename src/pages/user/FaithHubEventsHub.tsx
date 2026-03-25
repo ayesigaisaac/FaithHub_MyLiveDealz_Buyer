@@ -145,7 +145,7 @@ export default function FaithHubEventsHub() {
                     type="button"
                     onClick={() => setShowMap(false)}
                     className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      !showMap ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      !showMap ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     Feed
@@ -154,7 +154,7 @@ export default function FaithHubEventsHub() {
                     type="button"
                     onClick={() => setShowMap(true)}
                     className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      showMap ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+                      showMap ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
                     Map
