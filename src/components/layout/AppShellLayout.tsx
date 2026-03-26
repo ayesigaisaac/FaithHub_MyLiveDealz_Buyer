@@ -46,7 +46,7 @@ const mobileLabelByItemId: Record<string, string> = {
 const roleTriggerLabel: Record<RoleKey, string> = {
   user: "Faith Member",
   provider: "Provider Workspace",
-  admin: "Platform Admin",
+  admin: "Admin Command",
 };
 
 const alertRouteByRole: Record<RoleKey, string> = {

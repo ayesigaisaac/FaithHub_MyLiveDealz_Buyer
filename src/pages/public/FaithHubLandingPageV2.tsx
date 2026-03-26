@@ -8,6 +8,7 @@ import {
   BookOpen,
   CalendarDays,
   CheckCircle2,
+  CircleUserRound,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -100,14 +101,14 @@ const operatorRoleSections: OperatorRoleSection[] = [
 const operatorRoles: OperatorRole[] = [
   {
     id: "platform-admin",
-    label: "Platform Administrator",
-    description: "Global control, governance, and role visibility",
+    label: "Admin Command Center",
+    description: "Governance, trust, policy, and security oversight",
     section: "Platform Leadership",
     icon: ShieldCheck,
     defaultRoute: "/app/admin/overview",
     baseRole: "FaithAdmin",
     heroFocus: "Global governance and multi-module oversight",
-    viewingAs: "Platform Administrator",
+    viewingAs: "Admin Command Center",
     modules: [
       {
         id: "control",
@@ -715,6 +716,7 @@ export default function FaithHubLandingPageV2() {
   const [operatorMenuOpen, setOperatorMenuOpen] = useState(false);
   const operatorMenuRef = useRef<HTMLDivElement | null>(null);
   const operatorTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const operatorProfileTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const currentRole = useMemo(() => roleCards.find((item) => item.role === activeRole), [activeRole]);
   const currentDevice = useMemo(() => deviceTabs.find((item) => item.key === activeDevice), [activeDevice]);
@@ -758,8 +760,9 @@ export default function FaithHubLandingPageV2() {
     const handlePointerDown = (event: MouseEvent) => {
       const target = event.target as Node;
       const clickInsideMenu = operatorMenuRef.current?.contains(target);
-      const clickInsideTrigger = operatorTriggerRef.current?.contains(target);
-      if (!clickInsideMenu && !clickInsideTrigger) {
+      const clickInsidePrimaryTrigger = operatorTriggerRef.current?.contains(target);
+      const clickInsideProfileTrigger = operatorProfileTriggerRef.current?.contains(target);
+      if (!clickInsideMenu && !clickInsidePrimaryTrigger && !clickInsideProfileTrigger) {
         setOperatorMenuOpen(false);
       }
     };
@@ -857,6 +860,19 @@ export default function FaithHubLandingPageV2() {
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--accent)]" />
             </button>
             <button
+              ref={operatorProfileTriggerRef}
+              type="button"
+              title={`Switch role (${activeOperatorRole.label})`}
+              aria-label={`Switch role. Current role: ${activeOperatorRole.label}`}
+              aria-expanded={operatorMenuOpen}
+              onClick={() => setOperatorMenuOpen((prev) => !prev)}
+              className={`fh-shell-control inline-flex h-11 w-11 items-center justify-center rounded-2xl text-slate-700 transition ${
+                operatorMenuOpen ? "ring-2 ring-emerald-200" : ""
+              }`}
+            >
+              <CircleUserRound className="h-5 w-5" />
+            </button>
+            <button
               type="button"
               aria-label="Open quick navigation"
               onClick={() => setMobileNavOpen((prev) => !prev)}
@@ -877,10 +893,13 @@ export default function FaithHubLandingPageV2() {
             />
             <div
               ref={operatorMenuRef}
-              className="fixed inset-x-3 top-[88px] z-50 max-h-[76vh] overflow-hidden rounded-[24px] border border-[var(--border)] bg-[color:var(--card)] shadow-[0_26px_70px_rgba(15,23,42,0.35)] sm:inset-x-auto sm:right-5 sm:top-[74px] sm:w-[460px]"
+              className="fixed inset-x-3 top-[88px] z-50 max-h-[78vh] overflow-hidden rounded-[24px] border border-[var(--border)] bg-[color:var(--card)] shadow-[0_28px_80px_rgba(15,23,42,0.36)] sm:inset-x-auto sm:right-5 sm:top-[74px] sm:w-[490px]"
             >
               <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
-                <div className="text-xl font-semibold text-slate-900">Switch role</div>
+                <div>
+                  <div className="text-xl font-semibold text-slate-900">Switch role</div>
+                  <div className="text-sm text-slate-500">Choose your workspace</div>
+                </div>
                 <button
                   type="button"
                   aria-label="Close role switcher"
@@ -891,10 +910,23 @@ export default function FaithHubLandingPageV2() {
                 </button>
               </div>
 
-              <div className="fh-scroll-region max-h-[calc(76vh-122px)] space-y-4 overflow-y-auto px-3 py-3">
+              <div className="border-b border-[var(--border)] bg-[color:var(--surface)]/70 px-4 py-3">
+                <div className="flex items-start gap-3">
+                  <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700">
+                    <activeOperatorRole.icon className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Current role</span>
+                    <span className="mt-0.5 block text-lg font-semibold leading-tight text-slate-900">{activeOperatorRole.label}</span>
+                    <span className="mt-1 block text-sm text-slate-600">{activeOperatorRole.description}</span>
+                  </span>
+                </div>
+              </div>
+
+              <div className="fh-scroll-region max-h-[calc(78vh-228px)] space-y-4 overflow-y-auto px-3 py-3">
                 {roleSwitcherGroups.map((group) => (
                   <div key={group.section}>
-                    <div className="px-1 fh-label text-slate-500">{group.section}</div>
+                    <div className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">{group.section}</div>
                     <div className="mt-2 space-y-2">
                       {group.roles.map((role) => {
                         const active = role.id === activeOperatorRole.id;
@@ -906,25 +938,26 @@ export default function FaithHubLandingPageV2() {
                             onClick={() => handleOperatorRoleSelect(role.id)}
                             className={`w-full rounded-2xl border px-3 py-3 text-left transition ${
                               active
-                                ? "border-slate-300 bg-slate-100"
+                                ? "border-emerald-200 bg-emerald-50/60"
                                 : "border-[var(--border)] bg-[color:var(--surface)] hover:-translate-y-[1px] hover:border-slate-300 hover:bg-slate-50"
                             }`}
                           >
                             <div className="flex items-start gap-3">
                               <span
                                 className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                                  active ? "border border-slate-300 bg-white text-slate-800 shadow-sm" : "bg-slate-100 text-slate-600"
+                                  active ? "border border-emerald-200 bg-white text-emerald-700 shadow-sm" : "bg-slate-100 text-slate-600"
                                 }`}
                               >
                                 <role.icon className="h-5 w-5" />
                               </span>
                               <span className="min-w-0 flex-1">
-                                <span className="block text-xl font-semibold leading-[1.2] text-slate-900">
-                                  Switch to {role.label}
-                                </span>
+                                <span className="block text-lg font-semibold leading-[1.2] text-slate-900">{role.label}</span>
                                 <span className="mt-0.5 block text-sm text-slate-600">{role.description}</span>
+                                <span className="mt-2 inline-flex rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-[11px] font-semibold text-slate-600">
+                                  Base role: {role.baseRole}
+                                </span>
                               </span>
-                              {active ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-slate-700" /> : null}
+                              {active ? <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700" /> : null}
                             </div>
                           </button>
                         );
@@ -941,7 +974,7 @@ export default function FaithHubLandingPageV2() {
                     setOperatorMenuOpen(false);
                     navigate("/app/admin/overview");
                   }}
-                  className="inline-flex w-full items-center justify-center rounded-2xl border border-[var(--border)] bg-[color:var(--surface)] px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 hover:text-slate-900"
+                  className="inline-flex w-full items-center justify-center rounded-2xl border border-[var(--border)] bg-[color:var(--surface)] px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
                 >
                   Manage roles & permissions
                 </button>

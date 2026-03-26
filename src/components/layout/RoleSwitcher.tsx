@@ -79,7 +79,7 @@ const roleSwitcherGroups: RoleSwitchGroup[] = [
       {
         id: "admin-overview",
         role: "admin",
-        title: "Switch to Platform Admin",
+        title: "Switch to Admin Command Center",
         subtitle: "Governance, trust, policy, and security",
         targetPath: "/app/admin/overview",
         matchPrefix: "/app/admin",
