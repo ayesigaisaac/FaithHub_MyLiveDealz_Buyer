@@ -143,7 +143,7 @@ function SidebarPanel({
                   >
                     <section.icon className="h-[1.08rem] w-[1.08rem]" />
                   </AppIcon>
-                  <span className="truncate text-[1.05rem] font-semibold uppercase tracking-[0.12em] text-[var(--fh-nav-muted)]">
+                  <span className="text-[1.05rem] font-semibold uppercase tracking-[0.12em] text-[var(--fh-nav-muted)]">
                     {section.label}
                   </span>
                 </span>
@@ -176,7 +176,7 @@ function SidebarPanel({
                             : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)] hover:bg-[color:var(--fh-nav-item-hover)]"
                         }`}
                       >
-                        <div className={`truncate font-semibold ${compactHeight ? "text-[1rem]" : "text-[1.04rem]"}`}>
+                        <div className={`break-words font-semibold leading-snug ${compactHeight ? "text-[1rem]" : "text-[1.04rem]"}`}>
                           {item.label}
                         </div>
                         {item.subtitle ? (

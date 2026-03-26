@@ -210,6 +210,7 @@ h3,
 h4 {
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 p,
@@ -254,6 +255,36 @@ a,
 
 :where(.fh-page-canvas) :where(button, .MuiButton-root) {
   max-width: 100%;
+}
+
+/* Keep long words readable and stop card/text clipping in complex grid layouts. */
+.fh-app-content :is(.grid, .flex) > * {
+  min-width: 0;
+}
+
+.fh-app-content :is(h1, h2, h3, h4, p, li, td, th, .fh-body, .fh-section-subtitle) {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Make buttons easy to read and clearly interactive across all pages. */
+.fh-app-content :is(button, .MuiButton-root, [role="button"]) {
+  line-height: 1.3;
+}
+
+.fh-app-content :is(button, .MuiButton-root):not([aria-label]) {
+  white-space: normal;
+  text-wrap: pretty;
+}
+
+.fh-app-content :is(button, .MuiButton-root):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-soft), 0 0 0 4px rgba(255, 255, 255, 0.92);
+}
+
+.fh-app-content :is(button, .MuiButton-root):disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
 }
 
 /* Shared spacing and typography utilities for premium visual consistency */

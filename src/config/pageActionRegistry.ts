@@ -1,4 +1,10 @@
-import { defaultPageForRole, pageRegistry, type RoleKey } from "@/config/pageRegistry";
+import {
+  defaultPageForRole,
+  pageRegistry,
+  pagesByRole,
+  type PageRegistryItem,
+  type RoleKey,
+} from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
 
 const rawExactPageActions: Record<string, Record<string, string>> = {
@@ -72,6 +78,7 @@ const rawExactPageActions: Record<string, Record<string, string>> = {
   },
   "/app/user/live/waiting-room": {
     "enter live": "/app/user/live/player",
+    "enter session": "/app/user/live/player",
     "open chat": "/app/user/live/chat",
   },
   "/app/user/live/player": {
@@ -91,6 +98,7 @@ const rawExactPageActions: Record<string, Record<string, string>> = {
   "/app/user/events/detail": {
     "reserve seat": "/app/user/giving",
     "give now": "/app/user/giving",
+    "buy in faithmart": "/app/user/giving",
     "open institution": "/app/user/institution",
   },
   "/app/user/giving": {
@@ -175,11 +183,15 @@ const rawExactPageActions: Record<string, Record<string, string>> = {
   "/app/provider/reviews-moderation": {
     "open trust queue": "/app/provider/reviews-moderation",
     "open case": "/app/provider/dashboard",
+    respond: "/app/provider/reviews-moderation",
   },
   "/app/admin/overview": {
     "open incident desk": "/app/admin/live-moderation",
+    "open messages": "/app/admin/live-moderation",
     "open live ops": "/app/provider/live-ops",
     "open security": "/app/admin/security",
+    "open user app": "/app/user/home",
+    "open provider app": "/app/provider/dashboard",
     "moderation console": "/app/admin/live-moderation",
     "verification queue": "/app/admin/verification",
     "provider operations": "/app/provider/live-ops",
@@ -236,6 +248,12 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "open attachment": "/app/user/replay",
     "open cta": "/app/user/institution",
     "open event pass": "/app/user/events/detail",
+    "open ticket": "/app/user/events/detail",
+    "open messages": "/app/user/live/chat",
+    reply: "/app/user/live/chat",
+    report: "/app/user/reviews",
+    block: "/app/user/reviews",
+    "buy in faithmart": "/app/user/giving",
     rsvp: "/app/user/events/detail",
     "set reminder": "/app/user/events",
     "continue giving": "/app/user/giving",
@@ -261,6 +279,8 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "trust queue": "/app/provider/reviews-moderation",
     "view queue": "/app/provider/reviews-moderation",
     "go live": "/app/provider/live-studio",
+    "save draft": "/app/provider/dashboard",
+    "open queue": "/app/provider/reviews-moderation",
   },
   admin: {
     "open incident desk": "/app/admin/live-moderation",
@@ -275,6 +295,7 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "manage badge": "/app/admin/policy",
     approve: "/app/admin/verification",
     escalate: "/app/admin/live-moderation",
+    "open messages": "/app/admin/live-moderation",
   },
 };
 
@@ -467,6 +488,202 @@ const knownActionTargets = new Set<string>([
   ...pageRegistry.map((page) => page.path),
 ]);
 
+const navigationIntentWords = new Set([
+  "open",
+  "view",
+  "go",
+  "goto",
+  "launch",
+  "visit",
+  "switch",
+  "join",
+  "watch",
+  "continue",
+  "back",
+  "return",
+  "manage",
+  "explore",
+  "enter",
+  "browse",
+]);
+
+const nonNavigationIntentWords = new Set([
+  "save",
+  "submit",
+  "approve",
+  "reject",
+  "block",
+  "report",
+  "cancel",
+  "retry",
+  "refresh",
+  "download",
+  "upload",
+  "copy",
+  "delete",
+  "remove",
+  "mute",
+  "unmute",
+  "enable",
+  "disable",
+  "toggle",
+  "start",
+  "stop",
+]);
+
+const helperTokens = new Set([
+  "now",
+  "all",
+  "my",
+  "to",
+  "the",
+  "and",
+  "your",
+  "app",
+  "page",
+  "pages",
+  "module",
+  "modules",
+  "queue",
+]);
+
+const directNavKeywords = new Set([
+  "home",
+  "account",
+  "discover",
+  "series",
+  "live",
+  "events",
+  "community",
+  "finance",
+  "funds",
+  "settings",
+  "security",
+  "dashboard",
+  "notifications",
+  "contacts",
+  "channels",
+  "policy",
+  "verification",
+]);
+
+const roleKeywordFallbackPath: Record<RoleKey, Record<string, string>> = {
+  user: {
+    home: routes.app.user.home,
+    account: routes.app.user.entry,
+    discover: routes.app.user.discover,
+    series: routes.app.user.series,
+    live: routes.app.user.liveHub,
+    events: routes.app.user.events,
+    community: routes.app.user.events,
+    finance: routes.app.user.giving,
+    funds: routes.app.user.giving,
+    settings: routes.app.user.settings,
+    security: routes.app.user.settings,
+    membership: routes.app.user.membership,
+  },
+  provider: {
+    home: routes.app.provider.dashboard,
+    dashboard: routes.app.provider.dashboard,
+    account: routes.app.provider.onboarding,
+    series: routes.app.provider.seriesBuilder,
+    live: routes.app.provider.liveOps,
+    events: routes.app.provider.events,
+    community: routes.app.provider.contacts,
+    finance: routes.app.provider.funds,
+    funds: routes.app.provider.funds,
+    settings: routes.app.provider.dashboard,
+    security: routes.app.provider.reviewsModeration,
+    notifications: routes.app.provider.notifications,
+    contacts: routes.app.provider.contacts,
+  },
+  admin: {
+    home: routes.app.admin.overview,
+    dashboard: routes.app.admin.overview,
+    discover: routes.app.user.discover,
+    live: routes.app.admin.liveModeration,
+    events: routes.app.admin.liveModeration,
+    community: routes.app.admin.overview,
+    finance: routes.app.admin.finance,
+    funds: routes.app.admin.finance,
+    settings: routes.app.admin.security,
+    security: routes.app.admin.security,
+    channels: routes.app.admin.channels,
+    policy: routes.app.admin.policy,
+    verification: routes.app.admin.verification,
+  },
+};
+
+function tokenizeNormalized(value: string) {
+  return normalizeLabel(value).split(" ").filter(Boolean);
+}
+
+function isLikelyNavigationIntent(normalizedLabel: string) {
+  const tokens = normalizedLabel.split(" ").filter(Boolean);
+  if (!tokens.length) return false;
+  if (tokens.some((token) => nonNavigationIntentWords.has(token))) return false;
+  if (tokens.some((token) => navigationIntentWords.has(token))) return true;
+  return tokens.some((token) => {
+    if (helperTokens.has(token)) return false;
+    return directNavKeywords.has(token);
+  });
+}
+
+function scorePageAgainstTokens(page: PageRegistryItem, labelTokens: string[], normalizedLabel: string) {
+  const label = normalizeLabel(page.label);
+  const navTag = normalizeLabel(page.navTag);
+  const section = normalizeLabel(page.section);
+  const pathTail = normalizeLabel((page.path.split("/").pop() || "").replace(/-/g, " "));
+
+  let score = 0;
+
+  if (label && normalizedLabel.includes(label)) score += 9;
+  if (navTag && normalizedLabel.includes(navTag)) score += 7;
+  if (pathTail && normalizedLabel.includes(pathTail)) score += 5;
+  if (section && normalizedLabel.includes(section)) score += 3;
+
+  const keywordTokens = new Set([...tokenizeNormalized(page.label), ...tokenizeNormalized(page.navTag), ...tokenizeNormalized(page.section), ...tokenizeNormalized(pathTail)]);
+
+  for (const token of labelTokens) {
+    if (helperTokens.has(token) || navigationIntentWords.has(token)) continue;
+    if (keywordTokens.has(token)) score += 2;
+  }
+
+  return score;
+}
+
+function resolveHeuristicPageTarget(pathname: string, normalizedLabel: string) {
+  if (!isLikelyNavigationIntent(normalizedLabel)) return null;
+
+  const role = getRoleFromPath(pathname);
+  const candidates = pagesByRole[role] || [];
+  const labelTokens = normalizedLabel.split(" ").filter(Boolean);
+
+  for (const token of labelTokens) {
+    const mapped = roleKeywordFallbackPath[role]?.[token];
+    if (mapped) return mapped;
+  }
+
+  let best: { path: string; score: number } | null = null;
+  let tie = false;
+
+  for (const page of candidates) {
+    const score = scorePageAgainstTokens(page, labelTokens, normalizedLabel);
+    if (score <= 0) continue;
+    if (!best || score > best.score) {
+      best = { path: page.path, score };
+      tie = false;
+      continue;
+    }
+    if (best && score === best.score && page.path !== best.path) {
+      tie = true;
+    }
+  }
+
+  if (!best || best.score < 4 || tie) return null;
+  return best.path;
+}
+
 function validateActionTargets() {
   const unknownTargets = new Set<string>();
   for (const actions of Object.values(rawExactPageActions)) {
@@ -528,5 +745,7 @@ export function resolvePageButtonAction(pathname: string, label: string, actionI
   if (exact) return exact;
   const roleLevel = roleLevelActions[getRoleFromPath(cleanPathname)]?.[normalized];
   if (roleLevel) return roleLevel;
-  return globalActionLabelTargets[normalized] || null;
+  const globalMatch = globalActionLabelTargets[normalized];
+  if (globalMatch) return globalMatch;
+  return resolveHeuristicPageTarget(cleanPathname, normalized);
 }

@@ -52,3 +52,26 @@ describe("FaithHub action-id routing", () => {
   });
 });
 
+describe("FaithHub action-label routing", () => {
+  it("resolves newly mapped labels", () => {
+    expect(resolvePageButtonAction(routes.app.user.eventDetail, "Buy in FaithMart")).toBe(
+      routes.app.user.giving,
+    );
+    expect(resolvePageButtonAction(routes.app.admin.overview, "Open User App")).toBe(
+      routes.app.user.home,
+    );
+  });
+
+  it("falls back by role keyword for navigation intent", () => {
+    expect(resolvePageButtonAction(routes.app.provider.dashboard, "Open finance page")).toBe(
+      routes.app.provider.funds,
+    );
+    expect(resolvePageButtonAction(routes.app.admin.overview, "Go to security")).toBe(
+      routes.app.admin.security,
+    );
+  });
+
+  it("does not force navigation on non-navigation labels", () => {
+    expect(resolvePageButtonAction(routes.app.user.profile, "Save profile")).toBeNull();
+  });
+});
