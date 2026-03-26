@@ -180,7 +180,7 @@ function SidebarPanel({
                           {item.label}
                         </div>
                         {item.subtitle ? (
-                          <div className="mt-0.5 text-[0.92rem] leading-snug text-[var(--fh-nav-item-sub)]">
+                          <div className="mt-0.5 truncate text-[0.92rem] font-medium leading-snug text-[var(--fh-nav-item-sub)]">
                             {item.subtitle}
                           </div>
                         ) : null}

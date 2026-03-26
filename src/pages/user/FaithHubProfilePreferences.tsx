@@ -123,8 +123,8 @@ export default function FaithHubProfilePreferences() {
   };
 
   return (
-    <div className="fh-page-canvas min-h-screen text-slate-900">
-      <div className="flex min-h-screen w-full max-w-none flex-col px-4 py-4 sm:px-6 lg:px-8">
+    <div className="fh-page-canvas min-h-0 text-slate-900">
+      <div className="flex min-h-0 w-full max-w-none flex-col gap-4">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -153,12 +153,12 @@ export default function FaithHubProfilePreferences() {
           </div>
         </motion.div>
 
-        <div className="grid flex-1 gap-4 xl:grid-cols-[1.12fr_0.88fr]">
+        <div className="grid gap-4 xl:grid-cols-12">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
-            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)]"
+            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)] xl:col-span-8"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.1),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_22%)]" />
             <div className="relative z-10 fh-pad-hero">
@@ -209,7 +209,7 @@ export default function FaithHubProfilePreferences() {
                       </Badge>
                     </div>
 
-                    <div className="grid gap-5 lg:grid-cols-[0.36fr_0.64fr]">
+                    <div className="grid gap-5 2xl:grid-cols-[0.36fr_0.64fr]">
                       <div className="rounded-[24px] border border-slate-200 bg-[#f8fafc] p-5 text-center">
                         <div className="relative mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-full bg-gradient-to-br from-[#03cd8c] to-[#20cf9c] text-white shadow-sm shadow-[#03cd8c]/20">
                           <UserCircle2 className="h-14 w-14" />
@@ -312,7 +312,7 @@ export default function FaithHubProfilePreferences() {
                       <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Safe defaults enabled</Badge>
                     </div>
 
-                    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+                    <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-3">
                       {groups.map((group) => {
                         const selected = selectedGroups.includes(group.key);
                         return (
@@ -447,7 +447,7 @@ export default function FaithHubProfilePreferences() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.4 }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 xl:col-span-4"
           >
             <Card className="fh-interactive-card overflow-hidden fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">

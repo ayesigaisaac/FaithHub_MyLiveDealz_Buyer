@@ -69,7 +69,7 @@ export default function FaithHubLiveStudio() {
   const [producerRoles, setProducerRoles] = useState(true);
 
   return (
-    <div className="fh-page-canvas min-h-screen text-slate-900">
+    <div className="fh-page-canvas min-h-0 text-slate-900">
       <div className="w-full max-w-none px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -369,6 +369,7 @@ export default function FaithHubLiveStudio() {
     </div>
   );
 }
+
 
 
 

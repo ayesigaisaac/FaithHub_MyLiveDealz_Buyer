@@ -73,23 +73,17 @@ const itemLabelMap: Partial<Record<string, string>> = {
 };
 
 const itemSubtitleMap: Partial<Record<string, string | null>> = {
-  "a-overview": null,
-  "a-policy": "Platform policy controls",
-  "a-verification": "Approval and compliance flow",
-  "a-live-mod": "Cross-network intervention control",
-  "a-security": "Evidence and compliance tracing",
-  "a-finance": "Payouts, refunds, and risk controls",
-  "a-channels": "Deliverability and sender governance",
+  "a-overview": "Command",
+  "a-policy": "Policy",
+  "a-verification": "Compliance",
+  "a-live-mod": "Moderation",
+  "a-security": "Audit",
+  "a-finance": "Payouts",
+  "a-channels": "Delivery",
 };
 
 const sectionSortOrderByRole: Partial<Record<RoleKey, string[]>> = {
   admin: ["Control", "Security", "Finance"],
-};
-
-const rolePrefixLabel: Record<RoleKey, string> = {
-  user: "User",
-  provider: "Provider",
-  admin: "Admin",
 };
 
 function getSectionLabel(role: RoleKey, section: string) {
@@ -111,12 +105,17 @@ function getSidebarItemLabel(item: Pick<PageRegistryItem, "id" | "label">) {
   return itemLabelMap[item.id] || item.label;
 }
 
-function getSidebarItemSubtitle(item: Pick<PageRegistryItem, "id" | "description">) {
+function getSingleWord(text: string) {
+  const token = text.trim().split(/\s+/)[0] || "";
+  return token.replace(/[^A-Za-z0-9-]/g, "") || "Details";
+}
+
+function getSidebarItemSubtitle(item: Pick<PageRegistryItem, "id" | "navTag">) {
   if (item.id in itemSubtitleMap) {
     const mapped = itemSubtitleMap[item.id];
     return mapped || undefined;
   }
-  return item.description;
+  return getSingleWord(item.navTag);
 }
 
 export function buildSidebarSections({
@@ -137,7 +136,7 @@ export function buildSidebarSections({
     const pageRole = adminAllAccess ? page.role : role;
     const labelBase = getSectionLabel(pageRole, page.section);
     const sectionId = adminAllAccess ? `${page.role}:${labelBase}` : labelBase;
-    const label = adminAllAccess ? `${rolePrefixLabel[page.role]} - ${labelBase}` : labelBase;
+    const label = labelBase;
 
     if (!sectionMap.has(sectionId)) {
       sectionMap.set(sectionId, {

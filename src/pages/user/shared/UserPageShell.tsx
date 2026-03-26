@@ -16,7 +16,7 @@ export default function UserPageShell({
   stickyFooter,
 }: UserPageShellProps) {
   return (
-    <div className="fh-page-canvas min-h-screen text-slate-900">
+    <div className="fh-page-canvas min-h-0 text-slate-900">
       <div
         className={`w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-5 xl:px-6 ${
           stickyFooter ? "pb-24 sm:pb-20 lg:pb-4" : ""
@@ -39,4 +39,5 @@ export default function UserPageShell({
     </div>
   );
 }
+
 

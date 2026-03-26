@@ -102,8 +102,8 @@ export default function FaithHubAuthCenter() {
   const isPasskey = method === "passkey";
 
   return (
-    <div className="fh-page-canvas min-h-screen text-slate-900">
-      <div className="flex min-h-screen w-full max-w-none flex-col px-4 py-4 sm:px-6 lg:px-8">
+    <div className="fh-page-canvas min-h-0 text-slate-900">
+      <div className="flex min-h-0 w-full max-w-none flex-col gap-4">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -132,12 +132,12 @@ export default function FaithHubAuthCenter() {
           </div>
         </motion.div>
 
-        <div className="grid flex-1 gap-4 lg:grid-cols-[1fr_0.9fr]">
+        <div className="grid gap-4 xl:grid-cols-12">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
-            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)]"
+            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-white/92 shadow-[0_24px_80px_-30px_rgba(15,23,42,0.25)] xl:col-span-8"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.1),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_20%)]" />
             <div className="relative z-10 fh-pad-hero">
@@ -157,6 +157,7 @@ export default function FaithHubAuthCenter() {
                   FH-U-002
                 </div>
                 <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">{title}</h1>
+                <p className="text-sm leading-relaxed text-slate-600 sm:text-base">{subtitle}</p>
               </div>
 
               <div className="mb-6 grid gap-3 md:grid-cols-3">
@@ -170,7 +171,7 @@ export default function FaithHubAuthCenter() {
                 ))}
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
+              <div className="grid gap-4 2xl:grid-cols-[1.12fr_0.88fr]">
                 <Card className="fh-interactive-card rounded-[28px] border-slate-200 bg-white shadow-sm">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-3">
@@ -410,7 +411,7 @@ export default function FaithHubAuthCenter() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.4 }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 xl:col-span-4"
           >
             <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#22d39f] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">

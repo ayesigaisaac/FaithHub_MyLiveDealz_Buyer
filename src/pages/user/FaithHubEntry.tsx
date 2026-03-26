@@ -88,8 +88,8 @@ export default function FaithHubEntry() {
   );
 
   return (
-    <div className="fh-page-canvas min-h-screen text-slate-900">
-      <div className="flex min-h-screen w-full max-w-none flex-col px-4 py-4 sm:px-6 lg:px-8">
+    <div className="fh-page-canvas min-h-0 text-slate-900">
+      <div className="flex min-h-0 w-full max-w-none flex-col gap-4">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -119,12 +119,12 @@ export default function FaithHubEntry() {
           </div>
         </motion.div>
 
-        <div className="grid flex-1 gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="grid gap-4 xl:grid-cols-12">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.4 }}
-            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#24d5a1] to-[#f2f2f2] p-5 shadow-[0_24px_80px_-24px_rgba(3,205,140,0.45)] sm:p-7"
+            className="relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#24d5a1] to-[#f2f2f2] p-5 shadow-[0_24px_80px_-24px_rgba(3,205,140,0.45)] sm:p-7 xl:col-span-8"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.4),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.14),transparent_22%)]" />
             <div className="relative z-10 flex h-full flex-col justify-between gap-8">
@@ -142,7 +142,7 @@ export default function FaithHubEntry() {
                   <div className="fh-kicker-wide text-white/90">
                     Welcome into FaithHub
                   </div>
-                  <h1 className="max-w-2xl text-4xl font-semibold leading-tight text-white sm:text-5xl">
+                  <h1 className="max-w-2xl text-[clamp(2.1rem,4.4vw,3.6rem)] font-semibold leading-[1.06] text-white">
                     A gentle, low-friction entry into a world-class digital faith experience.
                   </h1>
                   <p className="max-w-xl text-base leading-7 text-white/90 sm:text-lg">
@@ -159,7 +159,7 @@ export default function FaithHubEntry() {
                 </div>
               </div>
 
-              <div className="grid gap-4 xl:grid-cols-[1fr_0.95fr]">
+              <div className="grid gap-4 2xl:grid-cols-[1fr_0.95fr]">
                 <Card className="fh-interactive-card rounded-[28px] border-white/65 bg-white/88 shadow-xl shadow-black/5 backdrop-blur">
                   <CardContent className="fh-pad-panel">
                     <div className="mb-5 flex items-center justify-between gap-4">
@@ -323,7 +323,7 @@ export default function FaithHubEntry() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.4 }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 xl:col-span-4"
           >
             <Card className="fh-interactive-card overflow-hidden rounded-[32px] border border-white/60 bg-white/90 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.35)]">
               <CardContent className="p-0">

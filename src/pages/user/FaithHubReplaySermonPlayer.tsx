@@ -113,7 +113,7 @@ export default function FaithHubReplaySermonPlayer() {
   const visibleTranscript = showTranscriptOnlyMatches ? transcriptView : transcriptBlocks;
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text-primary)]">
+    <div className="min-h-0 bg-[var(--bg)] text-[var(--text-primary)]">
       <div className="w-full max-w-none px-4 py-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -459,6 +459,7 @@ function SectionHeader({ title, subtitle, action = "See all" }: SectionHeaderPro
     </div>
   );
 }
+
 
 
 
