@@ -1081,10 +1081,10 @@ export default function FaithHubLandingPageV2() {
             <div className="p-4 sm:p-5">
               <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                 <div className="min-w-0">
-                  <div className="text-xs text-slate-500">FaithHub Platform</div>
+                  <div className="text-xs text-slate-500">FaithHub Connect</div>
                   <h1 className="mt-1 text-3xl font-bold tracking-tight text-slate-900 sm:text-[2rem]">{copy.hero.title}</h1>
                   <p className="mt-2 max-w-3xl text-sm text-slate-600">
-                    FaithHub brings worship, teachings, Live Sessionz, events, giving, memberships, messaging,
+                    FaithHub Connect brings worship, teachings, Live Sessionz, events, giving, memberships, messaging,
                     marketplace experiences, trust systems, provider operations, and platform-grade governance into one
                     premium ecosystem inside the EVzone Super App.
                   </p>

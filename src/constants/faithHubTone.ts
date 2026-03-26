@@ -57,7 +57,7 @@ export const faithHubToneCopy = {
   },
   publicShell: {
     hero: {
-      title: "Welcome to FaithHub Platform",
+      title: "FaithHub Connect",
       viewingAs: "Viewing as FaithHub User",
       openMessages: "Open Messages",
     },
@@ -69,4 +69,3 @@ export const faithHubToneCopy = {
     },
   },
 } as const;
-
