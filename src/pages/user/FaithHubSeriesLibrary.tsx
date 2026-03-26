@@ -200,7 +200,7 @@ export default function FaithHubSeriesLibrary() {
               </div>
             </div>
 
-            <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[430px]">
+            <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[360px] 2xl:min-w-[430px]">
               <label className="flex min-h-[42px] items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3 text-base text-slate-500">
                 <Search className="h-4 w-4 shrink-0" />
                 <input
@@ -277,8 +277,8 @@ export default function FaithHubSeriesLibrary() {
         />
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.25fr_0.95fr_1fr]">
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
+      <div className="grid gap-4 xl:grid-cols-12">
+        <Card className="fh-interactive-card fh-surface-card rounded-2xl xl:col-span-8">
           <CardContent className="p-4 sm:p-5">
             <DashboardSectionHeader
               title="Series Results"
@@ -354,86 +354,88 @@ export default function FaithHubSeriesLibrary() {
           </CardContent>
         </Card>
 
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
-            <DashboardSectionHeader
-              title="Downloaded Assets"
-              subtitle="Continue learning while offline"
-            />
+        <div className="grid content-start gap-4 xl:col-span-4">
+          <Card className="fh-interactive-card fh-surface-card rounded-2xl">
+            <CardContent className="p-4 sm:p-5">
+              <DashboardSectionHeader
+                title="Downloaded Assets"
+                subtitle="Continue learning while offline"
+              />
 
-            <div className="space-y-2">
-              {downloadedAssets.map((item) => (
-                <div key={item} className="fh-subcard rounded-xl p-3">
-                  <div className="flex items-start gap-2">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
-                      <Download className="h-4 w-4" />
-                    </span>
-                    <div>
-                      <div className="text-base font-semibold text-slate-900">{item}</div>
-                      <div className="mt-1 text-sm text-slate-500">Offline ready - Cached successfully</div>
+              <div className="space-y-2">
+                {downloadedAssets.map((item) => (
+                  <div key={item} className="fh-subcard rounded-xl p-3">
+                    <div className="flex items-start gap-2">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#ecfff8] text-[#049e6d]">
+                        <Download className="h-4 w-4" />
+                      </span>
+                      <div>
+                        <div className="text-base font-semibold text-slate-900">{item}</div>
+                        <div className="mt-1 text-sm text-slate-500">Offline ready - Cached successfully</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <div className="mt-3 fh-subcard-muted rounded-xl p-3">
-              <div className="fh-label text-slate-400">Smart reminders</div>
-              <div className="mt-1 text-base font-semibold text-slate-900">{smartReminders ? "Enabled" : "Disabled"}</div>
-              <div className="mt-1 text-sm text-slate-500">Get nudges based on your watch progression and reading plan checkpoints.</div>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="mt-3 fh-subcard-muted rounded-xl p-3">
+                <div className="fh-label text-slate-400">Smart reminders</div>
+                <div className="mt-1 text-base font-semibold text-slate-900">{smartReminders ? "Enabled" : "Disabled"}</div>
+                <div className="mt-1 text-sm text-slate-500">Get nudges based on your watch progression and reading plan checkpoints.</div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="fh-interactive-card fh-surface-card rounded-2xl">
-          <CardContent className="p-4 sm:p-5">
-            <DashboardSectionHeader
-              title="Action Center"
-              subtitle="Fast actions for series exploration"
-              action={
-                <button
-                  type="button"
-                  aria-label="Open series settings"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
-                >
-                  <Sparkles className="h-4 w-4" />
-                </button>
-              }
-            />
+          <Card className="fh-interactive-card fh-surface-card rounded-2xl">
+            <CardContent className="p-4 sm:p-5">
+              <DashboardSectionHeader
+                title="Action Center"
+                subtitle="Fast actions for series exploration"
+                action={
+                  <button
+                    type="button"
+                    aria-label="Open series settings"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                  </button>
+                }
+              />
 
-            <div className="space-y-2">
-              <DashboardActionItem
-                title="Open featured series"
-                detail="Jump directly into the highest engagement series."
-                actionLabel="Open series"
-                tone="elevated"
-              />
-              <DashboardActionItem
-                title="Unlock premium access"
-                detail="Access deeper study paths and exclusive attachments."
-                actionLabel="Unlock premium"
-              />
-              <DashboardActionItem
-                title="View membership benefits"
-                detail="Compare premium series benefits and support options."
-                actionLabel="View benefits"
-              />
-              <DashboardActionItem
-                title="Continue watching"
-                detail="Resume where you stopped in your latest replay."
-                actionLabel="Open series"
-              />
-            </div>
+              <div className="space-y-2">
+                <DashboardActionItem
+                  title="Open featured series"
+                  detail="Jump directly into the highest engagement series."
+                  actionLabel="Open series"
+                  tone="elevated"
+                />
+                <DashboardActionItem
+                  title="Unlock premium access"
+                  detail="Access deeper study paths and exclusive attachments."
+                  actionLabel="Unlock premium"
+                />
+                <DashboardActionItem
+                  title="View membership benefits"
+                  detail="Compare premium series benefits and support options."
+                  actionLabel="View benefits"
+                />
+                <DashboardActionItem
+                  title="Continue watching"
+                  detail="Resume where you stopped in your latest replay."
+                  actionLabel="Open series"
+                />
+              </div>
 
-            <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Insight</div>
-              <div className="mt-1 text-base font-semibold text-slate-900">Series with reading plans retain more returning viewers</div>
-              <p className="mt-1 text-sm text-slate-600">
-                Enabling reminders around reading checkpoints improves replay completion.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="mt-3 fh-subcard-accent rounded-xl p-3">
+                <div className="fh-label text-emerald-700">Insight</div>
+                <div className="mt-1 text-base font-semibold text-slate-900">Series with reading plans retain more returning viewers</div>
+                <p className="mt-1 text-sm text-slate-600">
+                  Enabling reminders around reading checkpoints improves replay completion.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

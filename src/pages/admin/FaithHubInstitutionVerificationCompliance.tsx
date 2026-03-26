@@ -123,12 +123,12 @@ export default function FaithHubInstitutionVerificationCompliance() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 xl:grid-cols-[1.12fr_0.88fr]">
+        <div className="grid gap-4 xl:grid-cols-12">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.35 }}
-            className="space-y-4"
+            className="space-y-4 xl:col-span-7 2xl:col-span-8"
           >
             <Card className="fh-interactive-card relative overflow-hidden rounded-[32px] border border-white/60 bg-gradient-to-br from-[#03cd8c] via-[#20cf9c] to-[#eafcf6] shadow-[0_24px_80px_-28px_rgba(3,205,140,0.45)]">
               <CardContent className="fh-pad-hero">
@@ -138,10 +138,10 @@ export default function FaithHubInstitutionVerificationCompliance() {
                     <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">Provider approvals and compliance control</Badge>
                     <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">Badges, disputes, identity, automation</Badge>
                   </div>
-                  <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
+                  <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.72fr)]">
                     <div className="space-y-4">
                       <div className="fh-kicker text-white/90">Trust starts with provider legitimacy</div>
-                      <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                      <h1 className="text-[clamp(2.1rem,4.2vw,3.45rem)] font-semibold leading-[1.06]">
                         Approve institutions, validate administrators, resolve role disputes, and issue verified trust signals with rigor.
                       </h1>
                       <p className="max-w-2xl fh-body text-white/90 sm:text-base">
@@ -226,7 +226,7 @@ export default function FaithHubInstitutionVerificationCompliance() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.08, duration: 0.35 }}
-            className="space-y-4"
+            className="space-y-4 xl:col-span-5 2xl:col-span-4"
           >
             <Card className="fh-interactive-card fh-surface-dark rounded-[32px] text-white">
               <CardContent className="fh-pad-panel">

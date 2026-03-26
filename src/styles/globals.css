@@ -723,6 +723,11 @@ a,
   backdrop-filter: blur(14px);
 }
 
+/* App-shell decision: use only the global top header and hide per-page subheaders. */
+.fh-page-header {
+  display: none !important;
+}
+
 .fh-surface-card {
   border: 1px solid var(--fh-surface-card-border);
   background: var(--fh-surface-card-bg);
