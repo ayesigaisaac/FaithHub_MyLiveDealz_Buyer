@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronDown, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import AppIcon from "@/components/ui/app-icon";
@@ -16,7 +17,8 @@ interface SidebarProps {
   sections: SidebarSection[];
   collapsed?: boolean;
   currentPath: string;
-  onNavigate: (path: string) => void;
+  onNavigate?: (path: string) => void;
+  resolvePath?: (path: string) => string;
   onToggleCollapse?: () => void;
   compactHeight?: boolean;
 }
@@ -32,6 +34,7 @@ export default function Sidebar({
   collapsed = false,
   currentPath,
   onNavigate,
+  resolvePath,
   onToggleCollapse,
   compactHeight = false,
 }: SidebarProps) {
@@ -41,6 +44,7 @@ export default function Sidebar({
         sections={sections}
         currentPath={currentPath}
         onNavigate={onNavigate}
+        resolvePath={resolvePath}
         onToggleCollapse={onToggleCollapse}
       />
     );
@@ -52,6 +56,7 @@ export default function Sidebar({
       sections={sections}
       currentPath={currentPath}
       onNavigate={onNavigate}
+      resolvePath={resolvePath}
       onToggleCollapse={onToggleCollapse}
       compactHeight={compactHeight}
     />
@@ -63,13 +68,15 @@ function SidebarPanel({
   sections,
   currentPath,
   onNavigate,
+  resolvePath,
   onToggleCollapse,
   compactHeight,
 }: {
   role: RoleKey;
   sections: SidebarSection[];
   currentPath: string;
-  onNavigate: (path: string) => void;
+  onNavigate?: (path: string) => void;
+  resolvePath?: (path: string) => string;
   onToggleCollapse?: () => void;
   compactHeight: boolean;
 }) {
@@ -93,10 +100,10 @@ function SidebarPanel({
   };
 
   return (
-    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[24px]">
+    <Card className="fh-nav-shell-card h-full min-h-0 overflow-hidden rounded-[24px]">
       <CardContent
         className={`flex min-h-0 flex-col gap-2 overflow-hidden ${
-          compactHeight ? "max-h-[76vh] p-2" : "h-full p-2.5"
+          compactHeight ? "h-full p-2" : "h-full p-2 lg:p-2.5"
         }`}
       >
         <div className="flex items-center justify-between gap-3 px-1">
@@ -118,14 +125,18 @@ function SidebarPanel({
           ) : null}
         </div>
 
-        <div className={`fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 ${compactHeight ? "pb-1" : ""}`}>
+        <div
+          className={`fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 ${
+            compactHeight ? "pb-1" : "pb-2"
+          }`}
+        >
           {sections.map((section) => (
-            <div key={section.id} className="overflow-hidden rounded-2xl border border-zinc-200 bg-white/80">
+            <div key={section.id} className="overflow-hidden rounded-[18px] border border-zinc-200 bg-white/80">
               <button
                 type="button"
                 onClick={() => toggleSection(section.id)}
                 className={`flex w-full items-center justify-between gap-2 hover:bg-zinc-50 ${
-                  compactHeight ? "px-2 py-1.5" : "px-2.5 py-2"
+                  compactHeight ? "px-2 py-1.5" : "px-2 py-1.5 xl:px-2.5 xl:py-2"
                 }`}
               >
                 <span className="flex min-w-0 items-center gap-2">
@@ -148,14 +159,14 @@ function SidebarPanel({
                     const active = isPathActive(item.path, currentPath);
                     const ItemIcon = item.icon;
                     return (
-                      <button
-                        type="button"
+                      <Link
                         key={item.id}
+                        to={resolvePath ? resolvePath(item.path) : item.path}
                         title={item.title}
                         aria-current={active ? "page" : undefined}
-                        onClick={() => onNavigate(item.path)}
-                        className={`flex w-full items-center gap-2 rounded-2xl border px-2.5 text-left text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
-                          compactHeight ? "h-9" : "h-10"
+                        onClick={() => onNavigate?.(item.path)}
+                        className={`flex w-full items-center gap-2 rounded-2xl border px-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
+                          compactHeight ? "h-9 text-sm" : "h-9 text-[13px] xl:h-10 xl:text-sm"
                         } ${
                           active
                             ? "border-zinc-200 bg-white text-zinc-900 shadow-sm"
@@ -174,7 +185,7 @@ function SidebarPanel({
                           <ItemIcon className="h-4 w-4 shrink-0" />
                         </AppIcon>
                         <span className="min-w-0 flex-1 truncate font-semibold">{item.label}</span>
-                      </button>
+                      </Link>
                     );
                   })}
                 </div>
@@ -191,15 +202,17 @@ function SidebarRail({
   sections,
   currentPath,
   onNavigate,
+  resolvePath,
   onToggleCollapse,
 }: {
   sections: SidebarSection[];
   currentPath: string;
-  onNavigate: (path: string) => void;
+  onNavigate?: (path: string) => void;
+  resolvePath?: (path: string) => string;
   onToggleCollapse?: () => void;
 }) {
   return (
-    <Card className="fh-nav-shell-card h-full overflow-hidden rounded-[24px]">
+    <Card className="fh-nav-shell-card h-full min-h-0 overflow-hidden rounded-[24px]">
       <CardContent className="flex h-full min-h-0 flex-col items-center gap-2 p-2">
         {onToggleCollapse ? (
           <button
@@ -221,11 +234,11 @@ function SidebarRail({
             if (!targetPath) return null;
 
             return (
-              <button
+              <Link
                 key={section.id}
-                type="button"
+                to={resolvePath ? resolvePath(targetPath) : targetPath}
                 aria-label={section.label}
-                onClick={() => onNavigate(targetPath)}
+                onClick={() => onNavigate?.(targetPath)}
                 className={`group relative inline-flex h-10 w-10 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
                   active
                     ? "border-zinc-200 bg-white text-zinc-900 shadow-sm"
@@ -236,7 +249,7 @@ function SidebarRail({
                 <span className="pointer-events-none absolute left-[calc(100%+10px)] top-1/2 z-20 -translate-y-1/2 whitespace-nowrap rounded-md bg-zinc-950 px-2 py-1 text-xs font-medium text-white opacity-0 shadow-sm transition duration-200 ease-out group-hover:opacity-100 group-focus-visible:opacity-100">
                   {section.label}
                 </span>
-              </button>
+              </Link>
             );
           })}
         </div>

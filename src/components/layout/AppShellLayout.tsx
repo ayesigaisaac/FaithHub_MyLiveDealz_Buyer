@@ -49,6 +49,12 @@ const roleTriggerLabel: Record<RoleKey, string> = {
   admin: "Platform Admin",
 };
 
+const alertRouteByRole: Record<RoleKey, string> = {
+  user: "/app/user/settings",
+  provider: "/app/provider/notifications",
+  admin: "/app/admin/live-moderation",
+};
+
 function getMobileNavLabel(item: { id: string; label: string }) {
   const mapped = mobileLabelByItemId[item.id];
   if (mapped) return mapped;
@@ -120,7 +126,8 @@ export default function AppShellLayout() {
   const activeNavPath = currentPage?.path || location.pathname;
   const currentRoleLabel = roleTriggerLabel[shellRole];
 
-  const navigateToPath = (path: string) => navigate(withAdminAccess(path, adminAllAccess));
+  const resolveNavPath = (path: string) => withAdminAccess(path, adminAllAccess);
+  const navigateToPath = (path: string) => navigate(resolveNavPath(path));
 
   const mobilePrimaryItems = useMemo(() => {
     const seen = new Set<string>();
@@ -228,6 +235,9 @@ export default function AppShellLayout() {
               <button
                 type="button"
                 aria-label="Open alerts"
+                data-action-id="open-alerts"
+                title="Open alerts"
+                onClick={() => navigateToPath(alertRouteByRole[shellRole])}
                 className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700"
               >
                 <Bell className="h-5 w-5" />
@@ -288,14 +298,18 @@ export default function AppShellLayout() {
       </header>
 
       <div className="relative flex w-full min-h-0 min-w-0 flex-1 gap-2 overflow-hidden px-1 py-1.5 sm:px-2 lg:px-2.5 lg:pb-3">
-        <aside className={`hidden min-h-0 shrink-0 lg:block ${sidebarCollapsed ? "w-[92px]" : "w-[284px]"}`}>
-          <div className="h-full">
+        <aside
+          className={`hidden min-h-0 shrink-0 transition-[width] duration-300 ease-out lg:block ${
+            sidebarCollapsed ? "w-[84px] xl:w-[92px]" : "w-[248px] xl:w-[284px]"
+          }`}
+        >
+          <div className="h-full min-h-0">
             <Sidebar
               role={shellRole}
               sections={sidebarSections}
               collapsed={sidebarCollapsed}
               currentPath={activeNavPath}
-              onNavigate={navigateToPath}
+              resolvePath={resolveNavPath}
               onToggleCollapse={() => setSidebarCollapsed((prev) => !prev)}
             />
           </div>
@@ -314,7 +328,7 @@ export default function AppShellLayout() {
             },
           }}
         >
-          <div className="fh-mobile-drawer-shell h-full border-r border-zinc-200 bg-white shadow-2xl">
+          <div className="fh-mobile-drawer-shell flex h-full min-h-0 flex-col border-r border-zinc-200 bg-white shadow-2xl">
             <div className="mb-2.5 flex items-center justify-between px-1">
               <div className="fh-label text-zinc-500">Navigation</div>
               <button
@@ -326,16 +340,16 @@ export default function AppShellLayout() {
                 <X className="h-4 w-4" />
               </button>
             </div>
-            <Sidebar
-              role={shellRole}
-              sections={sidebarSections}
-              currentPath={activeNavPath}
-              compactHeight
-              onNavigate={(path) => {
-                navigateToPath(path);
-                setMobileOpen(false);
-              }}
-            />
+            <div className="min-h-0 flex-1">
+              <Sidebar
+                role={shellRole}
+                sections={sidebarSections}
+                currentPath={activeNavPath}
+                compactHeight
+                resolvePath={resolveNavPath}
+                onNavigate={() => setMobileOpen(false)}
+              />
+            </div>
           </div>
         </Drawer>
         <main

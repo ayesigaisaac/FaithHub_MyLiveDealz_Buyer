@@ -231,9 +231,19 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "unlock study guide": "/app/user/membership",
     "unlock membership": "/app/user/membership",
     "view benefits": "/app/user/membership",
+    "open alerts": "/app/user/settings",
+    "open thread": "/app/user/live/chat",
+    "open attachment": "/app/user/replay",
+    "open cta": "/app/user/institution",
+    "open event pass": "/app/user/events/detail",
+    rsvp: "/app/user/events/detail",
+    "set reminder": "/app/user/events",
+    "continue giving": "/app/user/giving",
+    "send magic link": "/app/user/home",
+    resend: "/app/user/auth",
   },
   provider: {
-    "open alerts": "/app/provider/reviews-moderation",
+    "open alerts": "/app/provider/notifications",
     "open scheduler": "/app/provider/live-schedule",
     "open studio": "/app/provider/live-studio",
     "stream destinations": "/app/provider/stream-to-platforms",
@@ -242,6 +252,15 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "open contacts": "/app/provider/contacts",
     "open trust queue": "/app/provider/reviews-moderation",
     "open case": "/app/provider/reviews-moderation",
+    "open controls": "/app/provider/live-studio",
+    "create event": "/app/provider/events",
+    "create fund": "/app/provider/funds",
+    "connect new": "/app/provider/stream-to-platforms",
+    destinations: "/app/provider/stream-to-platforms",
+    studio: "/app/provider/live-studio",
+    "trust queue": "/app/provider/reviews-moderation",
+    "view queue": "/app/provider/reviews-moderation",
+    "go live": "/app/provider/live-studio",
   },
   admin: {
     "open incident desk": "/app/admin/live-moderation",
@@ -250,6 +269,12 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "edit policy": "/app/admin/policy",
     "open security": "/app/admin/security",
     "open ops": "/app/admin/overview",
+    "open alerts": "/app/admin/live-moderation",
+    "open finance desk": "/app/admin/finance",
+    "open audit explorer": "/app/admin/security",
+    "manage badge": "/app/admin/policy",
+    approve: "/app/admin/verification",
+    escalate: "/app/admin/live-moderation",
   },
 };
 
@@ -294,6 +319,7 @@ const rawRoleLevelActionIds: Record<RoleKey, Record<string, string>> = {
     "open-settings": routes.app.user.settings,
     "open-discover": routes.app.user.discover,
     "open-events": routes.app.user.events,
+    "open-alerts": routes.app.user.settings,
   },
   provider: {
     "open-live-schedule": routes.app.provider.liveSchedule,
@@ -303,6 +329,7 @@ const rawRoleLevelActionIds: Record<RoleKey, Record<string, string>> = {
     "open-contacts": routes.app.provider.contacts,
     "open-reviews-moderation": routes.app.provider.reviewsModeration,
     "open-live-ops": routes.app.provider.liveOps,
+    "open-alerts": routes.app.provider.notifications,
   },
   admin: {
     "open-admin-overview": routes.app.admin.overview,
@@ -314,6 +341,7 @@ const rawRoleLevelActionIds: Record<RoleKey, Record<string, string>> = {
     "open-admin-channels": routes.app.admin.channels,
     "open-live-ops": routes.app.provider.liveOps,
     "open-discover": routes.app.user.discover,
+    "open-alerts": routes.app.admin.liveModeration,
   },
 };
 
@@ -398,6 +426,34 @@ const roleLevelActionIds = Object.fromEntries(
   ]),
 ) as Record<RoleKey, Record<string, string>>;
 
+function buildUniqueTargetTable(tables: Array<Record<string, string>>) {
+  const merged: Record<string, string | null> = {};
+  for (const table of tables) {
+    for (const [key, path] of Object.entries(table)) {
+      if (!(key in merged)) {
+        merged[key] = path;
+        continue;
+      }
+      if (merged[key] !== path) {
+        merged[key] = null;
+      }
+    }
+  }
+  return Object.fromEntries(
+    Object.entries(merged).filter((entry): entry is [string, string] => Boolean(entry[1])),
+  ) as Record<string, string>;
+}
+
+const globalActionLabelTargets = buildUniqueTargetTable([
+  ...Object.values(exactPageActions),
+  ...Object.values(roleLevelActions),
+]);
+
+const globalActionIdTargets = buildUniqueTargetTable([
+  ...Object.values(exactPageActionIds),
+  ...Object.values(roleLevelActionIds),
+]);
+
 const knownActionTargets = new Set<string>([
   "/",
   "/access",
@@ -453,18 +509,24 @@ function getRoleFromPath(pathname: string): RoleKey {
 }
 
 export function resolvePageButtonAction(pathname: string, label: string, actionId = "") {
+  const cleanPathname = pathname.split(/[?#]/, 1)[0] || pathname;
   const normalizedActionId = normalizeActionId(actionId);
   if (normalizedActionId) {
-    const exactByActionId = exactPageActionIds[pathname]?.[normalizedActionId];
+    const exactByActionId = exactPageActionIds[cleanPathname]?.[normalizedActionId];
     if (exactByActionId) return exactByActionId;
 
-    const roleByActionId = roleLevelActionIds[getRoleFromPath(pathname)]?.[normalizedActionId];
+    const roleByActionId = roleLevelActionIds[getRoleFromPath(cleanPathname)]?.[normalizedActionId];
     if (roleByActionId) return roleByActionId;
+
+    const globalByActionId = globalActionIdTargets[normalizedActionId];
+    if (globalByActionId) return globalByActionId;
   }
 
   const normalized = normalizeLabel(label);
   if (!normalized) return null;
-  const exact = exactPageActions[pathname]?.[normalized];
+  const exact = exactPageActions[cleanPathname]?.[normalized];
   if (exact) return exact;
-  return roleLevelActions[getRoleFromPath(pathname)]?.[normalized] || null;
+  const roleLevel = roleLevelActions[getRoleFromPath(cleanPathname)]?.[normalized];
+  if (roleLevel) return roleLevel;
+  return globalActionLabelTargets[normalized] || null;
 }
