@@ -13,6 +13,7 @@ import { pagesByRole, type PageRegistryItem, type RoleKey } from "@/config/pageR
 export interface SidebarItem {
   id: string;
   label: string;
+  subtitle?: string;
   title: string;
   path: string;
   icon: PageRegistryItem["icon"];
@@ -71,6 +72,20 @@ const itemLabelMap: Partial<Record<string, string>> = {
   "a-security": "Security",
 };
 
+const itemSubtitleMap: Partial<Record<string, string | null>> = {
+  "a-overview": null,
+  "a-policy": "Platform policy controls",
+  "a-verification": "Approval and compliance flow",
+  "a-live-mod": "Cross-network intervention control",
+  "a-security": "Evidence and compliance tracing",
+  "a-finance": "Payouts, refunds, and risk controls",
+  "a-channels": "Deliverability and sender governance",
+};
+
+const sectionSortOrderByRole: Partial<Record<RoleKey, string[]>> = {
+  admin: ["Control", "Security", "Finance"],
+};
+
 const rolePrefixLabel: Record<RoleKey, string> = {
   user: "User",
   provider: "Provider",
@@ -96,6 +111,14 @@ function getSidebarItemLabel(item: Pick<PageRegistryItem, "id" | "label">) {
   return itemLabelMap[item.id] || item.label;
 }
 
+function getSidebarItemSubtitle(item: Pick<PageRegistryItem, "id" | "description">) {
+  if (item.id in itemSubtitleMap) {
+    const mapped = itemSubtitleMap[item.id];
+    return mapped || undefined;
+  }
+  return item.description;
+}
+
 export function buildSidebarSections({
   role,
   pages,
@@ -105,6 +128,9 @@ export function buildSidebarSections({
   pages: PageRegistryItem[];
   adminAllAccess?: boolean;
 }) {
+  const preferredOrder = sectionSortOrderByRole[role] || [];
+  const sectionSortIndex = new Map(preferredOrder.map((label, index) => [label.toLowerCase(), index]));
+
   const sectionMap = new Map<string, SidebarSection>();
 
   for (const page of pages) {
@@ -125,6 +151,7 @@ export function buildSidebarSections({
     sectionMap.get(sectionId)?.items.push({
       id: page.id,
       label: getSidebarItemLabel(page),
+      subtitle: getSidebarItemSubtitle(page),
       title: page.label,
       path: page.path,
       icon: page.icon,
@@ -132,7 +159,16 @@ export function buildSidebarSections({
     });
   }
 
-  return Array.from(sectionMap.values());
+  const sections = Array.from(sectionMap.values());
+  if (!adminAllAccess && preferredOrder.length > 0) {
+    sections.sort((left, right) => {
+      const leftRank = sectionSortIndex.get(left.label.toLowerCase()) ?? Number.MAX_SAFE_INTEGER;
+      const rightRank = sectionSortIndex.get(right.label.toLowerCase()) ?? Number.MAX_SAFE_INTEGER;
+      return leftRank - rightRank;
+    });
+  }
+
+  return sections;
 }
 
 export const sidebarConfig: Record<RoleKey, SidebarSection[]> = {

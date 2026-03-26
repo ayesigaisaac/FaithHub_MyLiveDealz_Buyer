@@ -1,19 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { ChevronDown, ChevronsLeft, ChevronsRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import AppIcon from "@/components/ui/app-icon";
-import type { RoleKey } from "@/config/pageRegistry";
 import type { SidebarSection } from "@/config/sidebar";
 
-const roleLabelMap: Record<RoleKey, string> = {
-  user: "User",
-  provider: "Provider",
-  admin: "Admin",
-};
-
 interface SidebarProps {
-  role: RoleKey;
   sections: SidebarSection[];
   collapsed?: boolean;
   currentPath: string;
@@ -29,7 +21,6 @@ function isPathActive(itemPath: string, currentPath: string) {
 }
 
 export default function Sidebar({
-  role,
   sections,
   collapsed = false,
   currentPath,
@@ -52,7 +43,6 @@ export default function Sidebar({
 
   return (
     <SidebarPanel
-      role={role}
       sections={sections}
       currentPath={currentPath}
       onNavigate={onNavigate}
@@ -64,7 +54,6 @@ export default function Sidebar({
 }
 
 function SidebarPanel({
-  role,
   sections,
   currentPath,
   onNavigate,
@@ -72,7 +61,6 @@ function SidebarPanel({
   onToggleCollapse,
   compactHeight,
 }: {
-  role: RoleKey;
   sections: SidebarSection[];
   currentPath: string;
   onNavigate?: (path: string) => void;
@@ -80,84 +68,101 @@ function SidebarPanel({
   onToggleCollapse?: () => void;
   compactHeight: boolean;
 }) {
-  const [openSectionIds, setOpenSectionIds] = useState<string[]>(() => sections.map((section) => section.id));
+  const [openSectionId, setOpenSectionId] = useState<string>("");
 
   useEffect(() => {
-    setOpenSectionIds((prev) => {
-      const validIds = new Set(sections.map((section) => section.id));
-      const retained = prev.filter((id) => validIds.has(id));
-      const appended = sections.map((section) => section.id).filter((id) => !retained.includes(id));
-      return [...retained, ...appended];
-    });
-  }, [sections]);
+    if (!sections.length) {
+      setOpenSectionId("");
+      return;
+    }
 
-  const openSectionSet = useMemo(() => new Set(openSectionIds), [openSectionIds]);
+    const activeSectionId =
+      sections.find((section) => section.items.some((item) => isPathActive(item.path, currentPath)))?.id ||
+      sections[0].id;
+
+    setOpenSectionId((prev) => {
+      if (!prev) return activeSectionId;
+      const currentSection = sections.find((section) => section.id === prev);
+      if (!currentSection) return activeSectionId;
+      const stillActiveSection = currentSection.items.some((item) => isPathActive(item.path, currentPath));
+      return stillActiveSection ? prev : activeSectionId;
+    });
+  }, [sections, currentPath]);
 
   const toggleSection = (sectionId: string) => {
-    setOpenSectionIds((prev) =>
-      prev.includes(sectionId) ? prev.filter((id) => id !== sectionId) : [...prev, sectionId],
-    );
+    setOpenSectionId((prev) => (prev === sectionId ? "" : sectionId));
   };
 
   return (
-    <Card className="fh-nav-shell-card h-full min-h-0 overflow-hidden rounded-[24px]">
+    <Card className="h-full min-h-0 overflow-hidden rounded-[22px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-none">
       <CardContent
-        className={`flex min-h-0 flex-col gap-2 overflow-hidden ${
+        className={`flex min-h-0 flex-col gap-2.5 overflow-hidden ${
           compactHeight ? "h-full p-2" : "h-full p-2 lg:p-2.5"
         }`}
       >
-        <div className="flex items-center justify-between gap-3 px-1">
+        <div className="flex items-start justify-between gap-3 px-0.5 pt-0.5">
           <div className="min-w-0">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-zinc-500">
-              {roleLabelMap[role]}
-            </div>
-            <div className="mt-1 text-sm font-semibold text-zinc-900">Navigation</div>
+            <div className="text-[1.95rem] font-semibold tracking-tight text-[var(--fh-nav-title)]">Navigation</div>
+            <div className="-mt-0.5 text-[1.08rem] font-semibold text-[var(--fh-nav-muted)]">Modules</div>
           </div>
           {onToggleCollapse ? (
             <button
               type="button"
               aria-label="Minimize sidebar"
               onClick={onToggleCollapse}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 transition duration-200 ease-out hover:bg-zinc-50"
+              className="inline-flex h-12 w-12 items-center justify-center rounded-[17px] border-2 border-[#16161a] bg-[#f7f8fa] text-[#16161a] transition duration-200 ease-out hover:bg-white"
             >
-              <PanelLeftClose className="h-4 w-4" />
+              <ChevronsLeft className="h-[1.2rem] w-[1.2rem]" />
             </button>
           ) : null}
         </div>
 
         <div
-          className={`fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 ${
-            compactHeight ? "pb-1" : "pb-2"
+          className={`fh-scroll-region min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1.5 ${
+            compactHeight ? "pb-1" : "pb-2.5"
           }`}
         >
           {sections.map((section) => (
-            <div key={section.id} className="overflow-hidden rounded-[18px] border border-zinc-200 bg-white/80">
+            <div
+              key={section.id}
+              className="overflow-hidden rounded-[18px] border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]"
+            >
               <button
                 type="button"
                 onClick={() => toggleSection(section.id)}
-                className={`flex w-full items-center justify-between gap-2 hover:bg-zinc-50 ${
-                  compactHeight ? "px-2 py-1.5" : "px-2 py-1.5 xl:px-2.5 xl:py-2"
+                className={`group flex w-full items-center justify-between gap-3 ${
+                  openSectionId === section.id ? "" : "hover:bg-[color:var(--fh-nav-item-hover)]"
+                } ${
+                  compactHeight ? "px-2.5 py-2.5" : "px-3 py-3"
                 }`}
               >
-                <span className="flex min-w-0 items-center gap-2">
-                  <AppIcon size="sm" className="border-zinc-200 bg-zinc-100 text-zinc-700">
-                    <section.icon className="h-4 w-4" />
+                <span className="flex min-w-0 items-center gap-2.5">
+                  <AppIcon
+                    size="sm"
+                    className="h-12 w-12 rounded-[14px] border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)] shadow-none"
+                  >
+                    <section.icon className="h-[1.08rem] w-[1.08rem]" />
                   </AppIcon>
-                  <span className="truncate text-[11px] font-semibold uppercase tracking-[0.11em] text-zinc-500">
+                  <span className="truncate text-[1.05rem] font-semibold uppercase tracking-[0.12em] text-[var(--fh-nav-muted)]">
                     {section.label}
                   </span>
                 </span>
-                <ChevronDown
-                  className={`h-4 w-4 text-zinc-500 transition ${
-                    openSectionSet.has(section.id) ? "rotate-0" : "-rotate-90"
-                  }`}
-                />
+                <span className="relative inline-flex h-8 w-8 items-center justify-center">
+                  <ChevronDown
+                    className={`h-[1.35rem] w-[1.35rem] text-[var(--fh-nav-item-chevron)] transition ${
+                      openSectionId === section.id ? "rotate-0" : "-rotate-90"
+                    }`}
+                  />
+                </span>
               </button>
-              {openSectionSet.has(section.id) ? (
-                <div className={`space-y-1 px-2 ${compactHeight ? "pb-1.5" : "pb-2"}`}>
+              {openSectionId === section.id ? (
+                <div
+                  className={`space-y-2 border-t border-[var(--fh-nav-section-divider)] px-3 pt-3 ${
+                    compactHeight ? "pb-2" : "pb-3"
+                  }`}
+                >
                   {section.items.map((item) => {
                     const active = isPathActive(item.path, currentPath);
-                    const ItemIcon = item.icon;
                     return (
                       <Link
                         key={item.id}
@@ -165,26 +170,20 @@ function SidebarPanel({
                         title={item.title}
                         aria-current={active ? "page" : undefined}
                         onClick={() => onNavigate?.(item.path)}
-                        className={`flex w-full items-center gap-2 rounded-2xl border px-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
-                          compactHeight ? "h-9 text-sm" : "h-9 text-[13px] xl:h-10 xl:text-sm"
-                        } ${
+                        className={`block w-full rounded-[14px] border px-3 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
                           active
-                            ? "border-zinc-200 bg-white text-zinc-900 shadow-sm"
-                            : "border-zinc-200/80 bg-white text-zinc-700 hover:bg-zinc-50"
+                            ? "border-[#d2d7df] bg-white text-[#1b2330] shadow-sm"
+                            : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)] hover:bg-[color:var(--fh-nav-item-hover)]"
                         }`}
                       >
-                        <AppIcon
-                          size="sm"
-                          tone={active ? "dark" : "neutral"}
-                          className={
-                            active
-                              ? "border-slate-300 bg-slate-100 text-slate-700 shadow-none"
-                              : "border-zinc-200 bg-zinc-100 text-zinc-700"
-                          }
-                        >
-                          <ItemIcon className="h-4 w-4 shrink-0" />
-                        </AppIcon>
-                        <span className="min-w-0 flex-1 truncate font-semibold">{item.label}</span>
+                        <div className={`truncate font-semibold ${compactHeight ? "text-[1rem]" : "text-[1.04rem]"}`}>
+                          {item.label}
+                        </div>
+                        {item.subtitle ? (
+                          <div className="mt-0.5 text-[0.92rem] leading-snug text-[var(--fh-nav-item-sub)]">
+                            {item.subtitle}
+                          </div>
+                        ) : null}
                       </Link>
                     );
                   })}
@@ -212,16 +211,16 @@ function SidebarRail({
   onToggleCollapse?: () => void;
 }) {
   return (
-    <Card className="fh-nav-shell-card h-full min-h-0 overflow-hidden rounded-[24px]">
+    <Card className="h-full min-h-0 overflow-hidden rounded-[22px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-none">
       <CardContent className="flex h-full min-h-0 flex-col items-center gap-2 p-2">
         {onToggleCollapse ? (
           <button
             type="button"
             aria-label="Expand sidebar"
             onClick={onToggleCollapse}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 transition duration-200 ease-out hover:bg-zinc-50"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-[14px] border-2 border-[#16161a] bg-[#f7f8fa] text-[#16161a] transition duration-200 ease-out hover:bg-white"
           >
-            <PanelLeftOpen className="h-4 w-4" />
+            <ChevronsRight className="h-4 w-4" />
           </button>
         ) : null}
 
@@ -239,10 +238,10 @@ function SidebarRail({
                 to={resolvePath ? resolvePath(targetPath) : targetPath}
                 aria-label={section.label}
                 onClick={() => onNavigate?.(targetPath)}
-                className={`group relative inline-flex h-10 w-10 items-center justify-center rounded-xl border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
+                className={`group relative inline-flex h-10 w-10 items-center justify-center rounded-[14px] border transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
                   active
-                    ? "border-zinc-200 bg-white text-zinc-900 shadow-sm"
-                    : "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50"
+                    ? "border-[var(--fh-nav-rail-active-border)] bg-[color:var(--fh-nav-rail-active-bg)] text-[var(--fh-nav-rail-active-fg)]"
+                    : "border-[var(--fh-nav-rail-icon-border)] bg-[color:var(--fh-nav-rail-icon-bg)] text-[var(--fh-nav-rail-icon-fg)] hover:bg-white"
                 }`}
               >
                 <section.icon className="h-4 w-4" />

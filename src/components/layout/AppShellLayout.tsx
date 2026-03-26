@@ -305,7 +305,6 @@ export default function AppShellLayout() {
         >
           <div className="h-full min-h-0">
             <Sidebar
-              role={shellRole}
               sections={sidebarSections}
               collapsed={sidebarCollapsed}
               currentPath={activeNavPath}
@@ -342,7 +341,6 @@ export default function AppShellLayout() {
             </div>
             <div className="min-h-0 flex-1">
               <Sidebar
-                role={shellRole}
                 sections={sidebarSections}
                 currentPath={activeNavPath}
                 compactHeight
