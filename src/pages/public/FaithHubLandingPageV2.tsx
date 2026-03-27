@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 import {
   ArrowRight,
   BadgeCheck,
-  Bell,
   BellRing,
   BookOpen,
   CalendarDays,
   CheckCircle2,
-  CircleUserRound,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -40,7 +38,6 @@ import { Badge } from "@/components/ui/badge";
 import AppIcon from "@/components/ui/app-icon";
 import { ctaPriorityClass } from "@/constants/ctaStyles";
 import { faithHubToneCopy } from "@/constants/faithHubTone";
-import { ColorModeToggle } from "@/theme/color-mode-toggle";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 const faithmartLogoSingle = "/faithmart-logo-single.png";
@@ -717,7 +714,6 @@ export default function FaithHubLandingPageV2() {
   const [operatorMenuOpen, setOperatorMenuOpen] = useState(false);
   const operatorMenuRef = useRef<HTMLDivElement | null>(null);
   const operatorTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const operatorProfileTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const currentRole = useMemo(() => roleCards.find((item) => item.role === activeRole), [activeRole]);
   const currentDevice = useMemo(() => deviceTabs.find((item) => item.key === activeDevice), [activeDevice]);
@@ -762,8 +758,7 @@ export default function FaithHubLandingPageV2() {
       const target = event.target as Node;
       const clickInsideMenu = operatorMenuRef.current?.contains(target);
       const clickInsidePrimaryTrigger = operatorTriggerRef.current?.contains(target);
-      const clickInsideProfileTrigger = operatorProfileTriggerRef.current?.contains(target);
-      if (!clickInsideMenu && !clickInsidePrimaryTrigger && !clickInsideProfileTrigger) {
+      if (!clickInsideMenu && !clickInsidePrimaryTrigger) {
         setOperatorMenuOpen(false);
       }
     };
@@ -818,7 +813,7 @@ export default function FaithHubLandingPageV2() {
             className="fh-shell-control inline-flex min-w-0 flex-1 items-center justify-center overflow-hidden rounded-2xl px-2 py-1.5 sm:flex-none sm:justify-start sm:px-2.5"
           >
             <picture>
-              <source media="(min-width: 640px)" srcSet={faithmartLogoLandscape} />
+              <source media="(min-width: 768px)" srcSet={faithmartLogoLandscape} />
               <img
                 src={faithmartLogoSingle}
                 alt="FaithMart"
@@ -853,34 +848,12 @@ export default function FaithHubLandingPageV2() {
               />
             </label>
           </div>
-          <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
-            <ColorModeToggle className="h-10 w-10 rounded-2xl sm:h-11 sm:w-11" />
-            <button
-              type="button"
-              aria-label="Open alerts"
-              className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl sm:h-11 sm:w-11"
-            >
-              <Bell className="h-5 w-5 text-slate-700" />
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--accent)]" />
-            </button>
-            <button
-              ref={operatorProfileTriggerRef}
-              type="button"
-              title={`Switch role (${activeOperatorRole.label})`}
-              aria-label={`Switch role. Current role: ${activeOperatorRole.label}`}
-              aria-expanded={operatorMenuOpen}
-              onClick={() => setOperatorMenuOpen((prev) => !prev)}
-              className={`fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-slate-700 transition sm:h-11 sm:w-11 ${
-                operatorMenuOpen ? "ring-2 ring-emerald-200" : ""
-              }`}
-            >
-              <CircleUserRound className="h-5 w-5" />
-            </button>
+          <div className="ml-auto flex items-center lg:hidden">
             <button
               type="button"
               aria-label="Open quick navigation"
               onClick={() => setMobileNavOpen((prev) => !prev)}
-              className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl lg:hidden sm:h-11 sm:w-11"
+              className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl sm:h-11 sm:w-11"
             >
               {mobileNavOpen ? <X className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
             </button>
