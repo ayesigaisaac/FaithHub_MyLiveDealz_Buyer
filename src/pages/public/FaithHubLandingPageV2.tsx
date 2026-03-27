@@ -43,6 +43,7 @@ import { faithHubToneCopy } from "@/constants/faithHubTone";
 import { ColorModeToggle } from "@/theme/color-mode-toggle";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
+const faithmartLogoSingle = "/faithmart-logo-single.png";
 
 type QuickTone = "emerald" | "orange" | "slate";
 
@@ -800,12 +801,12 @@ export default function FaithHubLandingPageV2() {
   return (
     <div className="flex h-[100dvh] flex-col overflow-hidden bg-[color:var(--bg)] text-[color:var(--text-primary)]">
       <header className="fh-shell-topbar z-40 shrink-0 border-b border-[color:var(--border)]">
-        <div className="flex w-full items-center gap-2 px-2 py-3 sm:px-4 lg:px-5">
+        <div className="flex w-full items-center gap-1.5 px-1.5 py-2.5 sm:gap-2 sm:px-4 sm:py-3 lg:px-5">
           <button
             type="button"
             onClick={() => setMobileSidebarOpen(true)}
             aria-label="Open sidebar"
-            className="fh-shell-control inline-flex h-11 w-11 items-center justify-center rounded-2xl lg:hidden"
+            className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl lg:hidden sm:h-11 sm:w-11"
           >
             <Menu className="h-5 w-5" />
           </button>
@@ -814,13 +815,16 @@ export default function FaithHubLandingPageV2() {
             type="button"
             onClick={() => scrollToId("overview")}
             aria-label="Go to overview"
-            className="fh-shell-control inline-flex min-w-0 items-center rounded-2xl px-2.5 py-1.5"
+            className="fh-shell-control inline-flex min-w-0 flex-1 items-center justify-center overflow-hidden rounded-2xl px-2 py-1.5 sm:flex-none sm:justify-start sm:px-2.5"
           >
-            <img
-              src={faithmartLogoLandscape}
-              alt="FaithMart"
-              className="h-9 w-auto max-w-[11.5rem] object-contain sm:h-10 sm:max-w-[12.8rem]"
-            />
+            <picture>
+              <source media="(min-width: 640px)" srcSet={faithmartLogoLandscape} />
+              <img
+                src={faithmartLogoSingle}
+                alt="FaithMart"
+                className="h-8 w-auto max-w-[2.05rem] object-contain sm:h-10 sm:max-w-[12.8rem]"
+              />
+            </picture>
           </button>
 
           <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 md:flex">
@@ -849,12 +853,12 @@ export default function FaithHubLandingPageV2() {
               />
             </label>
           </div>
-          <div className="ml-auto flex items-center gap-2 md:ml-0">
-            <ColorModeToggle className="h-11 w-11 rounded-2xl" />
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
+            <ColorModeToggle className="h-10 w-10 rounded-2xl sm:h-11 sm:w-11" />
             <button
               type="button"
               aria-label="Open alerts"
-              className="fh-shell-control relative inline-flex h-11 w-11 items-center justify-center rounded-2xl"
+              className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl sm:h-11 sm:w-11"
             >
               <Bell className="h-5 w-5 text-slate-700" />
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--accent)]" />
@@ -866,7 +870,7 @@ export default function FaithHubLandingPageV2() {
               aria-label={`Switch role. Current role: ${activeOperatorRole.label}`}
               aria-expanded={operatorMenuOpen}
               onClick={() => setOperatorMenuOpen((prev) => !prev)}
-              className={`fh-shell-control inline-flex h-11 w-11 items-center justify-center rounded-2xl text-slate-700 transition ${
+              className={`fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-slate-700 transition sm:h-11 sm:w-11 ${
                 operatorMenuOpen ? "ring-2 ring-emerald-200" : ""
               }`}
             >
@@ -876,7 +880,7 @@ export default function FaithHubLandingPageV2() {
               type="button"
               aria-label="Open quick navigation"
               onClick={() => setMobileNavOpen((prev) => !prev)}
-              className="fh-shell-control inline-flex h-11 w-11 items-center justify-center rounded-2xl lg:hidden"
+              className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl lg:hidden sm:h-11 sm:w-11"
             >
               {mobileNavOpen ? <X className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
             </button>
