@@ -5,8 +5,6 @@ import { ThemeProvider } from "@mui/material/styles";
 import { evzoneTheme } from "@/theme/evzoneTheme";
 import { useColorMode } from "@/theme/color-mode";
 import { ScrollToTop } from "@/components/system/ScrollToTop";
-import RoleGuard from "@/components/system/guards/RoleGuard";
-import TenantScopeGuard from "@/components/system/guards/TenantScopeGuard";
 import {
   defaultPageForRole,
   getRoutePatterns,
@@ -15,16 +13,9 @@ import {
 } from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
 import AppShellLayout from "@/components/layout/AppShellLayout";
-import SuperAdminLayout from "@/layouts/SuperAdminLayout";
-import TenantAdminLayout from "@/layouts/TenantAdminLayout";
-import OpsLayout from "@/layouts/OpsLayout";
-import EnterpriseModulePlaceholder from "@/pages/enterprise/EnterpriseModulePlaceholder";
 import FaithHubLandingPageV2 from "@/pages/public/FaithHubLandingPageV2";
 import FaithHubMultiRoleAppShell from "@/pages/public/FaithHubMultiRoleAppShell";
 import FaithHubAccessGateway from "@/pages/public/FaithHubAccessGateway";
-import OpsOverview from "@/pages/ops/OpsOverview";
-import SuperAdminOverview from "@/pages/super-admin/SuperAdminOverview";
-import TenantAdminOverview from "@/pages/tenant-admin/TenantAdminOverview";
 
 const roleBasePath: Record<RoleKey, string> = {
   user: routes.app.user.base,
@@ -64,49 +55,12 @@ export default function AppRouter() {
           <Route path={routes.public.landing} element={<FaithHubLandingPageV2 />} />
           <Route path={routes.public.access} element={<FaithHubAccessGateway />} />
           <Route path={routes.public.shellPreview} element={<FaithHubMultiRoleAppShell />} />
+          <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
+          <Route path="/tenant-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
           <Route
-            path="/super-admin"
-            element={
-              <RoleGuard allowedRoles={["super_admin"]}>
-                <SuperAdminLayout />
-              </RoleGuard>
-            }
-          >
-            <Route index element={<Navigate to="/super-admin/overview" replace />} />
-            <Route path="overview" element={<SuperAdminOverview />} />
-            <Route path=":module" element={<EnterpriseModulePlaceholder role="super_admin" />} />
-            <Route path="*" element={<Navigate to="/super-admin/overview" replace />} />
-          </Route>
-          <Route
-            path="/tenant-admin"
-            element={
-              <RoleGuard allowedRoles={["tenant_admin"]}>
-                <TenantScopeGuard>
-                  <TenantAdminLayout />
-                </TenantScopeGuard>
-              </RoleGuard>
-            }
-          >
-            <Route index element={<Navigate to="/tenant-admin/overview" replace />} />
-            <Route path="overview" element={<TenantAdminOverview />} />
-            <Route path=":module" element={<EnterpriseModulePlaceholder role="tenant_admin" />} />
-            <Route path="*" element={<Navigate to="/tenant-admin/overview" replace />} />
-          </Route>
-          <Route
-            path="/ops"
-            element={
-              <RoleGuard allowedRoles={["ops", "moderator"]}>
-                <TenantScopeGuard>
-                  <OpsLayout />
-                </TenantScopeGuard>
-              </RoleGuard>
-            }
-          >
-            <Route index element={<Navigate to="/ops/incidents" replace />} />
-            <Route path="incidents" element={<OpsOverview />} />
-            <Route path=":module" element={<EnterpriseModulePlaceholder role="ops" />} />
-            <Route path="*" element={<Navigate to="/ops/incidents" replace />} />
-          </Route>
+            path="/ops/*"
+            element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
+          />
           <Route path={routes.aliases.user} element={<Navigate to={defaultPageForRole.user} replace />} />
           <Route
             path={routes.aliases.provider}

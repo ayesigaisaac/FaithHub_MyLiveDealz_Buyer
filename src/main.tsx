@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 
 import App from "@/App";
 import { ErrorBoundary } from "@/components/system/ErrorBoundary";
-import { EnterpriseAccessProvider } from "@/app/providers/EnterpriseAccessContext";
 import { ColorModeProvider } from "@/theme/color-mode";
 
 import "@/styles/globals.css";
@@ -18,9 +17,7 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ErrorBoundary>
       <ColorModeProvider>
-        <EnterpriseAccessProvider>
-          <App />
-        </EnterpriseAccessProvider>
+        <App />
       </ColorModeProvider>
     </ErrorBoundary>
   </React.StrictMode>
