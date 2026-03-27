@@ -6,7 +6,6 @@ import {
   CircleUserRound,
   Menu,
   Search,
-  X,
 } from "lucide-react";
 import Sidebar from "@/components/layout/Sidebar";
 import RoleSwitcher from "@/components/layout/RoleSwitcher";
@@ -75,9 +74,20 @@ function matchesPagePath(page: Pick<PageRegistryItem, "path" | "routePatterns">,
   return getRoutePatterns(page).some((pattern) => Boolean(matchPath({ path: pattern, end: true }, pathname)));
 }
 
+function isPathActive(itemPath: string, currentPath: string) {
+  if (itemPath === currentPath) return true;
+  return currentPath.startsWith(`${itemPath}/`);
+}
+
 function withAdminAccess(path: string, enabled: boolean) {
   if (!enabled || !path.startsWith("/app/")) return path;
-  return path.includes("?") ? `${path}&admin=1` : `${path}?admin=1`;
+  const [pathWithQuery, hashFragment] = path.split("#", 2);
+  const [pathname, rawQuery = ""] = pathWithQuery.split("?", 2);
+  const params = new URLSearchParams(rawQuery);
+  params.set("admin", "1");
+  const query = params.toString();
+  const hash = hashFragment ? `#${hashFragment}` : "";
+  return `${pathname}${query ? `?${query}` : ""}${hash}`;
 }
 
 export default function AppShellLayout() {
@@ -95,6 +105,7 @@ export default function AppShellLayout() {
   const [roleSwitcherOpen, setRoleSwitcherOpen] = useState(false);
   const roleSwitcherRef = useRef<HTMLDivElement | null>(null);
   const roleSwitcherTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const shouldRestoreRoleSwitcherFocus = useRef(false);
 
   const pages = useMemo(
     () => (adminAllAccess ? pageRegistry : pagesByRole[routeRole] || []),
@@ -142,9 +153,18 @@ export default function AppShellLayout() {
   }, [baseSidebarSections]);
 
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.defaultPrevented) return;
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
     const target = event.target as HTMLElement | null;
+    if (!target) return;
+    if (target.closest("[data-no-nav]")) return;
+    if (target.closest("a, [role='link'], input, textarea, select, option, label")) return;
+
     const button = target?.closest("button");
     if (!button || button.hasAttribute("disabled")) return;
+    if ((button.getAttribute("type") || "").toLowerCase() === "submit") return;
+
     const actionId = button.getAttribute("data-action-id") || "";
     const rawLabel =
       button.getAttribute("data-action-label") ||
@@ -163,6 +183,16 @@ export default function AppShellLayout() {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (roleSwitcherOpen) {
+      shouldRestoreRoleSwitcherFocus.current = true;
+      return;
+    }
+    if (!shouldRestoreRoleSwitcherFocus.current) return;
+    shouldRestoreRoleSwitcherFocus.current = false;
+    roleSwitcherTriggerRef.current?.focus();
+  }, [roleSwitcherOpen]);
+
+  useEffect(() => {
     if (!roleSwitcherOpen) return;
     const handlePointerDown = (event: MouseEvent) => {
       const target = event.target as Node;
@@ -177,10 +207,10 @@ export default function AppShellLayout() {
         setRoleSwitcherOpen(false);
       }
     };
-    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("pointerdown", handlePointerDown);
     document.addEventListener("keydown", handleEscape);
     return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleEscape);
     };
   }, [roleSwitcherOpen]);
@@ -220,6 +250,7 @@ export default function AppShellLayout() {
                 <Search className="h-4 w-4 shrink-0 text-zinc-500" />
                 <input
                   type="search"
+                  aria-label="Search pages and modules"
                   value={navQuery}
                   onChange={(event) => setNavQuery(event.target.value)}
                   placeholder="Search pages and modules"
@@ -288,6 +319,7 @@ export default function AppShellLayout() {
             <Search className="h-4 w-4 shrink-0 text-zinc-500" />
             <input
               type="search"
+              aria-label="Search pages and modules"
               value={navQuery}
               onChange={(event) => setNavQuery(event.target.value)}
               placeholder="Search pages and modules"
@@ -320,25 +352,14 @@ export default function AppShellLayout() {
           sx={{
             display: { lg: "none" },
             "& .MuiDrawer-paper": {
-              width: "min(344px, 86vw)",
+              width: "min(308px, 82vw)",
               backgroundColor: "transparent",
               boxShadow: "none",
               border: "none",
             },
           }}
         >
-          <div className="fh-mobile-drawer-shell flex h-full min-h-0 flex-col border-r border-zinc-200 bg-white shadow-2xl">
-            <div className="mb-2.5 flex items-center justify-between px-1">
-              <div className="fh-label text-zinc-500">Navigation</div>
-              <button
-                type="button"
-                aria-label="Close navigation menu"
-                onClick={() => setMobileOpen(false)}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
+          <div className="fh-mobile-drawer-shell flex h-full min-h-0 flex-col border-r border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)]/95 shadow-[0_28px_60px_rgba(15,23,42,0.22)] backdrop-blur-xl">
             <div className="min-h-0 flex-1">
               <Sidebar
                 sections={sidebarSections}
@@ -346,6 +367,7 @@ export default function AppShellLayout() {
                 compactHeight
                 resolvePath={resolveNavPath}
                 onNavigate={() => setMobileOpen(false)}
+                onClose={() => setMobileOpen(false)}
               />
             </div>
           </div>
@@ -362,7 +384,7 @@ export default function AppShellLayout() {
         <div className="mx-auto grid max-w-none grid-cols-5 px-1.5 py-1 sm:px-2.5">
           {mobilePrimaryItems.map((item) => {
             const Icon = item.icon;
-            const active = activeNavPath === item.path;
+            const active = isPathActive(item.path, activeNavPath);
             return (
               <button
                 key={item.id}

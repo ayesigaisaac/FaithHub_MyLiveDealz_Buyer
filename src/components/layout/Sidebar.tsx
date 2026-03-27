@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, ChevronsLeft, ChevronsRight } from "lucide-react";
+import { ChevronRight, ChevronsLeft, ChevronsRight, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import AppIcon from "@/components/ui/app-icon";
 import type { SidebarSection } from "@/config/sidebar";
@@ -12,12 +12,17 @@ interface SidebarProps {
   onNavigate?: (path: string) => void;
   resolvePath?: (path: string) => string;
   onToggleCollapse?: () => void;
+  onClose?: () => void;
   compactHeight?: boolean;
 }
 
 function isPathActive(itemPath: string, currentPath: string) {
   if (itemPath === currentPath) return true;
   return currentPath.startsWith(`${itemPath}/`);
+}
+
+function getSectionDomId(sectionId: string) {
+  return `sidebar-section-${sectionId.replace(/[^a-zA-Z0-9_-]/g, "-")}`;
 }
 
 export default function Sidebar({
@@ -27,6 +32,7 @@ export default function Sidebar({
   onNavigate,
   resolvePath,
   onToggleCollapse,
+  onClose,
   compactHeight = false,
 }: SidebarProps) {
   if (collapsed) {
@@ -48,6 +54,7 @@ export default function Sidebar({
       onNavigate={onNavigate}
       resolvePath={resolvePath}
       onToggleCollapse={onToggleCollapse}
+      onClose={onClose}
       compactHeight={compactHeight}
     />
   );
@@ -59,6 +66,7 @@ function SidebarPanel({
   onNavigate,
   resolvePath,
   onToggleCollapse,
+  onClose,
   compactHeight,
 }: {
   sections: SidebarSection[];
@@ -66,6 +74,7 @@ function SidebarPanel({
   onNavigate?: (path: string) => void;
   resolvePath?: (path: string) => string;
   onToggleCollapse?: () => void;
+  onClose?: () => void;
   compactHeight: boolean;
 }) {
   const [openSectionId, setOpenSectionId] = useState<string>("");
@@ -94,103 +103,128 @@ function SidebarPanel({
   };
 
   return (
-    <Card className="h-full min-h-0 overflow-hidden rounded-[22px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-none">
+    <Card className="fh-nav-shell-card h-full min-h-0 overflow-hidden rounded-[22px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_16px_32px_rgba(15,23,42,0.1)]">
       <CardContent
-        className={`flex min-h-0 flex-col gap-2.5 overflow-hidden ${
-          compactHeight ? "h-full p-2" : "h-full p-2 lg:p-2.5"
+        className={`flex min-h-0 flex-col overflow-hidden ${
+          compactHeight ? "h-full gap-2 p-2" : "h-full gap-2.5 p-2 lg:p-2.5"
         }`}
       >
-        <div className="flex items-start justify-between gap-3 px-0.5 pt-0.5">
+        <div className={`flex items-start justify-between gap-3 ${compactHeight ? "px-1 pt-1" : "px-0.5 pt-0.5"}`}>
           <div className="min-w-0">
-            <div className="text-[1.95rem] font-semibold tracking-tight text-[var(--fh-nav-title)]">Navigation</div>
-            <div className="-mt-0.5 text-[1.08rem] font-semibold text-[var(--fh-nav-muted)]">Modules</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--fh-nav-kicker)]">Navigation</div>
+            <div className="mt-1 text-[1.02rem] font-semibold text-[var(--fh-nav-title)]">
+              {compactHeight ? "Quick Access" : "Workspace Modules"}
+            </div>
           </div>
-          {onToggleCollapse ? (
+          {onClose ? (
+            <button
+              type="button"
+              aria-label="Close navigation menu"
+              onClick={onClose}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] transition duration-200 ease-out hover:bg-[color:var(--fh-nav-ghost-btn-hover)]"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          ) : onToggleCollapse ? (
             <button
               type="button"
               aria-label="Minimize sidebar"
               onClick={onToggleCollapse}
-              className="inline-flex h-12 w-12 items-center justify-center rounded-[17px] border-2 border-[#16161a] bg-[#f7f8fa] text-[#16161a] transition duration-200 ease-out hover:bg-white"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-[14px] border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] transition duration-200 ease-out hover:bg-[color:var(--fh-nav-ghost-btn-hover)]"
             >
-              <ChevronsLeft className="h-[1.2rem] w-[1.2rem]" />
+              <ChevronsLeft className="h-4 w-4" />
             </button>
           ) : null}
         </div>
 
         <div
-          className={`fh-scroll-region min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1.5 ${
+          className={`fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1.5 ${
             compactHeight ? "pb-1" : "pb-2.5"
           }`}
         >
-          {sections.map((section) => (
-            <div
-              key={section.id}
-              className="overflow-hidden rounded-[18px] border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]"
-            >
-              <button
-                type="button"
-                onClick={() => toggleSection(section.id)}
-                className={`group flex w-full items-center justify-between gap-3 ${
-                  openSectionId === section.id ? "" : "hover:bg-[color:var(--fh-nav-item-hover)]"
-                } ${
-                  compactHeight ? "px-2.5 py-2.5" : "px-3 py-3"
-                }`}
+          {sections.map((section) => {
+            const expanded = openSectionId === section.id;
+            const sectionDomId = getSectionDomId(section.id);
+            const triggerId = `${sectionDomId}-trigger`;
+            const panelId = `${sectionDomId}-panel`;
+            return (
+              <div
+                key={section.id}
+                className="overflow-hidden rounded-[20px] border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]"
               >
-                <span className="flex min-w-0 items-center gap-2.5">
-                  <AppIcon
-                    size="sm"
-                    className="h-12 w-12 rounded-[14px] border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)] shadow-none"
-                  >
-                    <section.icon className="h-[1.08rem] w-[1.08rem]" />
-                  </AppIcon>
-                  <span className="text-[1.05rem] font-semibold uppercase tracking-[0.12em] text-[var(--fh-nav-muted)]">
-                    {section.label}
-                  </span>
-                </span>
-                <span className="relative inline-flex h-8 w-8 items-center justify-center">
-                  <ChevronDown
-                    className={`h-[1.35rem] w-[1.35rem] text-[var(--fh-nav-item-chevron)] transition ${
-                      openSectionId === section.id ? "rotate-0" : "-rotate-90"
-                    }`}
-                  />
-                </span>
-              </button>
-              {openSectionId === section.id ? (
-                <div
-                  className={`space-y-2 border-t border-[var(--fh-nav-section-divider)] px-3 pt-3 ${
-                    compactHeight ? "pb-2" : "pb-3"
+                <button
+                  id={triggerId}
+                  type="button"
+                  aria-expanded={expanded}
+                  aria-controls={panelId}
+                  onClick={() => toggleSection(section.id)}
+                  className={`group flex w-full items-center justify-between gap-3 ${
+                    expanded ? "" : "hover:bg-[color:var(--fh-nav-item-hover)]"
+                  } ${
+                    compactHeight ? "px-2.5 py-2.5" : "px-3 py-3"
                   }`}
                 >
-                  {section.items.map((item) => {
-                    const active = isPathActive(item.path, currentPath);
-                    return (
-                      <Link
-                        key={item.id}
-                        to={resolvePath ? resolvePath(item.path) : item.path}
-                        title={item.title}
-                        aria-current={active ? "page" : undefined}
-                        onClick={() => onNavigate?.(item.path)}
+                  <span className="flex min-w-0 items-center gap-2.5">
+                    <AppIcon
+                      size="sm"
+                      className={`border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)] shadow-none ${
+                        compactHeight ? "h-10 w-10 rounded-[12px]" : "h-11 w-11 rounded-[13px]"
+                      }`}
+                    >
+                      <section.icon className={compactHeight ? "h-[0.95rem] w-[0.95rem]" : "h-4 w-4"} />
+                    </AppIcon>
+                    <span className={`font-semibold uppercase tracking-[0.12em] text-[var(--fh-nav-muted)] ${compactHeight ? "text-[0.98rem]" : "text-[1rem]"}`}>
+                      {section.label}
+                    </span>
+                  </span>
+                  <span className="relative inline-flex h-8 w-8 items-center justify-center">
+                    <ChevronRight
+                      className={`h-5 w-5 text-[var(--fh-nav-item-chevron)] transition ${
+                        expanded ? "rotate-90" : "rotate-0"
+                      }`}
+                    />
+                  </span>
+                </button>
+                {expanded ? (
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={triggerId}
+                    className={`space-y-2 border-t border-[var(--fh-nav-section-divider)] px-3 pt-3 ${
+                      compactHeight ? "pb-2" : "pb-3"
+                    }`}
+                  >
+                    {section.items.map((item) => {
+                      const active = isPathActive(item.path, currentPath);
+                      return (
+                        <Link
+                          key={item.id}
+                          to={resolvePath ? resolvePath(item.path) : item.path}
+                          title={item.title}
+                          aria-current={active ? "page" : undefined}
+                          onClick={() => onNavigate?.(item.path)}
                         className={`block w-full rounded-[14px] border px-3 py-2.5 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-soft)] ${
-                          active
-                            ? "border-[#d2d7df] bg-white text-[#1b2330] shadow-sm"
-                            : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)] hover:bg-[color:var(--fh-nav-item-hover)]"
-                        }`}
-                      >
-                        <div className={`break-words font-semibold leading-snug ${compactHeight ? "text-[1rem]" : "text-[1.04rem]"}`}>
-                          {item.label}
-                        </div>
-                        {item.subtitle ? (
-                          <div className="mt-0.5 truncate text-[0.92rem] font-medium leading-snug text-[var(--fh-nav-item-sub)]">
-                            {item.subtitle}
+                            active
+                              ? "border-[var(--fh-nav-item-active-border)] bg-[color:var(--fh-nav-item-active-bg)] text-[var(--fh-nav-item-active-fg)] shadow-sm"
+                              : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)] hover:bg-[color:var(--fh-nav-item-hover)]"
+                          }`}
+                        >
+                          <div className={`break-words font-semibold leading-snug ${compactHeight ? "text-[0.96rem]" : "text-[1.02rem]"}`}>
+                            {item.label}
                           </div>
-                        ) : null}
-                      </Link>
-                    );
-                  })}
-                </div>
-              ) : null}
-            </div>
-          ))}
+                          {item.subtitle ? (
+                            <div className={`mt-0.5 truncate font-medium leading-snug text-[var(--fh-nav-item-sub)] ${compactHeight ? "text-[0.82rem]" : "text-[0.88rem]"}`}>
+                              {item.subtitle}
+                            </div>
+                          ) : null}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>
@@ -211,14 +245,14 @@ function SidebarRail({
   onToggleCollapse?: () => void;
 }) {
   return (
-    <Card className="h-full min-h-0 overflow-hidden rounded-[22px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-none">
+    <Card className="fh-nav-shell-card h-full min-h-0 overflow-hidden rounded-[22px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_14px_30px_rgba(15,23,42,0.1)]">
       <CardContent className="flex h-full min-h-0 flex-col items-center gap-2 p-2">
         {onToggleCollapse ? (
           <button
             type="button"
             aria-label="Expand sidebar"
             onClick={onToggleCollapse}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-[14px] border-2 border-[#16161a] bg-[#f7f8fa] text-[#16161a] transition duration-200 ease-out hover:bg-white"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-[14px] border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)] transition duration-200 ease-out hover:bg-[color:var(--fh-nav-ghost-btn-hover)]"
           >
             <ChevronsRight className="h-4 w-4" />
           </button>
