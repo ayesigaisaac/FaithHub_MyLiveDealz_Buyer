@@ -1046,22 +1046,14 @@ export default function FaithHubLandingPageV2() {
         </aside>
 
         {mobileSidebarOpen ? (
-          <div className="fixed inset-0 z-50 bg-slate-900/45 backdrop-blur-[1px] lg:hidden">
-            <div className="h-full w-[320px] max-w-[88vw] bg-[color:var(--bg)] p-3 shadow-2xl">
-              <div className="mb-3 flex items-center justify-between px-1">
-                <div>
-                  <div className="text-sm font-semibold">Navigation</div>
-                  <div className="text-xs text-[color:var(--text-secondary)]">Modules</div>
-                </div>
-                <button
-                  type="button"
-                  aria-label="Close sidebar"
-                  onClick={() => setMobileSidebarOpen(false)}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[color:var(--border)] bg-[color:var(--card)]"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
+          <div className="fixed inset-0 z-50 bg-slate-900/52 backdrop-blur-[1.5px] lg:hidden">
+            <button
+              type="button"
+              aria-label="Close sidebar overlay"
+              onClick={() => setMobileSidebarOpen(false)}
+              className="absolute inset-0"
+            />
+            <div className="relative z-10 h-full w-[292px] max-w-[82vw] p-2.5 sm:w-[320px] sm:max-w-[86vw] sm:p-3">
               <LandingSidebarPanel
                 modules={activeSidebarModules}
                 openModule={openModule}
@@ -1071,6 +1063,8 @@ export default function FaithHubLandingPageV2() {
                   setMobileSidebarOpen(false);
                 }}
                 compactHeight
+                mobileMode
+                onClose={() => setMobileSidebarOpen(false)}
               />
             </div>
           </div>
@@ -1517,6 +1511,8 @@ function LandingSidebarPanel({
   onAction,
   onCollapse,
   compactHeight = false,
+  mobileMode = false,
+  onClose,
 }: {
   modules: SidebarModule[];
   openModule: string;
@@ -1524,18 +1520,37 @@ function LandingSidebarPanel({
   onAction: (target: string) => void;
   onCollapse?: () => void;
   compactHeight?: boolean;
+  mobileMode?: boolean;
+  onClose?: () => void;
 }) {
   return (
-    <Card className="fh-interactive-card h-full overflow-hidden rounded-[20px] border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_20px_40px_rgba(2,8,20,0.18)]">
+    <Card
+      className={`fh-interactive-card h-full overflow-hidden border border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)] shadow-[0_24px_48px_rgba(2,8,20,0.24)] ${
+        mobileMode ? "rounded-[18px]" : "rounded-[20px]"
+      }`}
+    >
       <CardContent
-        className={`flex min-h-0 flex-col gap-2.5 p-2.5 ${compactHeight ? "max-h-[78vh]" : "h-full"}`}
+        className={`flex min-h-0 flex-col ${mobileMode ? "gap-2 p-2" : "gap-2.5 p-2.5"} ${compactHeight ? (mobileMode ? "max-h-[86vh]" : "max-h-[78vh]") : "h-full"}`}
       >
-        <div className="flex items-start justify-between px-0.5">
+        <div className={`flex items-start justify-between ${mobileMode ? "px-1 pt-1" : "px-0.5"}`}>
           <div>
-            <div className="text-sm font-semibold text-[var(--fh-nav-title)]">Navigation</div>
-            <div className="text-xs text-[var(--fh-nav-muted)]">Modules</div>
+            <div className={`${mobileMode ? "text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--fh-nav-kicker)]" : "text-sm font-semibold text-[var(--fh-nav-title)]"}`}>
+              Navigation
+            </div>
+            <div className={`${mobileMode ? "mt-1 text-base font-semibold text-[var(--fh-nav-title)]" : "text-xs text-[var(--fh-nav-muted)]"}`}>
+              {mobileMode ? "Quick Access" : "Modules"}
+            </div>
           </div>
-          {onCollapse ? (
+          {onClose ? (
+            <button
+              type="button"
+              aria-label="Close sidebar"
+              onClick={onClose}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-[var(--fh-nav-ghost-btn-border)] bg-[color:var(--fh-nav-ghost-btn-bg)] text-[var(--fh-nav-title)]"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          ) : onCollapse ? (
             <button
               type="button"
               aria-label="Minimize sidebar"
@@ -1552,47 +1567,59 @@ function LandingSidebarPanel({
           ) : null}
         </div>
 
-        <div className="fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
+        <div className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto pr-1 ${mobileMode ? "space-y-1.5" : "space-y-2"}`}>
           {modules.map((module) => {
             const expanded = openModule === module.id;
             return (
-              <div key={module.id} className="rounded-xl border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)]">
+              <div
+                key={module.id}
+                className={`border border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-bg)] ${
+                  mobileMode ? "rounded-[16px]" : "rounded-xl"
+                }`}
+              >
                 <button
                   type="button"
                   onClick={() => onModuleToggle(expanded ? "" : module.id)}
-                  className="flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-left"
+                  className={`flex w-full items-center gap-2 text-left ${mobileMode ? "rounded-[16px] px-2 py-1.5" : "rounded-xl px-2.5 py-2"}`}
                 >
                   <AppIcon
                     size="sm"
-                    className="h-7 w-7 rounded-lg border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)] shadow-none"
+                    className={`border-[var(--fh-nav-section-border)] bg-[color:var(--fh-nav-section-icon-bg)] text-[var(--fh-nav-section-icon-fg)] shadow-none ${
+                      mobileMode ? "h-6 w-6 rounded-md" : "h-7 w-7 rounded-lg"
+                    }`}
                   >
-                    <module.icon className="h-4 w-4" />
+                    <module.icon className={mobileMode ? "h-3.5 w-3.5" : "h-4 w-4"} />
                   </AppIcon>
-                  <span className="min-w-0 flex-1 truncate text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--fh-nav-muted)]">
+                  <span
+                    className={`min-w-0 flex-1 truncate font-semibold text-[var(--fh-nav-muted)] ${
+                      mobileMode ? "text-xs tracking-[0.08em]" : "text-[11px] uppercase tracking-[0.14em]"
+                    }`}
+                  >
                     {module.label}
                   </span>
                   <ChevronRight
-                    className={`h-4 w-4 text-[var(--fh-nav-item-chevron)] transition ${expanded ? "rotate-90" : ""}`}
+                    className={`text-[var(--fh-nav-item-chevron)] transition ${expanded ? "rotate-90" : ""} ${mobileMode ? "h-3.5 w-3.5" : "h-4 w-4"}`}
                   />
                 </button>
 
                 {expanded && module.entries.length > 0 ? (
-                  <div className="space-y-1 border-t border-[var(--fh-nav-section-divider)] px-2 pb-2 pt-2">
+                  <div
+                    className={`space-y-1 border-t border-[var(--fh-nav-section-divider)] ${mobileMode ? "px-2 pb-1.5 pt-1.5" : "px-2 pb-2 pt-2"}`}
+                  >
                     {module.entries.map((entry) => (
                       <button
                         key={entry.title}
                         type="button"
                         onClick={() => (entry.target ? onAction(entry.target) : undefined)}
-                        className={`w-full rounded-lg border px-2.5 py-2 text-left transition ${
+                        className={`w-full border text-left transition ${
                           entry.highlighted
-                            ? "border-slate-200 bg-white text-slate-900 shadow-sm"
+                            ? "border-[var(--fh-nav-item-active-border)] bg-[color:var(--fh-nav-item-active-bg)] text-[var(--fh-nav-item-active-fg)] shadow-sm"
                             : "border-transparent bg-[color:var(--fh-nav-item-bg)] text-[var(--fh-nav-item-title)] hover:border-[var(--fh-nav-item-hover-border)]"
                         }`}
+                        style={{ borderRadius: mobileMode ? "14px" : "10px", padding: mobileMode ? "0.48rem 0.6rem" : "0.5rem 0.625rem" }}
                       >
-                        <div className="text-sm font-semibold">{entry.title}</div>
-                        <div className={`text-xs ${entry.highlighted ? "text-white/90" : "text-[var(--fh-nav-item-sub)]"}`}>
-                          {entry.detail}
-                        </div>
+                        <div className={`${mobileMode ? "text-[13px]" : "text-sm"} font-semibold`}>{entry.title}</div>
+                        <div className="text-xs text-[var(--fh-nav-item-sub)]">{entry.detail}</div>
                       </button>
                     ))}
                   </div>
