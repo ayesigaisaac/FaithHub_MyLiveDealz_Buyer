@@ -1,5 +1,5 @@
 import React, { Suspense, useMemo } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { evzoneTheme } from "@/theme/evzoneTheme";
@@ -14,7 +14,6 @@ import {
 import { routes } from "@/constants/routes";
 import AppShellLayout from "@/components/layout/AppShellLayout";
 import FaithHubLandingPageV2 from "@/pages/public/FaithHubLandingPageV2";
-import FaithHubMultiRoleAppShell from "@/pages/public/FaithHubMultiRoleAppShell";
 import FaithHubAccessGateway from "@/pages/public/FaithHubAccessGateway";
 
 const roleBasePath: Record<RoleKey, string> = {
@@ -42,6 +41,13 @@ function RouteFallback() {
   );
 }
 
+function LegacyRoleRedirect({ role }: { role: RoleKey }) {
+  const location = useLocation();
+  const prefix = `/${role}`;
+  const suffix = location.pathname.startsWith(prefix) ? location.pathname.slice(prefix.length) : "";
+  return <Navigate to={`/app/${role}${suffix}${location.search}${location.hash}`} replace />;
+}
+
 export default function AppRouter() {
   const { mode } = useColorMode();
   const muiTheme = useMemo(() => evzoneTheme(mode), [mode]);
@@ -54,19 +60,17 @@ export default function AppRouter() {
         <Routes>
           <Route path={routes.public.landing} element={<FaithHubLandingPageV2 />} />
           <Route path={routes.public.access} element={<FaithHubAccessGateway />} />
-          <Route path={routes.public.shellPreview} element={<FaithHubMultiRoleAppShell />} />
+          <Route path={routes.public.shellPreview} element={<Navigate to={defaultPageForRole.user} replace />} />
+          <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
           <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
           <Route path="/tenant-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
           <Route
             path="/ops/*"
             element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
           />
-          <Route path={routes.aliases.user} element={<Navigate to={defaultPageForRole.user} replace />} />
-          <Route
-            path={routes.aliases.provider}
-            element={<Navigate to={defaultPageForRole.provider} replace />}
-          />
-          <Route path={routes.aliases.admin} element={<Navigate to={defaultPageForRole.admin} replace />} />
+          <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
+          <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
+          <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
           <Route path={routes.app.shell} element={<Navigate to={defaultPageForRole.user} replace />} />
           <Route path={routes.app.root} element={<Navigate to={defaultPageForRole.user} replace />} />
           {roleOrder.map((role) => (

@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import Sidebar from "@/components/layout/Sidebar";
 import RoleSwitcher from "@/components/layout/RoleSwitcher";
-import { ColorModeToggle } from "@/theme/color-mode-toggle";
+import { useColorMode } from "@/theme/color-mode";
 import {
   getRoutePatterns,
   pagesByRole,
@@ -19,28 +19,9 @@ import {
 } from "@/config/pageRegistry";
 import { buildSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
+import { routes } from "@/constants/routes";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
-
-const mobileLabelByItemId: Record<string, string> = {
-  "u-home": "Home",
-  "u-discover": "Discover",
-  "u-live-hub": "Live",
-  "u-events-hub": "Events",
-  "u-giving": "Giving",
-  "u-series-library": "Series",
-  "u-profile": "Profile",
-  "u-settings": "Settings",
-  "p-dashboard": "Home",
-  "p-onboarding": "Setup",
-  "p-live-ops": "Live",
-  "p-events": "Events",
-  "p-funds": "Funds",
-  "a-overview": "Home",
-  "a-live-mod": "Live",
-  "a-finance": "Finance",
-  "a-security": "Security",
-};
 
 const roleTriggerLabel: Record<RoleKey, string> = {
   user: "Faith Member",
@@ -54,15 +35,11 @@ const alertRouteByRole: Record<RoleKey, string> = {
   admin: "/app/admin/live-moderation",
 };
 
-function getMobileNavLabel(item: { id: string; label: string }) {
-  const mapped = mobileLabelByItemId[item.id];
-  if (mapped) return mapped;
-  const trimmed = item.label.trim();
-  if (trimmed.length <= 9) return trimmed;
-  const firstWord = trimmed.split(/\s+/)[0] || trimmed;
-  if (firstWord.length >= 4 && firstWord.length <= 9) return firstWord;
-  return trimmed.slice(0, 9);
-}
+const profileSettingsRouteByRole: Record<RoleKey, string> = {
+  user: "/app/user/profile",
+  provider: "/app/provider/onboarding",
+  admin: "/app/admin/overview",
+};
 
 function getCurrentRole(pathname: string): RoleKey {
   if (pathname.startsWith("/app/provider")) return "provider";
@@ -72,11 +49,6 @@ function getCurrentRole(pathname: string): RoleKey {
 
 function matchesPagePath(page: Pick<PageRegistryItem, "path" | "routePatterns">, pathname: string) {
   return getRoutePatterns(page).some((pattern) => Boolean(matchPath({ path: pattern, end: true }, pathname)));
-}
-
-function isPathActive(itemPath: string, currentPath: string) {
-  if (itemPath === currentPath) return true;
-  return currentPath.startsWith(`${itemPath}/`);
 }
 
 function withAdminAccess(path: string, enabled: boolean) {
@@ -94,6 +66,7 @@ export default function AppShellLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { mode, toggle } = useColorMode();
 
   const routeRole = getCurrentRole(location.pathname);
   const adminAllAccess = routeRole === "admin" || searchParams.get("admin") === "1";
@@ -139,18 +112,6 @@ export default function AppShellLayout() {
 
   const resolveNavPath = (path: string) => withAdminAccess(path, adminAllAccess);
   const navigateToPath = (path: string) => navigate(resolveNavPath(path));
-
-  const mobilePrimaryItems = useMemo(() => {
-    const seen = new Set<string>();
-    return baseSidebarSections
-      .flatMap((section) => section.items)
-      .filter((item) => {
-        if (seen.has(item.path)) return false;
-        seen.add(item.path);
-        return true;
-      })
-      .slice(0, 4);
-  }, [baseSidebarSections]);
 
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
     if (event.defaultPrevented) return;
@@ -217,9 +178,9 @@ export default function AppShellLayout() {
 
   return (
     <div className="fh-page-canvas flex h-[100dvh] flex-col overflow-hidden overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
-      <header className="fh-shell-topbar sticky top-0 z-50 shrink-0 border-b border-zinc-200/80 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur">
-        <div className="w-full px-2.5 py-2 sm:px-3 sm:py-3 lg:px-4">
-          <div className="flex items-center gap-2">
+      <header className="fh-shell-topbar sticky top-0 z-50 h-14 shrink-0 border-b border-zinc-200/85">
+        <div className="h-full w-full px-2.5 sm:px-3 lg:px-4">
+          <div className="flex h-full items-center gap-2">
             <div className="flex min-w-0 items-center gap-2">
               <button
                 type="button"
@@ -246,7 +207,7 @@ export default function AppShellLayout() {
             </div>
 
             <div className="hidden min-w-0 flex-1 px-1 md:flex lg:px-2">
-              <label className="fh-search-shell fh-shell-control mx-auto flex w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3 py-2">
+              <label className="fh-search-shell fh-shell-control mx-auto flex h-10 w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3">
                 <Search className="h-4 w-4 shrink-0 text-zinc-500" />
                 <input
                   type="search"
@@ -260,9 +221,6 @@ export default function AppShellLayout() {
             </div>
 
             <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
-              <div className="hidden xl:block">
-                <ColorModeToggle className="h-10 w-10 rounded-2xl" />
-              </div>
               <button
                 type="button"
                 aria-label="Open alerts"
@@ -280,8 +238,8 @@ export default function AppShellLayout() {
                 <button
                   ref={roleSwitcherTriggerRef}
                   type="button"
-                  title={`Switch role (${currentRoleLabel})`}
-                  aria-label={`Switch role. Current role: ${currentRoleLabel}`}
+                  title={`Open account menu (${currentRoleLabel})`}
+                  aria-label={`Open account menu. Current role: ${currentRoleLabel}`}
                   aria-expanded={roleSwitcherOpen}
                   onClick={() => setRoleSwitcherOpen((prev) => !prev)}
                   className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700"
@@ -298,13 +256,22 @@ export default function AppShellLayout() {
                       isOpen={roleSwitcherOpen}
                       currentPath={location.pathname}
                       currentRole={shellRole}
+                      colorMode={mode}
                       onClose={() => setRoleSwitcherOpen(false)}
                       onSwitch={(path) => {
                         navigateToPath(path);
                         setRoleSwitcherOpen(false);
                       }}
-                      onManageRoles={() => {
-                        navigateToPath("/app/admin/overview");
+                      onToggleColorMode={() => {
+                        toggle();
+                        setRoleSwitcherOpen(false);
+                      }}
+                      onOpenProfileSettings={() => {
+                        navigateToPath(profileSettingsRouteByRole[shellRole]);
+                        setRoleSwitcherOpen(false);
+                      }}
+                      onLogout={() => {
+                        navigate(routes.public.access);
                         setRoleSwitcherOpen(false);
                       }}
                       className="w-full sm:w-[22rem]"
@@ -314,18 +281,6 @@ export default function AppShellLayout() {
               </div>
             </div>
           </div>
-
-          <label className="fh-search-shell fh-shell-control mt-2 flex items-center gap-2 rounded-2xl px-3 py-2 md:hidden">
-            <Search className="h-4 w-4 shrink-0 text-zinc-500" />
-            <input
-              type="search"
-              aria-label="Search pages and modules"
-              value={navQuery}
-              onChange={(event) => setNavQuery(event.target.value)}
-              placeholder="Search pages and modules"
-              className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-zinc-800 outline-none placeholder:text-zinc-400"
-            />
-          </label>
         </div>
       </header>
 
@@ -373,43 +328,12 @@ export default function AppShellLayout() {
           </div>
         </Drawer>
         <main
-          className="fh-scroll-region fh-app-content min-h-0 min-w-0 flex-1 overflow-y-auto rounded-3xl border border-zinc-200/75 bg-white/65 p-2 pb-[5.8rem] shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur sm:p-3 lg:p-4 lg:pb-4"
+          className="fh-scroll-region fh-app-content min-h-0 min-w-0 flex-1 overflow-y-auto rounded-3xl border border-zinc-200/75 bg-white/65 p-2 pb-3 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur sm:p-3 lg:p-4 lg:pb-4"
           onClickCapture={handlePageAction}
         >
           <Outlet />
         </main>
       </div>
-
-      <nav className="fh-mobile-bottom-nav lg:hidden" aria-label="Primary mobile navigation">
-        <div className="mx-auto grid max-w-none grid-cols-5 px-1.5 py-1 sm:px-2.5">
-          {mobilePrimaryItems.map((item) => {
-            const Icon = item.icon;
-            const active = isPathActive(item.path, activeNavPath);
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => navigateToPath(item.path)}
-                className={`relative min-w-0 flex flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-1.5 text-[10px] font-semibold leading-tight sm:px-2 ${
-                  active ? "bg-zinc-100 text-zinc-900" : "text-zinc-600 hover:bg-zinc-50"
-                }`}
-                title={item.label}
-              >
-                <Icon className="h-5 w-5" />
-                <span className="fh-mobile-nav-label w-full truncate text-center">{getMobileNavLabel(item)}</span>
-              </button>
-            );
-          })}
-          <button
-            type="button"
-            onClick={() => setMobileOpen(true)}
-            className="relative min-w-0 flex flex-col items-center justify-center gap-0.5 rounded-2xl px-1 py-1.5 text-[10px] font-semibold leading-tight text-zinc-600 sm:px-2"
-          >
-            <Menu className="h-5 w-5" />
-            <span className="fh-mobile-nav-label w-full truncate text-center">Menu</span>
-          </button>
-        </div>
-      </nav>
     </div>
   );
 }

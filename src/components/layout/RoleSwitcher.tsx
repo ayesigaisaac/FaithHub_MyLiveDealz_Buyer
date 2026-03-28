@@ -3,13 +3,18 @@ import {
   BookOpen,
   CheckCircle2,
   Landmark,
+  LogOut,
+  Moon,
   Radio,
+  Settings,
   ShieldCheck,
+  Sun,
   Users,
   X,
   type LucideIcon,
 } from "lucide-react";
 import type { RoleKey } from "@/config/pageRegistry";
+import type { ColorMode } from "@/theme/color-mode";
 
 type RoleSwitchItem = {
   id: string;
@@ -99,9 +104,12 @@ interface RoleSwitcherProps {
   isOpen: boolean;
   currentPath: string;
   currentRole: RoleKey;
+  colorMode: ColorMode;
   onClose: () => void;
   onSwitch: (path: string) => void;
-  onManageRoles: () => void;
+  onToggleColorMode: () => void;
+  onOpenProfileSettings: () => void;
+  onLogout: () => void;
   className?: string;
 }
 
@@ -155,12 +163,16 @@ export default function RoleSwitcher({
   isOpen,
   currentPath,
   currentRole,
+  colorMode,
   onClose,
   onSwitch,
-  onManageRoles,
+  onToggleColorMode,
+  onOpenProfileSettings,
+  onLogout,
   className = "",
 }: RoleSwitcherProps) {
   const activeItemId = useMemo(() => resolveActiveItemId(currentPath, currentRole), [currentPath, currentRole]);
+  const darkMode = colorMode === "dark";
 
   if (!isOpen) return null;
 
@@ -168,10 +180,10 @@ export default function RoleSwitcher({
     <div
       className={`w-[20rem] rounded-2xl border border-slate-200 bg-white p-4 shadow-sm ${className}`.trim()}
       role="dialog"
-      aria-label="Switch role"
+      aria-label="Account menu"
     >
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-800">Switch role</h3>
+        <h3 className="text-sm font-semibold text-slate-800">Account</h3>
         <button
           type="button"
           onClick={onClose}
@@ -195,13 +207,30 @@ export default function RoleSwitcher({
         ))}
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 space-y-1.5 border-t border-slate-100 pt-3">
         <button
           type="button"
-          onClick={onManageRoles}
-          className="w-full rounded-lg border border-slate-200 bg-white py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+          onClick={onToggleColorMode}
+          className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-50"
         >
-          Manage roles & permissions
+          {darkMode ? <Sun className="h-4 w-4 text-amber-500" /> : <Moon className="h-4 w-4 text-slate-600" />}
+          {darkMode ? "Switch to light mode" : "Switch to dark mode"}
+        </button>
+        <button
+          type="button"
+          onClick={onOpenProfileSettings}
+          className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-left text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+        >
+          <Settings className="h-4 w-4 text-slate-600" />
+          Profile settings
+        </button>
+        <button
+          type="button"
+          onClick={onLogout}
+          className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-rose-200 bg-white px-3 py-2 text-left text-sm font-medium text-rose-600 transition hover:bg-rose-50"
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
         </button>
       </div>
     </div>
