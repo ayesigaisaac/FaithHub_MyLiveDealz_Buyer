@@ -17,8 +17,8 @@ npm run build
 
 ## Main Routes
 
-- `/` public landing page
-- `/shell-preview` attached multi-role shell preview
+- `/` redirects to the default user dashboard route
+- `/access` workspace access gateway
 - `/app/user/*` user pages in routed app shell
 - `/app/provider/*` provider pages in routed app shell
 - `/app/admin/*` admin pages in routed app shell
@@ -33,7 +33,7 @@ npm run build
 ## Notes
 
 - Only attached FaithHub pages were used as the application screens.
-- Pages are routed through a responsive app shell and code-split with lazy loading.
+- Pages are routed through a single persistent app shell (fixed header + fixed sidebar) and code-split with lazy loading.
 - MUI theming and Tailwind utility styling are both included.
 
 ## Enterprise Role Routes (Preview)

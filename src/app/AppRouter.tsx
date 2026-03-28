@@ -12,8 +12,7 @@ import {
   type RoleKey,
 } from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
-import AppShellLayout from "@/components/layout/AppShellLayout";
-import FaithHubLandingPageV2 from "@/pages/public/FaithHubLandingPageV2";
+import Layout from "@/components/layout/Layout";
 import FaithHubAccessGateway from "@/pages/public/FaithHubAccessGateway";
 
 const roleBasePath: Record<RoleKey, string> = {
@@ -58,43 +57,45 @@ export default function AppRouter() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path={routes.public.landing} element={<FaithHubLandingPageV2 />} />
-          <Route path={routes.public.access} element={<FaithHubAccessGateway />} />
-          <Route path={routes.public.shellPreview} element={<Navigate to={defaultPageForRole.user} replace />} />
-          <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
-          <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
-          <Route path="/tenant-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
-          <Route
-            path="/ops/*"
-            element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
-          />
-          <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
-          <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
-          <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
-          <Route path={routes.app.shell} element={<Navigate to={defaultPageForRole.user} replace />} />
-          <Route path={routes.app.root} element={<Navigate to={defaultPageForRole.user} replace />} />
-          {roleOrder.map((role) => (
-            <Route key={role} path={roleBasePath[role]} element={<AppShellLayout />}>
-              <Route index element={<Navigate to={defaultPageForRole[role]} replace />} />
-              {(pagesByRole[role] || []).map((page) => {
-                const Component = page.element;
-                const paths = getRoutePatterns(page);
-                return paths.map((path) => (
-                  <Route
-                    key={`${page.id}:${path}`}
-                    path={getNestedRoutePath(path, role)}
-                    element={
-                      <Suspense fallback={<RouteFallback />}>
-                        <Component />
-                      </Suspense>
-                    }
-                  />
-                ));
-              })}
-              <Route path="*" element={<Navigate to={defaultPageForRole[role]} replace />} />
-            </Route>
-          ))}
-          <Route path="*" element={<Navigate to={routes.public.landing} replace />} />
+          <Route element={<Layout />}>
+            <Route path={routes.public.landing} element={<Navigate to={defaultPageForRole.user} replace />} />
+            <Route path={routes.public.access} element={<FaithHubAccessGateway />} />
+            <Route path={routes.public.shellPreview} element={<Navigate to={defaultPageForRole.user} replace />} />
+            <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
+            <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
+            <Route path="/tenant-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
+            <Route
+              path="/ops/*"
+              element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
+            />
+            <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
+            <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
+            <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
+            <Route path={routes.app.shell} element={<Navigate to={defaultPageForRole.user} replace />} />
+            <Route path={routes.app.root} element={<Navigate to={defaultPageForRole.user} replace />} />
+            {roleOrder.map((role) => (
+              <Route key={role} path={roleBasePath[role]}>
+                <Route index element={<Navigate to={defaultPageForRole[role]} replace />} />
+                {(pagesByRole[role] || []).map((page) => {
+                  const Component = page.element;
+                  const paths = getRoutePatterns(page);
+                  return paths.map((path) => (
+                    <Route
+                      key={`${page.id}:${path}`}
+                      path={getNestedRoutePath(path, role)}
+                      element={
+                        <Suspense fallback={<RouteFallback />}>
+                          <Component />
+                        </Suspense>
+                      }
+                    />
+                  ));
+                })}
+                <Route path="*" element={<Navigate to={defaultPageForRole[role]} replace />} />
+              </Route>
+            ))}
+            <Route path="*" element={<Navigate to={defaultPageForRole.user} replace />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

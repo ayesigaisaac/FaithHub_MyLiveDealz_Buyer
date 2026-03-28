@@ -1,23 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { matchPath, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
-import {
-  Bell,
-  CircleUserRound,
-  Menu,
-  Search,
-} from "lucide-react";
+import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
 import Sidebar from "@/components/layout/Sidebar";
 import RoleSwitcher from "@/components/layout/RoleSwitcher";
 import { useColorMode } from "@/theme/color-mode";
-import {
-  getRoutePatterns,
-  pagesByRole,
-  pageRegistry,
-  type PageRegistryItem,
-  type RoleKey,
-} from "@/config/pageRegistry";
-import { buildSidebarSections } from "@/config/sidebar";
+import { getRoutePatterns, pageRegistry, type PageRegistryItem, type RoleKey } from "@/config/pageRegistry";
+import { buildUnifiedSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 import { routes } from "@/constants/routes";
 
@@ -30,20 +19,20 @@ const roleTriggerLabel: Record<RoleKey, string> = {
 };
 
 const alertRouteByRole: Record<RoleKey, string> = {
-  user: "/app/user/settings",
-  provider: "/app/provider/notifications",
-  admin: "/app/admin/live-moderation",
+  user: routes.app.user.settings,
+  provider: routes.app.provider.notifications,
+  admin: routes.app.admin.liveModeration,
 };
 
 const profileSettingsRouteByRole: Record<RoleKey, string> = {
-  user: "/app/user/profile",
-  provider: "/app/provider/onboarding",
-  admin: "/app/admin/overview",
+  user: routes.app.user.profile,
+  provider: routes.app.provider.onboarding,
+  admin: routes.app.admin.security,
 };
 
 function getCurrentRole(pathname: string): RoleKey {
-  if (pathname.startsWith("/app/provider")) return "provider";
-  if (pathname.startsWith("/app/admin")) return "admin";
+  if (pathname.startsWith(routes.app.provider.base)) return "provider";
+  if (pathname.startsWith(routes.app.admin.base)) return "admin";
   return "user";
 }
 
@@ -80,40 +69,23 @@ export default function AppShellLayout() {
   const roleSwitcherTriggerRef = useRef<HTMLButtonElement | null>(null);
   const shouldRestoreRoleSwitcherFocus = useRef(false);
 
-  const pages = useMemo(
-    () => (adminAllAccess ? pageRegistry : pagesByRole[routeRole] || []),
-    [adminAllAccess, routeRole],
-  );
-
-  const baseSidebarSections = useMemo(
-    () => buildSidebarSections({ role: routeRole, pages, adminAllAccess }),
-    [adminAllAccess, pages, routeRole],
-  );
-
-  const filteredPages = useMemo(() => {
-    const normalized = navQuery.trim().toLowerCase();
-    if (!normalized) return pages;
-    return pages.filter((page) =>
-      `${page.label} ${page.section} ${page.navTag} ${page.description}`.toLowerCase().includes(normalized),
-    );
-  }, [pages, navQuery]);
-
   const sidebarSections = useMemo(
-    () =>
-      navQuery.trim()
-        ? buildSidebarSections({ role: routeRole, pages: filteredPages, adminAllAccess })
-        : baseSidebarSections,
-    [adminAllAccess, baseSidebarSections, filteredPages, navQuery, routeRole],
+    () => buildUnifiedSidebarSections({ role: shellRole, query: navQuery }),
+    [shellRole, navQuery],
   );
 
   const currentPage = pageRegistry.find((page) => matchesPagePath(page, location.pathname));
   const activeNavPath = currentPage?.path || location.pathname;
   const currentRoleLabel = roleTriggerLabel[shellRole];
+  const sidebarWidthClass = sidebarCollapsed ? "lg:ml-[84px]" : "lg:ml-[280px]";
 
   const resolveNavPath = (path: string) => withAdminAccess(path, adminAllAccess);
   const navigateToPath = (path: string) => navigate(resolveNavPath(path));
 
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
+    const insideAppWorkspace = location.pathname.startsWith("/app/");
+    if (!insideAppWorkspace && !currentPage) return;
+
     if (event.defaultPrevented) return;
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
@@ -122,7 +94,7 @@ export default function AppShellLayout() {
     if (target.closest("[data-no-nav]")) return;
     if (target.closest("a, [role='link'], input, textarea, select, option, label")) return;
 
-    const button = target?.closest("button");
+    const button = target.closest("button");
     if (!button || button.hasAttribute("disabled")) return;
     if ((button.getAttribute("type") || "").toLowerCase() === "submit") return;
 
@@ -177,8 +149,8 @@ export default function AppShellLayout() {
   }, [roleSwitcherOpen]);
 
   return (
-    <div className="fh-page-canvas flex h-[100dvh] flex-col overflow-hidden overflow-x-clip bg-[var(--bg)] text-[var(--text-primary)]">
-      <header className="fh-shell-topbar sticky top-0 z-50 h-14 shrink-0 border-b border-zinc-200/85">
+    <div className="fh-page-canvas h-[100dvh] overflow-hidden bg-[var(--bg)] text-[var(--text-primary)]">
+      <header className="fh-shell-topbar fixed inset-x-0 top-0 z-50 h-14 border-b border-zinc-200/85">
         <div className="h-full w-full px-2.5 sm:px-3 lg:px-4">
           <div className="flex h-full items-center gap-2">
             <div className="flex min-w-0 items-center gap-2">
@@ -195,7 +167,7 @@ export default function AppShellLayout() {
               <button
                 type="button"
                 aria-label="Go to FaithHub landing page"
-                onClick={() => navigate("/")}
+                onClick={() => navigate(routes.public.landing)}
                 className="fh-shell-control inline-flex h-10 min-w-0 items-center rounded-2xl px-2.5 sm:px-3"
               >
                 <img
@@ -211,10 +183,10 @@ export default function AppShellLayout() {
                 <Search className="h-4 w-4 shrink-0 text-zinc-500" />
                 <input
                   type="search"
-                  aria-label="Search pages and modules"
+                  aria-label="Search navigation"
                   value={navQuery}
                   onChange={(event) => setNavQuery(event.target.value)}
-                  placeholder="Search pages and modules"
+                  placeholder="Search navigation"
                   className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-zinc-800 outline-none placeholder:text-zinc-400"
                 />
               </label>
@@ -284,21 +256,19 @@ export default function AppShellLayout() {
         </div>
       </header>
 
-      <div className="relative flex w-full min-h-0 min-w-0 flex-1 gap-2 overflow-hidden px-1 py-1.5 sm:px-2 lg:px-2.5 lg:pb-3">
+      <div className="flex h-full pt-14">
         <aside
-          className={`hidden min-h-0 shrink-0 transition-[width] duration-300 ease-out lg:block ${
-            sidebarCollapsed ? "w-[84px] xl:w-[92px]" : "w-[248px] xl:w-[284px]"
+          className={`fixed left-0 top-14 bottom-0 z-40 hidden transition-[width] duration-200 ease-out lg:block ${
+            sidebarCollapsed ? "w-[84px]" : "w-[280px]"
           }`}
         >
-          <div className="h-full min-h-0">
-            <Sidebar
-              sections={sidebarSections}
-              collapsed={sidebarCollapsed}
-              currentPath={activeNavPath}
-              resolvePath={resolveNavPath}
-              onToggleCollapse={() => setSidebarCollapsed((prev) => !prev)}
-            />
-          </div>
+          <Sidebar
+            sections={sidebarSections}
+            collapsed={sidebarCollapsed}
+            currentPath={activeNavPath}
+            resolvePath={resolveNavPath}
+            onToggleCollapse={() => setSidebarCollapsed((prev) => !prev)}
+          />
         </aside>
 
         <Drawer
@@ -307,35 +277,33 @@ export default function AppShellLayout() {
           sx={{
             display: { lg: "none" },
             "& .MuiDrawer-paper": {
-              width: "min(308px, 82vw)",
+              width: "min(300px, 84vw)",
               backgroundColor: "transparent",
               boxShadow: "none",
               border: "none",
             },
           }}
         >
-          <div className="fh-mobile-drawer-shell flex h-full min-h-0 flex-col border-r border-[var(--fh-nav-shell-border)] bg-[color:var(--fh-nav-shell-bg)]/95 shadow-[0_28px_60px_rgba(15,23,42,0.22)] backdrop-blur-xl">
-            <div className="min-h-0 flex-1">
-              <Sidebar
-                sections={sidebarSections}
-                currentPath={activeNavPath}
-                compactHeight
-                resolvePath={resolveNavPath}
-                onNavigate={() => setMobileOpen(false)}
-                onClose={() => setMobileOpen(false)}
-              />
-            </div>
+          <div className="h-full">
+            <Sidebar
+              sections={sidebarSections}
+              currentPath={activeNavPath}
+              resolvePath={resolveNavPath}
+              onNavigate={() => setMobileOpen(false)}
+              onClose={() => setMobileOpen(false)}
+            />
           </div>
         </Drawer>
+
         <main
-          className="fh-scroll-region fh-app-content min-h-0 min-w-0 flex-1 overflow-y-auto rounded-3xl border border-zinc-200/75 bg-white/65 p-2 pb-3 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur sm:p-3 lg:p-4 lg:pb-4"
+          className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4 ${sidebarWidthClass}`}
           onClickCapture={handlePageAction}
         >
-          <Outlet />
+          <div className="fh-app-content min-h-full rounded-3xl border border-zinc-200/75 bg-white/65 p-3 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur sm:p-4 lg:p-5">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>
   );
 }
-
-
