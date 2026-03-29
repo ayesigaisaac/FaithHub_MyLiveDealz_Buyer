@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ChevronDown, ChevronsLeft, ChevronsRight, X } from "lucide-react";
 import type { SidebarSection } from "@/config/sidebar";
 
@@ -109,23 +109,33 @@ export default function Sidebar({
                     const targetPath = resolvePath ? resolvePath(item.path) : item.path;
 
                     return (
-                      <Link
+                      <NavLink
                         key={item.id}
                         to={targetPath}
                         title={item.title}
                         aria-current={active ? "page" : undefined}
                         onClick={() => onNavigate?.(item.path)}
-                        className={`group flex items-center gap-2.5 rounded-xl border px-2.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200 ${
-                          collapsed ? "justify-center px-0" : ""
-                        } ${
-                          active
-                            ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                            : "border-transparent bg-white text-zinc-700 hover:border-zinc-200 hover:bg-zinc-50"
-                        }`}
+                        className={({ isActive }) => {
+                          const navActive = active || isActive;
+                          return `group flex items-center gap-2.5 rounded-xl border px-2.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200 ${
+                            collapsed ? "justify-center px-0" : ""
+                          } ${
+                            navActive
+                              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                              : "border-transparent bg-white text-zinc-700 hover:border-zinc-200 hover:bg-zinc-50"
+                          }`;
+                        }}
                       >
-                        <item.icon className={`h-4 w-4 shrink-0 ${active ? "text-emerald-600" : "text-zinc-500"}`} />
-                        {!collapsed ? <span className="truncate">{item.label}</span> : null}
-                      </Link>
+                        {({ isActive }) => {
+                          const navActive = active || isActive;
+                          return (
+                            <>
+                              <item.icon className={`h-4 w-4 shrink-0 ${navActive ? "text-emerald-600" : "text-zinc-500"}`} />
+                              {!collapsed ? <span className="truncate">{item.label}</span> : null}
+                            </>
+                          );
+                        }}
+                      </NavLink>
                     );
                   })}
                 </div>

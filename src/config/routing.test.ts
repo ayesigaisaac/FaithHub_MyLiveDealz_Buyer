@@ -1,3 +1,5 @@
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { matchPath } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { routes } from "@/constants/routes";
@@ -13,6 +15,44 @@ function findPage(path: string) {
 function pageMatchesPath(path: string, pathname: string) {
   const page = findPage(path);
   return getRoutePatterns(page).some((pattern) => Boolean(matchPath({ path: pattern, end: true }, pathname)));
+}
+
+function collectTsxFiles(dir: string): string[] {
+  const entries = readdirSync(dir, { withFileTypes: true });
+  const files: string[] = [];
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...collectTsxFiles(fullPath));
+      continue;
+    }
+    if (entry.isFile() && fullPath.endsWith(".tsx")) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
+function collectStaticActionTokens() {
+  const sourceRoot = join(process.cwd(), "src");
+  const files = collectTsxFiles(sourceRoot);
+  const labels = new Set<string>();
+  const actionIds = new Set<string>();
+
+  const labelRegex = /data-action-label="([^"]+)"/g;
+  const actionIdRegex = /data-action-id="([^"]+)"/g;
+
+  for (const file of files) {
+    const content = readFileSync(file, "utf8");
+    for (const match of content.matchAll(labelRegex)) {
+      labels.add(match[1]);
+    }
+    for (const match of content.matchAll(actionIdRegex)) {
+      actionIds.add(match[1]);
+    }
+  }
+
+  return { labels: Array.from(labels), actionIds: Array.from(actionIds) };
 }
 
 describe("FaithHub routing aliases", () => {
@@ -50,6 +90,15 @@ describe("FaithHub action-id routing", () => {
       routes.app.provider.liveOps,
     );
   });
+
+  it("falls back from unmapped action ids using route keywords", () => {
+    expect(resolvePageButtonAction(routes.app.provider.dashboard, "", "open-calendar-view")).toBe(
+      routes.app.provider.liveSchedule,
+    );
+    expect(resolvePageButtonAction(routes.app.admin.overview, "", "open-admin-moderation")).toBe(
+      routes.app.admin.liveModeration,
+    );
+  });
 });
 
 describe("FaithHub action-label routing", () => {
@@ -71,7 +120,34 @@ describe("FaithHub action-label routing", () => {
     );
   });
 
+  it("resolves calendar and schedule labels by role", () => {
+    expect(resolvePageButtonAction(routes.app.user.liveHub, "Open calendar")).toBe(routes.app.user.events);
+    expect(resolvePageButtonAction(routes.app.provider.dashboard, "Open schedule")).toBe(
+      routes.app.provider.liveSchedule,
+    );
+  });
+
   it("does not force navigation on non-navigation labels", () => {
     expect(resolvePageButtonAction(routes.app.user.profile, "Save profile")).toBeNull();
+  });
+});
+
+describe("FaithHub static action bindings", () => {
+  const pathnames = pageRegistry.map((page) => page.path);
+
+  it("resolves all statically declared data-action-label values", () => {
+    const { labels } = collectStaticActionTokens();
+    const unresolved = labels.filter(
+      (label) => !pathnames.some((pathname) => Boolean(resolvePageButtonAction(pathname, label))),
+    );
+    expect(unresolved).toEqual([]);
+  });
+
+  it("resolves all statically declared data-action-id values", () => {
+    const { actionIds } = collectStaticActionTokens();
+    const unresolved = actionIds.filter(
+      (actionId) => !pathnames.some((pathname) => Boolean(resolvePageButtonAction(pathname, "", actionId))),
+    );
+    expect(unresolved).toEqual([]);
   });
 });

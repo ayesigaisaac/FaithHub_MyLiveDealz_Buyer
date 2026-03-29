@@ -296,10 +296,10 @@ export default function AppShellLayout() {
         </Drawer>
 
         <main
-          className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto p-2 sm:p-3 lg:p-4 ${sidebarWidthClass}`}
+          className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto px-6 py-4 ${sidebarWidthClass}`}
           onClickCapture={handlePageAction}
         >
-          <div className="fh-app-content min-h-full rounded-3xl border border-zinc-200/75 bg-white/65 p-3 shadow-[0_12px_30px_rgba(15,23,42,0.08)] backdrop-blur sm:p-4 lg:p-5">
+          <div className="fh-app-content min-h-full">
             <Outlet />
           </div>
         </main>

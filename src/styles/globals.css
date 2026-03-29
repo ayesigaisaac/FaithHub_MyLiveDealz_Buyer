@@ -148,7 +148,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--fh-page-canvas-grad);
+  background: var(--bg);
   color: var(--text-primary);
   line-height: 1.5;
   letter-spacing: 0.01em;
@@ -457,18 +457,13 @@ a,
 
 .fh-hero-card {
   position: relative;
-  border: 1px solid var(--fh-hero-border);
-  background: var(--fh-hero-grad);
+  border: 1px solid var(--fh-surface-card-border);
+  background: var(--fh-surface-card-bg);
   box-shadow: var(--fh-shadow-card);
 }
 
 .fh-hero-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(132deg, rgba(22, 163, 74, 0.1), rgba(255, 255, 255, 0.04) 44%, rgba(249, 115, 22, 0.1));
+  content: none;
 }
 
 .fh-hero-card > * {
@@ -487,9 +482,10 @@ a,
 /* Brand guardrail for legacy mint gradients so they match the EVzone green/orange system. */
 :where(html:not([data-theme="dark"]), html[data-theme="light"])
   :is([class*="bg-gradient-to-br"][class*="from-[#03cd8c]"], [class*="bg-gradient-to-r"][class*="from-[#03cd8c]"]) {
-  background-image: linear-gradient(120deg, #eaf9ef 0%, #ffffff 52%, #fff2e8 100%) !important;
-  border-color: rgba(22, 163, 74, 0.2) !important;
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09) !important;
+  background-image: none !important;
+  background-color: var(--card) !important;
+  border-color: var(--fh-surface-card-border) !important;
+  box-shadow: var(--fh-shadow-card) !important;
   color: #111827 !important;
 }
 
@@ -564,14 +560,15 @@ a,
 }
 
 [data-theme="light"] [class*="bg-[linear-gradient(135deg,#ecfdf5_0%,#f8fafc_100%)]"] {
-  background-image: linear-gradient(120deg, #eaf9ef 0%, #ffffff 52%, #fff2e8 100%) !important;
-  border-color: rgba(22, 163, 74, 0.2) !important;
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09) !important;
+  background-image: none !important;
+  background-color: var(--card) !important;
+  border-color: var(--fh-surface-card-border) !important;
+  box-shadow: var(--fh-shadow-card) !important;
 }
 
 [data-theme="light"] [class*="shadow-[#03cd8c]/"],
 [data-theme="light"] [class*="shadow-emerald-500/"] {
-  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.24) !important;
+  box-shadow: var(--fh-shadow-card) !important;
 }
 
 [data-theme="light"] [class*="hover:bg-[#02b67c]"]:hover {
@@ -764,19 +761,23 @@ a,
 }
 
 .fh-page-canvas {
-  background: var(--fh-page-canvas-grad);
+  background: transparent;
 }
 
 .fh-page-header {
   border: 1px solid var(--fh-page-header-border);
-  background: var(--fh-page-header-bg);
-  box-shadow: var(--fh-page-header-shadow);
-  backdrop-filter: blur(14px);
+  background: var(--card);
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 /* App-shell decision: use only the global top header and hide per-page subheaders. */
 .fh-page-header {
   display: none !important;
+}
+
+.fh-app-content :is([class*="rounded-[32px]"], [class*="rounded-[30px]"], [class*="rounded-[28px]"]) {
+  border-radius: 1rem !important;
 }
 
 .fh-surface-card {
@@ -1117,9 +1118,9 @@ a,
   }
 
   .fh-app-content {
-    border-radius: 1.2rem;
-    padding: 0.58rem;
-    padding-bottom: 5.35rem;
+    border-radius: 0;
+    padding: 0;
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
   }
 
   .fh-app-content :is(.fh-surface-card, .fh-surface-dark, .fh-surface-warm, .fh-hero-card) {
@@ -1301,7 +1302,7 @@ a,
 
 [data-theme="dark"] .fh-page-header {
   border-color: var(--fh-page-header-border);
-  background: var(--fh-page-header-bg);
+  background: var(--card);
 }
 
 [data-theme="dark"] .fh-search-shell {

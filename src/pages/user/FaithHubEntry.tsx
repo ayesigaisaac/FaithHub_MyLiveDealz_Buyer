@@ -89,7 +89,7 @@ export default function FaithHubEntry() {
 
   return (
     <div className="fh-page-canvas min-h-0 text-slate-900">
-      <div className="flex min-h-0 w-full max-w-none flex-col gap-4">
+      <div className="flex min-h-0 w-full flex-col gap-4">
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

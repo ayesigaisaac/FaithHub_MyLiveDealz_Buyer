@@ -46,7 +46,7 @@ const accessCards = [
 export default function FaithHubAccessGateway() {
   return (
     <div className="min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)] px-4 py-8 text-slate-900 sm:px-6 lg:px-8">
-      <div className="w-full max-w-none">
+      <div className="w-full">
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <Link to="/" className="flex min-w-0 items-center gap-3 text-left">
             <img src={faithmartLogoLandscape} alt="FaithMart" className="h-12 w-auto max-w-[15rem] object-contain sm:h-14 sm:max-w-[18rem]" />
@@ -73,7 +73,7 @@ export default function FaithHubAccessGateway() {
               presents only User and Provider experiences.
             </p>
 
-            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {accessCards.map((item) => {
                 const Icon = item.icon;
                 return (
