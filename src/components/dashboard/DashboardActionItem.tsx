@@ -35,10 +35,10 @@ export function DashboardActionItem({
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[0.95rem] font-semibold text-slate-900 sm:text-base">{title}</div>
-          <div className="mt-1 text-sm leading-relaxed text-slate-500 sm:text-[0.95rem]">{detail}</div>
+          <div className="text-[0.95rem] font-semibold text-[var(--text-primary)] sm:text-base">{title}</div>
+          <div className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.95rem]">{detail}</div>
         </div>
-        <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5" />
+        <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-[var(--text-muted,#6B7280)] transition group-hover:translate-x-0.5" />
       </div>
     </button>
   );

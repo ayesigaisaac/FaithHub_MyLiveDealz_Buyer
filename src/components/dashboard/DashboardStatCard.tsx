@@ -23,10 +23,10 @@ function toneClass(tone: Tone) {
 }
 
 function progressToneClass(tone: Tone) {
-  if (tone === "orange") return "bg-gradient-to-r from-[#f77f00] to-[#f59e0b]";
+  if (tone === "orange") return "bg-gradient-to-r from-[#f77f00] to-[#d96f00]";
   if (tone === "rose") return "bg-gradient-to-r from-rose-500 to-rose-400";
-  if (tone === "slate") return "bg-gradient-to-r from-slate-500 to-slate-400";
-  return "bg-gradient-to-r from-[#03cd8c] to-[#14b8a6]";
+  if (tone === "slate") return "bg-gradient-to-r from-[#a6a6a6] to-[#8d8d8d]";
+  return "bg-gradient-to-r from-[#03cd8c] to-[#02b87c]";
 }
 
 function iconTone(tone: Tone): "neutral" | "orange" | "green" {
@@ -56,8 +56,8 @@ export function DashboardStatCard({
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="fh-label text-slate-500">{label}</div>
-            <div className="fh-stat-value mt-2 text-[1.6rem] font-bold tracking-tight text-slate-900 sm:text-3xl">{value}</div>
+            <div className="fh-label text-[var(--text-secondary)]">{label}</div>
+            <div className="fh-stat-value mt-2 text-[1.6rem] font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">{value}</div>
           </div>
 
           {badge ? (
@@ -70,7 +70,7 @@ export function DashboardStatCard({
         </div>
 
         {normalizedProgress !== undefined ? (
-          <div className="mt-3.5 h-1.5 rounded-full bg-slate-200/85">
+          <div className="mt-3.5 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--border)_76%,transparent_24%)]">
             <div
               className={`h-full rounded-full ${progressToneClass(tone)} transition-[width] duration-500`}
               style={{ width: `${normalizedProgress}%` }}
@@ -78,7 +78,7 @@ export function DashboardStatCard({
           </div>
         ) : null}
 
-        {hint ? <p className="mt-2.5 text-sm leading-relaxed text-slate-500 sm:text-[0.92rem]">{hint}</p> : null}
+        {hint ? <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.92rem]">{hint}</p> : null}
       </CardContent>
     </Card>
   );

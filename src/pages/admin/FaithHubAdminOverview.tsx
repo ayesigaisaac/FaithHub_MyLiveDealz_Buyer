@@ -484,7 +484,7 @@ export default function FaithHubAdminOverview() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Smart insight</div>
+              <div className="fh-label text-[var(--accent)]">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Trust posture improves with faster escalation loops</div>
               <p className="mt-1 text-xs text-slate-600">
                 Incidents resolved under 10 minutes have significantly lower recurrence risk.
@@ -511,4 +511,5 @@ function ArrowBadge() {
     </span>
   );
 }
+
 

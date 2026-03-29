@@ -225,15 +225,15 @@ const actionItems: PriorityItem[] = [
 ];
 
 function signalToneClass(tone: SignalMetric["tone"]) {
-  if (tone === "orange") return "bg-[#fff3e8] text-[#cc6500]";
-  if (tone === "slate") return "bg-slate-100 text-slate-700";
-  return "bg-[#ecfff8] text-[#049e6d]";
+  if (tone === "orange") return "fh-pill fh-pill-orange";
+  if (tone === "slate") return "fh-pill fh-pill-slate";
+  return "fh-pill fh-pill-emerald";
 }
 
 function signalBarClass(metric: SignalMetric) {
-  if (metric.trend === "down") return "w-[42%] bg-[#f77f00]/75";
-  if (metric.trend === "flat") return "w-[56%] bg-slate-400/70";
-  return "w-[72%] bg-[#03cd8c]/75";
+  if (metric.trend === "down") return "w-[42%] bg-[color-mix(in_srgb,var(--warning)_78%,transparent_22%)]";
+  if (metric.trend === "flat") return "w-[56%] bg-[color-mix(in_srgb,var(--text-secondary)_68%,transparent_32%)]";
+  return "w-[72%] bg-[color-mix(in_srgb,var(--accent)_76%,transparent_24%)]";
 }
 
 export default function FaithHubHome() {
@@ -282,22 +282,22 @@ export default function FaithHubHome() {
           <CardContent className="fh-pad-hero">
             <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
               <div className="min-w-0">
-                <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
-                <h2 className="mt-2 text-[1.9rem] font-bold leading-tight tracking-tight text-slate-900 sm:text-[2.35rem]">
+                <div className="fh-label fh-user-kicker">{copy.hero.kicker}</div>
+                <h2 className="mt-2 text-[1.9rem] font-bold leading-tight tracking-tight text-[var(--text-primary)] sm:text-[2.35rem]">
                   {copy.hero.title}
                 </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-[0.95rem]">
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)] sm:text-[0.95rem]">
                   {copy.hero.subtitle}
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <Badge className="fh-pill fh-pill-emerald hover:bg-emerald-50">
+                  <Badge className="fh-pill fh-pill-emerald">
                     {copy.badges.primary}
                   </Badge>
-                  <Badge className="fh-pill fh-pill-slate hover:bg-slate-100">
+                  <Badge className="fh-pill fh-pill-slate">
                     {copy.badges.secondary}
                   </Badge>
-                  <Badge className="fh-pill fh-pill-slate hover:bg-white">
+                  <Badge className="fh-pill fh-pill-slate">
                     {copy.badges.tertiary}
                   </Badge>
                 </div>
@@ -305,31 +305,25 @@ export default function FaithHubHome() {
 
               <div className="flex w-full min-w-0 flex-col gap-3 xl:w-auto xl:min-w-[420px]">
                 <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
-                  <div className="fh-inline-action inline-flex items-center rounded-xl p-1">
+                  <div className="fh-user-segment">
                     <button
                       type="button"
                       onClick={() => setWindowView("today")}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "today" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                      }`}
+                      className={`fh-user-segment-btn ${windowView === "today" ? "is-active" : ""}`}
                     >
                       Today
                     </button>
                     <button
                       type="button"
                       onClick={() => setWindowView("week")}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "week" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                      }`}
+                      className={`fh-user-segment-btn ${windowView === "week" ? "is-active" : ""}`}
                     >
                       This week
                     </button>
                     <button
                       type="button"
                       onClick={() => setWindowView("month")}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "month" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                      }`}
+                      className={`fh-user-segment-btn ${windowView === "month" ? "is-active" : ""}`}
                     >
                       This month
                     </button>
@@ -366,17 +360,17 @@ export default function FaithHubHome() {
                     transition={{ delay: 0.06 + index * 0.05, duration: 0.28, ease: "easeOut" }}
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.996 }}
-                    className="fh-interactive-card fh-subcard group min-h-[132px] w-full rounded-2xl p-3.5 text-left transition hover:border-[#c8f0e0] hover:bg-white sm:min-h-[146px] sm:p-4"
+                    className="fh-interactive-card fh-subcard group min-h-[132px] w-full rounded-2xl p-3.5 text-left sm:min-h-[146px] sm:p-4"
                   >
                     <div className="flex items-center justify-between gap-3">
-                      <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
+                      <div className="fh-user-icon-badge">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <Sparkles className="h-4 w-4 text-slate-400 transition group-hover:text-[#049e6d]" />
+                      <Sparkles className="h-4 w-4 text-[var(--text-muted)] transition group-hover:text-[var(--accent)]" />
                     </div>
 
-                    <div className="mt-3 text-base font-semibold leading-tight text-slate-900">{module.title}</div>
-                    <div className="mt-1 text-xs leading-relaxed text-slate-500">{module.description}</div>
+                    <div className="mt-3 text-base font-semibold leading-tight text-[var(--text-primary)]">{module.title}</div>
+                    <div className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">{module.description}</div>
                   </motion.button>
                 );
               })}
@@ -416,15 +410,15 @@ export default function FaithHubHome() {
               <CardContent className="p-3.5 sm:p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <div className="fh-label text-slate-500">{metric.label}</div>
-                    <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
+                    <div className="fh-label text-[var(--text-secondary)]">{metric.label}</div>
+                    <div className="mt-2 text-3xl font-bold leading-none text-[var(--text-primary)]">{metric.value}</div>
                   </div>
                   <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${signalToneClass(metric.tone)}`}>
                     {metric.delta}
                   </span>
                 </div>
 
-                <div className="mt-3 h-8 rounded-xl bg-slate-100/90 p-1">
+                <div className="mt-3 h-8 rounded-xl bg-[color-mix(in_srgb,var(--border)_76%,transparent_24%)] p-1">
                   <div className={`h-full rounded-lg ${signalBarClass(metric)}`} />
                 </div>
               </CardContent>
@@ -449,7 +443,7 @@ export default function FaithHubHome() {
                   type="button"
                   data-action-label="Open calendar"
                   data-action-id="open-events"
-                  className="text-sm font-semibold text-slate-500 transition hover:text-slate-800"
+                  className="text-sm font-semibold text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]"
                 >
                   {copy.ctas.openFullList}
                 </button>
@@ -482,7 +476,7 @@ export default function FaithHubHome() {
                   type="button"
                   data-action-label="Open calendar"
                   data-action-id="open-events"
-                  className="fh-inline-action inline-flex items-center rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-600"
+                  className="fh-inline-action inline-flex items-center rounded-xl px-3 py-1.5 text-xs font-semibold text-[var(--text-secondary)]"
                 >
                   <CalendarDays className="mr-1.5 h-3.5 w-3.5" />
                   Open calendar
@@ -497,24 +491,24 @@ export default function FaithHubHome() {
               </div>
               {agenda.map((item) => (
                 <div key={item.id} className="fh-data-grid-row grid gap-2 px-3 py-3 sm:grid-cols-[78px_minmax(0,1fr)] sm:items-start">
-                  <div className="inline-flex h-7 w-fit items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
+                  <div className="inline-flex h-7 w-fit items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--border)_66%,transparent_34%)] px-2 text-xs font-semibold text-[var(--text-secondary)]">
                     {item.time}
                   </div>
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                    <div className="mt-1 text-xs text-slate-500">{item.detail}</div>
+                    <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                    <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.detail}</div>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="fh-subcard-muted mt-3 rounded-xl p-3">
-              <div className="fh-label text-slate-400">Completion</div>
-              <div className="mt-1 text-2xl font-bold text-slate-900">61%</div>
-              <div className="mt-2 h-1.5 rounded-full bg-slate-200">
-                <div className="h-full w-[61%] rounded-full bg-[#03cd8c]" />
+              <div className="fh-label text-[var(--text-muted)]">Completion</div>
+              <div className="mt-1 text-2xl font-bold text-[var(--text-primary)]">61%</div>
+              <div className="mt-2 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--border)_78%,transparent_22%)]">
+                <div className="h-full w-[61%] rounded-full bg-[var(--accent)]" />
               </div>
-              <div className="mt-2 text-xs text-slate-500">You are on track with live, replay, and event milestones.</div>
+              <div className="mt-2 text-xs text-[var(--text-secondary)]">You are on track with live, replay, and event milestones.</div>
             </div>
           </CardContent>
         </Card>
@@ -528,7 +522,7 @@ export default function FaithHubHome() {
                 <button
                   type="button"
                   aria-label="Open action center settings"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
+                  className="fh-user-secondary-btn inline-flex h-8 w-8 items-center justify-center rounded-lg"
                 >
                   <Sparkles className="h-4 w-4" />
                 </button>
@@ -537,8 +531,8 @@ export default function FaithHubHome() {
 
             <div className="fh-subcard-muted rounded-xl p-3">
               <div className="mb-2 flex items-center justify-between gap-2">
-                <div className="fh-label text-slate-400">Highlights</div>
-                <MessageSquare className="h-4 w-4 text-slate-400" />
+                <div className="fh-label text-[var(--text-muted)]">Highlights</div>
+                <MessageSquare className="h-4 w-4 text-[var(--text-muted)]" />
               </div>
 
               <div className="space-y-2.5">
@@ -556,9 +550,9 @@ export default function FaithHubHome() {
             </div>
 
             <div className="fh-subcard-accent mt-3 rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Smart insight</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">Live sessions with early joiners retain higher engagement</div>
-              <p className="mt-1 text-xs text-slate-600">
+              <div className="fh-label text-[var(--accent)]">Smart insight</div>
+              <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">Live sessions with early joiners retain higher engagement</div>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">
                 Joining a waiting room 10 minutes early increases completion and chat participation.
               </p>
             </div>
@@ -628,3 +622,4 @@ export default function FaithHubHome() {
     </div>
   );
 }
+

@@ -29,11 +29,11 @@ export default function PageStateView({
 
   return (
     <div className="fh-surface-card rounded-[28px] p-8 text-center">
-      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
         <Icon className={`h-5 w-5 ${state === "loading" ? "animate-spin" : ""}`} />
       </div>
-      <div className="text-lg font-semibold text-slate-900">{title}</div>
-      <div className="mx-auto mt-2 max-w-xl fh-body text-slate-500">{message}</div>
+      <div className="text-lg font-semibold text-[var(--text-primary)]">{title}</div>
+      <div className="mx-auto mt-2 max-w-xl fh-body text-[var(--text-secondary)]">{message}</div>
       {actionLabel ? (
         <div className="mt-5">
           <Button onClick={onAction}>{actionLabel}</Button>

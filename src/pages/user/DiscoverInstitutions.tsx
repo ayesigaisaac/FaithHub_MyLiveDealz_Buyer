@@ -61,55 +61,51 @@ export default function DiscoverInstitutions() {
 
   return (
     <div className="space-y-4">
-      <Card className="fh-interactive-card overflow-hidden rounded-[24px] border border-[var(--border)] bg-[linear-gradient(109deg,rgba(14,165,233,0.12),rgba(248,251,252,0.94)_35%,rgba(3,205,140,0.1))] shadow-[var(--shadow-soft)]">
+      <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[24px]">
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
-              <div className="fh-label text-slate-500">Discover</div>
-              <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">Discover Institutions</h2>
-              <p className="mt-2 text-sm text-slate-600">Find nearby worship communities, live sessions, and trusted institutions.</p>
+              <div className="fh-label fh-user-kicker">Discover</div>
+              <h2 className="mt-1 text-3xl font-bold tracking-tight text-[var(--text-primary)]">Discover Institutions</h2>
+              <p className="mt-2 text-sm text-[var(--text-secondary)]">Find nearby worship communities, live sessions, and trusted institutions.</p>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                <Badge className="rounded-full border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-50">
+                <Badge className="fh-pill fh-pill-emerald">
                   Nearby now: {nearbyNowInstitutions.length}
                 </Badge>
-                <Badge className="rounded-full border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-100">
+                <Badge className="fh-pill fh-pill-slate">
                   Active filters: {activeFilterCount}
                 </Badge>
-                <Badge className="rounded-full border-slate-200 bg-white text-slate-600 hover:bg-white">
+                <Badge className="fh-pill fh-pill-slate">
                   Verified communities
                 </Badge>
               </div>
             </div>
 
             <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[430px]">
-              <label className="flex min-h-[42px] items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3 text-sm text-slate-500">
+              <label className="fh-user-input text-sm">
                 <Search className="h-4 w-4 shrink-0" />
                 <input
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Search institutions or location"
-                  className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                  className="w-full text-sm"
                 />
               </label>
 
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <div className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white p-1">
+                <div className="fh-user-segment">
                   <button
                     type="button"
                     onClick={() => setViewMode("list")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      viewMode === "list" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                    }`}
+                    className={`fh-user-segment-btn ${viewMode === "list" ? "is-active" : ""}`}
                   >
                     List
                   </button>
                   <button
                     type="button"
                     onClick={() => setViewMode("map")}
-                    className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                      viewMode === "map" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                    }`}
+                    className={`fh-user-segment-btn ${viewMode === "map" ? "is-active" : ""}`}
                   >
                     Map
                   </button>
@@ -118,13 +114,13 @@ export default function DiscoverInstitutions() {
                 <Button
                   variant="outline"
                   data-action-label="Open profile"
-                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  className="fh-user-secondary-btn h-10 rounded-xl px-4 text-sm"
                 >
                   Open profile
                 </Button>
                 <Button
                   data-action-label="Join live"
-                  className="h-10 rounded-xl bg-[#03cd8c] px-4 text-sm text-white hover:bg-[#03cd8c]"
+                  className="fh-user-primary-btn h-10 rounded-xl px-4 text-sm"
                 >
                   Join live
                 </Button>
@@ -202,7 +198,7 @@ export default function DiscoverInstitutions() {
                 <button
                   type="button"
                   data-action-label="Explore profile"
-                  className="text-sm font-semibold text-slate-500 transition hover:text-slate-800"
+                  className="text-sm font-semibold text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]"
                 >
                   Explore profile
                 </button>
@@ -215,23 +211,23 @@ export default function DiscoverInstitutions() {
                   key={institution.id}
                   type="button"
                   data-action-label="Open profile"
-                  className="group w-full rounded-xl border border-[var(--border)] bg-white p-3 text-left transition hover:border-[#c8f0e0]"
+                  className="fh-subcard group w-full rounded-xl p-3 text-left"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <div className="text-sm font-semibold text-slate-900">{institution.name}</div>
-                      <div className="mt-1 text-xs text-slate-500">{institution.location} · {institution.distanceKm} km</div>
-                      <div className="mt-1 text-xs text-slate-500">{institution.serviceTime}</div>
+                      <div className="text-sm font-semibold text-[var(--text-primary)]">{institution.name}</div>
+                      <div className="mt-1 text-xs text-[var(--text-secondary)]">{institution.location} - {institution.distanceKm} km</div>
+                      <div className="mt-1 text-xs text-[var(--text-secondary)]">{institution.serviceTime}</div>
                     </div>
 
                     <div className="flex flex-col items-end gap-1">
                       {institution.verified ? (
-                        <span className="rounded-full bg-[#ecfff8] px-2 py-0.5 text-[11px] font-semibold text-[#049e6d]">Verified</span>
+                        <span className="fh-pill fh-pill-emerald">Verified</span>
                       ) : (
-                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600">Pending</span>
+                        <span className="fh-pill fh-pill-slate">Pending</span>
                       )}
                       {institution.sponsored ? (
-                        <span className="rounded-full bg-[#fff3e8] px-2 py-0.5 text-[11px] font-semibold text-[#cc6500]">Sponsored</span>
+                        <span className="fh-pill fh-pill-orange">Sponsored</span>
                       ) : null}
                     </div>
                   </div>
@@ -248,8 +244,8 @@ export default function DiscoverInstitutions() {
               subtitle="Visual location context for nearby communities"
             />
 
-            <div className="relative h-[280px] overflow-hidden rounded-xl border border-[var(--border)] bg-[linear-gradient(145deg,#f8fbfc,#eef3f7)] sm:h-[320px]">
-              <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(to_right,#cbd5e1_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e1_1px,transparent_1px)] [background-size:34px_34px]" />
+            <div className="relative h-[280px] overflow-hidden rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_84%,var(--surface)_16%)] sm:h-[320px]">
+              <div className="absolute inset-0 opacity-35 [background-image:linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] [background-size:34px_34px]" />
 
               {filteredInstitutions.map((institution) => (
                 <button
@@ -259,14 +255,14 @@ export default function DiscoverInstitutions() {
                   className="absolute -translate-x-1/2 -translate-y-1/2"
                   style={{ left: institution.mapX, top: institution.mapY }}
                 >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#03cd8c] text-white shadow-sm">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-[var(--card)] bg-[var(--accent)] text-white shadow-sm">
                     <MapPin className="h-3.5 w-3.5" />
                   </span>
                 </button>
               ))}
             </div>
 
-            <div className="mt-3 text-xs text-slate-500">
+            <div className="mt-3 text-xs text-[var(--text-secondary)]">
               {viewMode === "map"
                 ? "Map mode is active. Tap any marker to open the institution profile."
                 : "Switch to map mode for route-aware discovery and venue context."}
@@ -283,7 +279,7 @@ export default function DiscoverInstitutions() {
                 <button
                   type="button"
                   aria-label="Open discover settings"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
+                  className="fh-user-secondary-btn inline-flex h-8 w-8 items-center justify-center rounded-lg"
                 >
                   <Sparkles className="h-4 w-4" />
                 </button>
@@ -310,9 +306,9 @@ export default function DiscoverInstitutions() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Smart insight</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">Nearby verified communities get higher replay completion</div>
-              <p className="mt-1 text-xs text-slate-600">
+              <div className="fh-label text-[var(--accent)]">Smart insight</div>
+              <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">Nearby verified communities get higher replay completion</div>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">
                 Users who start from verified profiles are more likely to continue into live and events.
               </p>
             </div>
@@ -351,12 +347,12 @@ function FilterSelect({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+    <label className="fh-user-filter">
       {label}
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-2 w-full rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-sm font-medium tracking-normal text-slate-700"
+        className="w-full"
       >
         {options.map((option) => (
           <option key={option} value={option}>
@@ -367,4 +363,5 @@ function FilterSelect({
     </label>
   );
 }
+
 

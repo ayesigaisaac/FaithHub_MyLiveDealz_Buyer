@@ -117,7 +117,7 @@ export default function Sidebar({
                         onClick={() => onNavigate?.(item.path)}
                         className={({ isActive }) => {
                           const navActive = active || isActive;
-                          return `fh-sidebar-item group flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/30 ${
+                          return `fh-sidebar-item group flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
                             collapsed ? "justify-center px-0" : ""
                           } ${navActive ? "is-active" : ""}`;
                         }}
@@ -128,7 +128,7 @@ export default function Sidebar({
                             <>
                               <item.icon
                                 className={`h-4 w-4 shrink-0 ${
-                                  navActive ? "text-[#22C55E]" : "text-[var(--text-secondary)]"
+                                  navActive ? "text-[var(--accent)]" : "text-[var(--text-secondary)]"
                                 }`}
                               />
                               {!collapsed ? <span className="truncate">{item.label}</span> : null}

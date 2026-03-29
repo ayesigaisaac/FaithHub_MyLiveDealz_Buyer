@@ -15,14 +15,14 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
     return {
       variant: "outlined",
       sx: {
-        borderColor: "var(--border)",
+        borderColor: "var(--button-secondary-border)",
         color: "var(--text-primary)",
         textTransform: "none",
         boxShadow: "none",
-        backgroundColor: "var(--surface)",
+        backgroundColor: "transparent",
         "&:hover": {
-          borderColor: "color-mix(in srgb, var(--accent) 45%, var(--border) 55%)",
-          backgroundColor: "color-mix(in srgb, var(--accent-soft) 32%, var(--surface) 68%)",
+          borderColor: "var(--button-secondary-border)",
+          backgroundColor: "var(--button-secondary-hover)",
           boxShadow: "none",
         },
       },
@@ -51,7 +51,7 @@ function resolveStyles(variant: Variant): { variant: MuiButtonProps["variant"]; 
       color: "#ffffff",
       "&:hover": {
         backgroundColor: "var(--accent-strong)",
-        boxShadow: "0 14px 30px rgba(22, 163, 74, 0.28)",
+        boxShadow: "0 12px 24px rgba(3, 205, 140, 0.24)",
       },
     },
   };

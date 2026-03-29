@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  Bell,
   CalendarDays,
-  Clock3,
   Download,
   MapPin,
   Radio,
@@ -205,9 +203,9 @@ export default function FaithHubLiveHub() {
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
-              <div className="fh-label text-slate-500">Live Hub</div>
-              <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">FaithHub Live Sessionz</h2>
-              <p className="mt-2 text-sm text-slate-600">Now live, upcoming rooms, and replay continuity in one surface.</p>
+              <div className="fh-label fh-user-kicker">Live Hub</div>
+              <h2 className="mt-1 text-3xl font-bold tracking-tight text-[var(--text-primary)]">FaithHub Live Sessionz</h2>
+              <p className="mt-2 text-sm text-[var(--text-secondary)]">Now live, upcoming rooms, and replay continuity in one surface.</p>
 
               <div className="mt-4 flex flex-wrap gap-2">
                 <Badge className="fh-pill fh-pill-emerald hover:bg-emerald-50">
@@ -216,27 +214,27 @@ export default function FaithHubLiveHub() {
                 <Badge className="fh-pill fh-pill-orange hover:bg-slate-100">
                   {filteredUpcoming.length} upcoming
                 </Badge>
-                <Badge className="fh-pill fh-pill-slate hover:bg-white">
+                <Badge className="fh-pill fh-pill-slate">
                   {filteredReplays.length} replays
                 </Badge>
               </div>
             </div>
 
             <div className="flex w-full flex-col gap-3 xl:w-auto xl:min-w-[440px]">
-              <label className="flex min-h-[42px] items-center gap-2 rounded-xl border border-[var(--border)] bg-white px-3 text-sm text-slate-500">
+              <label className="fh-user-input text-sm">
                 <Search className="h-4 w-4 shrink-0" />
                 <input
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Search sessions, institutions, or series"
-                  className="w-full border-0 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+                  className="w-full text-sm"
                 />
               </label>
 
               <div className="flex flex-wrap items-center justify-end gap-2">
                 <Button
                   variant="outline"
-                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  className="fh-user-secondary-btn h-10 rounded-xl px-4 text-sm"
                   onClick={() => setDataSaver((prev) => !prev)}
                 >
                   <Video className="mr-1.5 h-4 w-4" />
@@ -244,7 +242,7 @@ export default function FaithHubLiveHub() {
                 </Button>
                 <Button
                   variant="outline"
-                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  className="fh-user-secondary-btn h-10 rounded-xl px-4 text-sm"
                   onClick={() => setOfflineMode((prev) => !prev)}
                 >
                   <Download className="mr-1.5 h-4 w-4" />
@@ -252,7 +250,7 @@ export default function FaithHubLiveHub() {
                 </Button>
                 <Button
                   data-action-label="Join live"
-                  className="h-10 rounded-xl bg-[#03cd8c] px-4 text-sm text-white hover:bg-[#03cd8c]"
+                  className="fh-user-primary-btn h-10 rounded-xl px-4 text-sm"
                 >
                   Join live
                 </Button>
@@ -324,7 +322,7 @@ export default function FaithHubLiveHub() {
                 <button
                   type="button"
                   data-action-label="Join live"
-                  className="text-sm font-semibold text-slate-500 transition hover:text-slate-800"
+                  className="text-sm font-semibold text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]"
                 >
                   Join live
                 </button>
@@ -336,18 +334,18 @@ export default function FaithHubLiveHub() {
                 <div key={item.id} className="fh-subcard rounded-xl p-3">
                   <div className="mb-2 flex items-start justify-between gap-2">
                     <div>
-                      <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                      <div className="mt-1 text-xs text-slate-500">{item.institution} · {item.series}</div>
+                      <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                      <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.institution} - {item.series}</div>
                     </div>
                     <span className="rounded-full bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-600">Live</span>
                   </div>
 
-                  <div className="text-xs text-slate-500">{item.audience} · {item.viewers} · {item.latency}</div>
+                  <div className="text-xs text-[var(--text-secondary)]">{item.audience} - {item.viewers} - {item.latency}</div>
 
                   <div className="mt-2 flex items-center gap-2">
                     <Button
                       data-action-label="Join live"
-                      className="h-9 rounded-xl bg-[#03cd8c] px-3 text-xs font-semibold text-white hover:bg-[#03cd8c]"
+                      className="fh-user-primary-btn h-9 rounded-xl px-3 text-xs font-semibold"
                     >
                       Join live
                     </Button>
@@ -372,7 +370,7 @@ export default function FaithHubLiveHub() {
                 <button
                   type="button"
                   data-action-label="Open room"
-                  className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+                  className="fh-user-secondary-btn inline-flex items-center rounded-xl px-3 py-1.5 text-xs font-semibold"
                 >
                   <CalendarDays className="mr-1.5 h-3.5 w-3.5" />
                   Open room
@@ -383,14 +381,14 @@ export default function FaithHubLiveHub() {
             <div className="space-y-2">
               {filteredUpcoming.map((item) => (
                 <div key={item.id} className="fh-subcard rounded-xl p-3">
-                  <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                  <div className="mt-1 text-xs text-slate-500">{item.institution} · {item.series}</div>
-                  <div className="mt-1 text-xs text-slate-600">{item.time} · {item.audience}</div>
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.institution} - {item.series}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.time} - {item.audience}</div>
 
                   <div className="mt-2 flex items-center gap-2">
                     <Button
                       data-action-label={item.waitingRoom ? "Open room" : "Join live"}
-                      className="h-9 rounded-xl bg-[#03cd8c] px-3 text-xs font-semibold text-white hover:bg-[#03cd8c]"
+                      className="fh-user-primary-btn h-9 rounded-xl px-3 text-xs font-semibold"
                     >
                       {item.waitingRoom ? "Open room" : "Join live"}
                     </Button>
@@ -405,9 +403,9 @@ export default function FaithHubLiveHub() {
             </div>
 
             <div className="mt-3 fh-subcard-muted rounded-xl p-3">
-              <div className="fh-label text-slate-400">Next launch</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">{filteredUpcoming[0]?.title || "No upcoming sessions"}</div>
-              <div className="mt-1 text-xs text-slate-500">{filteredUpcoming[0]?.time || "Check filters"}</div>
+              <div className="fh-label text-[var(--text-muted)]">Next launch</div>
+              <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{filteredUpcoming[0]?.title || "No upcoming sessions"}</div>
+              <div className="mt-1 text-xs text-[var(--text-secondary)]">{filteredUpcoming[0]?.time || "Check filters"}</div>
             </div>
           </CardContent>
         </Card>
@@ -421,7 +419,7 @@ export default function FaithHubLiveHub() {
                 <button
                   type="button"
                   aria-label="Open live settings"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
+                  className="fh-user-secondary-btn inline-flex h-8 w-8 items-center justify-center rounded-lg"
                 >
                   <Sparkles className="h-4 w-4" />
                 </button>
@@ -448,9 +446,9 @@ export default function FaithHubLiveHub() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Live insight</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">Early waiting-room entry improves completion and chat participation</div>
-              <p className="mt-1 text-xs text-slate-600">
+              <div className="fh-label text-[var(--accent)]">Live insight</div>
+              <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">Early waiting-room entry improves completion and chat participation</div>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">
                 Users entering before start time stay longer and return for replay at higher rates.
               </p>
             </div>
@@ -467,7 +465,7 @@ export default function FaithHubLiveHub() {
                 <DashboardActionItem
                   key={item.id}
                   title={item.title}
-                  detail={`${item.institution} · ${item.duration} · ${item.cached ? "Cached" : "Online"}`}
+                  detail={`${item.institution} - ${item.duration} - ${item.cached ? "Cached" : "Online"}`}
                   actionLabel="Watch replay"
                 />
               ))}
@@ -524,12 +522,12 @@ function SelectFilter({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+    <label className="fh-user-filter">
       {label}
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-2 w-full rounded-lg border border-[var(--border)] bg-white px-3 py-2 text-sm font-medium tracking-normal text-slate-700"
+        className="w-full"
       >
         {options.map((option) => (
           <option key={option} value={option}>
@@ -544,11 +542,12 @@ function SelectFilter({
 function SignalCard({ title, value, icon }: { title: string; value: string; icon: React.ReactNode }) {
   return (
     <div className="fh-subcard-muted rounded-xl p-3">
-      <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+      <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-secondary)]">
         {icon}
         {title}
       </div>
-      <div className="mt-1 text-sm font-semibold text-slate-900">{value}</div>
+      <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{value}</div>
     </div>
   );
 }
+

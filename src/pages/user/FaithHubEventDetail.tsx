@@ -153,10 +153,10 @@ export default function FaithHubEventDetail() {
                       <div className="mb-2 text-sm font-semibold text-slate-700">Your event status</div>
                       <div className="mb-3 text-2xl font-semibold text-slate-900">{rsvp}</div>
                       <div className="fh-actions-grid">
-                        <Button className="rounded-2xl bg-[#059669] text-white hover:bg-[#047857]">RSVP</Button>
+                        <Button className="fh-user-primary-btn rounded-2xl">RSVP</Button>
                         <Button
                           variant="outline"
-                          className="rounded-2xl border-slate-200 bg-white text-slate-700 hover:border-[#059669]/25 hover:bg-slate-50"
+                          className="fh-user-secondary-btn rounded-2xl text-[var(--text-secondary)] hover:bg-[var(--accent-soft)]"
                           onClick={() => setOfflineMode((prev) => !prev)}
                         >
                           {offlineMode ? "Online mode" : "Offline pass"}

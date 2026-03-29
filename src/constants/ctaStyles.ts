@@ -2,10 +2,10 @@ export type CtaPriority = "primary" | "secondary" | "accent";
 
 export function ctaPriorityClass(priority: CtaPriority) {
   if (priority === "primary") {
-    return "border-transparent bg-[#16a34a] text-white hover:bg-[#15803d]";
+    return "border-transparent bg-[#03cd8c] text-white hover:bg-[#02b87c]";
   }
   if (priority === "accent") {
-    return "border-transparent bg-[#f97316] text-white hover:bg-[#ea580c]";
+    return "border-transparent bg-[#f77f00] text-white hover:bg-[#d96f00]";
   }
-  return "border-slate-200 bg-white text-slate-700 hover:bg-slate-50";
+  return "border-[var(--button-secondary-border)] bg-transparent text-[var(--text-primary)] hover:bg-[var(--button-secondary-hover)]";
 }

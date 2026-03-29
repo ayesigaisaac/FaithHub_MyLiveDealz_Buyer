@@ -157,7 +157,7 @@ export default function AppShellLayout() {
                 className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
               >
                 <Bell className="h-5 w-5" />
-                <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-emerald-500 px-1 text-[10px] font-bold text-white">
+                <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white">
                   2
                 </span>
               </button>

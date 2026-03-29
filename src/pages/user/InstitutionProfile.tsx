@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
 import {
-  Building2,
   CalendarDays,
-  CheckCircle2,
   HeartHandshake,
   Layers3,
   MapPin,
@@ -88,18 +86,18 @@ export default function InstitutionProfile() {
         <CardContent className="p-4 sm:p-5 lg:p-6">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
             <div className="min-w-0">
-              <div className="fh-label text-slate-500">Institution Profile</div>
-              <h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-900">St. Marys Cathedral</h2>
-              <p className="mt-2 text-sm text-slate-600">Community worship, live teaching, events, and giving in one trusted profile.</p>
+              <div className="fh-label fh-user-kicker">Institution Profile</div>
+              <h2 className="mt-1 text-3xl font-bold tracking-tight text-[var(--text-primary)]">St. Marys Cathedral</h2>
+              <p className="mt-2 text-sm text-[var(--text-secondary)]">Community worship, live teaching, events, and giving in one trusted profile.</p>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                <Badge className="fh-pill fh-pill-emerald hover:bg-emerald-50">
+                <Badge className="fh-pill fh-pill-emerald">
                   Verified institution
                 </Badge>
-                <Badge className="fh-pill fh-pill-slate hover:bg-slate-100">
+                <Badge className="fh-pill fh-pill-slate">
                   {following ? "Following" : "Not following"}
                 </Badge>
-                <Badge className="fh-pill fh-pill-slate hover:bg-white">
+                <Badge className="fh-pill fh-pill-slate">
                   {memberMode ? "Member mode" : "Public mode"}
                 </Badge>
               </div>
@@ -110,20 +108,20 @@ export default function InstitutionProfile() {
                 <Button
                   variant="outline"
                   data-action-label="Open series"
-                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  className="fh-user-secondary-btn h-10 rounded-xl px-4 text-sm"
                 >
                   Series
                 </Button>
                 <Button
                   variant="outline"
                   data-action-label="Open event"
-                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  className="fh-user-secondary-btn h-10 rounded-xl px-4 text-sm"
                 >
                   Events
                 </Button>
                 <Button
                   data-action-label="Open live"
-                  className="h-10 rounded-xl bg-[#03cd8c] px-4 text-sm text-white hover:bg-[#03cd8c]"
+                  className="fh-user-primary-btn h-10 rounded-xl px-4 text-sm"
                 >
                   Open live
                 </Button>
@@ -135,8 +133,8 @@ export default function InstitutionProfile() {
                   onClick={() => setFollowing((prev) => !prev)}
                   className={`inline-flex min-h-[38px] items-center rounded-xl border px-3 text-xs font-semibold transition ${
                     following
-                      ? "border-emerald-200 bg-[#ecfff8] text-[#049e6d]"
-                      : "border-slate-200 bg-white text-slate-600 hover:-translate-y-[1px] hover:bg-slate-50"
+                      ? "border-[color-mix(in_srgb,var(--accent)_38%,var(--border)_62%)] bg-[var(--accent-soft)] text-[var(--accent-strong)]"
+                      : "fh-user-secondary-btn text-[var(--text-secondary)]"
                   }`}
                 >
                   {following ? "Following" : "Follow"}
@@ -146,8 +144,8 @@ export default function InstitutionProfile() {
                   onClick={() => setMemberMode((prev) => !prev)}
                   className={`inline-flex min-h-[38px] items-center rounded-xl border px-3 text-xs font-semibold transition ${
                     memberMode
-                      ? "border-emerald-200 bg-[#ecfff8] text-[#049e6d]"
-                      : "border-slate-200 bg-white text-slate-600 hover:-translate-y-[1px] hover:bg-slate-50"
+                      ? "border-[color-mix(in_srgb,var(--accent)_38%,var(--border)_62%)] bg-[var(--accent-soft)] text-[var(--accent-strong)]"
+                      : "fh-user-secondary-btn text-[var(--text-secondary)]"
                   }`}
                 >
                   {memberMode ? "Member mode on" : "Member mode off"}
@@ -226,7 +224,7 @@ export default function InstitutionProfile() {
                 <button
                   type="button"
                   data-action-label="Open series"
-                  className="text-sm font-semibold text-slate-500 transition hover:text-slate-800"
+                  className="text-sm font-semibold text-[var(--text-secondary)] transition hover:text-[var(--text-primary)]"
                 >
                   Open series
                 </button>
@@ -236,9 +234,9 @@ export default function InstitutionProfile() {
             <div className="space-y-2">
               {leaders.map((leader) => (
                 <div key={leader.name} className="fh-subcard rounded-xl p-3">
-                  <div className="text-sm font-semibold text-slate-900">{leader.name}</div>
-                  <div className="mt-1 text-xs text-slate-500">{leader.role}</div>
-                  <div className="mt-1 text-xs text-slate-600">{leader.specialty}</div>
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">{leader.name}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{leader.role}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{leader.specialty}</div>
                 </div>
               ))}
             </div>
@@ -254,7 +252,7 @@ export default function InstitutionProfile() {
                 <button
                   type="button"
                   data-action-label="Join live"
-                  className="inline-flex items-center rounded-xl border border-[var(--border)] bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:bg-slate-50"
+                  className="fh-user-secondary-btn inline-flex items-center rounded-xl px-3 py-1.5 text-xs font-semibold"
                 >
                   <CalendarDays className="mr-1.5 h-3.5 w-3.5" />
                   Join live
@@ -265,17 +263,17 @@ export default function InstitutionProfile() {
             <div className="space-y-2">
               {serviceSchedule.map((item) => (
                 <div key={`${item.day}-${item.time}`} className="fh-subcard rounded-xl p-3">
-                  <div className="text-sm font-semibold text-slate-900">{item.day}</div>
-                  <div className="mt-1 text-xs text-slate-500">{item.time}</div>
-                  <div className="mt-1 text-xs text-slate-600">{item.note}</div>
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">{item.day}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.time}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.note}</div>
                 </div>
               ))}
             </div>
 
             <div className="mt-3 fh-subcard-muted rounded-xl p-3">
-              <div className="fh-label text-slate-400">Next service</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">{nextService.day}</div>
-              <div className="mt-1 text-xs text-slate-500">{nextService.time}</div>
+              <div className="fh-label text-[var(--text-muted)]">Next service</div>
+              <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{nextService.day}</div>
+              <div className="mt-1 text-xs text-[var(--text-secondary)]">{nextService.time}</div>
             </div>
           </CardContent>
         </Card>
@@ -289,7 +287,7 @@ export default function InstitutionProfile() {
                 <button
                   type="button"
                   aria-label="Open institution settings"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
+                  className="fh-user-secondary-btn inline-flex h-8 w-8 items-center justify-center rounded-lg"
                 >
                   <Sparkles className="h-4 w-4" />
                 </button>
@@ -326,9 +324,9 @@ export default function InstitutionProfile() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Trust insight</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">Verified leadership and clear schedules improve live participation</div>
-              <p className="mt-1 text-xs text-slate-600">
+              <div className="fh-label text-[var(--accent)]">Trust insight</div>
+              <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">Verified leadership and clear schedules improve live participation</div>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">
                 Communities with transparent timing and leader profiles retain more returning users.
               </p>
             </div>
@@ -361,7 +359,7 @@ export default function InstitutionProfile() {
                 <DashboardActionItem
                   key={item.title}
                   title={item.title}
-                  detail={`${item.date} · ${item.type} · ${item.price}`}
+                  detail={`${item.date} - ${item.type} - ${item.price}`}
                   actionLabel="Open event"
                 />
               ))}
@@ -411,11 +409,12 @@ function ModuleCard({
       data-action-label={actionLabel}
       className="fh-interactive-card fh-subcard group w-full rounded-2xl p-4 text-left"
     >
-      <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
+      <div className="fh-user-icon-badge">
         {icon}
       </div>
-      <div className="mt-3 text-sm font-semibold tracking-tight text-slate-900">{title}</div>
-      <div className="mt-1 fh-body-tight text-slate-500">{description}</div>
+      <div className="mt-3 text-sm font-semibold tracking-tight text-[var(--text-primary)]">{title}</div>
+      <div className="mt-1 fh-body-tight text-[var(--text-secondary)]">{description}</div>
     </button>
   );
 }
+

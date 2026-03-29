@@ -128,14 +128,14 @@ export default function AccountSwitcher({
                     onClick={() => onSwitchRole(option.role, option.path)}
                     className={`group flex w-full items-start gap-3 rounded-xl border p-3 text-left transition ${
                       active
-                        ? "border-[rgba(34,197,94,0.35)] bg-[rgba(34,197,94,0.15)]"
-                        : "border-[var(--border)] bg-[var(--card)] hover:border-[rgba(34,197,94,0.22)] hover:bg-[var(--fh-elevated-surface)]"
+                        ? "border-[rgba(3,205,140,0.35)] bg-[rgba(3,205,140,0.15)]"
+                        : "border-[var(--border)] bg-[var(--card)] hover:border-[rgba(3,205,140,0.24)] hover:bg-[var(--fh-elevated-surface)]"
                     }`}
                   >
                     <span
                       className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
                         active
-                          ? "bg-[rgba(34,197,94,0.18)] text-[#22C55E]"
+                          ? "bg-[rgba(3,205,140,0.18)] text-[var(--accent)]"
                           : "bg-[var(--fh-elevated-surface)] text-[var(--text-secondary)]"
                       }`}
                     >
@@ -145,14 +145,14 @@ export default function AccountSwitcher({
                       <span className="flex items-center gap-2">
                         <span className="text-sm font-semibold text-[var(--text-primary)]">{option.label}</span>
                         {active ? (
-                          <span className="rounded-full bg-[rgba(34,197,94,0.18)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#22C55E]">
+                          <span className="rounded-full bg-[rgba(3,205,140,0.18)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
                             Current
                           </span>
                         ) : null}
                       </span>
                       <span className="mt-1 block text-xs text-[var(--text-secondary)]">{option.subtitle}</span>
                     </span>
-                    {active ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#22C55E]" /> : null}
+                    {active ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]" /> : null}
                   </button>
                 );
               })}

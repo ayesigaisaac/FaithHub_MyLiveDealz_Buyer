@@ -1,15 +1,22 @@
 import { createTheme } from "@mui/material/styles";
+import { evZonePalette } from "@/theme/tokens";
 
 export function evzoneTheme(mode: "light" | "dark") {
   const dark = mode === "dark";
   return createTheme({
     palette: {
       mode,
-      primary: { main: dark ? "#22C55E" : "#059669", contrastText: "#ffffff" },
-      secondary: { main: "#f77f00", contrastText: "#ffffff" },
-      text: { primary: dark ? "#F9FAFB" : "#0f172a", secondary: dark ? "#9CA3AF" : "#5b6676" },
-      background: { default: dark ? "#0B1220" : "#eff3f4", paper: dark ? "#111827" : "#ffffff" },
-      divider: dark ? "rgba(255,255,255,0.06)" : "#d9e1e8",
+      primary: { main: evZonePalette.primary, contrastText: "#ffffff" },
+      secondary: { main: evZonePalette.accent, contrastText: "#ffffff" },
+      text: {
+        primary: dark ? evZonePalette.textPrimaryDark : evZonePalette.textPrimaryLight,
+        secondary: dark ? evZonePalette.textSecondaryDark : evZonePalette.textSecondaryLight,
+      },
+      background: {
+        default: dark ? evZonePalette.bgPrimaryDark : evZonePalette.bgPrimaryLight,
+        paper: dark ? evZonePalette.bgSurfaceDark : evZonePalette.bgSurfaceLight,
+      },
+      divider: dark ? evZonePalette.borderDark : evZonePalette.borderLight,
     },
     shape: { borderRadius: 16 },
     typography: {
@@ -22,7 +29,11 @@ export function evzoneTheme(mode: "light" | "dark") {
     },
     components: {
       MuiCssBaseline: {
-        styleOverrides: { body: { backgroundColor: dark ? "#0B1220" : "#eff3f4" } },
+        styleOverrides: {
+          body: {
+            backgroundColor: dark ? evZonePalette.bgPrimaryDark : evZonePalette.bgPrimaryLight,
+          },
+        },
       },
       MuiPaper: {
         styleOverrides: {

@@ -380,7 +380,7 @@ export default function FaithHubEventsHub() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Smart insight</div>
+              <div className="fh-label text-[var(--accent)]">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Events with reminders see stronger attendance completion</div>
               <p className="mt-1 text-xs text-slate-600">
                 Sending reminders within 45 minutes of start time increases confirmed attendance.
@@ -465,4 +465,5 @@ function ModuleCard({
     </button>
   );
 }
+
 

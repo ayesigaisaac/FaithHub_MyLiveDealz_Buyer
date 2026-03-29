@@ -498,7 +498,7 @@ export default function FaithHubLiveDashboardOperations() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Smart insight</div>
+              <div className="fh-label text-[var(--accent)]">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Backup route health impacts conversion during spikes</div>
               <p className="mt-1 text-xs text-slate-600">Sessions with armed redundancy show lower drop-off and fewer moderation escalations.</p>
             </div>
@@ -614,7 +614,7 @@ export default function FaithHubLiveDashboardOperations() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Operational confidence</div>
+              <div className="fh-label text-[var(--accent)]">Operational confidence</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Most systems are stable with one backup-path risk</div>
               <p className="mt-1 text-xs text-slate-600">Arm backup and keep moderation queue below 5 urgent items for green posture.</p>
             </div>
@@ -683,4 +683,5 @@ function PulseItem({
     </div>
   );
 }
+
 

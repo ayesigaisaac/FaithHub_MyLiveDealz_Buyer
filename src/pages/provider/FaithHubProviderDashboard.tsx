@@ -547,7 +547,7 @@ export default function FaithHubProviderDashboard() {
             </div>
 
             <div className="fh-subcard-accent mt-3 rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Smart insight</div>
+              <div className="fh-label text-[var(--accent)]">Smart insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Practical signals for better decisions</div>
               <p className="mt-1 text-xs text-slate-600">
                 Funnel optimization improves when attendee reminders are sent within 20 minutes.
@@ -595,3 +595,4 @@ export default function FaithHubProviderDashboard() {
     </div>
   );
 }
+

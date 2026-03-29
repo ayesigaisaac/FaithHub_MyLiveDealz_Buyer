@@ -297,7 +297,7 @@ export default function FaithHubGiving() {
             </div>
 
             <div className="mt-3 fh-subcard-accent rounded-xl p-3">
-              <div className="fh-label text-emerald-700">Trust insight</div>
+              <div className="fh-label text-[var(--accent)]">Trust insight</div>
               <div className="mt-1 text-sm font-semibold text-slate-900">Transparent funds improve recurring commitment</div>
               <p className="mt-1 text-xs text-slate-600">
                 Users who review fund progress before payment are more likely to continue monthly support.
@@ -388,4 +388,5 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     </label>
   );
 }
+
 
