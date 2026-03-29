@@ -53,6 +53,17 @@ export const routes = {
       membership: "/app/user/membership",
       reviews: "/app/user/reviews",
       settings: "/app/user/settings",
+      counseling: "/app/user/counseling",
+      counselingProfile: "/app/user/counseling/profile",
+      counselingProfilePattern: "/app/user/counseling/:counselorId",
+      counselingProfileById: (counselorId: RouteParam) =>
+        `/app/user/counseling/${encodeSegment(counselorId)}`,
+      counselingBook: "/app/user/counseling/book",
+      counselingSession: "/app/user/counseling/session",
+      counselingSessionPattern: "/app/user/counseling/session/:sessionId",
+      counselingSessionById: (sessionId: RouteParam) =>
+        `/app/user/counseling/session/${encodeSegment(sessionId)}`,
+      counselingHistory: "/app/user/counseling/history",
     },
     provider: {
       base: "/app/provider",
@@ -71,6 +82,7 @@ export const routes = {
       events: "/app/provider/events",
       funds: "/app/provider/funds",
       reviewsModeration: "/app/provider/reviews-moderation",
+      counseling: "/app/provider/counseling",
     },
     admin: {
       base: "/app/admin",
@@ -81,6 +93,7 @@ export const routes = {
       finance: "/app/admin/finance",
       channels: "/app/admin/channels",
       security: "/app/admin/security",
+      counseling: "/app/admin/counseling",
     },
   },
   aliases: {
@@ -103,5 +116,6 @@ export const faithHubRouteAliases: Record<string, string[]> = {
   [routes.app.user.livePlayer]: [routes.app.user.livePlayerPattern],
   [routes.app.user.liveChat]: [routes.app.user.liveChatPattern],
   [routes.app.user.eventDetail]: [routes.app.user.eventDetailPattern],
+  [routes.app.user.counselingProfile]: [routes.app.user.counselingProfilePattern],
+  [routes.app.user.counselingSession]: [routes.app.user.counselingSessionPattern],
 };
-

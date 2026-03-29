@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { BadgeCheck, Building2, BookOpen, CalendarDays, Clock3, Compass, FileText, HeartHandshake, Home, KeyRound, Layers3, LayoutDashboard, MessageSquare, MonitorPlay, PlayCircle, Radio, Settings2, ShieldCheck, Sparkles, Users, Wallet, Bell, Send } from "lucide-react";
+import { BadgeCheck, Building2, BookOpen, CalendarDays, Clock3, Compass, FileText, HeartHandshake, Home, KeyRound, Layers3, LayoutDashboard, MessageSquare, MonitorPlay, PlayCircle, Radio, Settings2, ShieldCheck, Sparkles, Stethoscope, Users, Video, Wallet, Bell, Send } from "lucide-react";
 import { faithHubRouteAliases, routes } from "@/constants/routes";
 
 export type RoleKey = "user" | "provider" | "admin";
@@ -24,9 +24,15 @@ const FaithHubEventDetail = lazy(() => import("@/pages/user/FaithHubEventDetail"
 const FaithHubGiving = lazy(() => import("@/pages/user/FaithHubGiving"));
 const FaithHubSubscriptionsMembership = lazy(() => import("@/pages/user/FaithHubSubscriptionsMembership"));
 const FaithHubReviews = lazy(() => import("@/pages/user/FaithHubReviews"));
+const FaithHubCounselingHub = lazy(() => import("@/pages/user/FaithHubCounselingHub"));
+const FaithHubCounselorProfile = lazy(() => import("@/pages/user/FaithHubCounselorProfile"));
+const FaithHubCounselingBooking = lazy(() => import("@/pages/user/FaithHubCounselingBooking"));
+const FaithHubCounselingSession = lazy(() => import("@/pages/user/FaithHubCounselingSession"));
+const FaithHubCounselingHistory = lazy(() => import("@/pages/user/FaithHubCounselingHistory"));
 const FaithHubSettings = lazy(() => import("@/pages/user/FaithHubSettings"));
 const FaithHubProviderOnboarding = lazy(() => import("@/pages/provider/FaithHubProviderOnboarding"));
 const FaithHubProviderDashboard = lazy(() => import("@/pages/provider/FaithHubProviderDashboard"));
+const FaithHubProviderCounseling = lazy(() => import("@/pages/provider/FaithHubProviderCounseling"));
 const FaithHubSeriesBuilder = lazy(() => import("@/pages/provider/FaithHubSeriesBuilder"));
 const FaithHubEpisodeBuilder = lazy(() => import("@/pages/provider/FaithHubEpisodeBuilder"));
 const FaithHubPostLivePublishing = lazy(() => import("@/pages/provider/FaithHubPostLivePublishing"));
@@ -47,6 +53,7 @@ const FaithHubContentPolicyTaxonomy = lazy(() => import("@/pages/admin/FaithHubC
 const FaithHubPaymentsDonationsDisputes = lazy(() => import("@/pages/admin/FaithHubPaymentsDonationsDisputes"));
 const FaithHubChannelsRegistryDeliverability = lazy(() => import("@/pages/admin/FaithHubChannelsRegistryDeliverability"));
 const FaithHubSecurityAuditLogs = lazy(() => import("@/pages/admin/FaithHubSecurityAuditLogs"));
+const FaithHubAdminCounseling = lazy(() => import("@/pages/admin/FaithHubAdminCounseling"));
 
 export interface PageRegistryItem {
   id: string;
@@ -85,9 +92,15 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "u-giving", role: "user", section: "Events, Giving & Membership", label: "Giving", path: "/app/user/giving", template: "T2", description: "Funds, recurring gifts, and receipts.", icon: HeartHandshake, element: FaithHubGiving },
   { id: "u-membership", role: "user", section: "Events, Giving & Membership", label: "Subscriptions & Membership", path: "/app/user/membership", template: "T3", description: "Plan comparison and entitlements.", icon: BadgeCheck, element: FaithHubSubscriptionsMembership },
   { id: "u-reviews", role: "user", section: "Trust & Settings", label: "Reviews", path: "/app/user/reviews", template: "T7", description: "Structured reviews and abuse reporting.", icon: MessageSquare, element: FaithHubReviews },
+  { id: "u-counseling-hub", role: "user", section: "Counseling Care", label: "Counseling Discovery", path: "/app/user/counseling", template: "T1", description: "Find verified counselors and start private care journeys.", icon: Stethoscope, element: FaithHubCounselingHub },
+  { id: "u-counseling-profile", role: "user", section: "Counseling Care", label: "Counselor Profile", path: "/app/user/counseling/profile", template: "T2", description: "Counselor bio, trust markers, and availability.", icon: Users, element: FaithHubCounselorProfile },
+  { id: "u-counseling-book", role: "user", section: "Counseling Care", label: "Book Counseling Session", path: "/app/user/counseling/book", template: "T3", description: "Book a counseling slot with selected session mode.", icon: CalendarDays, element: FaithHubCounselingBooking },
+  { id: "u-counseling-session", role: "user", section: "Counseling Care", label: "Counseling Session", path: "/app/user/counseling/session", template: "T6", description: "Secure online counseling via video or chat room.", icon: Video, element: FaithHubCounselingSession },
+  { id: "u-counseling-history", role: "user", section: "Counseling Care", label: "Counseling History", path: "/app/user/counseling/history", template: "T4", description: "Past sessions, upcoming bookings, and rebook actions.", icon: Clock3, element: FaithHubCounselingHistory },
   { id: "u-settings", role: "user", section: "Trust & Settings", label: "Settings", path: "/app/user/settings", template: "T3", description: "Language, notifications, privacy, and downloads.", icon: Settings2, element: FaithHubSettings },
   { id: "p-onboarding", role: "provider", section: "Onboarding & Core HQ", label: "Provider Onboarding", path: "/app/provider/onboarding", template: "T3", description: "Institution onboarding and verification setup.", icon: Building2, element: FaithHubProviderOnboarding },
   { id: "p-dashboard", role: "provider", section: "Onboarding & Core HQ", label: "Provider Dashboard", path: "/app/provider/dashboard", template: "T1", description: "Operations, KPIs, and live health.", icon: LayoutDashboard, element: FaithHubProviderDashboard },
+  { id: "p-counseling", role: "provider", section: "Counseling Operations", label: "Provider Counseling", path: "/app/provider/counseling", template: "T3", description: "Availability management, booking queue, and session launch.", icon: Stethoscope, element: FaithHubProviderCounseling },
   { id: "p-series-builder", role: "provider", section: "Content Studio", label: "Series Builder", path: "/app/provider/series-builder", template: "T3", description: "Create and manage series.", icon: BookOpen, element: FaithHubSeriesBuilder },
   { id: "p-episode-builder", role: "provider", section: "Content Studio", label: "Episode Builder", path: "/app/provider/episode-builder", template: "T3", description: "Build episodes, resources, and live links.", icon: FileText, element: FaithHubEpisodeBuilder },
   { id: "p-post-live", role: "provider", section: "Content Studio", label: "Post-live Publishing", path: "/app/provider/post-live", template: "T3", description: "Replay publishing, clips, and transcript flows.", icon: FileText, element: FaithHubPostLivePublishing },
@@ -105,6 +118,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "a-verification", role: "admin", section: "Verification & Trust", label: "Institution Verification & Compliance", path: "/app/admin/verification", template: "T8", description: "Provider approvals, badges, and disputes.", icon: BadgeCheck, element: FaithHubInstitutionVerificationCompliance },
   { id: "a-live-mod", role: "admin", section: "Verification & Trust", label: "Live Moderation Console", path: "/app/admin/live-moderation", template: "T8", description: "Global live moderation and takedown operations.", icon: ShieldCheck, element: FaithHubLiveModerationConsole },
   { id: "a-policy", role: "admin", section: "Verification & Trust", label: "Content Policy & Taxonomy", path: "/app/admin/policy", template: "T8", description: "Taxonomy, policy notices, and localized overrides.", icon: Sparkles, element: FaithHubContentPolicyTaxonomy },
+  { id: "a-counseling", role: "admin", section: "Verification & Trust", label: "Counseling Governance", path: "/app/admin/counseling", template: "T8", description: "Counselor approvals, session monitoring, and trust controls.", icon: Stethoscope, element: FaithHubAdminCounseling },
   { id: "a-finance", role: "admin", section: "Finance & Channels", label: "Payments, Donations & Disputes", path: "/app/admin/finance", template: "T8", description: "Fees, disputes, refunds, payouts, and risk scoring.", icon: Wallet, element: FaithHubPaymentsDonationsDisputes },
   { id: "a-channels", role: "admin", section: "Finance & Channels", label: "Channels Registry & Deliverability", path: "/app/admin/channels", template: "T8", description: "Templates, sender reputation, and deliverability oversight.", icon: Send, element: FaithHubChannelsRegistryDeliverability },
   { id: "a-security", role: "admin", section: "Security & Evidence", label: "Security & Audit Logs", path: "/app/admin/security", template: "T8", description: "Audit trails, immutable logs, and SIEM posture.", icon: Settings2, element: FaithHubSecurityAuditLogs },
@@ -131,9 +145,15 @@ const navTagById: Record<string, string> = {
   "u-giving": "Giving",
   "u-membership": "Member",
   "u-reviews": "Reviews",
+  "u-counseling-hub": "Counseling",
+  "u-counseling-profile": "Profile",
+  "u-counseling-book": "Book",
+  "u-counseling-session": "Session",
+  "u-counseling-history": "History",
   "u-settings": "Settings",
   "p-onboarding": "Onboard",
   "p-dashboard": "Dashboard",
+  "p-counseling": "Counseling",
   "p-series-builder": "Builder",
   "p-episode-builder": "Episode",
   "p-post-live": "Publish",
@@ -151,6 +171,7 @@ const navTagById: Record<string, string> = {
   "a-verification": "Verify",
   "a-live-mod": "Moderate",
   "a-policy": "Policy",
+  "a-counseling": "Counseling",
   "a-finance": "Finance",
   "a-channels": "Channels",
   "a-security": "Security",

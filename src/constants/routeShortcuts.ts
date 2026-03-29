@@ -8,9 +8,10 @@ export const routeShortcuts: Record<string, string> = {
   "/provider/dashboard": routes.app.provider.dashboard,
   "/provider/content": routes.app.provider.seriesBuilder,
   "/provider/events": routes.app.provider.events,
+  "/provider/counseling": routes.app.provider.counseling,
   "/admin/overview": routes.app.admin.overview,
   "/admin/policy": routes.app.admin.policy,
   "/admin/security": routes.app.admin.security,
   "/admin/finance": routes.app.admin.finance,
+  "/admin/counseling": routes.app.admin.counseling,
 };
-
