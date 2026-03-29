@@ -25,25 +25,25 @@ type RoleOption = {
 
 const roleOptions: RoleOption[] = [
   {
+    role: "admin",
+    label: "Admin",
+    subtitle: "Policy, security, finance, and governance",
+    path: routes.app.admin.overview,
+    icon: ShieldCheck,
+  },
+  {
     role: "user",
-    label: "User Workspace",
+    label: "User",
     subtitle: "Home, series, live, and community",
     path: routes.app.user.home,
     icon: Users,
   },
   {
     role: "provider",
-    label: "Provider Workspace",
+    label: "Provider",
     subtitle: "Content, analytics, events, and audience",
     path: routes.app.provider.dashboard,
     icon: Landmark,
-  },
-  {
-    role: "admin",
-    label: "Admin Command Center",
-    subtitle: "Policy, security, finance, and governance",
-    path: routes.app.admin.overview,
-    icon: ShieldCheck,
   },
 ];
 

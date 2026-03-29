@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { flushSync } from "react-dom";
 import { matchPath, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
 import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
@@ -232,7 +233,9 @@ export default function AppShellLayout() {
         colorMode={mode}
         onClose={() => setAccountSwitcherOpen(false)}
         onSwitchRole={(nextRole: Role, path: string) => {
-          setRole(nextRole);
+          flushSync(() => {
+            setRole(nextRole);
+          });
           navigateToPath(path);
           setAccountSwitcherOpen(false);
         }}
