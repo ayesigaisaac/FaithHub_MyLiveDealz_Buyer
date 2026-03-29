@@ -129,12 +129,14 @@ export default function AccountSwitcher({
                     className={`group flex w-full items-start gap-3 rounded-xl border p-3 text-left transition ${
                       active
                         ? "border-[rgba(34,197,94,0.35)] bg-[rgba(34,197,94,0.15)]"
-                        : "border-[var(--border)] bg-[var(--card)] hover:border-[rgba(255,255,255,0.1)] hover:bg-[#1F2937]"
+                        : "border-[var(--border)] bg-[var(--card)] hover:border-[rgba(34,197,94,0.22)] hover:bg-[var(--fh-elevated-surface)]"
                     }`}
                   >
                     <span
                       className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                        active ? "bg-[rgba(34,197,94,0.18)] text-[#22C55E]" : "bg-[#1F2937] text-[var(--text-secondary)]"
+                        active
+                          ? "bg-[rgba(34,197,94,0.18)] text-[#22C55E]"
+                          : "bg-[var(--fh-elevated-surface)] text-[var(--text-secondary)]"
                       }`}
                     >
                       <option.icon className="h-5 w-5" />
@@ -162,15 +164,19 @@ export default function AccountSwitcher({
                 <button
                   type="button"
                   onClick={onToggleColorMode}
-                  className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[#1F2937] hover:text-[var(--text-primary)]"
+                  className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--fh-elevated-surface)] hover:text-[var(--text-primary)]"
                 >
-                  {darkMode ? <Sun className="h-4 w-4 text-amber-500" /> : <Moon className="h-4 w-4 text-slate-600" />}
+                  {darkMode ? (
+                    <Sun className="h-4 w-4 text-amber-500" />
+                  ) : (
+                    <Moon className="h-4 w-4 text-[var(--text-secondary)]" />
+                  )}
                   {darkMode ? "Switch to light mode" : "Switch to dark mode"}
                 </button>
                 <button
                   type="button"
                   onClick={onOpenProfileSettings}
-                  className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[#1F2937] hover:text-[var(--text-primary)]"
+                  className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--fh-elevated-surface)] hover:text-[var(--text-primary)]"
                 >
                   <Settings className="h-4 w-4 text-[var(--text-secondary)]" />
                   Profile settings
@@ -183,7 +189,7 @@ export default function AccountSwitcher({
             <button
               type="button"
               onClick={onLogout}
-              className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-rose-400 transition hover:bg-[#1F2937]"
+              className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-rose-400 transition hover:bg-[var(--fh-elevated-surface)]"
             >
               <LogOut className="h-4 w-4" />
               Logout

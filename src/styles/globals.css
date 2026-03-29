@@ -651,9 +651,9 @@ a,
 }
 
 .btn-accent {
-  background: #1f2937;
+  background: var(--card);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   border-radius: 12px;
   transition: filter 220ms ease, transform 220ms ease;
 }
@@ -661,12 +661,13 @@ a,
 .btn-accent:hover {
   filter: brightness(1.08);
   transform: translateY(-1px);
+  background: var(--fh-elevated-surface);
 }
 
 .btn-secondary {
-  background: #1f2937;
+  background: var(--card);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   border-radius: 12px;
   transition: filter 220ms ease, transform 220ms ease, border-color 220ms ease;
 }
@@ -674,7 +675,8 @@ a,
 .btn-secondary:hover {
   filter: brightness(1.08);
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: var(--fh-elevated-surface);
+  border-color: color-mix(in srgb, var(--border) 80%, #ffffff 20%);
 }
 
 .fh-app-icon > svg {

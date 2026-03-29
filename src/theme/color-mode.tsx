@@ -19,14 +19,14 @@ function applyMode(mode: ColorMode) {
 }
 
 function getInitialMode(): ColorMode {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved === "dark" || saved === "light") return saved;
   } catch {
     // Ignore storage failures and continue with system preference fallback.
   }
-  return "dark";
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 export function ColorModeProvider({ children }: { children: React.ReactNode }) {
