@@ -141,9 +141,9 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
         {
           id: "user-community",
           label: "Community",
-          path: routes.app.user.discover,
+          path: routes.app.user.community,
           icon: Users,
-          activePrefixes: [routes.app.user.discover, routes.app.user.institution, routes.app.user.events, routes.app.user.reviews],
+          activePrefixes: [routes.app.user.community],
         },
         {
           id: "user-counseling",
@@ -188,6 +188,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.provider.contacts,
           icon: Users,
           activePrefixes: [routes.app.provider.contacts, routes.app.provider.notifications, routes.app.provider.reviewsModeration],
+        },
+        {
+          id: "provider-community",
+          label: "Community",
+          path: routes.app.provider.community,
+          icon: Users,
+          activePrefixes: [routes.app.provider.community],
         },
         {
           id: "provider-counseling",

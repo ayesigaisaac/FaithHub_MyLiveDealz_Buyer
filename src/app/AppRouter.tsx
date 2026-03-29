@@ -31,6 +31,12 @@ const counselingRouteByRole: Record<RoleKey, string> = {
   admin: routes.app.admin.counseling,
 };
 
+const communityRouteByRole: Record<RoleKey, string> = {
+  user: routes.app.user.community,
+  provider: routes.app.provider.community,
+  admin: routes.app.admin.overview,
+};
+
 const roleOrder: RoleKey[] = ["user", "provider", "admin"];
 
 function getNestedRoutePath(path: string, role: RoleKey) {
@@ -102,6 +108,7 @@ export default function AppRouter() {
               path="/ops/*"
               element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
             />
+            <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
             <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
             {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
               <Route
