@@ -33,6 +33,30 @@ const profileSettingsRouteByRole: Record<RoleKey, string> = {
   admin: routes.app.admin.security,
 };
 
+const iconFallbackRouteByRole: Record<
+  RoleKey,
+  { calendar: string; messages: string; discover: string; settings: string }
+> = {
+  user: {
+    calendar: routes.app.user.events,
+    messages: routes.app.user.liveChat,
+    discover: routes.app.user.discover,
+    settings: routes.app.user.settings,
+  },
+  provider: {
+    calendar: routes.app.provider.liveSchedule,
+    messages: routes.app.provider.notifications,
+    discover: routes.app.provider.contacts,
+    settings: routes.app.provider.onboarding,
+  },
+  admin: {
+    calendar: routes.app.admin.overview,
+    messages: routes.app.admin.liveModeration,
+    discover: routes.app.admin.verification,
+    settings: routes.app.admin.security,
+  },
+};
+
 function getCurrentRole(pathname: string): RoleKey {
   if (pathname.startsWith(routes.app.provider.base)) return "provider";
   if (pathname.startsWith(routes.app.admin.base)) return "admin";
@@ -41,6 +65,17 @@ function getCurrentRole(pathname: string): RoleKey {
 
 function matchesPagePath(page: Pick<PageRegistryItem, "path" | "routePatterns">, pathname: string) {
   return getRoutePatterns(page).some((pattern) => Boolean(matchPath({ path: pattern, end: true }, pathname)));
+}
+
+function resolveIconOnlyFallbackPath(button: HTMLButtonElement, role: RoleKey) {
+  const iconRoutes = iconFallbackRouteByRole[role];
+  if (button.querySelector(".lucide-bell")) return alertRouteByRole[role];
+  if (button.querySelector(".lucide-sparkles")) return iconRoutes.settings;
+  if (button.querySelector(".lucide-settings")) return iconRoutes.settings;
+  if (button.querySelector(".lucide-calendar-days")) return iconRoutes.calendar;
+  if (button.querySelector(".lucide-message-square")) return iconRoutes.messages;
+  if (button.querySelector(".lucide-users")) return iconRoutes.discover;
+  return null;
 }
 
 export default function AppShellLayout() {
@@ -90,10 +125,15 @@ export default function AppShellLayout() {
     const rawLabel =
       button.getAttribute("data-action-label") ||
       button.getAttribute("aria-label") ||
+      button.getAttribute("title") ||
       button.textContent ||
       "";
     const label = rawLabel.replace(/\s+/g, " ").trim();
-    const actionPath = resolvePageButtonAction(currentPage?.path || location.pathname, label, actionId);
+    const hasIconOnlyContent = !label && !actionId && Boolean(button.querySelector("svg"));
+    const actionPath =
+      resolvePageButtonAction(currentPage?.path || location.pathname, label, actionId) ||
+      resolveIconOnlyFallbackPath(button, shellRole) ||
+      (hasIconOnlyContent ? alertRouteByRole[shellRole] : null);
     if (!actionPath) return;
     event.preventDefault();
     navigateToPath(actionPath);

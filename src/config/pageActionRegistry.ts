@@ -502,6 +502,15 @@ const knownActionTargets = new Set<string>([
   ...pageRegistry.map((page) => page.path),
 ]);
 
+const registeredActionTargets = Array.from(
+  new Set([
+    ...Object.values(rawExactPageActions).flatMap((actions) => Object.values(actions)),
+    ...Object.values(rawRoleLevelActions).flatMap((actions) => Object.values(actions)),
+    ...Object.values(rawExactPageActionIds).flatMap((actions) => Object.values(actions)),
+    ...Object.values(rawRoleLevelActionIds).flatMap((actions) => Object.values(actions)),
+  ]),
+).sort();
+
 const navigationIntentWords = new Set([
   "open",
   "view",
@@ -737,24 +746,9 @@ function resolveHeuristicPageTarget(pathname: string, normalizedLabel: string) {
 
 function validateActionTargets() {
   const unknownTargets = new Set<string>();
-  for (const actions of Object.values(rawExactPageActions)) {
-    for (const path of Object.values(actions)) {
-      if (!knownActionTargets.has(path)) unknownTargets.add(path);
-    }
-  }
-  for (const actions of Object.values(rawRoleLevelActions)) {
-    for (const path of Object.values(actions)) {
-      if (!knownActionTargets.has(path)) unknownTargets.add(path);
-    }
-  }
-  for (const actions of Object.values(rawExactPageActionIds)) {
-    for (const path of Object.values(actions)) {
-      if (!knownActionTargets.has(path)) unknownTargets.add(path);
-    }
-  }
-  for (const actions of Object.values(rawRoleLevelActionIds)) {
-    for (const path of Object.values(actions)) {
-      if (!knownActionTargets.has(path)) unknownTargets.add(path);
+  for (const path of registeredActionTargets) {
+    if (!knownActionTargets.has(path)) {
+      unknownTargets.add(path);
     }
   }
   if (unknownTargets.size > 0) {
@@ -764,6 +758,14 @@ function validateActionTargets() {
         .join(", ")}`,
     );
   }
+}
+
+export function getRegisteredActionTargets() {
+  return [...registeredActionTargets];
+}
+
+export function isKnownActionTarget(path: string) {
+  return knownActionTargets.has(path);
 }
 
 if (import.meta.env.DEV) {

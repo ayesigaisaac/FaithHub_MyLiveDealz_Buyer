@@ -3,8 +3,13 @@ import { join } from "node:path";
 import { matchPath } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { routes } from "@/constants/routes";
+import { routeShortcuts } from "@/constants/routeShortcuts";
 import { getRoutePatterns, pageRegistry } from "@/config/pageRegistry";
-import { resolvePageButtonAction } from "@/config/pageActionRegistry";
+import {
+  getRegisteredActionTargets,
+  isKnownActionTarget,
+  resolvePageButtonAction,
+} from "@/config/pageActionRegistry";
 
 function findPage(path: string) {
   const page = pageRegistry.find((item) => item.path === path);
@@ -69,6 +74,13 @@ describe("FaithHub routing aliases", () => {
   it("matches canonical and dynamic live player routes", () => {
     expect(pageMatchesPath(routes.app.user.livePlayer, routes.app.user.livePlayer)).toBe(true);
     expect(pageMatchesPath(routes.app.user.livePlayer, routes.app.user.livePlayerBySession("live-900"))).toBe(true);
+  });
+
+  it("keeps all legacy route shortcuts mapped to valid targets", () => {
+    const shortcutTargets = Object.values(routeShortcuts);
+    for (const targetPath of shortcutTargets) {
+      expect(isKnownActionTarget(targetPath)).toBe(true);
+    }
   });
 });
 
@@ -149,5 +161,10 @@ describe("FaithHub static action bindings", () => {
       (actionId) => !pathnames.some((pathname) => Boolean(resolvePageButtonAction(pathname, "", actionId))),
     );
     expect(unresolved).toEqual([]);
+  });
+
+  it("keeps all action registry targets bound to known routes", () => {
+    const unknownTargets = getRegisteredActionTargets().filter((path) => !isKnownActionTarget(path));
+    expect(unknownTargets).toEqual([]);
   });
 });

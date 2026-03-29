@@ -1,11 +1,12 @@
 import React, { Suspense, useMemo } from "react";
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { useAuth } from "@/auth/AuthContext";
 import { evzoneTheme } from "@/theme/evzoneTheme";
 import { useColorMode } from "@/theme/color-mode";
 import { ScrollToTop } from "@/components/system/ScrollToTop";
+import { Button } from "@/components/ui/button";
 import {
   defaultPageForRole,
   getRoutePatterns,
@@ -13,6 +14,7 @@ import {
   type RoleKey,
 } from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
+import { routeShortcuts } from "@/constants/routeShortcuts";
 import Layout from "@/components/layout/Layout";
 import FaithHubAccessGateway from "@/pages/public/FaithHubAccessGateway";
 import ProtectedRoute from "@/routes/ProtectedRoute";
@@ -37,6 +39,28 @@ function RouteFallback() {
       <div className="text-center">
         <div className="text-lg font-semibold text-slate-900">Loading FaithHub page</div>
         <div className="mt-2 text-sm text-slate-500">Preparing the selected route.</div>
+      </div>
+    </div>
+  );
+}
+
+function RoleRouteNotFound({ role }: { role: RoleKey }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const roleLabel = role === "admin" ? "Admin" : role === "provider" ? "Provider" : "User";
+
+  return (
+    <div className="fh-surface-card flex min-h-[40vh] items-center justify-center rounded-[28px] p-8">
+      <div className="max-w-md text-center">
+        <div className="text-xl font-semibold text-[var(--text-primary)]">Page not found</div>
+        <div className="mt-2 text-sm text-[var(--text-secondary)]">
+          No route was found for <span className="font-semibold">{location.pathname}</span>.
+        </div>
+        <div className="mt-5">
+          <Button onClick={() => navigate(defaultPageForRole[role])}>
+            Go to {roleLabel} dashboard
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -72,6 +96,13 @@ export default function AppRouter() {
               path="/ops/*"
               element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
             />
+            {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
+              <Route
+                key={`shortcut:${legacyPath}`}
+                path={legacyPath}
+                element={<Navigate to={targetPath} replace />}
+              />
+            ))}
             <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
             <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
             <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
@@ -95,10 +126,10 @@ export default function AppRouter() {
                     />
                   ));
                 })}
-                <Route path="*" element={<Navigate to={defaultPageForRole[role]} replace />} />
+                <Route path="*" element={<RoleRouteNotFound role={role} />} />
               </Route>
             ))}
-            <Route path="*" element={<Navigate to={roleHomePath} replace />} />
+            <Route path="*" element={<RoleRouteNotFound role={role} />} />
           </Route>
         </Routes>
       </BrowserRouter>
