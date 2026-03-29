@@ -1,15 +1,48 @@
-import { BarChart3, BookOpen, CalendarDays, type LucideIcon, LayoutDashboard, Radio, ShieldCheck, Users, Wallet } from "lucide-react";
+import {
+  BarChart3,
+  BookOpen,
+  CalendarDays,
+  type LucideIcon,
+  LayoutDashboard,
+  Radio,
+  ShieldCheck,
+  ShoppingBag,
+  Users,
+  Wallet,
+} from "lucide-react";
 import { routes } from "@/constants/routes";
 import type { RoleKey } from "@/config/pageRegistry";
 
-export interface SidebarItem {
+export type SidebarItemType = "internal" | "external";
+export type ExternalOpenMode = "new_tab" | "iframe";
+
+type SidebarItemBase = {
   id: string;
   label: string;
   title: string;
-  path: string;
   icon: LucideIcon;
+  type: SidebarItemType;
+};
+
+export interface InternalSidebarItem extends SidebarItemBase {
+  type: "internal";
+  path: string;
   activePrefixes: string[];
 }
+
+export interface ExternalSidebarItem extends SidebarItemBase {
+  type: "external";
+  url: string;
+  activePrefixes: string[];
+  openMode: ExternalOpenMode;
+  integration: {
+    key: string;
+    sso: "planned" | "none";
+    iframePath: string | null;
+  };
+}
+
+export type SidebarItem = InternalSidebarItem | ExternalSidebarItem;
 
 export interface SidebarSection {
   id: string;
@@ -18,19 +51,64 @@ export interface SidebarSection {
   items: SidebarItem[];
 }
 
-type SidebarItemTemplate = {
+type InternalSidebarItemTemplate = {
   id: string;
   label: string;
+  title?: string;
+  type?: "internal";
   path: string;
   icon: LucideIcon;
   activePrefixes?: string[];
 };
+
+type ExternalSidebarItemTemplate = {
+  id: string;
+  label: string;
+  title?: string;
+  type: "external";
+  url: string;
+  icon: LucideIcon;
+  activePrefixes?: string[];
+  openMode?: ExternalOpenMode;
+  integration?: {
+    key: string;
+    sso?: "planned" | "none";
+    iframePath?: string | null;
+  };
+};
+
+type SidebarItemTemplate = InternalSidebarItemTemplate | ExternalSidebarItemTemplate;
 
 type SidebarSectionTemplate = {
   id: string;
   label: string;
   items: SidebarItemTemplate[];
 };
+
+const faithMartUrl = (import.meta.env.VITE_FAITHMART_URL as string | undefined) || "https://faithmart.app";
+
+const faithMartSidebarItem: ExternalSidebarItemTemplate = {
+  id: "faithmart-global",
+  label: "FaithMart",
+  title: "Open FaithMart (external)",
+  type: "external",
+  url: faithMartUrl,
+  icon: ShoppingBag,
+  openMode: "new_tab",
+  integration: {
+    key: "faithmart",
+    sso: "planned",
+    iframePath: null,
+  },
+};
+
+function createFaithMartSection(sectionId: string): SidebarSectionTemplate {
+  return {
+    id: sectionId,
+    label: "External Modules",
+    items: [faithMartSidebarItem],
+  };
+}
 
 const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
   user: [
@@ -68,6 +146,7 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
         },
       ],
     },
+    createFaithMartSection("user-external"),
   ],
   provider: [
     {
@@ -104,6 +183,7 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
         },
       ],
     },
+    createFaithMartSection("provider-external"),
   ],
   admin: [
     {
@@ -140,6 +220,7 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
         },
       ],
     },
+    createFaithMartSection("admin-external"),
   ],
 };
 
@@ -156,17 +237,41 @@ export function buildUnifiedSidebarSections({
   return sourceSections
     .map<SidebarSection>((section) => {
       const items = section.items
-        .map<SidebarItem>((item) => ({
-          id: item.id,
-          label: item.label,
-          title: item.label,
-          path: item.path,
-          icon: item.icon,
-          activePrefixes: item.activePrefixes || [item.path],
-        }))
+        .map<SidebarItem>((item) => {
+          if (item.type === "external") {
+            return {
+              id: item.id,
+              label: item.label,
+              title: item.title || item.label,
+              type: "external",
+              url: item.url,
+              icon: item.icon,
+              activePrefixes: item.activePrefixes || [],
+              openMode: item.openMode || "new_tab",
+              integration: {
+                key: item.integration?.key || item.id,
+                sso: item.integration?.sso || "planned",
+                iframePath: item.integration?.iframePath ?? null,
+              },
+            };
+          }
+
+          return {
+            id: item.id,
+            label: item.label,
+            title: item.title || item.label,
+            type: "internal",
+            path: item.path,
+            icon: item.icon,
+            activePrefixes: item.activePrefixes || [item.path],
+          };
+        })
         .filter((item) => {
           if (!normalizedQuery) return true;
-          const searchable = `${section.label} ${item.label} ${item.path}`.toLowerCase();
+          const searchable =
+            item.type === "external"
+              ? `${section.label} ${item.label} ${item.url}`.toLowerCase()
+              : `${section.label} ${item.label} ${item.path}`.toLowerCase();
           return searchable.includes(normalizedQuery);
         });
 

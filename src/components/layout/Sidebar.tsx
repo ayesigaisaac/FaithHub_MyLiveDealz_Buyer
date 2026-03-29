@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ChevronDown, ChevronsLeft, ChevronsRight, X } from "lucide-react";
-import type { SidebarSection } from "@/config/sidebar";
+import { ChevronDown, ChevronsLeft, ChevronsRight, ExternalLink, X } from "lucide-react";
+import type { ExternalSidebarItem, SidebarSection } from "@/config/sidebar";
 
 interface SidebarProps {
   sections: SidebarSection[];
@@ -23,6 +23,16 @@ function isItemActive(pathname: string, prefixes: string[]) {
     if (pathname === prefix || pathname.startsWith(`${prefix}/`)) return true;
   }
   return false;
+}
+
+function openExternalSidebarItem(item: ExternalSidebarItem) {
+  if (item.openMode === "new_tab") {
+    window.open(item.url, "_blank", "noopener,noreferrer");
+    return;
+  }
+
+  // Future-ready hook for iframe mode: currently still opens in a separate tab.
+  window.open(item.url, "_blank", "noopener,noreferrer");
 }
 
 export default function Sidebar({
@@ -105,7 +115,34 @@ export default function Sidebar({
               {(collapsed || isOpen) && section.items.length > 0 ? (
                 <div className={`space-y-1 ${collapsed ? "items-center" : ""}`}>
                   {section.items.map((item) => {
-                    const active = isItemActive(currentPath, item.activePrefixes);
+                    const active = item.type === "internal" ? isItemActive(currentPath, item.activePrefixes) : false;
+
+                    if (item.type === "external") {
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          title={`${item.title} (opens in new tab)`}
+                          aria-label={`${item.label} (opens in new tab)`}
+                          onClick={() => {
+                            openExternalSidebarItem(item);
+                            onNavigate?.(item.url);
+                          }}
+                          className={`fh-sidebar-item group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                            collapsed ? "justify-center px-0" : ""
+                          }`}
+                        >
+                          <item.icon className="h-4 w-4 shrink-0 text-[var(--text-secondary)] group-hover:text-[var(--accent)]" />
+                          {!collapsed ? (
+                            <>
+                              <span className="truncate">{item.label}</span>
+                              <ExternalLink className="ml-auto h-3.5 w-3.5 shrink-0 text-[var(--text-muted,#6B7280)] group-hover:text-[var(--accent)]" />
+                            </>
+                          ) : null}
+                        </button>
+                      );
+                    }
+
                     const targetPath = resolvePath ? resolvePath(item.path) : item.path;
 
                     return (
