@@ -5,11 +5,11 @@ export function evzoneTheme(mode: "light" | "dark") {
   return createTheme({
     palette: {
       mode,
-      primary: { main: dark ? "#10b981" : "#059669", contrastText: "#ffffff" },
+      primary: { main: dark ? "#22C55E" : "#059669", contrastText: "#ffffff" },
       secondary: { main: "#f77f00", contrastText: "#ffffff" },
-      text: { primary: dark ? "#e8eef8" : "#0f172a", secondary: dark ? "#9fb0c5" : "#5b6676" },
-      background: { default: dark ? "#0d141f" : "#eff3f4", paper: dark ? "#162233" : "#ffffff" },
-      divider: dark ? "#243244" : "#d9e1e8",
+      text: { primary: dark ? "#F9FAFB" : "#0f172a", secondary: dark ? "#9CA3AF" : "#5b6676" },
+      background: { default: dark ? "#0B1220" : "#eff3f4", paper: dark ? "#111827" : "#ffffff" },
+      divider: dark ? "rgba(255,255,255,0.06)" : "#d9e1e8",
     },
     shape: { borderRadius: 16 },
     typography: {
@@ -22,7 +22,7 @@ export function evzoneTheme(mode: "light" | "dark") {
     },
     components: {
       MuiCssBaseline: {
-        styleOverrides: { body: { backgroundColor: dark ? "#0d141f" : "#eff3f4" } },
+        styleOverrides: { body: { backgroundColor: dark ? "#0B1220" : "#eff3f4" } },
       },
       MuiPaper: {
         styleOverrides: {

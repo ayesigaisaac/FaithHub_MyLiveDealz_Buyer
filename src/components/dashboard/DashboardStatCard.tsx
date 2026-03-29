@@ -53,7 +53,7 @@ export function DashboardStatCard({
     <Card
       className={`fh-interactive-card fh-surface-card rounded-[24px] ${className}`.trim()}
     >
-      <CardContent className="p-3 sm:p-4">
+      <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="fh-label text-slate-500">{label}</div>

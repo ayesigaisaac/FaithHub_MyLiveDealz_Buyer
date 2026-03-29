@@ -57,14 +57,14 @@ export default function Sidebar({
   };
 
   return (
-    <div className="fh-nav-shell-card flex h-full min-h-0 flex-col border-r border-zinc-200/80 bg-white/92 px-2 py-2.5 shadow-[0_12px_24px_rgba(15,23,42,0.06)] backdrop-blur lg:px-2.5 lg:py-3">
+    <div className="fh-nav-shell-card flex h-full min-h-0 flex-col px-2 py-2.5 lg:px-2.5 lg:py-3">
       <div className="mb-2 flex items-center justify-end gap-1.5">
         {onClose ? (
           <button
             type="button"
             aria-label="Close navigation menu"
             onClick={onClose}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-600 transition hover:bg-zinc-50"
+            className="fh-shell-control inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--text-secondary)]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -73,7 +73,7 @@ export default function Sidebar({
             type="button"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             onClick={onToggleCollapse}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-600 transition hover:bg-zinc-50"
+            className="fh-shell-control inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--text-secondary)]"
           >
             {collapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />}
           </button>
@@ -91,8 +91,8 @@ export default function Sidebar({
                 <button
                   type="button"
                   onClick={() => (canCollapseSection ? toggleSection(section.id) : undefined)}
-                  className={`flex w-full items-center justify-between rounded-lg px-2 py-1 text-left text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500 ${
-                    canCollapseSection ? "hover:bg-zinc-100/80" : ""
+                  className={`fh-sidebar-section-toggle flex w-full items-center justify-between rounded-lg px-2 py-1 text-left text-[11px] font-semibold uppercase tracking-[0.14em] ${
+                    canCollapseSection ? "" : "opacity-85"
                   }`}
                 >
                   <span>{section.label}</span>
@@ -117,20 +117,20 @@ export default function Sidebar({
                         onClick={() => onNavigate?.(item.path)}
                         className={({ isActive }) => {
                           const navActive = active || isActive;
-                          return `group flex items-center gap-2.5 rounded-xl border px-2.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200 ${
+                          return `fh-sidebar-item group flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/30 ${
                             collapsed ? "justify-center px-0" : ""
-                          } ${
-                            navActive
-                              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                              : "border-transparent bg-white text-zinc-700 hover:border-zinc-200 hover:bg-zinc-50"
-                          }`;
+                          } ${navActive ? "is-active" : ""}`;
                         }}
                       >
                         {({ isActive }) => {
                           const navActive = active || isActive;
                           return (
                             <>
-                              <item.icon className={`h-4 w-4 shrink-0 ${navActive ? "text-emerald-600" : "text-zinc-500"}`} />
+                              <item.icon
+                                className={`h-4 w-4 shrink-0 ${
+                                  navActive ? "text-[#22C55E]" : "text-[var(--text-secondary)]"
+                                }`}
+                              />
                               {!collapsed ? <span className="truncate">{item.label}</span> : null}
                             </>
                           );

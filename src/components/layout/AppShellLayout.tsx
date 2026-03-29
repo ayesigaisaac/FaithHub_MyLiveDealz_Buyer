@@ -1,14 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { matchPath, Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { matchPath, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
 import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
+import { useAuth } from "@/auth/AuthContext";
+import AccountSwitcher from "@/components/layout/AccountSwitcher";
 import Sidebar from "@/components/layout/Sidebar";
-import RoleSwitcher from "@/components/layout/RoleSwitcher";
 import { useColorMode } from "@/theme/color-mode";
 import { getRoutePatterns, pageRegistry, type PageRegistryItem, type RoleKey } from "@/config/pageRegistry";
 import { buildUnifiedSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 import { routes } from "@/constants/routes";
+import type { Role } from "@/types/roles";
 
 const faithmartLogoLandscape = "/faithmart-logo-landscape.png";
 
@@ -40,34 +42,19 @@ function matchesPagePath(page: Pick<PageRegistryItem, "path" | "routePatterns">,
   return getRoutePatterns(page).some((pattern) => Boolean(matchPath({ path: pattern, end: true }, pathname)));
 }
 
-function withAdminAccess(path: string, enabled: boolean) {
-  if (!enabled || !path.startsWith("/app/")) return path;
-  const [pathWithQuery, hashFragment] = path.split("#", 2);
-  const [pathname, rawQuery = ""] = pathWithQuery.split("?", 2);
-  const params = new URLSearchParams(rawQuery);
-  params.set("admin", "1");
-  const query = params.toString();
-  const hash = hashFragment ? `#${hashFragment}` : "";
-  return `${pathname}${query ? `?${query}` : ""}${hash}`;
-}
-
 export default function AppShellLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const { currentRole, setRole, setUser } = useAuth();
   const { mode, toggle } = useColorMode();
 
   const routeRole = getCurrentRole(location.pathname);
-  const adminAllAccess = routeRole === "admin" || searchParams.get("admin") === "1";
-  const shellRole: RoleKey = adminAllAccess ? "admin" : routeRole;
+  const shellRole: RoleKey = currentRole || routeRole;
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navQuery, setNavQuery] = useState("");
-  const [roleSwitcherOpen, setRoleSwitcherOpen] = useState(false);
-  const roleSwitcherRef = useRef<HTMLDivElement | null>(null);
-  const roleSwitcherTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const shouldRestoreRoleSwitcherFocus = useRef(false);
+  const [accountSwitcherOpen, setAccountSwitcherOpen] = useState(false);
 
   const sidebarSections = useMemo(
     () => buildUnifiedSidebarSections({ role: shellRole, query: navQuery }),
@@ -79,8 +66,8 @@ export default function AppShellLayout() {
   const currentRoleLabel = roleTriggerLabel[shellRole];
   const sidebarWidthClass = sidebarCollapsed ? "lg:ml-[84px]" : "lg:ml-[280px]";
 
-  const resolveNavPath = (path: string) => withAdminAccess(path, adminAllAccess);
-  const navigateToPath = (path: string) => navigate(resolveNavPath(path));
+  const resolveNavPath = (path: string) => path;
+  const navigateToPath = (path: string) => navigate(path);
 
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
     const insideAppWorkspace = location.pathname.startsWith("/app/");
@@ -112,45 +99,12 @@ export default function AppShellLayout() {
   };
 
   useEffect(() => {
-    setRoleSwitcherOpen(false);
+    setAccountSwitcherOpen(false);
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (roleSwitcherOpen) {
-      shouldRestoreRoleSwitcherFocus.current = true;
-      return;
-    }
-    if (!shouldRestoreRoleSwitcherFocus.current) return;
-    shouldRestoreRoleSwitcherFocus.current = false;
-    roleSwitcherTriggerRef.current?.focus();
-  }, [roleSwitcherOpen]);
-
-  useEffect(() => {
-    if (!roleSwitcherOpen) return;
-    const handlePointerDown = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const clickInsideMenu = roleSwitcherRef.current?.contains(target);
-      const clickInsideTrigger = roleSwitcherTriggerRef.current?.contains(target);
-      if (!clickInsideMenu && !clickInsideTrigger) {
-        setRoleSwitcherOpen(false);
-      }
-    };
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setRoleSwitcherOpen(false);
-      }
-    };
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [roleSwitcherOpen]);
 
   return (
     <div className="fh-page-canvas h-[100dvh] overflow-hidden bg-[var(--bg)] text-[var(--text-primary)]">
-      <header className="fh-shell-topbar fixed inset-x-0 top-0 z-50 h-14 border-b border-zinc-200/85">
+      <header className="fh-shell-topbar fixed inset-x-0 top-0 z-50 h-14 border-b">
         <div className="h-full w-full px-2.5 sm:px-3 lg:px-4">
           <div className="flex h-full items-center gap-2">
             <div className="flex min-w-0 items-center gap-2">
@@ -159,7 +113,7 @@ export default function AppShellLayout() {
                 aria-label="Open navigation menu"
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen(true)}
-                className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700 lg:hidden"
+                className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)] lg:hidden"
               >
                 <Menu className="h-5 w-5" />
               </button>
@@ -180,14 +134,14 @@ export default function AppShellLayout() {
 
             <div className="hidden min-w-0 flex-1 px-1 md:flex lg:px-2">
               <label className="fh-search-shell fh-shell-control mx-auto flex h-10 w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3">
-                <Search className="h-4 w-4 shrink-0 text-zinc-500" />
+                <Search className="h-4 w-4 shrink-0 text-[var(--text-secondary)]" />
                 <input
                   type="search"
                   aria-label="Search navigation"
                   value={navQuery}
                   onChange={(event) => setNavQuery(event.target.value)}
                   placeholder="Search navigation"
-                  className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-zinc-800 outline-none placeholder:text-zinc-400"
+                  className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted,#6B7280)]"
                 />
               </label>
             </div>
@@ -199,7 +153,7 @@ export default function AppShellLayout() {
                 data-action-id="open-alerts"
                 title="Open alerts"
                 onClick={() => navigateToPath(alertRouteByRole[shellRole])}
-                className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700"
+                className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
               >
                 <Bell className="h-5 w-5" />
                 <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-emerald-500 px-1 text-[10px] font-bold text-white">
@@ -208,48 +162,15 @@ export default function AppShellLayout() {
               </button>
               <div className="relative">
                 <button
-                  ref={roleSwitcherTriggerRef}
                   type="button"
                   title={`Open account menu (${currentRoleLabel})`}
                   aria-label={`Open account menu. Current role: ${currentRoleLabel}`}
-                  aria-expanded={roleSwitcherOpen}
-                  onClick={() => setRoleSwitcherOpen((prev) => !prev)}
-                  className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-zinc-700"
+                  aria-expanded={accountSwitcherOpen}
+                  onClick={() => setAccountSwitcherOpen((prev) => !prev)}
+                  className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
                 >
                   <CircleUserRound className="h-5 w-5" />
                 </button>
-
-                {roleSwitcherOpen ? (
-                  <div
-                    ref={roleSwitcherRef}
-                    className="fixed inset-x-2 top-[66px] z-[70] sm:absolute sm:right-0 sm:top-[calc(100%+10px)] sm:inset-x-auto"
-                  >
-                    <RoleSwitcher
-                      isOpen={roleSwitcherOpen}
-                      currentPath={location.pathname}
-                      currentRole={shellRole}
-                      colorMode={mode}
-                      onClose={() => setRoleSwitcherOpen(false)}
-                      onSwitch={(path) => {
-                        navigateToPath(path);
-                        setRoleSwitcherOpen(false);
-                      }}
-                      onToggleColorMode={() => {
-                        toggle();
-                        setRoleSwitcherOpen(false);
-                      }}
-                      onOpenProfileSettings={() => {
-                        navigateToPath(profileSettingsRouteByRole[shellRole]);
-                        setRoleSwitcherOpen(false);
-                      }}
-                      onLogout={() => {
-                        navigate(routes.public.access);
-                        setRoleSwitcherOpen(false);
-                      }}
-                      className="w-full sm:w-[22rem]"
-                    />
-                  </div>
-                ) : null}
               </div>
             </div>
           </div>
@@ -296,7 +217,7 @@ export default function AppShellLayout() {
         </Drawer>
 
         <main
-          className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto px-6 py-4 ${sidebarWidthClass}`}
+          className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto px-6 py-6 ${sidebarWidthClass}`}
           onClickCapture={handlePageAction}
         >
           <div className="fh-app-content min-h-full">
@@ -304,6 +225,30 @@ export default function AppShellLayout() {
           </div>
         </main>
       </div>
+
+      <AccountSwitcher
+        isOpen={accountSwitcherOpen}
+        currentRole={shellRole}
+        colorMode={mode}
+        onClose={() => setAccountSwitcherOpen(false)}
+        onSwitchRole={(nextRole: Role, path: string) => {
+          setRole(nextRole);
+          navigateToPath(path);
+          setAccountSwitcherOpen(false);
+        }}
+        onToggleColorMode={() => {
+          toggle();
+        }}
+        onOpenProfileSettings={() => {
+          navigateToPath(profileSettingsRouteByRole[shellRole]);
+          setAccountSwitcherOpen(false);
+        }}
+        onLogout={() => {
+          setUser(null);
+          navigate(routes.public.access);
+          setAccountSwitcherOpen(false);
+        }}
+      />
     </div>
   );
 }

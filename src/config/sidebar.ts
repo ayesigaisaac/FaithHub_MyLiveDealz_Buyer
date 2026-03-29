@@ -1,14 +1,4 @@
-import {
-  BookOpen,
-  CircleDollarSign,
-  type LucideIcon,
-  LayoutDashboard,
-  Radio,
-  Settings2,
-  ShieldCheck,
-  Users,
-  Wallet,
-} from "lucide-react";
+import { BarChart3, BookOpen, CalendarDays, type LucideIcon, LayoutDashboard, Radio, ShieldCheck, Users, Wallet } from "lucide-react";
 import { routes } from "@/constants/routes";
 import type { RoleKey } from "@/config/pageRegistry";
 
@@ -28,211 +18,130 @@ export interface SidebarSection {
   items: SidebarItem[];
 }
 
-interface SidebarItemConfig {
+type SidebarItemTemplate = {
   id: string;
   label: string;
+  path: string;
   icon: LucideIcon;
-  pathByRole: Record<RoleKey, string>;
-  activePrefixesByRole?: Partial<Record<RoleKey, string[]>>;
-}
+  activePrefixes?: string[];
+};
 
-interface SidebarSectionConfig {
+type SidebarSectionTemplate = {
   id: string;
   label: string;
-  collapsible?: boolean;
-  items: SidebarItemConfig[];
-}
+  items: SidebarItemTemplate[];
+};
 
-export const unifiedSidebarNavConfig: SidebarSectionConfig[] = [
-  {
-    id: "overview",
-    label: "Overview",
-    items: [
-      {
-        id: "overview",
-        label: "Overview",
-        icon: LayoutDashboard,
-        pathByRole: {
-          user: routes.app.user.home,
-          provider: routes.app.provider.dashboard,
-          admin: routes.app.admin.overview,
+const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
+  user: [
+    {
+      id: "user-core",
+      label: "Core",
+      items: [
+        {
+          id: "user-home",
+          label: "Home",
+          path: routes.app.user.home,
+          icon: LayoutDashboard,
+          activePrefixes: [routes.app.user.home, routes.app.user.entry, routes.app.user.auth, routes.app.user.profile],
         },
-        activePrefixesByRole: {
-          user: ["/app/user"],
-          provider: ["/app/provider"],
-          admin: ["/app/admin"],
+        {
+          id: "user-series",
+          label: "Series",
+          path: routes.app.user.series,
+          icon: BookOpen,
+          activePrefixes: [routes.app.user.series, routes.app.user.episode, routes.app.user.replay, routes.app.user.clips],
         },
-      },
-    ],
-  },
-  {
-    id: "core",
-    label: "Core",
-    collapsible: true,
-    items: [
-      {
-        id: "core-home",
-        label: "Home",
-        icon: LayoutDashboard,
-        pathByRole: {
-          user: routes.app.user.home,
-          provider: routes.app.provider.dashboard,
-          admin: routes.app.user.home,
+        {
+          id: "user-live",
+          label: "Live",
+          path: routes.app.user.liveHub,
+          icon: Radio,
+          activePrefixes: ["/app/user/live"],
         },
-        activePrefixesByRole: {
-          user: [routes.app.user.home, routes.app.user.entry, routes.app.user.auth, routes.app.user.profile],
-          provider: [routes.app.provider.dashboard, routes.app.provider.onboarding],
-          admin: [routes.app.user.home],
+        {
+          id: "user-community",
+          label: "Community",
+          path: routes.app.user.discover,
+          icon: Users,
+          activePrefixes: [routes.app.user.discover, routes.app.user.institution, routes.app.user.events, routes.app.user.reviews],
         },
-      },
-      {
-        id: "core-series",
-        label: "Series",
-        icon: BookOpen,
-        pathByRole: {
-          user: routes.app.user.series,
-          provider: routes.app.provider.seriesBuilder,
-          admin: routes.app.user.series,
+      ],
+    },
+  ],
+  provider: [
+    {
+      id: "provider-core",
+      label: "Provider",
+      items: [
+        {
+          id: "provider-content",
+          label: "Content",
+          path: routes.app.provider.seriesBuilder,
+          icon: BookOpen,
+          activePrefixes: [routes.app.provider.seriesBuilder, routes.app.provider.episodeBuilder, routes.app.provider.postLive],
         },
-        activePrefixesByRole: {
-          user: ["/app/user/series", "/app/user/episode", "/app/user/replay", "/app/user/clips"],
-          provider: ["/app/provider/series-builder", "/app/provider/episode-builder", "/app/provider/post-live"],
-          admin: ["/app/user/series", "/app/user/episode", "/app/user/replay", "/app/user/clips"],
+        {
+          id: "provider-analytics",
+          label: "Analytics",
+          path: routes.app.provider.dashboard,
+          icon: BarChart3,
+          activePrefixes: [routes.app.provider.dashboard, routes.app.provider.funds, routes.app.provider.liveOps],
         },
-      },
-      {
-        id: "core-live",
-        label: "Live",
-        icon: Radio,
-        pathByRole: {
-          user: routes.app.user.liveHub,
-          provider: routes.app.provider.liveOps,
-          admin: routes.app.admin.liveModeration,
+        {
+          id: "provider-events",
+          label: "Events",
+          path: routes.app.provider.events,
+          icon: CalendarDays,
+          activePrefixes: [routes.app.provider.events, routes.app.provider.liveSchedule, routes.app.provider.liveStudio],
         },
-        activePrefixesByRole: {
-          user: ["/app/user/live"],
-          provider: ["/app/provider/live-"],
-          admin: [routes.app.admin.liveModeration],
+        {
+          id: "provider-audience",
+          label: "Audience",
+          path: routes.app.provider.contacts,
+          icon: Users,
+          activePrefixes: [routes.app.provider.contacts, routes.app.provider.notifications, routes.app.provider.reviewsModeration],
         },
-      },
-      {
-        id: "core-community",
-        label: "Community",
-        icon: Users,
-        pathByRole: {
-          user: routes.app.user.discover,
-          provider: routes.app.provider.contacts,
-          admin: routes.app.user.discover,
+      ],
+    },
+  ],
+  admin: [
+    {
+      id: "admin-core",
+      label: "Administration",
+      items: [
+        {
+          id: "admin-overview",
+          label: "Overview",
+          path: routes.app.admin.overview,
+          icon: LayoutDashboard,
+          activePrefixes: [routes.app.admin.overview, routes.app.admin.channels, routes.app.admin.liveModeration],
         },
-        activePrefixesByRole: {
-          user: ["/app/user/discover", "/app/user/institution", "/app/user/events", "/app/user/reviews"],
-          provider: [
-            "/app/provider/contacts",
-            "/app/provider/notifications",
-            "/app/provider/events",
-            "/app/provider/reviews-moderation",
-          ],
-          admin: ["/app/user/discover", "/app/user/institution", "/app/user/events", "/app/user/reviews"],
+        {
+          id: "admin-policy",
+          label: "Policy",
+          path: routes.app.admin.policy,
+          icon: ShieldCheck,
+          activePrefixes: [routes.app.admin.policy, routes.app.admin.verification],
         },
-      },
-    ],
-  },
-  {
-    id: "management",
-    label: "Management",
-    collapsible: true,
-    items: [
-      {
-        id: "management-policy",
-        label: "Policy",
-        icon: ShieldCheck,
-        pathByRole: {
-          user: routes.app.admin.policy,
-          provider: routes.app.admin.policy,
-          admin: routes.app.admin.policy,
+        {
+          id: "admin-security",
+          label: "Security",
+          path: routes.app.admin.security,
+          icon: ShieldCheck,
+          activePrefixes: [routes.app.admin.security],
         },
-      },
-      {
-        id: "management-verification",
-        label: "Verification",
-        icon: ShieldCheck,
-        pathByRole: {
-          user: routes.app.admin.verification,
-          provider: routes.app.admin.verification,
-          admin: routes.app.admin.verification,
+        {
+          id: "admin-finance",
+          label: "Finance",
+          path: routes.app.admin.finance,
+          icon: Wallet,
+          activePrefixes: [routes.app.admin.finance],
         },
-      },
-      {
-        id: "management-security",
-        label: "Security",
-        icon: ShieldCheck,
-        pathByRole: {
-          user: routes.app.admin.security,
-          provider: routes.app.admin.security,
-          admin: routes.app.admin.security,
-        },
-      },
-    ],
-  },
-  {
-    id: "commerce",
-    label: "Commerce",
-    collapsible: true,
-    items: [
-      {
-        id: "commerce-finance",
-        label: "Finance",
-        icon: Wallet,
-        pathByRole: {
-          user: routes.app.user.giving,
-          provider: routes.app.provider.funds,
-          admin: routes.app.admin.finance,
-        },
-        activePrefixesByRole: {
-          user: [routes.app.user.giving],
-          provider: [routes.app.provider.funds],
-          admin: [routes.app.admin.finance],
-        },
-      },
-      {
-        id: "commerce-giving",
-        label: "Giving",
-        icon: CircleDollarSign,
-        pathByRole: {
-          user: routes.app.user.giving,
-          provider: routes.app.provider.funds,
-          admin: routes.app.user.giving,
-        },
-        activePrefixesByRole: {
-          user: [routes.app.user.giving, routes.app.user.membership],
-          provider: [routes.app.provider.funds],
-          admin: [routes.app.user.giving, routes.app.user.membership],
-        },
-      },
-    ],
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    items: [
-      {
-        id: "settings",
-        label: "Settings",
-        icon: Settings2,
-        pathByRole: {
-          user: routes.app.user.settings,
-          provider: routes.app.provider.notifications,
-          admin: routes.app.admin.security,
-        },
-        activePrefixesByRole: {
-          user: [routes.app.user.settings, routes.app.user.profile],
-          provider: [routes.app.provider.notifications],
-          admin: [routes.app.admin.security, routes.app.admin.channels],
-        },
-      },
-    ],
-  },
-];
+      ],
+    },
+  ],
+};
 
 export function buildUnifiedSidebarSections({
   role,
@@ -242,22 +151,19 @@ export function buildUnifiedSidebarSections({
   query?: string;
 }) {
   const normalizedQuery = query.trim().toLowerCase();
+  const sourceSections = sidebarSectionsByRole[role] || [];
 
-  return unifiedSidebarNavConfig
+  return sourceSections
     .map<SidebarSection>((section) => {
       const items = section.items
-        .map<SidebarItem>((item) => {
-          const path = item.pathByRole[role];
-          const activePrefixes = item.activePrefixesByRole?.[role] || [path];
-          return {
-            id: item.id,
-            label: item.label,
-            title: item.label,
-            path,
-            icon: item.icon,
-            activePrefixes,
-          };
-        })
+        .map<SidebarItem>((item) => ({
+          id: item.id,
+          label: item.label,
+          title: item.label,
+          path: item.path,
+          icon: item.icon,
+          activePrefixes: item.activePrefixes || [item.path],
+        }))
         .filter((item) => {
           if (!normalizedQuery) return true;
           const searchable = `${section.label} ${item.label} ${item.path}`.toLowerCase();
@@ -267,10 +173,8 @@ export function buildUnifiedSidebarSections({
       return {
         id: section.id,
         label: section.label,
-        collapsible: section.collapsible,
         items,
       };
     })
     .filter((section) => section.items.length > 0);
 }
-

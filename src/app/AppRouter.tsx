@@ -2,6 +2,7 @@ import React, { Suspense, useMemo } from "react";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
+import { useAuth } from "@/auth/AuthContext";
 import { evzoneTheme } from "@/theme/evzoneTheme";
 import { useColorMode } from "@/theme/color-mode";
 import { ScrollToTop } from "@/components/system/ScrollToTop";
@@ -14,6 +15,7 @@ import {
 import { routes } from "@/constants/routes";
 import Layout from "@/components/layout/Layout";
 import FaithHubAccessGateway from "@/pages/public/FaithHubAccessGateway";
+import ProtectedRoute from "@/routes/ProtectedRoute";
 
 const roleBasePath: Record<RoleKey, string> = {
   user: routes.app.user.base,
@@ -49,7 +51,9 @@ function LegacyRoleRedirect({ role }: { role: RoleKey }) {
 
 export default function AppRouter() {
   const { mode } = useColorMode();
+  const { role } = useAuth();
   const muiTheme = useMemo(() => evzoneTheme(mode), [mode]);
+  const roleHomePath = defaultPageForRole[role];
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -58,9 +62,9 @@ export default function AppRouter() {
         <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
-            <Route path={routes.public.landing} element={<Navigate to={defaultPageForRole.user} replace />} />
+            <Route path={routes.public.landing} element={<Navigate to={roleHomePath} replace />} />
             <Route path={routes.public.access} element={<FaithHubAccessGateway />} />
-            <Route path={routes.public.shellPreview} element={<Navigate to={defaultPageForRole.user} replace />} />
+            <Route path={routes.public.shellPreview} element={<Navigate to={roleHomePath} replace />} />
             <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
             <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
             <Route path="/tenant-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
@@ -71,10 +75,10 @@ export default function AppRouter() {
             <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
             <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
             <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
-            <Route path={routes.app.shell} element={<Navigate to={defaultPageForRole.user} replace />} />
-            <Route path={routes.app.root} element={<Navigate to={defaultPageForRole.user} replace />} />
+            <Route path={routes.app.shell} element={<Navigate to={roleHomePath} replace />} />
+            <Route path={routes.app.root} element={<Navigate to={roleHomePath} replace />} />
             {roleOrder.map((role) => (
-              <Route key={role} path={roleBasePath[role]}>
+              <Route key={role} path={roleBasePath[role]} element={<ProtectedRoute roles={[role]} />}>
                 <Route index element={<Navigate to={defaultPageForRole[role]} replace />} />
                 {(pagesByRole[role] || []).map((page) => {
                   const Component = page.element;
@@ -94,7 +98,7 @@ export default function AppRouter() {
                 <Route path="*" element={<Navigate to={defaultPageForRole[role]} replace />} />
               </Route>
             ))}
-            <Route path="*" element={<Navigate to={defaultPageForRole.user} replace />} />
+            <Route path="*" element={<Navigate to={roleHomePath} replace />} />
           </Route>
         </Routes>
       </BrowserRouter>
