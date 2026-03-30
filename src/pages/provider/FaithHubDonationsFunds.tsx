@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   BadgeCheck,
   Bell,
@@ -26,6 +27,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { routes } from "@/constants/routes";
 
 const funds = [
   {
@@ -72,6 +74,7 @@ const reconciliationItems = [
 ];
 
 export default function FaithHubDonationsFunds() {
+  const navigate = useNavigate();
   const [offlineViewOnly, setOfflineViewOnly] = useState(true);
   const [recurringEnabled, setRecurringEnabled] = useState(true);
   const [donorPrivacyControls, setDonorPrivacyControls] = useState(true);
@@ -144,7 +147,13 @@ export default function FaithHubDonationsFunds() {
                         <div className="mt-2 text-sm text-white/80">Target {activeFund?.target}</div>
                       </div>
                       <div className="mt-4 fh-actions-grid">
-                        <Button className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90">Create fund</Button>
+                        <Button
+                          className="rounded-2xl bg-white text-[#03cd8c] hover:bg-white/90"
+                          onClick={() => navigate(routes.app.provider.fundCreate)}
+                          data-no-nav
+                        >
+                          Create fund
+                        </Button>
                         <Button
                           variant="outline"
                           className="rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/15"

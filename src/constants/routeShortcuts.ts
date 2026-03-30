@@ -2,7 +2,6 @@ import { routes } from "@/constants/routes";
 
 export const routeShortcuts: Record<string, string> = {
   "/home": routes.app.user.home,
-  "/wallet": routes.app.user.wallet,
   "/series": routes.app.user.series,
   "/live": routes.app.user.liveHub,
   "/provider/dashboard": routes.app.provider.dashboard,
@@ -11,6 +10,7 @@ export const routeShortcuts: Record<string, string> = {
   "/provider/resources": routes.app.provider.resources,
   "/provider/content": routes.app.provider.seriesBuilder,
   "/provider/events": routes.app.provider.events,
+  "/provider/funds/create": routes.app.provider.fundCreate,
   "/provider/counseling": routes.app.provider.counseling,
   "/admin/overview": routes.app.admin.overview,
   "/admin/policy": routes.app.admin.policy,

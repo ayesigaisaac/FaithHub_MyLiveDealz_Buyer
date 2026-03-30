@@ -49,6 +49,8 @@ const FaithHubAudienceNotifications = lazy(() => import("@/pages/provider/FaithH
 const FaithHubChannelsContactManager = lazy(() => import("@/pages/provider/FaithHubChannelsContactManager"));
 const FaithHubEventsManager = lazy(() => import("@/pages/provider/FaithHubEventsManager"));
 const FaithHubDonationsFunds = lazy(() => import("@/pages/provider/FaithHubDonationsFunds"));
+const FaithHubFundCreate = lazy(() => import("@/pages/provider/FaithHubFundCreate"));
+const FaithHubFundDetail = lazy(() => import("@/pages/shared/FaithHubFundDetail"));
 const FaithHubReviewsModeration = lazy(() => import("@/pages/provider/FaithHubReviewsModeration"));
 const FaithHubAdminOverview = lazy(() => import("@/pages/admin/FaithHubAdminOverview"));
 const FaithHubInstitutionVerificationCompliance = lazy(() => import("@/pages/admin/FaithHubInstitutionVerificationCompliance"));
@@ -98,6 +100,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "u-event-detail", role: "user", section: "Events, Giving & Membership", label: "Event Detail", path: "/app/user/events/detail", template: "T2", description: "Event schedule, tickets, and venue details.", icon: CalendarDays, element: FaithHubEventDetail },
   { id: "u-wallet", role: "user", section: "Events, Giving & Membership", label: "Wallet", path: "/app/user/wallet", template: "T2", description: "Wallet balance, spending history, and funding actions.", icon: Wallet, element: FaithHubWallet },
   { id: "u-giving", role: "user", section: "Events, Giving & Membership", label: "Giving", path: "/app/user/giving", template: "T2", description: "Funds, recurring gifts, and receipts.", icon: HeartHandshake, element: FaithHubGiving },
+  { id: "u-fund-detail", role: "user", section: "Events, Giving & Membership", label: "Fund Detail", path: "/app/user/fund", template: "T2", description: "Fund progress, supporters, pledges, and wallet-backed support actions.", icon: HeartHandshake, element: FaithHubFundDetail },
   { id: "u-membership", role: "user", section: "Events, Giving & Membership", label: "Subscriptions & Membership", path: "/app/user/membership", template: "T3", description: "Plan comparison and entitlements.", icon: BadgeCheck, element: FaithHubSubscriptionsMembership },
   { id: "u-reviews", role: "user", section: "Trust & Settings", label: "Reviews", path: "/app/user/reviews", template: "T7", description: "Structured reviews and abuse reporting.", icon: MessageSquare, element: FaithHubReviews },
   { id: "u-counseling-hub", role: "user", section: "Counseling Care", label: "Counseling Discovery", path: "/app/user/counseling", template: "T1", description: "Find verified counselors and start private care journeys.", icon: Stethoscope, element: FaithHubCounselingHub },
@@ -125,6 +128,8 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "p-events", role: "provider", section: "Commerce, Funds & Trust", label: "Events Manager", path: "/app/provider/events", template: "T3", description: "Event operations, tickets, volunteers, and check-in.", icon: CalendarDays, element: FaithHubEventsManager },
   { id: "p-wallet", role: "provider", section: "Commerce, Funds & Trust", label: "Wallet", path: "/app/provider/wallet", template: "T2", description: "Provider wallet balance, earnings, and withdrawal activity.", icon: Wallet, element: FaithHubWallet },
   { id: "p-funds", role: "provider", section: "Commerce, Funds & Trust", label: "Donations & Funds", path: "/app/provider/funds", template: "T3", description: "Funds, donor segmentation, and payouts.", icon: Wallet, element: FaithHubDonationsFunds },
+  { id: "p-fund-create", role: "provider", section: "Commerce, Funds & Trust", label: "Create Fund", path: "/app/provider/funds/create", template: "T3", description: "Create one-time, crowdfunding, and recurring provider funds.", icon: Wallet, element: FaithHubFundCreate },
+  { id: "p-fund-detail", role: "provider", section: "Commerce, Funds & Trust", label: "Fund Detail", path: "/app/provider/fund", template: "T2", description: "Track fund supporters, pledges, and wallet-backed contributions.", icon: HeartHandshake, element: FaithHubFundDetail },
   { id: "p-reviews-mod", role: "provider", section: "Commerce, Funds & Trust", label: "Reviews & Moderation", path: "/app/provider/reviews-moderation", template: "T8", description: "Provider-side review response and moderation workflows.", icon: ShieldCheck, element: FaithHubReviewsModeration },
   { id: "a-overview", role: "admin", section: "Global Control", label: "Admin Overview", path: "/app/admin/overview", template: "T8", description: "Global KPIs, incidents, and anomalies.", icon: LayoutDashboard, element: FaithHubAdminOverview },
   { id: "a-verification", role: "admin", section: "Verification & Trust", label: "Institution Verification & Compliance", path: "/app/admin/verification", template: "T8", description: "Provider approvals, badges, and disputes.", icon: BadgeCheck, element: FaithHubInstitutionVerificationCompliance },
@@ -159,6 +164,7 @@ const navTagById: Record<string, string> = {
   "u-event-detail": "Event",
   "u-wallet": "Wallet",
   "u-giving": "Giving",
+  "u-fund-detail": "Fund",
   "u-membership": "Member",
   "u-reviews": "Reviews",
   "u-counseling-hub": "Counseling",
@@ -186,6 +192,8 @@ const navTagById: Record<string, string> = {
   "p-events": "Events",
   "p-wallet": "Wallet",
   "p-funds": "Funds",
+  "p-fund-create": "Create",
+  "p-fund-detail": "Fund",
   "p-reviews-mod": "Moderate",
   "a-overview": "Overview",
   "a-verification": "Verify",

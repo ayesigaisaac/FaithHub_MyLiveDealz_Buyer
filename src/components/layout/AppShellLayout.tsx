@@ -6,6 +6,7 @@ import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
 import { useAuth } from "@/auth/AuthContext";
 import AccountSwitcher from "@/components/layout/AccountSwitcher";
 import Sidebar from "@/components/layout/Sidebar";
+import GiveSupportCTA from "@/components/giving/GiveSupportCTA";
 import { useColorMode } from "@/theme/color-mode";
 import { getRoutePatterns, pageRegistry, type PageRegistryItem, type RoleKey } from "@/config/pageRegistry";
 import { buildUnifiedSidebarSections } from "@/config/sidebar";
@@ -101,6 +102,12 @@ export default function AppShellLayout() {
   const activeNavPath = currentPage?.path || location.pathname;
   const currentRoleLabel = roleTriggerLabel[shellRole];
   const sidebarWidthClass = sidebarCollapsed ? "lg:ml-[84px]" : "lg:ml-[280px]";
+  const showGivingCta =
+    shellRole !== "admin" &&
+    (location.pathname.startsWith(routes.app.provider.base) ||
+      location.pathname.includes("/series") ||
+      location.pathname.includes("/live") ||
+      location.pathname.includes("/community"));
 
   const resolveNavPath = (path: string) => path;
   const navigateToPath = (path: string) => navigate(path);
@@ -273,6 +280,7 @@ export default function AppShellLayout() {
           onClickCapture={handlePageAction}
         >
           <div className="fh-app-content min-h-full">
+            {showGivingCta ? <GiveSupportCTA role={shellRole} /> : null}
             <Outlet />
           </div>
         </main>

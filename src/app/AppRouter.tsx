@@ -1,5 +1,13 @@
 import React, { Suspense, useMemo } from "react";
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { useAuth } from "@/auth/AuthContext";
@@ -97,6 +105,18 @@ function LegacyRoleRedirect({ role }: { role: RoleKey }) {
   return <Navigate to={`/app/${role}${suffix}${location.search}${location.hash}`} replace />;
 }
 
+function FundAliasRedirect() {
+  const { role } = useAuth();
+  const { fundId = "" } = useParams<{ fundId: string }>();
+  const targetPath =
+    role === "provider"
+      ? routes.app.provider.fundDetailById(fundId)
+      : role === "admin"
+      ? routes.app.admin.finance
+      : routes.app.user.fundDetailById(fundId);
+  return <Navigate to={targetPath} replace />;
+}
+
 export default function AppRouter() {
   const { mode } = useColorMode();
   const { role } = useAuth();
@@ -124,6 +144,7 @@ export default function AppRouter() {
             <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
             <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
             <Route path="/wallet" element={<Navigate to={walletRouteByRole[role]} replace />} />
+            <Route path="/fund/:fundId" element={<FundAliasRedirect />} />
             {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
               <Route
                 key={`shortcut:${legacyPath}`}

@@ -12,6 +12,7 @@ import {
   TriangleAlert,
   Wallet,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,8 @@ import {
 } from "@/components/dashboard";
 import { ctaPriorityClass } from "@/constants/ctaStyles";
 import { faithHubToneCopy } from "@/constants/faithHubTone";
+import { getProviderFundSnapshot } from "@/data/funds";
+import { routes } from "@/constants/routes";
 
 type TimeWindow = "7d" | "30d" | "term";
 
@@ -231,9 +234,20 @@ function pulseBarClass(metric: PulseMetric) {
   return "w-[70%] bg-[#03cd8c]/75";
 }
 
+function toCurrency(value: number) {
+  return new Intl.NumberFormat(undefined, {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
 export default function FaithHubProviderDashboard() {
+  const navigate = useNavigate();
   const [windowView, setWindowView] = useState<TimeWindow>("7d");
   const copy = faithHubToneCopy.providerDashboard;
+  const fundSnapshots = getProviderFundSnapshot();
 
   const topActions = useMemo(
     () => [
@@ -425,6 +439,94 @@ export default function FaithHubProviderDashboard() {
             </Card>
           </motion.div>
         ))}
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.16, duration: 0.3, ease: "easeOut" }}
+      >
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
+            <DashboardSectionHeader
+              title="My Funds"
+              subtitle="Track campaign performance, supporter growth, and pledge commitments."
+              action={
+                <Button
+                  type="button"
+                  className="fh-user-primary-btn h-9 rounded-lg px-3"
+                  onClick={() => navigate(routes.app.provider.fundCreate)}
+                  data-no-nav
+                >
+                  Create fund
+                </Button>
+              }
+            />
+
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {fundSnapshots.length ? (
+                fundSnapshots.map((snapshot) => {
+                  const progress = Math.min(
+                    100,
+                    Math.round(
+                      (snapshot.fund.current_amount / Math.max(1, snapshot.fund.target_amount)) * 100,
+                    ),
+                  );
+                  return (
+                    <button
+                      key={snapshot.fund.id}
+                      type="button"
+                      onClick={() => navigate(routes.app.provider.fundDetailById(snapshot.fund.id))}
+                      className="fh-subcard group rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 text-left transition hover:border-[#03cd8c]/30"
+                      data-no-nav
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="text-sm font-semibold text-slate-900">{snapshot.fund.title}</div>
+                        <span className="rounded-full bg-[#ecfff8] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#049e6d]">
+                          {snapshot.fund.status}
+                        </span>
+                      </div>
+                      <div className="mt-2 text-xs text-slate-500">
+                        {toCurrency(snapshot.fund.current_amount)} /{" "}
+                        {toCurrency(snapshot.fund.target_amount)}
+                      </div>
+                      <div className="mt-2 h-1.5 rounded-full bg-slate-200">
+                        <div
+                          className="h-full rounded-full bg-[#03cd8c]"
+                          style={{ width: `${progress}%` }}
+                        />
+                      </div>
+                      <div className="mt-3 grid grid-cols-3 gap-2 text-xs text-slate-600">
+                        <div>
+                          <div className="fh-label text-slate-400">Supporters</div>
+                          <div className="mt-0.5 font-semibold text-slate-900">
+                            {snapshot.supporters_count}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="fh-label text-slate-400">Pledges</div>
+                          <div className="mt-0.5 font-semibold text-slate-900">
+                            {snapshot.pledges_count}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="fh-label text-slate-400">Pledged</div>
+                          <div className="mt-0.5 font-semibold text-slate-900">
+                            {toCurrency(snapshot.pledged_total)}
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] p-5 text-sm text-slate-500">
+                  No funds yet. Create your first campaign to start receiving community support.
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </motion.div>
 
       <motion.div

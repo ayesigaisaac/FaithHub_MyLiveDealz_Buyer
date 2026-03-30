@@ -177,7 +177,7 @@ const rawExactPageActions: Record<string, Record<string, string>> = {
     "open funds": "/app/provider/funds",
   },
   "/app/provider/funds": {
-    "create fund": "/app/provider/funds",
+    "create fund": "/app/provider/funds/create",
     "open trust queue": "/app/provider/reviews-moderation",
   },
   "/app/provider/reviews-moderation": {
@@ -276,7 +276,7 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "open case": "/app/provider/reviews-moderation",
     "open controls": "/app/provider/live-studio",
     "create event": "/app/provider/events",
-    "create fund": "/app/provider/funds",
+    "create fund": "/app/provider/funds/create",
     "connect new": "/app/provider/stream-to-platforms",
     destinations: "/app/provider/stream-to-platforms",
     studio: "/app/provider/live-studio",
@@ -367,6 +367,7 @@ const rawRoleLevelActionIds: Record<RoleKey, Record<string, string>> = {
     "open-schedule": routes.app.provider.liveSchedule,
     "open-alerts": routes.app.provider.notifications,
     "open-wallet": routes.app.provider.wallet,
+    "open-provider-fund-create": routes.app.provider.fundCreate,
   },
   admin: {
     "open-admin-overview": routes.app.admin.overview,
