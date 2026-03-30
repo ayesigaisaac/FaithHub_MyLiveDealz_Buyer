@@ -2,9 +2,11 @@ import { routes } from "@/constants/routes";
 
 export const routeShortcuts: Record<string, string> = {
   "/home": routes.app.user.home,
+  "/wallet": routes.app.user.wallet,
   "/series": routes.app.user.series,
   "/live": routes.app.user.liveHub,
   "/provider/dashboard": routes.app.provider.dashboard,
+  "/provider/wallet": routes.app.provider.wallet,
   "/provider/community": routes.app.provider.community,
   "/provider/resources": routes.app.provider.resources,
   "/provider/content": routes.app.provider.seriesBuilder,

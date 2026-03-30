@@ -11,6 +11,7 @@ const FaithHubHome = lazy(() => import("@/pages/user/FaithHubHome"));
 const FaithHubCommunity = lazy(() => import("@/pages/shared/FaithHubCommunity"));
 const FaithHubResourcesHub = lazy(() => import("@/pages/shared/FaithHubResourcesHub"));
 const FaithHubResourceDetail = lazy(() => import("@/pages/shared/FaithHubResourceDetail"));
+const FaithHubWallet = lazy(() => import("@/pages/shared/FaithHubWallet"));
 const DiscoverInstitutions = lazy(() => import("@/pages/user/DiscoverInstitutions"));
 const InstitutionProfile = lazy(() => import("@/pages/user/InstitutionProfile"));
 const FaithHubSeriesLibrary = lazy(() => import("@/pages/user/FaithHubSeriesLibrary"));
@@ -95,6 +96,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "u-live-chat", role: "user", section: "Live Sessionz", label: "Live Chat & Q&A", path: "/app/user/live/chat", template: "T7", description: "Chat and moderated Q&A lane.", icon: MessageSquare, element: FaithHubLiveChatQA },
   { id: "u-events-hub", role: "user", section: "Events, Giving & Membership", label: "Events Hub", path: "/app/user/events", template: "T1", description: "Faith events discovery and RSVP.", icon: CalendarDays, element: FaithHubEventsHub },
   { id: "u-event-detail", role: "user", section: "Events, Giving & Membership", label: "Event Detail", path: "/app/user/events/detail", template: "T2", description: "Event schedule, tickets, and venue details.", icon: CalendarDays, element: FaithHubEventDetail },
+  { id: "u-wallet", role: "user", section: "Events, Giving & Membership", label: "Wallet", path: "/app/user/wallet", template: "T2", description: "Wallet balance, spending history, and funding actions.", icon: Wallet, element: FaithHubWallet },
   { id: "u-giving", role: "user", section: "Events, Giving & Membership", label: "Giving", path: "/app/user/giving", template: "T2", description: "Funds, recurring gifts, and receipts.", icon: HeartHandshake, element: FaithHubGiving },
   { id: "u-membership", role: "user", section: "Events, Giving & Membership", label: "Subscriptions & Membership", path: "/app/user/membership", template: "T3", description: "Plan comparison and entitlements.", icon: BadgeCheck, element: FaithHubSubscriptionsMembership },
   { id: "u-reviews", role: "user", section: "Trust & Settings", label: "Reviews", path: "/app/user/reviews", template: "T7", description: "Structured reviews and abuse reporting.", icon: MessageSquare, element: FaithHubReviews },
@@ -121,6 +123,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "p-notifications", role: "provider", section: "Audience & Distribution", label: "Audience Notifications", path: "/app/provider/notifications", template: "T3", description: "Reminder plans and notification journeys.", icon: Bell, element: FaithHubAudienceNotifications },
   { id: "p-contacts", role: "provider", section: "Audience & Distribution", label: "Channels & Contact Manager", path: "/app/provider/contacts", template: "T1", description: "Contacts, consent, channels, and sender lines.", icon: Users, element: FaithHubChannelsContactManager },
   { id: "p-events", role: "provider", section: "Commerce, Funds & Trust", label: "Events Manager", path: "/app/provider/events", template: "T3", description: "Event operations, tickets, volunteers, and check-in.", icon: CalendarDays, element: FaithHubEventsManager },
+  { id: "p-wallet", role: "provider", section: "Commerce, Funds & Trust", label: "Wallet", path: "/app/provider/wallet", template: "T2", description: "Provider wallet balance, earnings, and withdrawal activity.", icon: Wallet, element: FaithHubWallet },
   { id: "p-funds", role: "provider", section: "Commerce, Funds & Trust", label: "Donations & Funds", path: "/app/provider/funds", template: "T3", description: "Funds, donor segmentation, and payouts.", icon: Wallet, element: FaithHubDonationsFunds },
   { id: "p-reviews-mod", role: "provider", section: "Commerce, Funds & Trust", label: "Reviews & Moderation", path: "/app/provider/reviews-moderation", template: "T8", description: "Provider-side review response and moderation workflows.", icon: ShieldCheck, element: FaithHubReviewsModeration },
   { id: "a-overview", role: "admin", section: "Global Control", label: "Admin Overview", path: "/app/admin/overview", template: "T8", description: "Global KPIs, incidents, and anomalies.", icon: LayoutDashboard, element: FaithHubAdminOverview },
@@ -154,6 +157,7 @@ const navTagById: Record<string, string> = {
   "u-live-chat": "Chat",
   "u-events-hub": "Events",
   "u-event-detail": "Event",
+  "u-wallet": "Wallet",
   "u-giving": "Giving",
   "u-membership": "Member",
   "u-reviews": "Reviews",
@@ -180,6 +184,7 @@ const navTagById: Record<string, string> = {
   "p-notifications": "Notify",
   "p-contacts": "Contacts",
   "p-events": "Events",
+  "p-wallet": "Wallet",
   "p-funds": "Funds",
   "p-reviews-mod": "Moderate",
   "a-overview": "Overview",

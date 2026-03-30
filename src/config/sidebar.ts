@@ -162,6 +162,26 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
         },
       ],
     },
+    {
+      id: "user-finance",
+      label: "Finance",
+      items: [
+        {
+          id: "user-wallet",
+          label: "Wallet",
+          path: routes.app.user.wallet,
+          icon: Wallet,
+          activePrefixes: [routes.app.user.wallet],
+        },
+        {
+          id: "user-giving",
+          label: "Giving",
+          path: routes.app.user.giving,
+          icon: Wallet,
+          activePrefixes: [routes.app.user.giving],
+        },
+      ],
+    },
     createFaithMartSection("user-external"),
   ],
   provider: [
@@ -188,7 +208,7 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           label: "Analytics",
           path: routes.app.provider.dashboard,
           icon: BarChart3,
-          activePrefixes: [routes.app.provider.dashboard, routes.app.provider.funds, routes.app.provider.liveOps],
+          activePrefixes: [routes.app.provider.dashboard, routes.app.provider.liveOps],
         },
         {
           id: "provider-events",
@@ -217,6 +237,26 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.provider.counseling,
           icon: Stethoscope,
           activePrefixes: [routes.app.provider.counseling],
+        },
+      ],
+    },
+    {
+      id: "provider-finance",
+      label: "Finance",
+      items: [
+        {
+          id: "provider-wallet",
+          label: "Wallet",
+          path: routes.app.provider.wallet,
+          icon: Wallet,
+          activePrefixes: [routes.app.provider.wallet],
+        },
+        {
+          id: "provider-funds",
+          label: "Earnings & Payouts",
+          path: routes.app.provider.funds,
+          icon: Wallet,
+          activePrefixes: [routes.app.provider.funds],
         },
       ],
     },

@@ -260,6 +260,7 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     rsvp: "/app/user/events/detail",
     "set reminder": "/app/user/events",
     "continue giving": "/app/user/giving",
+    "open wallet": "/app/user/wallet",
     "send magic link": "/app/user/home",
     resend: "/app/user/auth",
   },
@@ -287,6 +288,7 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     "open calendar": "/app/provider/live-schedule",
     "open schedule": "/app/provider/live-schedule",
     "open moderation": "/app/provider/reviews-moderation",
+    "open wallet": "/app/provider/wallet",
   },
   admin: {
     "open incident desk": "/app/admin/live-moderation",
@@ -351,6 +353,7 @@ const rawRoleLevelActionIds: Record<RoleKey, Record<string, string>> = {
     "open-calendar": routes.app.user.events,
     "open-schedule": routes.app.user.events,
     "open-alerts": routes.app.user.settings,
+    "open-wallet": routes.app.user.wallet,
   },
   provider: {
     "open-live-schedule": routes.app.provider.liveSchedule,
@@ -363,6 +366,7 @@ const rawRoleLevelActionIds: Record<RoleKey, Record<string, string>> = {
     "open-calendar": routes.app.provider.liveSchedule,
     "open-schedule": routes.app.provider.liveSchedule,
     "open-alerts": routes.app.provider.notifications,
+    "open-wallet": routes.app.provider.wallet,
   },
   admin: {
     "open-admin-overview": routes.app.admin.overview,
@@ -604,6 +608,7 @@ const directNavKeywords = new Set([
   "verification",
   "resources",
   "books",
+  "wallet",
 ]);
 
 const roleKeywordFallbackPath: Record<RoleKey, Record<string, string>> = {
@@ -622,6 +627,7 @@ const roleKeywordFallbackPath: Record<RoleKey, Record<string, string>> = {
     community: routes.app.user.community,
     finance: routes.app.user.giving,
     funds: routes.app.user.giving,
+    wallet: routes.app.user.wallet,
     giving: routes.app.user.giving,
     settings: routes.app.user.settings,
     security: routes.app.user.settings,
@@ -648,6 +654,7 @@ const roleKeywordFallbackPath: Record<RoleKey, Record<string, string>> = {
     community: routes.app.provider.community,
     finance: routes.app.provider.funds,
     funds: routes.app.provider.funds,
+    wallet: routes.app.provider.wallet,
     giving: routes.app.provider.funds,
     settings: routes.app.provider.dashboard,
     security: routes.app.provider.reviewsModeration,
