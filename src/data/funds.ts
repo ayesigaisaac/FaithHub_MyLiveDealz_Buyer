@@ -23,6 +23,7 @@ const seedStore: FundStore = {
   funds: [
     {
       id: "fund-community-kitchen",
+      slug: "community-kitchen-expansion",
       provider_id: defaultProviderId,
       title: "Community Kitchen Expansion",
       description:
@@ -35,7 +36,22 @@ const seedStore: FundStore = {
       end_date: "2026-06-30T23:59:59.000Z",
     },
     {
+      id: "fund-mission-outreach",
+      slug: "mission-outreach",
+      provider_id: defaultProviderId,
+      title: "Mission Outreach",
+      description:
+        "Fund missions, travel, materials, and local community outreach support for ongoing care initiatives.",
+      target_amount: 20000,
+      current_amount: 12900,
+      type: "crowdfunding",
+      status: "active",
+      created_at: "2026-03-17T07:25:00.000Z",
+      end_date: "2026-07-15T23:59:59.000Z",
+    },
+    {
       id: "fund-studio-upgrade",
+      slug: "live-studio-equipment",
       provider_id: defaultProviderId,
       title: "Live Studio Equipment",
       description:
@@ -103,21 +119,62 @@ function isBrowser() {
   return typeof window !== "undefined";
 }
 
+function slugifyFundTitle(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function normalizeFund(rawFund: Fund, index: number): Fund {
+  const fallbackSlug = slugifyFundTitle(rawFund.title) || `fund-${index + 1}`;
+  const rawSlug = typeof rawFund.slug === "string" ? rawFund.slug : "";
+  return {
+    ...rawFund,
+    slug: slugifyFundTitle(rawSlug) || fallbackSlug,
+  };
+}
+
+function ensureRequiredSeedFunds(funds: Fund[]) {
+  const normalized = funds.map(normalizeFund);
+  const existingSlugs = new Set(normalized.map((fund) => fund.slug));
+  const missingSeedFunds = seedStore.funds
+    .map((fund, index) => normalizeFund(fund, index))
+    .filter((fund) => !existingSlugs.has(fund.slug));
+  return sortFunds([...normalized, ...missingSeedFunds]);
+}
+
+function createUniqueFundSlug(title: string, funds: Fund[]) {
+  const base = slugifyFundTitle(title) || `fund-${Date.now()}`;
+  const existing = new Set(funds.map((fund) => fund.slug));
+  if (!existing.has(base)) return base;
+
+  let suffix = 2;
+  let candidate = `${base}-${suffix}`;
+  while (existing.has(candidate)) {
+    suffix += 1;
+    candidate = `${base}-${suffix}`;
+  }
+  return candidate;
+}
+
 function readStore(): FundStore {
-  if (!isBrowser()) return seedStore;
+  if (!isBrowser()) return { ...seedStore, funds: ensureRequiredSeedFunds(seedStore.funds) };
   const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) return seedStore;
+  if (!raw) return { ...seedStore, funds: ensureRequiredSeedFunds(seedStore.funds) };
   try {
     const parsed = JSON.parse(raw) as Partial<FundStore>;
+    const parsedFunds = Array.isArray(parsed.funds) ? (parsed.funds as Fund[]) : seedStore.funds;
     return {
-      funds: Array.isArray(parsed.funds) ? parsed.funds : seedStore.funds,
+      funds: ensureRequiredSeedFunds(parsedFunds),
       pledges: Array.isArray(parsed.pledges) ? parsed.pledges : seedStore.pledges,
       contributions: Array.isArray(parsed.contributions)
         ? parsed.contributions
         : seedStore.contributions,
     };
   } catch {
-    return seedStore;
+    return { ...seedStore, funds: ensureRequiredSeedFunds(seedStore.funds) };
   }
 }
 
@@ -156,6 +213,12 @@ export function getAllFunds() {
 
 export function getFundById(fundId: string) {
   return getAllFunds().find((fund) => fund.id === fundId) || null;
+}
+
+export function getFundBySlug(slug: string) {
+  const normalizedSlug = slugifyFundTitle(slug);
+  if (!normalizedSlug) return null;
+  return getAllFunds().find((fund) => fund.slug === normalizedSlug) || null;
 }
 
 export function getProviderFunds(providerId = defaultProviderId) {
@@ -229,10 +292,12 @@ export function createFund(input: {
   end_date?: string | null;
 }) {
   const store = readStore();
+  const trimmedTitle = input.title.trim();
   const created: Fund = {
     id: `fund-${Date.now()}`,
+    slug: createUniqueFundSlug(trimmedTitle, store.funds),
     provider_id: (input.provider_id || defaultProviderId).trim() || defaultProviderId,
-    title: input.title.trim(),
+    title: trimmedTitle,
     description: input.description.trim(),
     target_amount: amount(Math.max(1, input.target_amount)),
     current_amount: 0,
@@ -380,4 +445,3 @@ export function getProviderFundSnapshot(providerId = defaultProviderId) {
 export const fundDefaults = {
   providerId: defaultProviderId,
 };
-

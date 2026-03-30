@@ -35,7 +35,7 @@ export default function FaithHubFundCreate() {
       type: fundType,
       end_date: endDate || null,
     });
-    navigate(routes.app.provider.fundDetailById(created.id));
+    navigate(routes.app.provider.fundDetailBySlug(created.slug));
   };
 
   return (
@@ -135,4 +135,3 @@ export default function FaithHubFundCreate() {
     </div>
   );
 }
-

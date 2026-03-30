@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CheckCircle2,
   HeartHandshake,
@@ -18,36 +19,34 @@ import {
 } from "@/components/dashboard";
 import UserActionBar from "@/pages/user/shared/UserActionBar";
 import type { DonationMode, GivingFund } from "@/pages/user/giving/types";
+import { getActiveFunds } from "@/data/funds";
 
-const givingFunds: GivingFund[] = [
-  {
-    id: 1,
-    title: "General Giving",
-    description: "Support weekly services, operations, and care programs.",
-    raised: "$24,500",
-    goal: "$40,000",
-    progress: 61,
-  },
-  {
-    id: 2,
-    title: "Mission Outreach",
-    description: "Fund missions, travel, materials, and community support.",
-    raised: "$12,900",
-    goal: "$20,000",
-    progress: 64,
-  },
-  {
-    id: 3,
-    title: "Childrens Ministry",
-    description: "Equip learning spaces and youth support activities.",
-    raised: "$8,700",
-    goal: "$15,000",
-    progress: 58,
-  },
-];
+function compactCurrency(value: number) {
+  return new Intl.NumberFormat(undefined, {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+}
 
 export default function FaithHubGiving() {
-  const [selectedFundId, setSelectedFundId] = useState(givingFunds[0].id);
+  const navigate = useNavigate();
+  const givingFunds = useMemo<GivingFund[]>(
+    () =>
+      getActiveFunds().map((fund, index) => ({
+        id: index + 1,
+        fundId: fund.id,
+        slug: fund.slug,
+        title: fund.title,
+        description: fund.description,
+        raised: compactCurrency(fund.current_amount),
+        goal: compactCurrency(fund.target_amount),
+        progress: Math.min(100, Math.round((fund.current_amount / Math.max(1, fund.target_amount)) * 100)),
+      })),
+    [],
+  );
+  const [selectedFundId, setSelectedFundId] = useState<number>(() => givingFunds[0]?.id || 0);
   const [amount, setAmount] = useState("25");
   const [mode, setMode] = useState<DonationMode>("One-time");
   const [receiptEmail, setReceiptEmail] = useState("naomi@faithhub.com");
@@ -55,9 +54,21 @@ export default function FaithHubGiving() {
   const [supporterTier, setSupporterTier] = useState(true);
 
   const selectedFund = useMemo(
-    () => givingFunds.find((fund) => fund.id === selectedFundId) || givingFunds[0],
-    [selectedFundId],
+    () => givingFunds.find((fund) => fund.id === selectedFundId) || givingFunds[0] || null,
+    [selectedFundId, givingFunds],
   );
+
+  const openFund = (fund: GivingFund) => navigate(`/fund/${fund.slug}`);
+
+  if (!selectedFund) {
+    return (
+      <Card className="fh-surface-card rounded-2xl">
+        <CardContent className="p-6 text-sm text-[var(--text-secondary)]">
+          No active funds are available right now.
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -178,22 +189,40 @@ export default function FaithHubGiving() {
               {givingFunds.map((fund) => {
                 const active = fund.id === selectedFundId;
                 return (
-                  <button
+                  <div
                     key={fund.id}
-                    type="button"
-                    onClick={() => setSelectedFundId(fund.id)}
                     className={`w-full rounded-xl border p-3 text-left transition ${
                       active
                         ? "border-emerald-200 bg-[#ecfff8]"
                         : "border-[var(--border)] bg-white hover:border-[#c8f0e0]"
                     }`}
                   >
-                    <div className="text-sm font-semibold text-slate-900">{fund.title}</div>
-                    <div className="mt-1 text-xs text-slate-500">{fund.description}</div>
-                    <div className="mt-2 h-1.5 rounded-full bg-slate-200">
-                      <div className="h-full rounded-full bg-[#03cd8c]" style={{ width: `${fund.progress}%` }} />
+                    <button
+                      type="button"
+                      onClick={() => setSelectedFundId(fund.id)}
+                      className="w-full text-left"
+                    >
+                      <div className="text-sm font-semibold text-slate-900">{fund.title}</div>
+                      <div className="mt-1 text-xs text-slate-500">{fund.description}</div>
+                      <div className="mt-2 h-1.5 rounded-full bg-slate-200">
+                        <div className="h-full rounded-full bg-[#03cd8c]" style={{ width: `${fund.progress}%` }} />
+                      </div>
+                    </button>
+
+                    <div className="mt-3 flex items-center justify-between gap-2 text-xs text-slate-500">
+                      <span>
+                        {fund.raised} raised of {fund.goal}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => openFund(fund)}
+                        className="rounded-lg border border-[var(--border)] bg-white px-2.5 py-1 font-semibold text-[#03cd8c] hover:bg-[#f7fffb]"
+                        data-no-nav
+                      >
+                        Open fund
+                      </button>
                     </div>
-                  </button>
+                  </div>
                 );
               })}
             </div>

@@ -9,6 +9,7 @@ import {
   createPledge,
   donateToFundFromWallet,
   getFundById,
+  getFundBySlug,
   getFundPledges,
   getFundSupporters,
   payPledgeFromWallet,
@@ -40,12 +41,13 @@ function fundTypeLabel(type: Fund["type"]) {
 
 export default function FaithHubFundDetail() {
   const navigate = useNavigate();
-  const { fundId = "" } = useParams<{ fundId: string }>();
+  const { slug = "", fundId = "" } = useParams<{ slug?: string; fundId?: string }>();
   const { role, user } = useAuth();
+  const fundKey = slug || fundId;
 
-  const [fund, setFund] = useState<Fund | null>(() => getFundById(fundId));
-  const [pledges, setPledges] = useState<Pledge[]>(() => getFundPledges(fundId));
-  const [supporters, setSupporters] = useState(() => getFundSupporters(fundId));
+  const [fund, setFund] = useState<Fund | null>(() => getFundBySlug(fundKey) || getFundById(fundKey));
+  const [pledges, setPledges] = useState<Pledge[]>(() => getFundPledges((getFundBySlug(fundKey) || getFundById(fundKey))?.id || fundKey));
+  const [supporters, setSupporters] = useState(() => getFundSupporters((getFundBySlug(fundKey) || getFundById(fundKey))?.id || fundKey));
 
   const [donationAmount, setDonationAmount] = useState("25");
   const [pledgeAmount, setPledgeAmount] = useState("120");
@@ -56,14 +58,20 @@ export default function FaithHubFundDetail() {
   const currentUserId = role === "provider" ? "provider-owner" : toMemberId(user?.name || "Member");
 
   const refreshFund = () => {
-    setFund(getFundById(fundId));
-    setPledges(getFundPledges(fundId));
-    setSupporters(getFundSupporters(fundId));
+    const resolvedFund = getFundBySlug(fundKey) || getFundById(fundKey);
+    setFund(resolvedFund);
+    if (!resolvedFund) {
+      setPledges([]);
+      setSupporters([]);
+      return;
+    }
+    setPledges(getFundPledges(resolvedFund.id));
+    setSupporters(getFundSupporters(resolvedFund.id));
   };
 
   useEffect(() => {
     refreshFund();
-  }, [fundId]);
+  }, [fundKey]);
 
   const myPledges = useMemo(
     () => pledges.filter((pledge) => pledge.user_id === currentUserId),
@@ -316,4 +324,3 @@ export default function FaithHubFundDetail() {
     </div>
   );
 }
-

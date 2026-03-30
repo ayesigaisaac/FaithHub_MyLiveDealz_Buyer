@@ -3,6 +3,7 @@ export type FundStatus = "draft" | "active" | "closed";
 
 export interface Fund {
   id: string;
+  slug: string;
   provider_id: string;
   title: string;
   description: string;
@@ -43,4 +44,3 @@ export interface FundSupporter {
   pledged_total: number;
   contributions: number;
 }
-

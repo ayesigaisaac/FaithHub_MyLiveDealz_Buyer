@@ -476,7 +476,9 @@ export default function FaithHubProviderDashboard() {
                     <button
                       key={snapshot.fund.id}
                       type="button"
-                      onClick={() => navigate(routes.app.provider.fundDetailById(snapshot.fund.id))}
+                      onClick={() =>
+                        navigate(routes.app.provider.fundDetailBySlug(snapshot.fund.slug))
+                      }
                       className="fh-subcard group rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 text-left transition hover:border-[#03cd8c]/30"
                       data-no-nav
                     >

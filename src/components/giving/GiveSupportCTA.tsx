@@ -37,8 +37,8 @@ export default function GiveSupportCTA({ role }: { role: RoleKey }) {
 
   const openPath =
     role === "provider"
-      ? routes.app.provider.fundDetailById(activeFund.id)
-      : routes.app.user.fundDetailById(activeFund.id);
+      ? routes.app.provider.fundDetailBySlug(activeFund.slug)
+      : routes.app.user.fundDetailBySlug(activeFund.slug);
 
   return (
     <Card className="fh-surface-card mb-4 rounded-2xl" data-no-nav>
@@ -62,4 +62,3 @@ export default function GiveSupportCTA({ role }: { role: RoleKey }) {
     </Card>
   );
 }
-

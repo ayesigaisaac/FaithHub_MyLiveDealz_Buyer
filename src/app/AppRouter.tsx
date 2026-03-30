@@ -107,13 +107,13 @@ function LegacyRoleRedirect({ role }: { role: RoleKey }) {
 
 function FundAliasRedirect() {
   const { role } = useAuth();
-  const { fundId = "" } = useParams<{ fundId: string }>();
+  const { slug = "" } = useParams<{ slug: string }>();
   const targetPath =
     role === "provider"
-      ? routes.app.provider.fundDetailById(fundId)
+      ? routes.app.provider.fundDetailBySlug(slug)
       : role === "admin"
       ? routes.app.admin.finance
-      : routes.app.user.fundDetailById(fundId);
+      : routes.app.user.fundDetailBySlug(slug);
   return <Navigate to={targetPath} replace />;
 }
 
@@ -144,7 +144,7 @@ export default function AppRouter() {
             <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
             <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
             <Route path="/wallet" element={<Navigate to={walletRouteByRole[role]} replace />} />
-            <Route path="/fund/:fundId" element={<FundAliasRedirect />} />
+            <Route path="/fund/:slug" element={<FundAliasRedirect />} />
             {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
               <Route
                 key={`shortcut:${legacyPath}`}
