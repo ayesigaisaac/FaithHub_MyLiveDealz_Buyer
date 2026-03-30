@@ -24,6 +24,7 @@ import {
 import { ctaPriorityClass } from "@/constants/ctaStyles";
 import { faithHubToneCopy } from "@/constants/faithHubTone";
 import { getProviderFundSnapshot } from "@/data/funds";
+import { getProviderAnalyticsSnapshot } from "@/data/providerAnalytics";
 import { routes } from "@/constants/routes";
 
 type TimeWindow = "7d" | "30d" | "term";
@@ -243,11 +244,16 @@ function toCurrency(value: number) {
   }).format(value);
 }
 
+function integerFormatter(value: number) {
+  return new Intl.NumberFormat().format(value);
+}
+
 export default function FaithHubProviderDashboard() {
   const navigate = useNavigate();
   const [windowView, setWindowView] = useState<TimeWindow>("7d");
   const copy = faithHubToneCopy.providerDashboard;
   const fundSnapshots = getProviderFundSnapshot();
+  const analytics = useMemo(() => getProviderAnalyticsSnapshot(), []);
 
   const topActions = useMemo(
     () => [
@@ -439,6 +445,43 @@ export default function FaithHubProviderDashboard() {
             </Card>
           </motion.div>
         ))}
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.14, duration: 0.3, ease: "easeOut" }}
+      >
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
+            <DashboardSectionHeader
+              title="Performance Insights"
+              subtitle="Views, engagement, giving, attendance, and top content performance."
+            />
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+              <div className="fh-subcard rounded-xl p-3">
+                <div className="fh-label text-slate-500">Total views</div>
+                <div className="mt-1 text-xl font-bold text-slate-900">{integerFormatter(analytics.totalViews)}</div>
+              </div>
+              <div className="fh-subcard rounded-xl p-3">
+                <div className="fh-label text-slate-500">Engagement rate</div>
+                <div className="mt-1 text-xl font-bold text-slate-900">{analytics.engagementRate}%</div>
+              </div>
+              <div className="fh-subcard rounded-xl p-3">
+                <div className="fh-label text-slate-500">Giving received</div>
+                <div className="mt-1 text-xl font-bold text-slate-900">{toCurrency(analytics.givingReceived)}</div>
+              </div>
+              <div className="fh-subcard rounded-xl p-3">
+                <div className="fh-label text-slate-500">Live attendance</div>
+                <div className="mt-1 text-xl font-bold text-slate-900">{integerFormatter(analytics.liveAttendance)}</div>
+              </div>
+              <div className="fh-subcard rounded-xl p-3">
+                <div className="fh-label text-slate-500">Top content</div>
+                <div className="mt-1 text-sm font-semibold text-slate-900">{analytics.topPerformingContent}</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </motion.div>
 
       <motion.div

@@ -336,6 +336,10 @@ function creditProviderWallet(amountValue: number) {
     type: "earning",
     amount: amountValue,
     source: "provider_payout",
+    ledger: {
+      channel: "provider_payout",
+      note: "Provider payout from giving support",
+    },
   });
 }
 
@@ -371,6 +375,11 @@ export function donateToFundFromWallet(input: {
     type: "donation",
     amount: amountValue,
     source: "giving",
+    ledger: {
+      channel: "giving",
+      reference_id: fund.id,
+      note: `Donation to ${fund.title}`,
+    },
   });
   creditProviderWallet(amountValue);
 
@@ -417,6 +426,11 @@ export function payPledgeFromWallet(input: {
     type: "donation",
     amount: amountValue,
     source: "giving",
+    ledger: {
+      channel: "pledge",
+      reference_id: pledge.id,
+      note: `Pledge payment for ${fund.title}`,
+    },
   });
   creditProviderWallet(amountValue);
 
@@ -440,6 +454,18 @@ export function getProviderFundSnapshot(providerId = defaultProviderId) {
       pledged_total: amount(pledges.reduce((sum, pledge) => sum + pledge.pledged_amount, 0)),
     };
   });
+}
+
+export function getFundPledgeSummary(fundId: string) {
+  const pledges = getFundPledges(fundId);
+  const pledged_total = amount(pledges.reduce((sum, pledge) => sum + pledge.pledged_amount, 0));
+  const paid_total = amount(pledges.reduce((sum, pledge) => sum + pledge.paid_amount, 0));
+  const outstanding_total = amount(Math.max(0, pledged_total - paid_total));
+  return {
+    pledged_total,
+    paid_total,
+    outstanding_total,
+  };
 }
 
 export const fundDefaults = {

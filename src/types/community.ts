@@ -1,6 +1,9 @@
 import type { Role } from "@/types/roles";
 
 export type CommunityRole = Extract<Role, "user" | "provider">;
+export type CommunityReaction = "like" | "pray" | "support";
+
+export type CommunityReactionCounter = Record<CommunityReaction, number>;
 
 export interface CommunityAuthor {
   id: string;
@@ -35,6 +38,7 @@ export interface CommunityPost {
   highlighted: boolean;
   threadStarter: boolean;
   discussionTopic: string | null;
+  reactions: CommunityReactionCounter;
   comments: CommunityComment[];
   reported: boolean;
 }

@@ -116,7 +116,7 @@ describe("FaithHub action-id routing", () => {
 describe("FaithHub action-label routing", () => {
   it("resolves newly mapped labels", () => {
     expect(resolvePageButtonAction(routes.app.user.eventDetail, "Buy in FaithMart")).toBe(
-      routes.app.user.giving,
+      routes.app.user.wallet,
     );
     expect(resolvePageButtonAction(routes.app.admin.overview, "Open User App")).toBe(
       routes.app.user.home,

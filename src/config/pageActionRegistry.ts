@@ -98,7 +98,7 @@ const rawExactPageActions: Record<string, Record<string, string>> = {
   "/app/user/events/detail": {
     "reserve seat": "/app/user/giving",
     "give now": "/app/user/giving",
-    "buy in faithmart": "/app/user/giving",
+    "buy in faithmart": "/app/user/wallet",
     "open institution": "/app/user/institution",
   },
   "/app/user/giving": {
@@ -256,7 +256,7 @@ const rawRoleLevelActions: Record<RoleKey, Record<string, string>> = {
     reply: "/app/user/live/chat",
     report: "/app/user/reviews",
     block: "/app/user/reviews",
-    "buy in faithmart": "/app/user/giving",
+    "buy in faithmart": "/app/user/wallet",
     rsvp: "/app/user/events/detail",
     "set reminder": "/app/user/events",
     "continue giving": "/app/user/giving",

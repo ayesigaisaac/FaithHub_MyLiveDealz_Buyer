@@ -23,6 +23,7 @@ import {
 import { ctaPriorityClass } from "@/constants/ctaStyles";
 import { faithHubToneCopy } from "@/constants/faithHubTone";
 import { routes } from "@/constants/routes";
+import { getHomePersonalizationSnapshot } from "@/data/homePersonalization";
 import UserActionBar from "@/pages/user/shared/UserActionBar";
 
 type TimeWindow = "today" | "week" | "month";
@@ -240,6 +241,7 @@ export default function FaithHubHome() {
   const [windowView, setWindowView] = useState<TimeWindow>("today");
   const navigate = useNavigate();
   const copy = faithHubToneCopy.userHome;
+  const personalized = useMemo(() => getHomePersonalizationSnapshot(), []);
 
   const topActions = useMemo(
     () => [
@@ -425,6 +427,123 @@ export default function FaithHubHome() {
             </Card>
           </motion.div>
         ))}
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.18, duration: 0.3, ease: "easeOut" }}
+        className="grid gap-4 xl:grid-cols-2"
+      >
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel">
+            <DashboardSectionHeader
+              title="Continue Watching"
+              subtitle="Resume your in-progress teachings"
+            />
+            <div className="space-y-2.5">
+              {personalized.continueWatching.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => navigate(item.path)}
+                  className="fh-subcard w-full rounded-xl px-3 py-3 text-left transition hover:border-[rgba(3,205,140,0.3)]"
+                  data-no-nav
+                >
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.detail}</div>
+                </button>
+              ))}
+            </div>
+
+            <DashboardSectionHeader
+              title="Live Now"
+              subtitle="Sessions happening or about to start"
+              className="mt-4"
+            />
+            <div className="space-y-2.5">
+              {personalized.liveNow.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => navigate(item.path)}
+                  className="fh-subcard w-full rounded-xl px-3 py-3 text-left transition hover:border-[rgba(3,205,140,0.3)]"
+                  data-no-nav
+                >
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.detail}</div>
+                </button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
+          <CardContent className="fh-pad-panel space-y-4">
+            <div>
+              <DashboardSectionHeader
+                title="Recommended Content"
+                subtitle="Based on your recent sessions"
+              />
+              <div className="space-y-2.5">
+                {personalized.recommendedContent.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => navigate(item.path)}
+                    className="fh-subcard w-full rounded-xl px-3 py-3 text-left transition hover:border-[rgba(3,205,140,0.3)]"
+                    data-no-nav
+                  >
+                    <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                    <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.detail}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <DashboardSectionHeader
+                title="Community Activity"
+                subtitle="Recent updates from people you follow"
+              />
+              <div className="space-y-2.5">
+                {personalized.communityActivity.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => navigate(item.path)}
+                    className="fh-subcard w-full rounded-xl px-3 py-3 text-left transition hover:border-[rgba(3,205,140,0.3)]"
+                    data-no-nav
+                  >
+                    <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                    <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.detail}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <DashboardSectionHeader
+                title="Suggested Giving"
+                subtitle="Campaigns aligned with your recent activity"
+              />
+              <div className="space-y-2.5">
+                {personalized.suggestedGiving.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => navigate(item.path)}
+                    className="fh-subcard w-full rounded-xl px-3 py-3 text-left transition hover:border-[rgba(3,205,140,0.3)]"
+                    data-no-nav
+                  >
+                    <div className="text-sm font-semibold text-[var(--text-primary)]">{item.title}</div>
+                    <div className="mt-1 text-xs text-[var(--text-secondary)]">{item.detail}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </motion.div>
 
       <motion.div

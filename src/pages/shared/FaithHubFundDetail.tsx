@@ -11,6 +11,7 @@ import {
   getFundById,
   getFundBySlug,
   getFundPledges,
+  getFundPledgeSummary,
   getFundSupporters,
   payPledgeFromWallet,
 } from "@/data/funds";
@@ -112,6 +113,7 @@ export default function FaithHubFundDetail() {
   }
 
   const progress = Math.min(100, Math.round((fund.current_amount / Math.max(1, fund.target_amount)) * 100));
+  const pledgeSummary = getFundPledgeSummary(fund.id);
 
   const handleDonate = () => {
     donateToFundFromWallet({
@@ -183,6 +185,33 @@ export default function FaithHubFundDetail() {
             </div>
             <div className="mt-2 h-2 rounded-full bg-[color-mix(in_srgb,var(--border)_80%,transparent_20%)]">
               <div className="h-full rounded-full bg-[var(--accent)]" style={{ width: `${progress}%` }} />
+            </div>
+          </div>
+
+          <div className="mt-3 grid gap-2 sm:grid-cols-3">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)]">
+                Pledged
+              </div>
+              <div className="mt-1 text-lg font-bold text-[var(--text-primary)]">
+                {currency(pledgeSummary.pledged_total)}
+              </div>
+            </div>
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)]">
+                Paid
+              </div>
+              <div className="mt-1 text-lg font-bold text-[var(--text-primary)]">
+                {currency(pledgeSummary.paid_total)}
+              </div>
+            </div>
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+              <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-muted)]">
+                Outstanding
+              </div>
+              <div className="mt-1 text-lg font-bold text-[var(--text-primary)]">
+                {currency(pledgeSummary.outstanding_total)}
+              </div>
             </div>
           </div>
         </CardContent>

@@ -6,8 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { appendWalletTransaction, faithMartWalletUrl, getWalletByRole } from "@/data/wallet";
+import { getFinanceLedgerEntries } from "@/data/financeLedger";
 import { routes } from "@/constants/routes";
 import type { WalletRole, WalletTransaction, WalletTransactionType } from "@/types/wallet";
+import type { FinanceLedgerEntry } from "@/types/finance";
 
 function formatCurrency(amount: number) {
   return new Intl.NumberFormat(undefined, {
@@ -57,9 +59,13 @@ export default function FaithHubWallet() {
 
   const [amountInput, setAmountInput] = useState("25");
   const [wallet, setWallet] = useState(() => getWalletByRole(walletRole));
+  const [ledgerEntries, setLedgerEntries] = useState<FinanceLedgerEntry[]>(() =>
+    getFinanceLedgerEntries().filter((entry) => entry.wallet_role === walletRole),
+  );
 
   useEffect(() => {
     setWallet(getWalletByRole(walletRole));
+    setLedgerEntries(getFinanceLedgerEntries().filter((entry) => entry.wallet_role === walletRole));
   }, [walletRole]);
 
   const amountValue = useMemo(() => Number(amountInput), [amountInput]);
@@ -76,6 +82,7 @@ export default function FaithHubWallet() {
         source,
       }),
     );
+    setLedgerEntries(getFinanceLedgerEntries().filter((entry) => entry.wallet_role === walletRole));
   };
 
   return (
@@ -220,7 +227,42 @@ export default function FaithHubWallet() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="fh-surface-card rounded-2xl">
+        <CardContent className="p-4 sm:p-5">
+          <div className="text-base font-semibold text-[var(--text-primary)]">Unified finance log</div>
+          <p className="mt-1 text-xs text-[var(--text-secondary)]">
+            Central ledger across wallet, giving, FaithMart purchases, and provider payouts.
+          </p>
+          <div className="mt-3 space-y-2">
+            {ledgerEntries.length ? (
+              ledgerEntries.slice(0, 10).map((entry) => (
+                <div
+                  key={entry.id}
+                  className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+                      {entry.channel.replace("_", " ")}
+                    </div>
+                    <div className="text-sm font-semibold text-[var(--text-primary)]">
+                      {entry.direction === "debit" ? "-" : "+"}
+                      {formatCurrency(entry.amount)}
+                    </div>
+                  </div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">
+                    {entry.note} - {formatDate(entry.timestamp)}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="rounded-xl border border-dashed border-[var(--border)] px-3 py-4 text-sm text-[var(--text-secondary)]">
+                No ledger records yet.
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
-

@@ -1,4 +1,10 @@
-import type { CommunityAuthor, CommunityComment, CommunityPost, CommunityRole } from "@/types/community";
+import type {
+  CommunityAuthor,
+  CommunityComment,
+  CommunityPost,
+  CommunityReaction,
+  CommunityRole,
+} from "@/types/community";
 
 const COMMUNITY_STORAGE_KEY = "faithhub.community.posts.v1";
 
@@ -75,6 +81,11 @@ const seedCommunityPosts: CommunityPost[] = [
     highlighted: true,
     threadStarter: true,
     discussionTopic: "Prayer Circle",
+    reactions: {
+      like: 14,
+      pray: 39,
+      support: 8,
+    },
     reported: false,
     comments: [
       createComment({
@@ -110,6 +121,11 @@ const seedCommunityPosts: CommunityPost[] = [
     highlighted: false,
     threadStarter: false,
     discussionTopic: null,
+    reactions: {
+      like: 11,
+      pray: 7,
+      support: 4,
+    },
     reported: false,
     comments: [
       createComment({
@@ -142,7 +158,14 @@ function parsePosts(raw: string | null) {
 function mergePosts(posts: CommunityPost[]) {
   const map = new Map<string, CommunityPost>();
   for (const post of posts) {
-    map.set(post.id, post);
+    map.set(post.id, {
+      ...post,
+      reactions: {
+        like: post.reactions?.like || 0,
+        pray: post.reactions?.pray || 0,
+        support: post.reactions?.support || 0,
+      },
+    });
   }
   const merged = Array.from(map.values());
   return merged.sort((a, b) => {
@@ -248,11 +271,32 @@ export function createPost(posts: CommunityPost[], input: {
     highlighted: input.author.role === "provider",
     threadStarter: Boolean(input.threadStarter),
     discussionTopic: input.discussionTopic ?? null,
+    reactions: {
+      like: 0,
+      pray: 0,
+      support: 0,
+    },
     comments: [],
     reported: false,
   };
   const next = mergePosts([created, ...posts]);
   return { created, posts: next };
+}
+
+export function reactToPost(posts: CommunityPost[], input: {
+  postId: string;
+  reaction: CommunityReaction;
+}) {
+  return posts.map((post) => {
+    if (post.id !== input.postId) return post;
+    return {
+      ...post,
+      reactions: {
+        ...post.reactions,
+        [input.reaction]: (post.reactions?.[input.reaction] || 0) + 1,
+      },
+    };
+  });
 }
 
 export function addComment(posts: CommunityPost[], input: {

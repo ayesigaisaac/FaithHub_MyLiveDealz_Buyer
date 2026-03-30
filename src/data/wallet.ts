@@ -5,6 +5,8 @@ import type {
   WalletTransactionStatus,
   WalletTransactionType,
 } from "@/types/wallet";
+import { appendFinanceLedgerFromWallet } from "@/data/financeLedger";
+import type { FinanceChannel } from "@/types/finance";
 
 const STORAGE_KEY = "faithhub.wallet.v1";
 
@@ -155,6 +157,11 @@ export function appendWalletTransaction(
     amount: number;
     status?: WalletTransactionStatus;
     source?: WalletTransaction["source"];
+    ledger?: {
+      channel?: FinanceChannel;
+      reference_id?: string | null;
+      note?: string;
+    };
   },
 ) {
   const current = getWalletByRole(role);
@@ -177,6 +184,6 @@ export function appendWalletTransaction(
   };
 
   saveWalletByRole(role, nextWallet);
+  appendFinanceLedgerFromWallet(role, transaction, input.ledger);
   return nextWallet;
 }
-

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { matchPath, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
@@ -11,6 +11,7 @@ import { useColorMode } from "@/theme/color-mode";
 import { getRoutePatterns, pageRegistry, type PageRegistryItem, type RoleKey } from "@/config/pageRegistry";
 import { buildUnifiedSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
+import { searchGlobalContent } from "@/data/globalSearch";
 import { routes } from "@/constants/routes";
 import type { Role } from "@/types/roles";
 
@@ -91,7 +92,9 @@ export default function AppShellLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [navQuery, setNavQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
   const [accountSwitcherOpen, setAccountSwitcherOpen] = useState(false);
+  const searchContainerRef = useRef<HTMLLabelElement | null>(null);
 
   const sidebarSections = useMemo(
     () => buildUnifiedSidebarSections({ role: shellRole, query: navQuery }),
@@ -107,7 +110,12 @@ export default function AppShellLayout() {
     (location.pathname.startsWith(routes.app.provider.base) ||
       location.pathname.includes("/series") ||
       location.pathname.includes("/live") ||
-      location.pathname.includes("/community"));
+      location.pathname.includes("/community") ||
+      location.pathname.includes("/institution"));
+  const globalSearchResults = useMemo(
+    () => searchGlobalContent(navQuery, shellRole),
+    [navQuery, shellRole],
+  );
 
   const resolveNavPath = (path: string) => path;
   const navigateToPath = (path: string) => navigate(path);
@@ -155,7 +163,19 @@ export default function AppShellLayout() {
 
   useEffect(() => {
     setAccountSwitcherOpen(false);
+    setSearchOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!searchOpen) return;
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!searchContainerRef.current?.contains(event.target as Node)) {
+        setSearchOpen(false);
+      }
+    };
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, [searchOpen]);
 
   return (
     <div className="fh-page-canvas h-[100dvh] overflow-hidden bg-[var(--bg)] text-[var(--text-primary)]">
@@ -188,16 +208,59 @@ export default function AppShellLayout() {
             </div>
 
             <div className="hidden min-w-0 flex-1 px-1 md:flex lg:px-2">
-              <label className="fh-search-shell fh-shell-control mx-auto flex h-10 w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3">
+              <label
+                ref={searchContainerRef}
+                className="fh-search-shell fh-shell-control relative mx-auto flex h-10 w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3"
+              >
                 <Search className="h-4 w-4 shrink-0 text-[var(--text-secondary)]" />
                 <input
                   type="search"
-                  aria-label="Search navigation"
+                  aria-label="Search institutions, series, resources, and live sessions"
                   value={navQuery}
                   onChange={(event) => setNavQuery(event.target.value)}
-                  placeholder="Search navigation"
+                  onFocus={() => setSearchOpen(true)}
+                  placeholder="Search institutions, series, resources, live..."
                   className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted,#6B7280)]"
                 />
+                {searchOpen && navQuery.trim().length >= 2 ? (
+                  <div
+                    className="absolute left-0 right-0 top-[calc(100%+0.45rem)] z-50 rounded-xl border border-[var(--border)] bg-[var(--panel)] p-1.5 shadow-[var(--shadow-soft)]"
+                    data-no-nav
+                  >
+                    {globalSearchResults.length ? (
+                      <div className="max-h-72 overflow-y-auto">
+                        {globalSearchResults.map((result) => (
+                          <button
+                            key={`${result.type}:${result.id}`}
+                            type="button"
+                            onClick={() => {
+                              navigateToPath(result.path);
+                              setSearchOpen(false);
+                            }}
+                            className="flex w-full items-start justify-between gap-2 rounded-lg px-2.5 py-2 text-left transition hover:bg-[var(--fh-elevated-surface)]"
+                            data-no-nav
+                          >
+                            <span className="min-w-0">
+                              <span className="block truncate text-sm font-semibold text-[var(--text-primary)]">
+                                {result.title}
+                              </span>
+                              <span className="block truncate text-xs text-[var(--text-secondary)]">
+                                {result.subtitle}
+                              </span>
+                            </span>
+                            <span className="rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
+                              {result.type}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="px-2 py-3 text-xs text-[var(--text-secondary)]">
+                        No results found for "{navQuery.trim()}".
+                      </div>
+                    )}
+                  </div>
+                ) : null}
               </label>
             </div>
 

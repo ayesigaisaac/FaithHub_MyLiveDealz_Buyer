@@ -3,6 +3,8 @@ import {
   BadgeCheck,
   CornerDownRight,
   Flag,
+  Heart,
+  HeartHandshake,
   MessageSquare,
   Pin,
   ShieldCheck,
@@ -20,6 +22,7 @@ import {
   getCommunityPosts,
   getDefaultCommunityAuthor,
   moderateComment,
+  reactToPost,
   reportComment,
   saveCommunityPosts,
   togglePostFlag,
@@ -385,6 +388,33 @@ export default function FaithHubCommunity() {
                 </div>
 
                 <div className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">{renderMentionText(post.content)}</div>
+
+                <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => setPosts(reactToPost(posts, { postId: post.id, reaction: "like" }))}
+                    className="inline-flex items-center gap-1 rounded-lg border border-[var(--border)] px-2 py-1 text-xs font-semibold text-[var(--text-secondary)] transition hover:bg-[var(--fh-elevated-surface)]"
+                  >
+                    <Heart className="h-3.5 w-3.5" />
+                    Like {post.reactions.like}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPosts(reactToPost(posts, { postId: post.id, reaction: "pray" }))}
+                    className="inline-flex items-center gap-1 rounded-lg border border-[var(--border)] px-2 py-1 text-xs font-semibold text-[var(--text-secondary)] transition hover:bg-[var(--fh-elevated-surface)]"
+                  >
+                    <ShieldCheck className="h-3.5 w-3.5" />
+                    Pray {post.reactions.pray}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPosts(reactToPost(posts, { postId: post.id, reaction: "support" }))}
+                    className="inline-flex items-center gap-1 rounded-lg border border-[var(--border)] px-2 py-1 text-xs font-semibold text-[var(--text-secondary)] transition hover:bg-[var(--fh-elevated-surface)]"
+                  >
+                    <HeartHandshake className="h-3.5 w-3.5" />
+                    Support {post.reactions.support}
+                  </button>
+                </div>
 
                 <div className="mt-4 space-y-2">
                   {post.comments.map((comment) => renderComment(post.id, comment))}

@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/auth/AuthContext";
 import {
   DashboardActionItem,
   DashboardSectionHeader,
@@ -20,6 +21,7 @@ import {
 import UserActionBar from "@/pages/user/shared/UserActionBar";
 import type { DonationMode, GivingFund } from "@/pages/user/giving/types";
 import { getActiveFunds } from "@/data/funds";
+import { donateToFundFromWallet } from "@/data/funds";
 
 function compactCurrency(value: number) {
   return new Intl.NumberFormat(undefined, {
@@ -30,8 +32,13 @@ function compactCurrency(value: number) {
   }).format(value);
 }
 
+function memberIdFromName(name: string) {
+  return `member-${name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "anonymous"}`;
+}
+
 export default function FaithHubGiving() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const givingFunds = useMemo<GivingFund[]>(
     () =>
       getActiveFunds().map((fund, index) => ({
@@ -52,6 +59,7 @@ export default function FaithHubGiving() {
   const [receiptEmail, setReceiptEmail] = useState("naomi@faithhub.com");
   const [offlineMode, setOfflineMode] = useState(false);
   const [supporterTier, setSupporterTier] = useState(true);
+  const [walletMessage, setWalletMessage] = useState("");
 
   const selectedFund = useMemo(
     () => givingFunds.find((fund) => fund.id === selectedFundId) || givingFunds[0] || null,
@@ -59,6 +67,20 @@ export default function FaithHubGiving() {
   );
 
   const openFund = (fund: GivingFund) => navigate(`/fund/${fund.slug}`);
+  const handleWalletContribution = () => {
+    const parsedAmount = Number(amount);
+    if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+      setWalletMessage("Enter a valid amount to contribute from wallet.");
+      return;
+    }
+    donateToFundFromWallet({
+      fund_id: selectedFund.fundId,
+      user_id: memberIdFromName(user?.name || "member"),
+      amount: parsedAmount,
+      wallet_role: "user",
+    });
+    setWalletMessage(`Wallet contribution sent to ${selectedFund.title}.`);
+  };
 
   if (!selectedFund) {
     return (
@@ -114,6 +136,14 @@ export default function FaithHubGiving() {
                   className="h-10 rounded-xl bg-[#03cd8c] px-4 text-sm text-white hover:bg-[#03cd8c]"
                 >
                   Continue
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-10 rounded-xl border-slate-200 bg-white px-4 text-sm text-slate-700 hover:bg-slate-50"
+                  onClick={handleWalletContribution}
+                  data-no-nav
+                >
+                  Pay with wallet
                 </Button>
               </div>
             </div>
@@ -281,6 +311,19 @@ export default function FaithHubGiving() {
               >
                 Continue to payment
               </Button>
+              <Button
+                variant="outline"
+                className="h-11 w-full rounded-xl border-slate-200 bg-white hover:border-[#03cd8c]/35 hover:bg-[#f7fffb]"
+                onClick={handleWalletContribution}
+                data-no-nav
+              >
+                Contribute from wallet
+              </Button>
+              {walletMessage ? (
+                <div className="rounded-lg bg-[#ecfff8] px-3 py-2 text-xs font-semibold text-[#049e6d]">
+                  {walletMessage}
+                </div>
+              ) : null}
             </div>
           </CardContent>
         </Card>
