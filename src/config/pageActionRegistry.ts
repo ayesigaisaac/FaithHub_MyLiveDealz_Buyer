@@ -602,6 +602,8 @@ const directNavKeywords = new Set([
   "channels",
   "policy",
   "verification",
+  "resources",
+  "books",
 ]);
 
 const roleKeywordFallbackPath: Record<RoleKey, Record<string, string>> = {
@@ -609,6 +611,8 @@ const roleKeywordFallbackPath: Record<RoleKey, Record<string, string>> = {
     home: routes.app.user.home,
     account: routes.app.user.entry,
     discover: routes.app.user.discover,
+    resources: routes.app.user.resources,
+    books: routes.app.user.resources,
     series: routes.app.user.series,
     live: routes.app.user.liveHub,
     events: routes.app.user.events,
@@ -632,6 +636,8 @@ const roleKeywordFallbackPath: Record<RoleKey, Record<string, string>> = {
     home: routes.app.provider.dashboard,
     dashboard: routes.app.provider.dashboard,
     account: routes.app.provider.onboarding,
+    resources: routes.app.provider.resources,
+    books: routes.app.provider.resources,
     series: routes.app.provider.seriesBuilder,
     live: routes.app.provider.liveOps,
     schedule: routes.app.provider.liveSchedule,

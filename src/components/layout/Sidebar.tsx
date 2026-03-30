@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ChevronDown, ChevronsLeft, ChevronsRight, ExternalLink, X } from "lucide-react";
 import type { ExternalSidebarItem, SidebarSection } from "@/config/sidebar";
+import RoleSwitcher from "@/components/layout/RoleSwitcher";
+import type { Role } from "@/types/roles";
 
 interface SidebarProps {
   sections: SidebarSection[];
+  currentRole: Role;
   collapsed?: boolean;
   currentPath: string;
+  onRoleSwitch: (nextRole: Role, path: string) => void;
   onNavigate?: (path: string) => void;
   resolvePath?: (path: string) => string;
   onToggleCollapse?: () => void;
@@ -37,8 +41,10 @@ function openExternalSidebarItem(item: ExternalSidebarItem) {
 
 export default function Sidebar({
   sections,
+  currentRole,
   collapsed = false,
   currentPath,
+  onRoleSwitch,
   onNavigate,
   resolvePath,
   onToggleCollapse,
@@ -89,6 +95,30 @@ export default function Sidebar({
           </button>
         ) : null}
       </div>
+
+      {collapsed ? (
+        <div className="mb-2 flex items-center justify-center">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] text-xs font-bold tracking-[0.08em] text-[var(--text-primary)]">
+            FH
+          </span>
+        </div>
+      ) : (
+        <div className="mb-2 rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted,#6B7280)]">
+            FaithHub
+          </div>
+          <div className="text-sm font-semibold text-[var(--text-primary)]">Workspace</div>
+        </div>
+      )}
+
+      <RoleSwitcher
+        currentRole={currentRole}
+        collapsed={collapsed}
+        onSelectRole={(nextRole, path) => {
+          onRoleSwitch(nextRole, path);
+          onNavigate?.(path);
+        }}
+      />
 
       <nav className="fh-scroll-region min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
         {sections.map((section) => {

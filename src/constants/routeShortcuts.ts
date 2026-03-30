@@ -6,6 +6,7 @@ export const routeShortcuts: Record<string, string> = {
   "/live": routes.app.user.liveHub,
   "/provider/dashboard": routes.app.provider.dashboard,
   "/provider/community": routes.app.provider.community,
+  "/provider/resources": routes.app.provider.resources,
   "/provider/content": routes.app.provider.seriesBuilder,
   "/provider/events": routes.app.provider.events,
   "/provider/counseling": routes.app.provider.counseling,

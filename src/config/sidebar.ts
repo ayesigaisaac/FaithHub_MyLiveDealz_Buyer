@@ -2,6 +2,7 @@ import {
   BarChart3,
   BookOpen,
   CalendarDays,
+  Library,
   type LucideIcon,
   LayoutDashboard,
   Radio,
@@ -132,6 +133,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           activePrefixes: [routes.app.user.series, routes.app.user.episode, routes.app.user.replay, routes.app.user.clips],
         },
         {
+          id: "user-resources",
+          label: "Books & Resources",
+          path: routes.app.user.resources,
+          icon: Library,
+          activePrefixes: [routes.app.user.resources],
+        },
+        {
           id: "user-live",
           label: "Live",
           path: routes.app.user.liveHub,
@@ -167,6 +175,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.provider.seriesBuilder,
           icon: BookOpen,
           activePrefixes: [routes.app.provider.seriesBuilder, routes.app.provider.episodeBuilder, routes.app.provider.postLive],
+        },
+        {
+          id: "provider-resources",
+          label: "Books & Resources",
+          path: routes.app.provider.resources,
+          icon: Library,
+          activePrefixes: [routes.app.provider.resources],
         },
         {
           id: "provider-analytics",

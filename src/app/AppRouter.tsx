@@ -31,6 +31,12 @@ const counselingRouteByRole: Record<RoleKey, string> = {
   admin: routes.app.admin.counseling,
 };
 
+const resourcesRouteByRole: Record<RoleKey, string> = {
+  user: routes.app.user.resources,
+  provider: routes.app.provider.resources,
+  admin: routes.app.admin.overview,
+};
+
 const communityRouteByRole: Record<RoleKey, string> = {
   user: routes.app.user.community,
   provider: routes.app.provider.community,
@@ -108,6 +114,7 @@ export default function AppRouter() {
               path="/ops/*"
               element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
             />
+            <Route path="/resources" element={<Navigate to={resourcesRouteByRole[role]} replace />} />
             <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
             <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
             {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (

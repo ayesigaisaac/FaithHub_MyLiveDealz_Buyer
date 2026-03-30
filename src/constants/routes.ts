@@ -54,6 +54,11 @@ export const routes = {
       membership: "/app/user/membership",
       reviews: "/app/user/reviews",
       settings: "/app/user/settings",
+      resources: "/app/user/resources",
+      resourceDetail: "/app/user/resources/detail",
+      resourceDetailPattern: "/app/user/resources/:resourceId",
+      resourceDetailById: (resourceId: RouteParam) =>
+        `/app/user/resources/${encodeSegment(resourceId)}`,
       counseling: "/app/user/counseling",
       counselingProfile: "/app/user/counseling/profile",
       counselingProfilePattern: "/app/user/counseling/:counselorId",
@@ -80,6 +85,11 @@ export const routes = {
       streamToPlatforms: "/app/provider/stream-to-platforms",
       notifications: "/app/provider/notifications",
       contacts: "/app/provider/contacts",
+      resources: "/app/provider/resources",
+      resourceDetail: "/app/provider/resources/detail",
+      resourceDetailPattern: "/app/provider/resources/:resourceId",
+      resourceDetailById: (resourceId: RouteParam) =>
+        `/app/provider/resources/${encodeSegment(resourceId)}`,
       community: "/app/provider/community",
       events: "/app/provider/events",
       funds: "/app/provider/funds",
@@ -118,6 +128,8 @@ export const faithHubRouteAliases: Record<string, string[]> = {
   [routes.app.user.livePlayer]: [routes.app.user.livePlayerPattern],
   [routes.app.user.liveChat]: [routes.app.user.liveChatPattern],
   [routes.app.user.eventDetail]: [routes.app.user.eventDetailPattern],
+  [routes.app.user.resourceDetail]: [routes.app.user.resourceDetailPattern],
+  [routes.app.provider.resourceDetail]: [routes.app.provider.resourceDetailPattern],
   [routes.app.user.counselingProfile]: [routes.app.user.counselingProfilePattern],
   [routes.app.user.counselingSession]: [routes.app.user.counselingSessionPattern],
 };

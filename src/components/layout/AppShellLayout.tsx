@@ -104,6 +104,13 @@ export default function AppShellLayout() {
 
   const resolveNavPath = (path: string) => path;
   const navigateToPath = (path: string) => navigate(path);
+  const handleRoleSwitch = (nextRole: Role, path: string) => {
+    flushSync(() => {
+      setRole(nextRole);
+    });
+    navigateToPath(path);
+    setMobileOpen(false);
+  };
 
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
     const insideAppWorkspace = location.pathname.startsWith("/app/");
@@ -226,8 +233,10 @@ export default function AppShellLayout() {
         >
           <Sidebar
             sections={sidebarSections}
+            currentRole={shellRole}
             collapsed={sidebarCollapsed}
             currentPath={activeNavPath}
+            onRoleSwitch={handleRoleSwitch}
             resolvePath={resolveNavPath}
             onToggleCollapse={() => setSidebarCollapsed((prev) => !prev)}
           />
@@ -249,7 +258,9 @@ export default function AppShellLayout() {
           <div className="h-full">
             <Sidebar
               sections={sidebarSections}
+              currentRole={shellRole}
               currentPath={activeNavPath}
+              onRoleSwitch={handleRoleSwitch}
               resolvePath={resolveNavPath}
               onNavigate={() => setMobileOpen(false)}
               onClose={() => setMobileOpen(false)}
@@ -269,16 +280,8 @@ export default function AppShellLayout() {
 
       <AccountSwitcher
         isOpen={accountSwitcherOpen}
-        currentRole={shellRole}
         colorMode={mode}
         onClose={() => setAccountSwitcherOpen(false)}
-        onSwitchRole={(nextRole: Role, path: string) => {
-          flushSync(() => {
-            setRole(nextRole);
-          });
-          navigateToPath(path);
-          setAccountSwitcherOpen(false);
-        }}
         onToggleColorMode={() => {
           toggle();
         }}

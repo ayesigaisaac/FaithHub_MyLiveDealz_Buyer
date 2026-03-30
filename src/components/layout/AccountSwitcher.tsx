@@ -1,58 +1,17 @@
 import React, { useEffect } from "react";
 import {
-  CheckCircle2,
-  Landmark,
   LogOut,
   Moon,
   Settings,
-  ShieldCheck,
   Sun,
-  Users,
   X,
-  type LucideIcon,
 } from "lucide-react";
-import { routes } from "@/constants/routes";
-import type { Role } from "@/types/roles";
 import type { ColorMode } from "@/theme/color-mode";
-
-type RoleOption = {
-  role: Role;
-  label: string;
-  subtitle: string;
-  path: string;
-  icon: LucideIcon;
-};
-
-const roleOptions: RoleOption[] = [
-  {
-    role: "admin",
-    label: "Admin",
-    subtitle: "Policy, security, finance, and governance",
-    path: routes.app.admin.overview,
-    icon: ShieldCheck,
-  },
-  {
-    role: "user",
-    label: "User",
-    subtitle: "Home, series, live, and community",
-    path: routes.app.user.home,
-    icon: Users,
-  },
-  {
-    role: "provider",
-    label: "Provider",
-    subtitle: "Content, analytics, events, and audience",
-    path: routes.app.provider.dashboard,
-    icon: Landmark,
-  },
-];
 
 interface AccountSwitcherProps {
   isOpen: boolean;
-  currentRole: Role;
   colorMode: ColorMode;
   onClose: () => void;
-  onSwitchRole: (role: Role, path: string) => void;
   onToggleColorMode: () => void;
   onOpenProfileSettings: () => void;
   onLogout: () => void;
@@ -60,10 +19,8 @@ interface AccountSwitcherProps {
 
 export default function AccountSwitcher({
   isOpen,
-  currentRole,
   colorMode,
   onClose,
-  onSwitchRole,
   onToggleColorMode,
   onOpenProfileSettings,
   onLogout,
@@ -104,7 +61,7 @@ export default function AccountSwitcher({
           <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-muted,#6B7280)]">Account</p>
-              <h2 className="text-sm font-semibold text-[var(--text-primary)]">Switch Workspace</h2>
+              <h2 className="text-sm font-semibold text-[var(--text-primary)]">Preferences</h2>
             </div>
             <button
               type="button"
@@ -117,48 +74,7 @@ export default function AccountSwitcher({
           </div>
 
           <div className="fh-scroll-region flex-1 space-y-4 overflow-y-auto p-4">
-            <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.11em] text-[var(--text-muted,#6B7280)]">Roles</p>
-              {roleOptions.map((option) => {
-                const active = option.role === currentRole;
-                return (
-                  <button
-                    key={option.role}
-                    type="button"
-                    onClick={() => onSwitchRole(option.role, option.path)}
-                    className={`group flex w-full items-start gap-3 rounded-xl border p-3 text-left transition ${
-                      active
-                        ? "border-[rgba(3,205,140,0.35)] bg-[rgba(3,205,140,0.15)]"
-                        : "border-[var(--border)] bg-[var(--card)] hover:border-[rgba(3,205,140,0.24)] hover:bg-[var(--fh-elevated-surface)]"
-                    }`}
-                  >
-                    <span
-                      className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                        active
-                          ? "bg-[rgba(3,205,140,0.18)] text-[var(--accent)]"
-                          : "bg-[var(--fh-elevated-surface)] text-[var(--text-secondary)]"
-                      }`}
-                    >
-                      <option.icon className="h-5 w-5" />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-[var(--text-primary)]">{option.label}</span>
-                        {active ? (
-                          <span className="rounded-full bg-[rgba(3,205,140,0.18)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
-                            Current
-                          </span>
-                        ) : null}
-                      </span>
-                      <span className="mt-1 block text-xs text-[var(--text-secondary)]">{option.subtitle}</span>
-                    </span>
-                    {active ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]" /> : null}
-                  </button>
-                );
-              })}
-            </section>
-
-            <div className="border-t border-[var(--border)] pt-4">
+            <div>
               <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.11em] text-[var(--text-muted,#6B7280)]">Preferences</p>
               <div className="space-y-2">
                 <button
