@@ -1,745 +1,319 @@
-import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useMemo } from "react";
 import {
+  BarChart3,
+  BellRing,
+  BookOpen,
   CalendarDays,
-  CalendarRange,
-  ChevronRight,
-  Clock3,
+  HeartHandshake,
   MessageSquare,
   MonitorPlay,
-  ShieldAlert,
-  Sparkles,
-  TriangleAlert,
+  ShieldCheck,
+  Users,
   Wallet,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { useAuth } from "@/auth/AuthContext";
 import {
-  DashboardActionItem,
-  DashboardSectionHeader,
-  DashboardStatCard,
+  RoleDashboardShell,
+  type RoleDashboardCard,
+  type RoleDashboardCommunityModule,
+  type RoleDashboardNotification,
+  type RoleDashboardResumeItem,
+  type RoleDashboardStat,
 } from "@/components/dashboard";
-import { ctaPriorityClass } from "@/constants/ctaStyles";
-import { faithHubToneCopy } from "@/constants/faithHubTone";
+import { routes } from "@/constants/routes";
+import { getCommunityPosts } from "@/data/community";
 import { getProviderFundSnapshot } from "@/data/funds";
 import { getProviderAnalyticsSnapshot } from "@/data/providerAnalytics";
-import { routes } from "@/constants/routes";
+import { getWalletByRole } from "@/data/wallet";
 
-type TimeWindow = "7d" | "30d" | "term";
-
-type ModuleTile = {
-  id: string;
-  title: string;
-  description: string;
-  actionLabel: string;
-  actionId: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
-
-type ProgressMetric = {
-  id: string;
-  label: string;
-  value: string;
-  note: string;
-  progress: number;
-  tone: "emerald" | "orange" | "rose";
-  badge: string;
-};
-
-type PulseMetric = {
-  id: string;
-  label: string;
-  value: string;
-  delta: string;
-  trend: "up" | "down" | "flat";
-  tone: "emerald" | "orange" | "slate";
-};
-
-type PriorityItem = {
-  id: string;
-  title: string;
-  detail: string;
-  actionLabel: string;
-  actionId: string;
-  tone?: "default" | "elevated";
-};
-
-type AgendaItem = {
-  id: string;
-  time: string;
-  title: string;
-  detail: string;
-};
-
-const modules: ModuleTile[] = [
-  {
-    id: "live-studio",
-    title: "Live Studio",
-    description: "Scene switching, host controls, and overlays.",
-    actionLabel: "Open studio",
-    actionId: "open-live-studio",
-    icon: MonitorPlay,
-  },
-  {
-    id: "schedule",
-    title: "Schedule",
-    description: "Session calendar, staffing, and reminders.",
-    actionLabel: "Open scheduler",
-    actionId: "open-live-schedule",
-    icon: CalendarRange,
-  },
-  {
-    id: "signals",
-    title: "Giving Signals",
-    description: "Track momentum, conversion, and payout readiness.",
-    actionLabel: "Export analytics",
-    actionId: "open-live-ops",
-    icon: Wallet,
-  },
-  {
-    id: "moderation",
-    title: "Trust Moderation",
-    description: "Review trust queue and escalation follow-up.",
-    actionLabel: "Open trust queue",
-    actionId: "open-reviews-moderation",
-    icon: ShieldAlert,
-  },
-];
-
-const progressMetrics: ProgressMetric[] = [
-  {
-    id: "sessions",
-    label: "Upcoming live sessions",
-    value: "9",
-    note: "Two prime-time sessions still need final checks.",
-    progress: 74,
-    tone: "orange",
-    badge: "In review",
-  },
-  {
-    id: "queue",
-    label: "Moderation queue",
-    value: "14",
-    note: "Three items are urgent and still inside SLA.",
-    progress: 58,
-    tone: "rose",
-    badge: "Needs attention",
-  },
-  {
-    id: "conversion",
-    label: "Donation conversion",
-    value: "64%",
-    note: "Follow-up reminders are keeping conversion stable.",
-    progress: 81,
-    tone: "emerald",
-    badge: "Stable",
-  },
-];
-
-const pulseMetrics: PulseMetric[] = [
-  { id: "in-review", label: "Sessions in review", value: "26", delta: "+12%", trend: "up", tone: "emerald" },
-  { id: "missing-assets", label: "Missing assets", value: "6", delta: "-4%", trend: "down", tone: "orange" },
-  { id: "pastoral-followups", label: "Pastoral follow-ups", value: "3", delta: "+0.0%", trend: "flat", tone: "slate" },
-  { id: "conversion", label: "Conversion", value: "64%", delta: "+0.2%", trend: "up", tone: "emerald" },
-];
-
-const priorities: PriorityItem[] = [
-  {
-    id: "missing-assets",
-    title: "Request missing stream assets",
-    detail: "6 scheduled sessions still have incomplete artwork or metadata.",
-    actionLabel: "Open scheduler",
-    actionId: "open-live-schedule",
-  },
-  {
-    id: "queue",
-    title: "Process urgent trust queue",
-    detail: "3 urgent moderation items are waiting for provider response.",
-    actionLabel: "Open trust queue",
-    actionId: "open-reviews-moderation",
-    tone: "elevated",
-  },
-  {
-    id: "notifications",
-    title: "Notify pre-registered attendees",
-    detail: "Audience reminders are due for tomorrow's headline session.",
-    actionLabel: "Notify audience",
-    actionId: "open-notifications",
-  },
-  {
-    id: "signals",
-    title: "Reconcile campaign fund snapshots",
-    detail: "Export this week's donation and payout movement for finance ops.",
-    actionLabel: "Export analytics",
-    actionId: "open-live-ops",
-  },
-];
-
-const agenda: AgendaItem[] = [
-  {
-    id: "doc-review",
-    time: "09:15",
-    title: "Stream metadata review",
-    detail: "Verify titles, thumbnails, and publishing tags.",
-  },
-  {
-    id: "rehearsal",
-    time: "12:10",
-    title: "Host rehearsal block",
-    detail: "Scene transitions and backup audio checks.",
-  },
-  {
-    id: "handoff",
-    time: "16:20",
-    title: "Moderator handoff",
-    detail: "Finalize queue ownership before evening session.",
-  },
-];
-
-const actionCenterItems: PriorityItem[] = [
-  {
-    id: "forms",
-    title: "Missing campaign forms",
-    detail: "Most common publishing blocker in this window.",
-    actionLabel: "Open scheduler",
-    actionId: "open-live-schedule",
-    tone: "elevated",
-  },
-  {
-    id: "contacts",
-    title: "Follow-up queue",
-    detail: "3 pastoral follow-ups still need schedule confirmation.",
-    actionLabel: "Open contacts",
-    actionId: "open-contacts",
-  },
-  {
-    id: "queue-action",
-    title: "Moderation follow-up",
-    detail: "Resolve trust queue items before session launch.",
-    actionLabel: "Open trust queue",
-    actionId: "open-reviews-moderation",
-  },
-];
-
-function pulseToneClass(tone: PulseMetric["tone"]) {
-  if (tone === "orange") return "bg-[#fff3e8] text-[#cc6500]";
-  if (tone === "slate") return "bg-slate-100 text-slate-700";
-  return "bg-[#ecfff8] text-[#049e6d]";
-}
-
-function pulseBarClass(metric: PulseMetric) {
-  if (metric.trend === "down") return "w-[38%] bg-[#f77f00]/75";
-  if (metric.trend === "flat") return "w-[54%] bg-slate-400/70";
-  return "w-[70%] bg-[#03cd8c]/75";
-}
-
-function toCurrency(value: number) {
+function formatCurrency(amount: number) {
   return new Intl.NumberFormat(undefined, {
     style: "currency",
     currency: "USD",
-    minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(value);
-}
-
-function integerFormatter(value: number) {
-  return new Intl.NumberFormat().format(value);
+  }).format(amount);
 }
 
 export default function FaithHubProviderDashboard() {
-  const navigate = useNavigate();
-  const [windowView, setWindowView] = useState<TimeWindow>("7d");
-  const copy = faithHubToneCopy.providerDashboard;
-  const fundSnapshots = getProviderFundSnapshot();
+  const { user } = useAuth();
   const analytics = useMemo(() => getProviderAnalyticsSnapshot(), []);
+  const providerFunds = useMemo(() => getProviderFundSnapshot(), []);
+  const providerWallet = useMemo(() => getWalletByRole("provider"), []);
+  const communityPosts = useMemo(() => getCommunityPosts().filter((post) => post.authorRole === "provider"), []);
 
-  const topActions = useMemo(
+  const notifications = useMemo<RoleDashboardNotification[]>(() => {
+    const urgentModeration = communityPosts.filter((post) => post.reported).length;
+
+    return [
+      {
+        id: "provider-live-alert",
+        title: "Live session starts in 35 minutes",
+        detail: "Evening Prayer Revival requires final stream checks.",
+        type: "live",
+        path: routes.app.provider.liveSchedule,
+        window: "today",
+      },
+      {
+        id: "provider-event-reminder",
+        title: "Event reminder: Youth Outreach",
+        detail: "Volunteer confirmations are due before noon.",
+        type: "event",
+        path: routes.app.provider.events,
+        window: "today",
+      },
+      {
+        id: "provider-replies",
+        title: "New audience replies",
+        detail: "Members are engaging in your latest community thread.",
+        type: "reply",
+        path: routes.app.provider.community,
+        window: "week",
+      },
+      {
+        id: "provider-giving",
+        title: "Giving alert",
+        detail: `${formatCurrency(providerWallet.balance)} available for payout planning.`,
+        type: "giving",
+        path: routes.app.provider.wallet,
+        window: "week",
+      },
+      {
+        id: "provider-moderation",
+        title: "Moderation follow-up",
+        detail: `${urgentModeration} flagged conversations need provider review.`,
+        type: "reply",
+        path: routes.app.provider.reviewsModeration,
+        window: "month",
+      },
+    ];
+  }, [communityPosts, providerWallet.balance]);
+
+  const resumeItems = useMemo<RoleDashboardResumeItem[]>(() => {
+    const leadFund = providerFunds[0];
+    return [
+      {
+        id: "resume-provider-content",
+        label: "Content pipeline",
+        detail: "Continue editing series drafts and scheduling assets.",
+        path: routes.app.provider.seriesBuilder,
+      },
+      {
+        id: "resume-provider-events",
+        label: "Upcoming events",
+        detail: "Review registrations, reminders, and host assignments.",
+        path: routes.app.provider.events,
+      },
+      {
+        id: "resume-provider-fund",
+        label: "Fund progress",
+        detail: leadFund
+          ? `${leadFund.fund.title} - ${formatCurrency(leadFund.fund.current_amount)} raised`
+          : "Create your first campaign fund",
+        path: leadFund ? routes.app.provider.fundDetailBySlug(leadFund.fund.slug) : routes.app.provider.fundCreate,
+      },
+    ];
+  }, [providerFunds]);
+
+  const cards = useMemo<RoleDashboardCard[]>(() => {
+    return [
+      {
+        id: "provider-card-live",
+        icon: MonitorPlay,
+        title: "Live production",
+        description: "Launch and monitor live sessions with studio and operations controls.",
+        metadata: ["Today", "Live", "Production"],
+        category: "operations",
+        window: "today",
+        highlight: "accent",
+        primaryPath: routes.app.provider.liveStudio,
+        actions: [
+          { id: "provider-go-live", label: "Join", behavior: "navigate", to: routes.app.provider.liveStudio, variant: "default" },
+          { id: "provider-save-live", label: "Save", behavior: "save" },
+          { id: "provider-share-live", label: "Share", behavior: "share" },
+        ],
+      },
+      {
+        id: "provider-card-content",
+        icon: BookOpen,
+        title: "Manage series",
+        description: "Create episodes, update lessons, and publish replay content.",
+        metadata: ["This week", "Content", "Series builder"],
+        category: "content",
+        window: "week",
+        primaryPath: routes.app.provider.seriesBuilder,
+        actions: [
+          { id: "provider-open-content", label: "Watch Now", behavior: "navigate", to: routes.app.provider.seriesBuilder },
+          { id: "provider-save-content", label: "Save", behavior: "save" },
+          { id: "provider-share-content", label: "Share", behavior: "share" },
+        ],
+      },
+      {
+        id: "provider-card-events",
+        icon: CalendarDays,
+        title: "Manage events",
+        description: "Coordinate registrations, check-in flow, and event communication.",
+        metadata: ["This month", "Events", "Operations"],
+        category: "events",
+        window: "month",
+        primaryPath: routes.app.provider.events,
+        actions: [
+          { id: "provider-open-events", label: "Join", behavior: "navigate", to: routes.app.provider.events },
+          { id: "provider-save-events", label: "Save", behavior: "save" },
+          { id: "provider-share-events", label: "Share", behavior: "share" },
+        ],
+      },
+      {
+        id: "provider-card-analytics",
+        icon: BarChart3,
+        title: "Analytics cockpit",
+        description: "Track views, engagement, attendance, and top-performing content.",
+        metadata: ["Today", "Reports", "Insights"],
+        category: "reports",
+        window: "today",
+        primaryPath: routes.app.provider.liveOps,
+        actions: [
+          { id: "provider-open-analytics", label: "Watch Now", behavior: "navigate", to: routes.app.provider.liveOps, variant: "default" },
+          { id: "provider-save-analytics", label: "Save", behavior: "save" },
+          { id: "provider-share-analytics", label: "Share", behavior: "share" },
+        ],
+      },
+      {
+        id: "provider-card-community",
+        icon: Users,
+        title: "Community engagement",
+        description: "Lead discussions, respond to members, and publish community guidance.",
+        metadata: ["This week", "Community", "Audience"],
+        category: "community",
+        window: "week",
+        primaryPath: routes.app.provider.community,
+        actions: [
+          { id: "provider-open-community", label: "Join", behavior: "navigate", to: routes.app.provider.community },
+          { id: "provider-save-community", label: "Save", behavior: "save" },
+          { id: "provider-share-community", label: "Share", behavior: "share" },
+        ],
+      },
+      {
+        id: "provider-card-funds",
+        icon: Wallet,
+        title: "Earnings and payouts",
+        description: "Monitor provider earnings, wallet movement, and withdrawal readiness.",
+        metadata: ["This month", "Giving", "Payouts"],
+        category: "giving",
+        window: "month",
+        highlight: "warning",
+        primaryPath: routes.app.provider.wallet,
+        donationPath: routes.app.provider.funds,
+        actions: [
+          { id: "provider-open-wallet", label: "Donate", behavior: "navigate", to: routes.app.provider.wallet, variant: "default" },
+          { id: "provider-save-wallet", label: "Save", behavior: "save" },
+          { id: "provider-share-wallet", label: "Share", behavior: "share" },
+        ],
+      },
+    ];
+  }, []);
+
+  const communityModules = useMemo<RoleDashboardCommunityModule[]>(
     () => [
       {
-        id: "messages",
-        label: copy.ctas.openInbox,
-        actionLabel: "Open contacts",
-        actionId: "open-contacts",
-        variant: "outline" as const,
-        priority: "secondary" as const,
+        id: "provider-prayer",
+        icon: HeartHandshake,
+        title: "Prayer Requests",
+        description: "Facilitate prayer threads and pastoral follow-ups.",
+        path: routes.app.provider.community,
       },
       {
-        id: "explore",
-        label: copy.ctas.openSchedule,
-        actionLabel: "Open scheduler",
-        actionId: "open-live-schedule",
-        variant: "default" as const,
-        priority: "primary" as const,
+        id: "provider-testimonies",
+        icon: MessageSquare,
+        title: "Testimonies",
+        description: "Highlight member stories and faith milestones.",
+        path: routes.app.provider.community,
       },
       {
-        id: "support",
-        label: copy.ctas.openTrustQueue,
-        actionLabel: "Open trust queue",
-        actionId: "open-reviews-moderation",
-        variant: "outline" as const,
-        priority: "secondary" as const,
+        id: "provider-noticeboard",
+        icon: BellRing,
+        title: "Announcements",
+        description: "Publish ministry updates and event notices.",
+        path: routes.app.provider.noticeboard,
+      },
+      {
+        id: "provider-groups",
+        icon: Users,
+        title: "Small Groups",
+        description: "Coordinate leaders and discussion circles.",
+        path: routes.app.provider.community,
+      },
+      {
+        id: "provider-feed",
+        icon: ShieldCheck,
+        title: "Community Feed",
+        description: "Moderate ongoing conversations with context.",
+        path: routes.app.provider.community,
       },
     ],
-    [copy.ctas.openInbox, copy.ctas.openSchedule, copy.ctas.openTrustQueue],
+    [],
   );
+
+  const stats = useMemo<RoleDashboardStat[]>(() => {
+    const eventRegistrations = 142;
+    const activeMembers = communityPosts.length * 48;
+
+    return [
+      {
+        id: "provider-stat-attendance",
+        label: "Live attendance",
+        value: analytics.liveAttendance.toLocaleString(),
+        hint: "Audience in recent live sessions",
+        tone: "emerald",
+      },
+      {
+        id: "provider-stat-giving",
+        label: "Donations received",
+        value: formatCurrency(analytics.givingReceived),
+        hint: "Funds raised across active campaigns",
+        tone: "orange",
+      },
+      {
+        id: "provider-stat-events",
+        label: "Event registrations",
+        value: eventRegistrations.toLocaleString(),
+        hint: "Registrations awaiting event day",
+        tone: "slate",
+      },
+      {
+        id: "provider-stat-members",
+        label: "Active members",
+        value: activeMembers.toLocaleString(),
+        hint: "Engaged followers and participants",
+        tone: "emerald",
+      },
+      {
+        id: "provider-stat-views",
+        label: "Content views",
+        value: analytics.totalViews.toLocaleString(),
+        hint: "Total views from series and live replays",
+        tone: "slate",
+      },
+    ];
+  }, [analytics, communityPosts.length]);
 
   return (
-    <div className="space-y-4 sm:space-y-5">
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-      >
-        <Card className="fh-interactive-card fh-hero-card overflow-hidden rounded-[28px] border border-[var(--border)] bg-[linear-gradient(108deg,rgba(3,205,140,0.12),rgba(248,251,252,0.92)_34%,rgba(247,127,0,0.1))] shadow-[var(--shadow-soft)]">
-          <CardContent className="fh-pad-hero">
-            <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-              <div className="min-w-0">
-                <div className="fh-label text-slate-500">{copy.hero.kicker}</div>
-                <h2 className="mt-2 text-[1.9rem] font-bold leading-tight tracking-tight text-slate-900 sm:text-[2.35rem]">
-                  {copy.hero.title}
-                </h2>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-[0.95rem]">
-                  {copy.hero.subtitle}
-                </p>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Badge className="rounded-full border-[#f6d5b0] bg-[#fff3e8] text-[#cc6500] hover:bg-[#fff3e8]">
-                    {copy.badges.primary}
-                  </Badge>
-                  <Badge className="rounded-full border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-100">
-                    {copy.badges.secondary}
-                  </Badge>
-                  <Badge className="rounded-full border-slate-200 bg-white text-slate-600 hover:bg-white">
-                    {copy.badges.tertiary}
-                  </Badge>
-                </div>
-              </div>
-
-              <div className="flex w-full min-w-0 flex-col gap-3 xl:w-auto xl:min-w-[420px]">
-                <div className="flex flex-wrap items-center justify-start gap-2 sm:justify-end">
-                  <div className="fh-inline-action inline-flex items-center rounded-xl border border-[var(--border)] bg-white p-1">
-                    <button
-                      type="button"
-                      onClick={() => setWindowView("7d")}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "7d" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                      }`}
-                    >
-                      7 days
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setWindowView("30d")}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "30d" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                      }`}
-                    >
-                      30 days
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setWindowView("term")}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${
-                        windowView === "term" ? "bg-white border border-slate-200 text-slate-900 shadow-sm" : "text-slate-600 hover:bg-slate-100"
-                      }`}
-                    >
-                      This term
-                    </button>
-                  </div>
-
-                  {topActions.map((item) => (
-                    <Button
-                      key={item.id}
-                      variant={item.variant}
-                      data-action-label={item.actionLabel}
-                      data-action-id={item.actionId}
-                      className={`fh-interactive-card h-10 rounded-xl px-4 text-sm ${
-                        item.priority === "secondary" ? "hidden sm:inline-flex" : "inline-flex w-full sm:w-auto"
-                      } ${ctaPriorityClass(item.priority)}`}
-                    >
-                      {item.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              {modules.map((module, index) => {
-                const Icon = module.icon;
-                return (
-                  <motion.button
-                    key={module.id}
-                    type="button"
-                    data-action-label={module.actionLabel}
-                    data-action-id={module.actionId}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.06 + index * 0.05, duration: 0.28, ease: "easeOut" }}
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.996 }}
-                    className="fh-interactive-card fh-subcard group min-h-[132px] w-full rounded-2xl p-3.5 text-left transition hover:border-[#c8f0e0] hover:bg-white sm:min-h-[146px] sm:p-4"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#ecfff8] text-[#049e6d]">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-slate-400 transition group-hover:translate-x-0.5" />
-                    </div>
-
-                    <div className="mt-3 text-base font-semibold leading-tight text-slate-900">{module.title}</div>
-                    <div className="mt-1 text-xs leading-relaxed text-slate-500">{module.description}</div>
-                  </motion.button>
-                );
-              })}
-            </div>
-
-            <div className="mt-4 grid gap-3 md:grid-cols-3">
-              {progressMetrics.map((metric) => (
-                <DashboardStatCard
-                  key={metric.id}
-                  label={metric.label}
-                  value={metric.value}
-                  badge={metric.badge}
-                  hint={metric.note}
-                  tone={metric.tone}
-                  progress={metric.progress}
-                />
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.12, duration: 0.35, ease: "easeOut" }}
-        className="grid gap-3 md:grid-cols-2 xl:grid-cols-4"
-      >
-        {pulseMetrics.map((metric, index) => (
-          <motion.div
-            key={metric.id}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.16 + index * 0.04, duration: 0.24, ease: "easeOut" }}
-          >
-            <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
-              <CardContent className="p-3.5 sm:p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <div className="fh-label text-slate-500">{metric.label}</div>
-                    <div className="mt-2 text-3xl font-bold leading-none text-slate-900">{metric.value}</div>
-                  </div>
-                  <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${pulseToneClass(metric.tone)}`}>
-                    {metric.delta}
-                  </span>
-                </div>
-
-                <div className="mt-3 h-8 rounded-xl bg-slate-100/90 p-1">
-                  <div className={`h-full rounded-lg ${pulseBarClass(metric)}`} />
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.14, duration: 0.3, ease: "easeOut" }}
-      >
-        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
-          <CardContent className="fh-pad-panel">
-            <DashboardSectionHeader
-              title="Performance Insights"
-              subtitle="Views, engagement, giving, attendance, and top content performance."
-            />
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-              <div className="fh-subcard rounded-xl p-3">
-                <div className="fh-label text-slate-500">Total views</div>
-                <div className="mt-1 text-xl font-bold text-slate-900">{integerFormatter(analytics.totalViews)}</div>
-              </div>
-              <div className="fh-subcard rounded-xl p-3">
-                <div className="fh-label text-slate-500">Engagement rate</div>
-                <div className="mt-1 text-xl font-bold text-slate-900">{analytics.engagementRate}%</div>
-              </div>
-              <div className="fh-subcard rounded-xl p-3">
-                <div className="fh-label text-slate-500">Giving received</div>
-                <div className="mt-1 text-xl font-bold text-slate-900">{toCurrency(analytics.givingReceived)}</div>
-              </div>
-              <div className="fh-subcard rounded-xl p-3">
-                <div className="fh-label text-slate-500">Live attendance</div>
-                <div className="mt-1 text-xl font-bold text-slate-900">{integerFormatter(analytics.liveAttendance)}</div>
-              </div>
-              <div className="fh-subcard rounded-xl p-3">
-                <div className="fh-label text-slate-500">Top content</div>
-                <div className="mt-1 text-sm font-semibold text-slate-900">{analytics.topPerformingContent}</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.16, duration: 0.3, ease: "easeOut" }}
-      >
-        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
-          <CardContent className="fh-pad-panel">
-            <DashboardSectionHeader
-              title="My Funds"
-              subtitle="Track campaign performance, supporter growth, and pledge commitments."
-              action={
-                <Button
-                  type="button"
-                  className="fh-user-primary-btn h-9 rounded-lg px-3"
-                  onClick={() => navigate(routes.app.provider.fundCreate)}
-                  data-no-nav
-                >
-                  Create fund
-                </Button>
-              }
-            />
-
-            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-              {fundSnapshots.length ? (
-                fundSnapshots.map((snapshot) => {
-                  const progress = Math.min(
-                    100,
-                    Math.round(
-                      (snapshot.fund.current_amount / Math.max(1, snapshot.fund.target_amount)) * 100,
-                    ),
-                  );
-                  return (
-                    <button
-                      key={snapshot.fund.id}
-                      type="button"
-                      onClick={() =>
-                        navigate(routes.app.provider.fundDetailBySlug(snapshot.fund.slug))
-                      }
-                      className="fh-subcard group rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 text-left transition hover:border-[#03cd8c]/30"
-                      data-no-nav
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="text-sm font-semibold text-slate-900">{snapshot.fund.title}</div>
-                        <span className="rounded-full bg-[#ecfff8] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#049e6d]">
-                          {snapshot.fund.status}
-                        </span>
-                      </div>
-                      <div className="mt-2 text-xs text-slate-500">
-                        {toCurrency(snapshot.fund.current_amount)} /{" "}
-                        {toCurrency(snapshot.fund.target_amount)}
-                      </div>
-                      <div className="mt-2 h-1.5 rounded-full bg-slate-200">
-                        <div
-                          className="h-full rounded-full bg-[#03cd8c]"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                      <div className="mt-3 grid grid-cols-3 gap-2 text-xs text-slate-600">
-                        <div>
-                          <div className="fh-label text-slate-400">Supporters</div>
-                          <div className="mt-0.5 font-semibold text-slate-900">
-                            {snapshot.supporters_count}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="fh-label text-slate-400">Pledges</div>
-                          <div className="mt-0.5 font-semibold text-slate-900">
-                            {snapshot.pledges_count}
-                          </div>
-                        </div>
-                        <div>
-                          <div className="fh-label text-slate-400">Pledged</div>
-                          <div className="mt-0.5 font-semibold text-slate-900">
-                            {toCurrency(snapshot.pledged_total)}
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })
-              ) : (
-                <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] p-5 text-sm text-slate-500">
-                  No funds yet. Create your first campaign to start receiving community support.
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.19, duration: 0.34, ease: "easeOut" }}
-        className="grid gap-4 xl:grid-cols-[1.1fr_1.05fr_1.1fr]"
-      >
-        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
-          <CardContent className="fh-pad-panel">
-            <DashboardSectionHeader
-              title="Provider Priorities"
-              subtitle="Move high-impact tasks through the workflow"
-              action={
-                <button
-                  type="button"
-                  data-action-label="Open scheduler"
-                  data-action-id="open-live-schedule"
-                  className="text-sm font-semibold text-slate-500 transition hover:text-slate-800"
-                >
-                  {copy.ctas.openFullList}
-                </button>
-              }
-            />
-
-            <div className="space-y-2.5">
-              {priorities.map((item) => (
-                <DashboardActionItem
-                  key={item.id}
-                  title={item.title}
-                  detail={item.detail}
-                  actionLabel={item.actionLabel}
-                  actionId={item.actionId}
-                  tone={item.tone}
-                />
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
-          <CardContent className="fh-pad-panel">
-            <DashboardSectionHeader
-              title="Agenda"
-              subtitle="Broadcast and community-care timeline for today"
-              action={
-                <button
-                  type="button"
-                  data-action-label="Open scheduler"
-                  data-action-id="open-live-schedule"
-                  className="fh-inline-action inline-flex items-center rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-600"
-                >
-                  <CalendarDays className="mr-1.5 h-3.5 w-3.5" />
-                  {copy.ctas.openScheduleInline}
-                </button>
-              }
-            />
-
-            <div className="space-y-2.5">
-              {agenda.map((item) => (
-                <div key={item.id} className="fh-subcard rounded-xl p-3">
-                  <div className="flex items-start gap-3">
-                    <div className="inline-flex h-7 min-w-[2.6rem] items-center justify-center rounded-lg bg-slate-100 px-2 text-xs font-semibold text-slate-600">
-                      {item.time}
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                      <div className="mt-1 text-xs text-slate-500">{item.detail}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="fh-subcard-muted mt-3 rounded-xl p-3">
-              <div className="fh-label text-slate-400">Completion</div>
-              <div className="mt-1 text-2xl font-bold text-slate-900">58%</div>
-              <div className="mt-2 h-1.5 rounded-full bg-slate-200">
-                <div className="h-full w-[58%] rounded-full bg-[#03cd8c]" />
-              </div>
-              <div className="mt-2 text-xs text-slate-500">Keep workflows moving. Most delays are from missing assets.</div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="fh-interactive-card fh-surface-card rounded-[24px]">
-          <CardContent className="fh-pad-panel">
-            <DashboardSectionHeader
-              title="Action Center"
-              subtitle="Alerts, recommendations, and fast actions"
-              action={
-                <button
-                  type="button"
-                  aria-label="Open action center settings"
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border)] bg-white text-slate-600"
-                >
-                  <Sparkles className="h-4 w-4" />
-                </button>
-              }
-            />
-
-            <div className="fh-subcard-muted rounded-xl p-3">
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <div className="fh-label text-slate-400">Highlights</div>
-                <MessageSquare className="h-4 w-4 text-slate-400" />
-              </div>
-
-              <div className="space-y-2.5">
-                {actionCenterItems.map((item) => (
-                  <DashboardActionItem
-                    key={item.id}
-                    title={item.title}
-                    detail={item.detail}
-                    actionLabel={item.actionLabel}
-                    actionId={item.actionId}
-                    tone={item.tone}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="fh-subcard-accent mt-3 rounded-xl p-3">
-              <div className="fh-label text-[var(--accent)]">Smart insight</div>
-              <div className="mt-1 text-sm font-semibold text-slate-900">Practical signals for better decisions</div>
-              <p className="mt-1 text-xs text-slate-600">
-                Funnel optimization improves when attendee reminders are sent within 20 minutes.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25, duration: 0.32, ease: "easeOut" }}
-        className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
-      >
-        <DashboardStatCard
-          label="Trust queue"
-          value="14"
-          hint="3 urgent items"
-          tone="rose"
-          icon={<TriangleAlert className="h-4 w-4" />}
-        />
-        <DashboardStatCard
-          label="Live readiness"
-          value="92%"
-          hint="Crew and assets prepared"
-          tone="emerald"
-          icon={<MonitorPlay className="h-4 w-4" />}
-        />
-        <DashboardStatCard
-          label="Next launch"
-          value="2h 18m"
-          hint="Evening Prayer Revival"
-          tone="orange"
-          icon={<Clock3 className="h-4 w-4" />}
-        />
-        <DashboardStatCard
-          label="Giving"
-          value="$12.4k"
-          hint="Current 24h signal"
-          tone="slate"
-          icon={<Wallet className="h-4 w-4" />}
-        />
-      </motion.div>
-    </div>
+    <RoleDashboardShell
+      role="provider"
+      kicker="PROVIDER COMMAND"
+      title="Run content, community, and giving from one provider dashboard"
+      subtitle="Manage live operations, audience engagement, and financial growth with a single, role-aware workspace."
+      profile={{
+        name: user?.name || "Provider",
+        roleLabel: "Provider",
+        community: "FaithHub Provider Workspace",
+        status: "Active",
+      }}
+      notifications={notifications}
+      resumeItems={resumeItems}
+      cards={cards}
+      communityModules={communityModules}
+      stats={stats}
+      defaultDonatePath={routes.app.provider.funds}
+    />
   );
 }
-
