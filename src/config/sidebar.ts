@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  BellRing,
   BookOpen,
   CalendarDays,
   Library,
@@ -154,6 +155,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           activePrefixes: [routes.app.user.community],
         },
         {
+          id: "user-noticeboard",
+          label: "Noticeboard",
+          path: routes.app.user.noticeboard,
+          icon: BellRing,
+          activePrefixes: [routes.app.user.noticeboard],
+        },
+        {
           id: "user-counseling",
           label: "Counseling",
           path: routes.app.user.counseling,
@@ -230,6 +238,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.provider.community,
           icon: Users,
           activePrefixes: [routes.app.provider.community],
+        },
+        {
+          id: "provider-noticeboard",
+          label: "Noticeboard",
+          path: routes.app.provider.noticeboard,
+          icon: BellRing,
+          activePrefixes: [routes.app.provider.noticeboard],
         },
         {
           id: "provider-counseling",
@@ -311,6 +326,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.admin.counseling,
           icon: Stethoscope,
           activePrefixes: [routes.app.admin.counseling],
+        },
+        {
+          id: "admin-noticeboard",
+          label: "Noticeboard",
+          path: routes.app.admin.noticeboard,
+          icon: BellRing,
+          activePrefixes: [routes.app.admin.noticeboard],
         },
       ],
     },

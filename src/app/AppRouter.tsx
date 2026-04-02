@@ -57,6 +57,12 @@ const walletRouteByRole: Record<RoleKey, string> = {
   admin: routes.app.admin.finance,
 };
 
+const noticeboardRouteByRole: Record<RoleKey, string> = {
+  user: routes.app.user.noticeboard,
+  provider: routes.app.provider.noticeboard,
+  admin: routes.app.admin.noticeboard,
+};
+
 const roleOrder: RoleKey[] = ["user", "provider", "admin"];
 
 function getNestedRoutePath(path: string, role: RoleKey) {
@@ -144,6 +150,7 @@ export default function AppRouter() {
             <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
             <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
             <Route path="/wallet" element={<Navigate to={walletRouteByRole[role]} replace />} />
+            <Route path="/noticeboard" element={<Navigate to={noticeboardRouteByRole[role]} replace />} />
             <Route path="/fund/:slug" element={<FundAliasRedirect />} />
             {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
               <Route

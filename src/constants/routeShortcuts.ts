@@ -8,6 +8,7 @@ export const routeShortcuts: Record<string, string> = {
   "/provider/wallet": routes.app.provider.wallet,
   "/provider/community": routes.app.provider.community,
   "/provider/resources": routes.app.provider.resources,
+  "/provider/noticeboard": routes.app.provider.noticeboard,
   "/provider/content": routes.app.provider.seriesBuilder,
   "/provider/events": routes.app.provider.events,
   "/provider/funds/create": routes.app.provider.fundCreate,
@@ -17,4 +18,6 @@ export const routeShortcuts: Record<string, string> = {
   "/admin/security": routes.app.admin.security,
   "/admin/finance": routes.app.admin.finance,
   "/admin/counseling": routes.app.admin.counseling,
+  "/admin/noticeboard": routes.app.admin.noticeboard,
+  "/noticeboard": routes.app.user.noticeboard,
 };

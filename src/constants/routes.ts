@@ -20,6 +20,7 @@ export const routes = {
       profile: "/app/user/profile",
       home: "/app/user/home",
       community: "/app/user/community",
+      noticeboard: "/app/user/noticeboard",
       discover: "/app/user/discover",
       institution: "/app/user/institution",
       institutionPattern: "/app/user/institution/:institutionId",
@@ -91,6 +92,7 @@ export const routes = {
       notifications: "/app/provider/notifications",
       contacts: "/app/provider/contacts",
       resources: "/app/provider/resources",
+      noticeboard: "/app/provider/noticeboard",
       resourceDetail: "/app/provider/resources/detail",
       resourceDetailPattern: "/app/provider/resources/:resourceId",
       resourceDetailById: (resourceId: RouteParam) =>
@@ -117,6 +119,7 @@ export const routes = {
       channels: "/app/admin/channels",
       security: "/app/admin/security",
       counseling: "/app/admin/counseling",
+      noticeboard: "/app/admin/noticeboard",
     },
   },
   aliases: {
