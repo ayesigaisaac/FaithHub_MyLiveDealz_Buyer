@@ -19,3 +19,20 @@ export type CalendarDay = {
   day: string;
   label: string;
 };
+
+export type EventAgendaItem = {
+  time: string;
+  title: string;
+  description?: string;
+};
+
+export type CalendarEventModel = {
+  id: string;
+  title: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  location?: string;
+  description?: string;
+  agenda?: EventAgendaItem[];
+};
