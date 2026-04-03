@@ -5,6 +5,8 @@ import type { ExternalSidebarItem, SidebarSection } from "@/config/sidebar";
 import RoleSwitcher from "@/components/layout/RoleSwitcher";
 import type { Role } from "@/types/roles";
 
+const logoIconSrc = "/assets/branding/logo-icon.png";
+
 interface SidebarProps {
   sections: SidebarSection[];
   currentRole: Role;
@@ -98,16 +100,16 @@ export default function Sidebar({
 
       {collapsed ? (
         <div className="mb-2 flex items-center justify-center">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] text-xs font-bold tracking-[0.08em] text-[var(--text-primary)]">
-            FH
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
+            <img src={logoIconSrc} alt="FaithHub icon" className="h-7 w-7 object-contain" />
           </span>
         </div>
       ) : (
-        <div className="mb-2 rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted,#6B7280)]">
-            FaithHub
-          </div>
-          <div className="text-sm font-semibold text-[var(--text-primary)]">Workspace</div>
+        <div className="mb-2 flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] px-3 py-2">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] p-1">
+            <img src={logoIconSrc} alt="FaithHub icon" className="h-6 w-6 object-contain" />
+          </span>
+          <div className="text-sm font-semibold text-[var(--text-primary)]">Workspace modules</div>
         </div>
       )}
 

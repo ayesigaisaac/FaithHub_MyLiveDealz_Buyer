@@ -1,0 +1,159 @@
+import React from "react";
+import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
+import type { GlobalSearchResult } from "@/data/globalSearch";
+
+const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
+
+interface AppHeaderProps {
+  mobileOpen: boolean;
+  navQuery: string;
+  searchOpen: boolean;
+  accountSwitcherOpen: boolean;
+  currentRoleLabel: string;
+  alertPath: string;
+  searchResults: GlobalSearchResult[];
+  searchContainerRef: React.RefObject<HTMLLabelElement | null>;
+  onOpenMobileMenu: () => void;
+  onGoToLanding: () => void;
+  onChangeQuery: (value: string) => void;
+  onToggleSearchOpen: (open: boolean) => void;
+  onNavigate: (path: string) => void;
+  onToggleAccountSwitcher: () => void;
+}
+
+export default function AppHeader({
+  mobileOpen,
+  navQuery,
+  searchOpen,
+  accountSwitcherOpen,
+  currentRoleLabel,
+  alertPath,
+  searchResults,
+  searchContainerRef,
+  onOpenMobileMenu,
+  onGoToLanding,
+  onChangeQuery,
+  onToggleSearchOpen,
+  onNavigate,
+  onToggleAccountSwitcher,
+}: AppHeaderProps) {
+  return (
+    <header className="fh-shell-topbar fixed inset-x-0 top-0 z-50 h-14 border-b">
+      <div className="h-full w-full px-2.5 sm:px-3 lg:px-4">
+        <div className="flex h-full items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
+            <button
+              type="button"
+              aria-label="Open navigation menu"
+              aria-expanded={mobileOpen}
+              onClick={onOpenMobileMenu}
+              className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)] lg:hidden"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+
+            <button
+              type="button"
+              aria-label="Go to FaithHub landing page"
+              onClick={onGoToLanding}
+              className="fh-shell-control inline-flex h-10 min-w-0 items-center rounded-2xl px-2.5 sm:px-3"
+            >
+              <span className="inline-flex items-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
+                <img
+                  src={logoLandscapeSrc}
+                  alt="FaithHub"
+                  className="h-[32px] w-auto max-w-[11.5rem] object-contain sm:h-[36px] sm:max-w-[12.75rem]"
+                />
+              </span>
+            </button>
+          </div>
+
+          <div className="hidden min-w-0 flex-1 px-1 md:flex lg:px-2">
+            <label
+              ref={searchContainerRef}
+              className="fh-search-shell fh-shell-control relative mx-auto flex h-10 w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3"
+            >
+              <Search className="h-4 w-4 shrink-0 text-[var(--text-secondary)]" />
+              <input
+                type="search"
+                aria-label="Search institutions, series, resources, and live sessions"
+                value={navQuery}
+                onChange={(event) => onChangeQuery(event.target.value)}
+                onFocus={() => onToggleSearchOpen(true)}
+                placeholder="Search institutions, series, resources, live..."
+                className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted,#6B7280)]"
+              />
+              {searchOpen && navQuery.trim().length >= 2 ? (
+                <div
+                  className="absolute left-0 right-0 top-[calc(100%+0.45rem)] z-50 rounded-xl border border-[var(--border)] bg-[var(--panel)] p-1.5 shadow-[var(--shadow-soft)]"
+                  data-no-nav
+                >
+                  {searchResults.length ? (
+                    <div className="max-h-72 overflow-y-auto">
+                      {searchResults.map((result) => (
+                        <button
+                          key={`${result.type}:${result.id}`}
+                          type="button"
+                          onClick={() => {
+                            onNavigate(result.path);
+                            onToggleSearchOpen(false);
+                          }}
+                          className="flex w-full items-start justify-between gap-2 rounded-lg px-2.5 py-2 text-left transition hover:bg-[var(--fh-elevated-surface)]"
+                          data-no-nav
+                        >
+                          <span className="min-w-0">
+                            <span className="block truncate text-sm font-semibold text-[var(--text-primary)]">
+                              {result.title}
+                            </span>
+                            <span className="block truncate text-xs text-[var(--text-secondary)]">
+                              {result.subtitle}
+                            </span>
+                          </span>
+                          <span className="rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
+                            {result.type}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="px-2 py-3 text-xs text-[var(--text-secondary)]">
+                      No results found for "{navQuery.trim()}".
+                    </div>
+                  )}
+                </div>
+              ) : null}
+            </label>
+          </div>
+
+          <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
+            <button
+              type="button"
+              aria-label="Open alerts"
+              data-action-id="open-alerts"
+              title="Open alerts"
+              onClick={() => onNavigate(alertPath)}
+              className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
+            >
+              <Bell className="h-5 w-5" />
+              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white">
+                2
+              </span>
+            </button>
+            <div className="relative">
+              <button
+                type="button"
+                title={`Open account menu (${currentRoleLabel})`}
+                aria-label={`Open account menu. Current role: ${currentRoleLabel}`}
+                aria-expanded={accountSwitcherOpen}
+                onClick={onToggleAccountSwitcher}
+                className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
+              >
+                <CircleUserRound className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

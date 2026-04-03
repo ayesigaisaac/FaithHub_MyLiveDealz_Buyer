@@ -24,7 +24,7 @@ import {
 import { routes } from "@/constants/routes";
 import { routeShortcuts } from "@/constants/routeShortcuts";
 import Layout from "@/components/layout/Layout";
-import FaithHubAccessGateway from "@/pages/public/FaithHubAccessGateway";
+import LoginPage from "@/pages/public/LoginPage";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 
 const roleBasePath: Record<RoleKey, string> = {
@@ -137,7 +137,7 @@ export default function AppRouter() {
         <Routes>
           <Route element={<Layout />}>
             <Route path={routes.public.landing} element={<Navigate to={roleHomePath} replace />} />
-            <Route path={routes.public.access} element={<FaithHubAccessGateway />} />
+            <Route path={routes.public.access} element={<LoginPage />} />
             <Route path={routes.public.shellPreview} element={<Navigate to={roleHomePath} replace />} />
             <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
             <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
