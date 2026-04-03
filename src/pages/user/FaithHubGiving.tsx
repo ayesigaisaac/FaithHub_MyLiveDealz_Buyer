@@ -1,27 +1,27 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   CheckCircle2,
   HeartHandshake,
   Lock,
   Receipt,
-  ShieldCheck,
   Sparkles,
   Wallet,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/auth/AuthContext";
-import {
-  DashboardActionItem,
-  DashboardSectionHeader,
-  DashboardStatCard,
-} from "@/components/dashboard";
-import UserActionBar from "@/pages/user/shared/UserActionBar";
-import type { DonationMode, GivingFund } from "@/pages/user/giving/types";
+import { DashboardSectionHeader, DashboardStatCard } from "@/components/dashboard";
+import { routes } from "@/constants/routes";
 import { getActiveFunds, donateToFundFromWallet } from "@/data/funds";
 import { trackEvent } from "@/data/tracker";
+import DonationModeToggle from "@/pages/user/giving/components/DonationModeToggle";
+import FundSelector from "@/pages/user/giving/components/FundSelector";
+import GivingHero from "@/pages/user/giving/components/GivingHero";
+import GivingTrustPanel from "@/pages/user/giving/components/GivingTrustPanel";
+import PaymentSummaryCard from "@/pages/user/giving/components/PaymentSummaryCard";
+import type { DonationMode, GivingFund } from "@/pages/user/giving/types";
+import UserActionBar from "@/pages/user/shared/UserActionBar";
 
 function compactCurrency(value: number) {
   return new Intl.NumberFormat(undefined, {
@@ -41,7 +41,8 @@ function memberIdFromName(name: string) {
 
 export default function FaithHubGiving() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { role, user } = useAuth();
+  const [fundRefreshToken, setFundRefreshToken] = useState(0);
 
   const givingFunds = useMemo<GivingFund[]>(() => {
     const funds = getActiveFunds();
@@ -60,17 +61,26 @@ export default function FaithHubGiving() {
         )
       ),
     }));
-  }, []);
+  }, [fundRefreshToken]);
 
   const [selectedFundId, setSelectedFundId] = useState<number>(
     givingFunds[0]?.id || 0
   );
   const [amount, setAmount] = useState("25");
   const [mode, setMode] = useState<DonationMode>("One-time");
-  const [receiptEmail, setReceiptEmail] = useState("naomi@faithhub.com");
+  const [receiptEmail, setReceiptEmail] = useState(
+    user?.email || "member@faithhub.app"
+  );
   const [offlineMode, setOfflineMode] = useState(false);
   const [supporterTier, setSupporterTier] = useState(true);
   const [walletMessage, setWalletMessage] = useState("");
+
+  useEffect(() => {
+    if (!givingFunds.length) return;
+    if (!givingFunds.some((fund) => fund.id === selectedFundId)) {
+      setSelectedFundId(givingFunds[0].id);
+    }
+  }, [givingFunds, selectedFundId]);
 
   const selectedFund = useMemo(
     () =>
@@ -85,13 +95,54 @@ export default function FaithHubGiving() {
     return Number.isFinite(val) && val > 0 ? val : 0;
   }, [amount]);
 
-  const openFund = (fund: GivingFund) => {
-    navigate(`/fund/${fund.slug}`);
+  const openSelectedFund = () => {
+    if (!selectedFund) return;
+    const path = routes.app.user.fundDetailBySlug(selectedFund.slug);
+    trackEvent(
+      "NAVIGATE_PAGE",
+      {
+        from: routes.app.user.giving,
+        to: path,
+        source: "giving-selected-fund",
+      },
+      { role }
+    );
+    navigate(path);
+  };
+
+  const openWallet = () => {
+    trackEvent(
+      "NAVIGATE_PAGE",
+      {
+        from: routes.app.user.giving,
+        to: routes.app.user.wallet,
+        source: "giving-wallet-shortcut",
+      },
+      { role }
+    );
+    navigate(routes.app.user.wallet);
   };
 
   const handleWalletContribution = () => {
+    if (!selectedFund) return;
     if (!parsedAmount) {
       setWalletMessage("Enter a valid amount.");
+      return;
+    }
+
+    if (offlineMode) {
+      setWalletMessage(
+        "Offline mode is active. Your giving intent has been queued and will complete when you go online."
+      );
+      trackEvent(
+        "CLICK_BUTTON",
+        {
+          id: "giving-queue-intent",
+          label: "Queue giving intent",
+          location: routes.app.user.giving,
+        },
+        { role }
+      );
       return;
     }
 
@@ -108,70 +159,232 @@ export default function FaithHubGiving() {
         amount: parsedAmount,
         mode: mode === "One-time" ? "one-time" : "recurring",
       },
-      { role: "user" },
+      { role },
     );
 
-    setWalletMessage(`Contribution sent to ${selectedFund.title}`);
-    setAmount("25"); // reset for UX
+    setWalletMessage(`Contribution sent to ${selectedFund.title}.`);
+    setAmount("25");
+    setFundRefreshToken((prev) => prev + 1);
   };
 
   if (!selectedFund) {
     return (
-      <Card className="fh-surface-card rounded-2xl">
-        <CardContent className="p-6 text-sm text-[var(--text-secondary)]">
-          No active funds available.
+      <Card className="fh-surface-card rounded-[24px]">
+        <CardContent className="space-y-4 p-6">
+          <div className="text-sm text-[var(--text-secondary)]">
+            No active funds available right now.
+          </div>
+          <Button className="fh-user-primary-btn" onClick={openWallet}>
+            <Wallet className="h-4 w-4" />
+            Open wallet
+          </Button>
         </CardContent>
       </Card>
     );
   }
 
+  const quickActions = [
+    {
+      id: "giving-mobile-wallet",
+      label: "Open Wallet",
+      onClick: openWallet,
+      icon: <Wallet className="h-4 w-4" />,
+      variant: "outline" as const,
+      dataActionLabel: "Open wallet",
+      dataActionId: "open-wallet",
+    },
+    {
+      id: "giving-mobile-fund",
+      label: "Fund Details",
+      onClick: openSelectedFund,
+      icon: <Sparkles className="h-4 w-4" />,
+      variant: "outline" as const,
+      dataActionLabel: "Open fund details",
+    },
+    {
+      id: "giving-mobile-contribute",
+      label: "Contribute",
+      onClick: handleWalletContribution,
+      icon: <HeartHandshake className="h-4 w-4" />,
+      dataActionLabel: "Contribute from wallet",
+      dataActionId: "give-now",
+    },
+  ];
+
   return (
-    <div className="space-y-4">
-      {/* HEADER */}
-      <Card className="fh-interactive-card rounded-[24px]">
-        <CardContent className="p-5">
-          <h2 className="text-2xl font-bold">FaithHub Giving</h2>
+    <>
+      <div className="space-y-4">
+        <GivingHero
+          offlineMode={offlineMode}
+          onToggleOfflineMode={() => setOfflineMode((prev) => !prev)}
+        />
 
-          <div className="mt-3 flex gap-2">
-            <Badge>{selectedFund.title}</Badge>
-            <Badge>Mode: {mode}</Badge>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* FUND SELECTOR */}
-      <Card>
-        <CardContent className="p-4">
-          {givingFunds.map((fund) => (
-            <div key={fund.id} className="mb-2">
-              <button
-                onClick={() => setSelectedFundId(fund.id)}
-                className="w-full text-left"
-              >
-                {fund.title}
-              </button>
-
-              <button onClick={() => openFund(fund)}>Open</button>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* PAYMENT */}
-      <Card>
-        <CardContent className="p-4">
-          <input
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+        <div className="grid gap-4 md:grid-cols-3">
+          <DashboardStatCard
+            label="ACTIVE FUNDS"
+            value={`${givingFunds.length}`}
+            hint="Open causes currently available for support."
+            tone="slate"
+            icon={<Sparkles className="h-4 w-4" />}
           />
+          <DashboardStatCard
+            label="SELECTED FUND"
+            value={`${selectedFund.progress}%`}
+            hint={`${selectedFund.raised} raised of ${selectedFund.goal}.`}
+            tone="emerald"
+            progress={selectedFund.progress}
+            icon={<HeartHandshake className="h-4 w-4" />}
+          />
+          <DashboardStatCard
+            label="GIVING READINESS"
+            value={offlineMode ? "Queued" : "Ready"}
+            hint={
+              offlineMode
+                ? "Intent only while offline."
+                : "Wallet contribution available."
+            }
+            tone={offlineMode ? "orange" : "emerald"}
+            icon={offlineMode ? <Lock className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+          />
+        </div>
 
-          <Button onClick={handleWalletContribution}>
-            Contribute from wallet
-          </Button>
+        <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+          <div className="space-y-4">
+            <FundSelector
+              funds={givingFunds}
+              selectedFundId={selectedFundId}
+              onSelectFund={setSelectedFundId}
+            />
 
-          {walletMessage && <div>{walletMessage}</div>}
-        </CardContent>
-      </Card>
-    </div>
+            <Card className="fh-surface-card rounded-[24px]">
+              <CardContent className="p-5">
+                <DashboardSectionHeader
+                  title="Selected Fund Overview"
+                  subtitle="Keep giving context visible while you complete your contribution."
+                  action={
+                    <Button
+                      variant="outline"
+                      className="fh-user-secondary-btn"
+                      onClick={openSelectedFund}
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      Open fund details
+                    </Button>
+                  }
+                />
+
+                <div className="space-y-3 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                  <div className="text-lg font-semibold text-[var(--text-primary)]">
+                    {selectedFund.title}
+                  </div>
+                  <p className="text-sm text-[var(--text-secondary)]">
+                    {selectedFund.description}
+                  </p>
+                  <div className="grid gap-2 sm:grid-cols-3">
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+                      <div className="fh-label text-[var(--text-muted)]">Raised</div>
+                      <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
+                        {selectedFund.raised}
+                      </div>
+                    </div>
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+                      <div className="fh-label text-[var(--text-muted)]">Goal</div>
+                      <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
+                        {selectedFund.goal}
+                      </div>
+                    </div>
+                    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+                      <div className="fh-label text-[var(--text-muted)]">Progress</div>
+                      <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
+                        {selectedFund.progress}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="space-y-4">
+            <PaymentSummaryCard
+              selectedFund={selectedFund}
+              amount={amount}
+              onAmountChange={setAmount}
+              mode={mode}
+              onModeChange={setMode}
+              receiptEmail={receiptEmail}
+              onReceiptEmailChange={setReceiptEmail}
+            />
+
+            <Card className="fh-surface-card rounded-[24px]">
+              <CardContent className="p-5">
+                <DashboardSectionHeader
+                  title="Contribute From Wallet"
+                  subtitle="Use your wallet balance to support the selected fund instantly."
+                />
+
+                <div className="space-y-3">
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="fh-pill fh-pill-emerald">Mode: {mode}</span>
+                      <span className="fh-pill fh-pill-slate">
+                        Amount: {compactCurrency(parsedAmount || 0)}
+                      </span>
+                      <span className="fh-pill fh-pill-slate">
+                        <Receipt className="mr-1 inline h-3.5 w-3.5" />
+                        Receipt ready
+                      </span>
+                    </div>
+                    <div className="mt-3 text-xs text-[var(--text-secondary)]">
+                      Receipt email: {receiptEmail || "Not set"}
+                    </div>
+                  </div>
+
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <Button
+                      className="fh-user-primary-btn"
+                      onClick={handleWalletContribution}
+                      disabled={!parsedAmount}
+                    >
+                      <HeartHandshake className="h-4 w-4" />
+                      Contribute from wallet
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="fh-user-secondary-btn"
+                      onClick={openWallet}
+                    >
+                      <Wallet className="h-4 w-4" />
+                      Open wallet
+                    </Button>
+                  </div>
+
+                  <div
+                    className={`rounded-2xl border px-4 py-3 text-sm ${
+                      walletMessage
+                        ? "border-[rgba(3,205,140,0.28)] bg-[rgba(3,205,140,0.1)] text-[var(--text-primary)]"
+                        : "border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)]"
+                    }`}
+                  >
+                    {walletMessage ||
+                      "Ready to contribute. Use the controls above to complete your giving."}
+                  </div>
+
+                  <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4">
+                    <DonationModeToggle mode={mode} onChange={setMode} />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <GivingTrustPanel
+              supporterTier={supporterTier}
+              onToggleSupporterTier={() => setSupporterTier((prev) => !prev)}
+            />
+          </div>
+        </div>
+      </div>
+      <UserActionBar actions={quickActions} />
+    </>
   );
 }
