@@ -2,7 +2,7 @@ import React from "react";
 import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
 import type { GlobalSearchResult } from "@/data/globalSearch";
 
-const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
+const logoIconSrc = "/assets/branding/logo-icon.png";
 
 interface AppHeaderProps {
   mobileOpen: boolean;
@@ -31,7 +31,6 @@ export default function AppHeader({
   searchResults,
   searchContainerRef,
   onOpenMobileMenu,
-  onGoToLanding,
   onChangeQuery,
   onToggleSearchOpen,
   onNavigate,
@@ -54,16 +53,24 @@ export default function AppHeader({
 
             <button
               type="button"
-              aria-label="Go to FaithHub landing page"
-              onClick={onGoToLanding}
-              className="fh-shell-control inline-flex h-10 min-w-0 items-center rounded-2xl px-2.5 sm:px-3"
+              aria-label="Go to home"
+              onClick={() => onNavigate("/home")}
+              className="inline-flex min-h-[42px] min-w-0 items-center gap-2 rounded-2xl px-2.5 py-1.5 transition-colors duration-200 hover:bg-[rgba(3,200,220,0.1)] dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,200,220,0.34)] sm:px-3"
             >
-              <span className="inline-flex items-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1 sm:h-10 sm:w-10">
                 <img
-                  src={logoLandscapeSrc}
-                  alt="FaithHub"
-                  className="h-[32px] w-auto max-w-[11.5rem] object-contain sm:h-[36px] sm:max-w-[12.75rem]"
+                  src={logoIconSrc}
+                  alt="EVzone FaithHub icon"
+                  className="h-8 w-8 object-contain sm:h-9 sm:w-9"
                 />
+              </span>
+              <span className="min-w-0 text-left leading-none">
+                <span className="block text-[10px] font-medium tracking-[0.08em] text-[#03c8dc] sm:text-[11px]">
+                  EVzone
+                </span>
+                <span className="mt-0.5 block text-base font-bold tracking-tight text-[#f77f00] sm:text-[1.05rem]">
+                  FaithHub
+                </span>
               </span>
             </button>
           </div>
