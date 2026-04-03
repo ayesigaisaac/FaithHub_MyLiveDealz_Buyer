@@ -1,7 +1,10 @@
 import React from "react";
 import { ArrowRight, Building2, ExternalLink, Landmark, Lock, ShieldAlert, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/auth/AuthContext";
+import { trackEvent } from "@/data/tracker";
+import type { Role } from "@/types/roles";
 
 const logoPortraitSrc = "/assets/branding/logo-portrait.png";
 
@@ -12,6 +15,7 @@ const accessCards = [
     path: "/app/user/home?as=user",
     tone: "bg-[#ecfff8] text-[#03cd8c]",
     icon: Users,
+    role: "user" as Role,
   },
   {
     title: "Provider Workspace",
@@ -19,6 +23,7 @@ const accessCards = [
     path: "/app/provider/dashboard?as=provider&tenant=tenant-faithway",
     tone: "bg-[#fff8ef] text-[#f77f00]",
     icon: Landmark,
+    role: "provider" as Role,
   },
   {
     title: "Super Admin",
@@ -26,6 +31,7 @@ const accessCards = [
     path: "/app/admin/overview?admin=1&as=super_admin",
     tone: "bg-slate-100 text-slate-700",
     icon: Lock,
+    role: "admin" as Role,
   },
   {
     title: "Tenant Admin",
@@ -33,6 +39,7 @@ const accessCards = [
     path: "/app/admin/overview?admin=1&as=tenant_admin&tenant=tenant-faithway",
     tone: "bg-[#eff6ff] text-[#1d4ed8]",
     icon: Building2,
+    role: "admin" as Role,
   },
   {
     title: "Ops / Safety",
@@ -40,10 +47,28 @@ const accessCards = [
     path: "/app/admin/live-moderation?admin=1&as=ops&tenant=tenant-faithway",
     tone: "bg-[#fef2f2] text-[#b91c1c]",
     icon: ShieldAlert,
+    role: "admin" as Role,
   },
 ];
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const { mockLoginAsRole, role: currentRole } = useAuth();
+
+  const openWorkspace = async (role: Role, path: string) => {
+    await mockLoginAsRole(role);
+    trackEvent(
+      "ROLE_SWITCH",
+      {
+        fromRole: currentRole,
+        toRole: role,
+        trigger: "access",
+      },
+      { role },
+    );
+    navigate(path);
+  };
+
   return (
     <div className="min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.12),transparent_26%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.08),transparent_18%)] px-4 py-8 text-slate-900 sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-[1200px]">
@@ -91,13 +116,14 @@ export default function LoginPage() {
                       <div className="mt-4 rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-xs font-semibold text-[var(--text-secondary)]">
                         {item.path}
                       </div>
-                      <Link
-                        to={item.path}
+                      <button
+                        type="button"
+                        onClick={() => openWorkspace(item.role, item.path)}
                         className="mt-5 inline-flex min-h-[42px] w-full items-center justify-center rounded-2xl bg-[var(--accent)] px-[14px] text-[0.9rem] font-bold tracking-[0.01em] text-white shadow-[var(--shadow-soft)] transition hover:bg-[var(--accent-strong)]"
                       >
                         Open Workspace
                         <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
+                      </button>
                     </CardContent>
                   </Card>
                 );

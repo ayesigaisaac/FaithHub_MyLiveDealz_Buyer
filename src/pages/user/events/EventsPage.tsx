@@ -5,11 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import EventDetailsPanel from "@/pages/user/events/components/EventDetailsPanel";
-import EventsCalendar, {
-  type CalendarEvent,
-  type CalendarView,
-  type EventAgendaItem,
-} from "@/pages/user/events/components/EventsCalendar";
+import EventsCalendar from "@/pages/user/events/components/EventsCalendar";
+import type { CalendarEvent, CalendarView, EventAgendaItem } from "@/types/events";
+import { getEventsSync, saveEventsSync } from "@/data/services/eventsService";
+import { trackEvent } from "@/data/tracker";
 
 type EventFormState = {
   title: string;
@@ -21,59 +20,6 @@ type EventFormState = {
   eventType: NonNullable<CalendarEvent["eventType"]>;
   agendaText: string;
 };
-
-const initialEvents: CalendarEvent[] = [
-  {
-    id: "event-1",
-    title: "Morning Prayer Gathering",
-    date: "2026-04-03",
-    startTime: "09:00",
-    endTime: "11:30",
-    location: "FaithHub Main Hall",
-    description: "A guided prayer and worship session for all ministries.",
-    eventType: "service",
-    agenda: [
-      { time: "09:00", title: "Opening Prayer" },
-      { time: "10:00", title: "Worship Session" },
-      { time: "11:00", title: "Scripture Reflection" },
-    ],
-  },
-  {
-    id: "event-2",
-    title: "Youth Leadership Workshop",
-    date: "2026-04-05",
-    startTime: "14:00",
-    endTime: "17:30",
-    location: "Community Training Center",
-    description: "Interactive workshop on mentorship, service, and leadership.",
-    eventType: "conference",
-    agenda: [
-      { time: "14:00", title: "Welcome and Introductions" },
-      { time: "15:00", title: "Team Building Session", description: "Facilitated breakout circles" },
-      { time: "16:15", title: "Action Planning" },
-    ],
-  },
-  {
-    id: "event-3",
-    title: "Neighborhood Outreach Drive",
-    date: "2026-04-08",
-    startTime: "10:30",
-    endTime: "13:00",
-    location: "Makindye Community Grounds",
-    description: "Outreach activities with community support and prayer partners.",
-    eventType: "community",
-  },
-  {
-    id: "event-4",
-    title: "Security Readiness Briefing",
-    date: "2026-04-10",
-    startTime: "08:00",
-    endTime: "09:15",
-    location: "Operations Room",
-    description: "Urgent briefing for event coordinators and volunteer captains.",
-    eventType: "urgent",
-  },
-];
 
 function formatDateKey(date: Date) {
   const year = date.getFullYear();
@@ -158,12 +104,23 @@ export default function EventsPage() {
 
   const [view, setView] = useState<CalendarView>("month");
   const [cursorDate, setCursorDate] = useState<Date>(new Date());
-  const [events, setEvents] = useState<CalendarEvent[]>(initialEvents);
-  const [selectedEventId, setSelectedEventId] = useState<string | null>(initialEvents[0]?.id ?? null);
+  const [events, setEvents] = useState<CalendarEvent[]>(() => getEventsSync());
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(() => getEventsSync()[0]?.id ?? null);
   const [searchQuery, setSearchQuery] = useState("");
   const [editorOpen, setEditorOpen] = useState(false);
   const [editingEventId, setEditingEventId] = useState<string | null>(null);
   const [draft, setDraft] = useState<EventFormState>(() => defaultFormState(new Date()));
+
+  const setAndPersistEvents = useCallback(
+    (updater: CalendarEvent[] | ((previous: CalendarEvent[]) => CalendarEvent[])) => {
+      setEvents((previous) => {
+        const next = typeof updater === "function" ? updater(previous) : updater;
+        saveEventsSync(next);
+        return next;
+      });
+    },
+    [],
+  );
 
   const filteredEvents = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -240,10 +197,19 @@ export default function EventsPage() {
       agenda: parseAgendaText(draft.agendaText),
     };
 
-    setEvents((previous) => {
+    setAndPersistEvents((previous) => {
       if (!editingEventId) return [nextEvent, ...previous];
       return previous.map((existing) => (existing.id === editingEventId ? nextEvent : existing));
     });
+    trackEvent(
+      "CLICK_BUTTON",
+      {
+        id: editingEventId ? "event-save" : "event-create",
+        label: nextEvent.title,
+        location: "events-editor",
+      },
+      { role },
+    );
     setSelectedEventId(nextEvent.id);
     setCursorDate(new Date(`${nextEvent.date}T00:00:00`));
     closeEditor();

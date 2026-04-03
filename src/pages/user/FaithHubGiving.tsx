@@ -21,6 +21,7 @@ import {
 import UserActionBar from "@/pages/user/shared/UserActionBar";
 import type { DonationMode, GivingFund } from "@/pages/user/giving/types";
 import { getActiveFunds, donateToFundFromWallet } from "@/data/funds";
+import { trackEvent } from "@/data/tracker";
 
 function compactCurrency(value: number) {
   return new Intl.NumberFormat(undefined, {
@@ -100,6 +101,15 @@ export default function FaithHubGiving() {
       amount: parsedAmount,
       wallet_role: "user",
     });
+    trackEvent(
+      "GIVE_DONATION",
+      {
+        fundId: selectedFund.fundId,
+        amount: parsedAmount,
+        mode: mode === "One-time" ? "one-time" : "recurring",
+      },
+      { role: "user" },
+    );
 
     setWalletMessage(`Contribution sent to ${selectedFund.title}`);
     setAmount("25"); // reset for UX

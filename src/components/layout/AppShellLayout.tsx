@@ -12,6 +12,7 @@ import { getRoutePatterns, pageRegistry, type PageRegistryItem, type RoleKey } f
 import { buildUnifiedSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 import { searchGlobalContent } from "@/data/globalSearch";
+import { trackEvent } from "@/data/tracker";
 import { routes } from "@/constants/routes";
 import type { Role } from "@/types/roles";
 
@@ -63,6 +64,15 @@ function getCurrentRole(pathname: string): RoleKey {
   return "user";
 }
 
+function parseRoleFromSearch(search: string): RoleKey | null {
+  const params = new URLSearchParams(search);
+  const as = (params.get("as") || "").toLowerCase();
+  if (as === "admin" || as === "super_admin" || as === "tenant_admin" || as === "ops") return "admin";
+  if (as === "provider") return "provider";
+  if (as === "user") return "user";
+  return null;
+}
+
 function matchesPagePath(page: Pick<PageRegistryItem, "path" | "routePatterns">, pathname: string) {
   return getRoutePatterns(page).some((pattern) => Boolean(matchPath({ path: pattern, end: true }, pathname)));
 }
@@ -81,7 +91,7 @@ function resolveIconOnlyFallbackPath(button: HTMLButtonElement, role: RoleKey) {
 export default function AppShellLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentRole, setRole, setUser } = useAuth();
+  const { currentRole, setRole, logout } = useAuth();
   const { mode, toggle } = useColorMode();
 
   const routeRole = getCurrentRole(location.pathname);
@@ -116,8 +126,28 @@ export default function AppShellLayout() {
   );
 
   const resolveNavPath = (path: string) => path;
-  const navigateToPath = (path: string) => navigate(path);
+  const navigateToPath = (path: string) => {
+    trackEvent(
+      "NAVIGATE_PAGE",
+      {
+        from: location.pathname,
+        to: path,
+        source: "app-shell",
+      },
+      { role: shellRole },
+    );
+    navigate(path);
+  };
   const handleRoleSwitch = (nextRole: Role, path: string) => {
+    trackEvent(
+      "ROLE_SWITCH",
+      {
+        fromRole: shellRole,
+        toRole: nextRole,
+        trigger: "sidebar",
+      },
+      { role: shellRole },
+    );
     flushSync(() => {
       setRole(nextRole);
     });
@@ -156,6 +186,15 @@ export default function AppShellLayout() {
       (hasIconOnlyContent ? alertRouteByRole[shellRole] : null);
     if (!actionPath) return;
     event.preventDefault();
+    trackEvent(
+      "CLICK_BUTTON",
+      {
+        id: actionId || "shell-action",
+        label,
+        location: currentPage?.path || location.pathname,
+      },
+      { role: shellRole },
+    );
     navigateToPath(actionPath);
   };
 
@@ -163,6 +202,12 @@ export default function AppShellLayout() {
     setAccountSwitcherOpen(false);
     setSearchOpen(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    const requestedRole = parseRoleFromSearch(location.search);
+    if (!requestedRole || requestedRole === currentRole) return;
+    setRole(requestedRole);
+  }, [currentRole, location.search, setRole]);
 
   useEffect(() => {
     if (!searchOpen) return;
@@ -260,7 +305,7 @@ export default function AppShellLayout() {
           setAccountSwitcherOpen(false);
         }}
         onLogout={() => {
-          setUser(null);
+          logout();
           navigate(routes.public.access);
           setAccountSwitcherOpen(false);
         }}

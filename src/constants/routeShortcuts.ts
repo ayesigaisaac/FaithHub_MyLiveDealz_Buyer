@@ -19,5 +19,6 @@ export const routeShortcuts: Record<string, string> = {
   "/admin/finance": routes.app.admin.finance,
   "/admin/counseling": routes.app.admin.counseling,
   "/admin/noticeboard": routes.app.admin.noticeboard,
+  "/qa": routes.app.user.qa,
   "/noticeboard": routes.app.user.noticeboard,
 };

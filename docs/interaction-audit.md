@@ -1,10 +1,10 @@
 # Interaction Audit
 
-Generated: 2026-03-29T14:41:27.392Z
+Generated: 2026-04-03T10:02:52.309Z
 
 ## Summary
 
-- Total clickable elements scanned: **505**
+- Total clickable elements scanned: **588**
 - Unresolved candidates (manual review): **0**
 
 ## Inventory (clickable elements)
@@ -12,31 +12,42 @@ Generated: 2026-03-29T14:41:27.392Z
 | File | Line | Element | Expected action |
 | --- | ---: | --- | --- |
 | `src/components/dashboard/DashboardActionItem.tsx` | 29 | `<button>` | handler:onClick |
-| `src/components/layout/AccountSwitcher.tsx` | 87 | `<button>` | handler:onClick |
-| `src/components/layout/AccountSwitcher.tsx` | 109 | `<button>` | handler:onClick |
-| `src/components/layout/AccountSwitcher.tsx` | 125 | `<button>` | handler:onClick |
-| `src/components/layout/AccountSwitcher.tsx` | 164 | `<button>` | handler:onClick |
-| `src/components/layout/AccountSwitcher.tsx` | 176 | `<button>` | handler:onClick |
-| `src/components/layout/AccountSwitcher.tsx` | 189 | `<button>` | handler:onClick |
-| `src/components/layout/AppShellLayout.tsx` | 152 | `<button>` | handler:onClick |
-| `src/components/layout/AppShellLayout.tsx` | 162 | `<button>` | handler:onClick |
-| `src/components/layout/AppShellLayout.tsx` | 191 | `<button>` | resolver:data-action-id (open-alerts) |
-| `src/components/layout/AppShellLayout.tsx` | 205 | `<button>` | handler:onClick |
-| `src/components/layout/Sidebar.tsx` | 63 | `<button>` | handler:onClick |
-| `src/components/layout/Sidebar.tsx` | 72 | `<button>` | handler:onClick |
-| `src/components/layout/Sidebar.tsx` | 91 | `<button>` | handler:onClick |
-| `src/components/layout/Sidebar.tsx` | 112 | `<NavLink>` | handler:onClick |
+| `src/components/dashboard/DashboardContentCard.tsx` | 72 | `<Button>` | handler:onClick |
+| `src/components/dashboard/RoleDashboardShell.tsx` | 239 | `<button>` | handler:onClick |
+| `src/components/dashboard/RoleDashboardShell.tsx` | 274 | `<button>` | handler:onClick |
+| `src/components/dashboard/RoleDashboardShell.tsx` | 383 | `<button>` | handler:onClick |
+| `src/components/giving/GiveSupportCTA.tsx` | 60 | `<Button>` | handler:onClick |
+| `src/components/giving/GiveSupportCTA.tsx` | 82 | `<button>` | handler:onClick |
+| `src/components/giving/GiveSupportCTA.tsx` | 92 | `<button>` | handler:onClick |
+| `src/components/layout/AccountSwitcher.tsx` | 44 | `<button>` | handler:onClick |
+| `src/components/layout/AccountSwitcher.tsx` | 66 | `<button>` | handler:onClick |
+| `src/components/layout/AccountSwitcher.tsx` | 80 | `<button>` | handler:onClick |
+| `src/components/layout/AccountSwitcher.tsx` | 92 | `<button>` | handler:onClick |
+| `src/components/layout/AccountSwitcher.tsx` | 105 | `<button>` | handler:onClick |
+| `src/components/layout/AppHeader.tsx` | 80 | `<button>` | handler:onClick |
+| `src/components/layout/AppHeader.tsx` | 90 | `<button>` | handler:onClick |
+| `src/components/layout/AppHeader.tsx` | 187 | `<button>` | handler:onClick |
+| `src/components/layout/AppHeader.tsx` | 233 | `<button>` | resolver:data-action-id (open-alerts) |
+| `src/components/layout/AppHeader.tsx` | 247 | `<button>` | handler:onClick |
+| `src/components/layout/RoleSwitcher.tsx` | 56 | `<button>` | handler:onClick |
+| `src/components/layout/Sidebar.tsx` | 81 | `<button>` | handler:onClick |
+| `src/components/layout/Sidebar.tsx` | 90 | `<button>` | handler:onClick |
+| `src/components/layout/Sidebar.tsx` | 133 | `<button>` | handler:onClick |
+| `src/components/layout/Sidebar.tsx` | 154 | `<button>` | handler:onClick |
+| `src/components/layout/Sidebar.tsx` | 181 | `<NavLink>` | handler:onClick |
+| `src/components/notice/NoticeCard.tsx` | 156 | `<button>` | handler:onClick |
+| `src/components/notice/NoticeCard.tsx` | 168 | `<button>` | handler:onClick |
+| `src/components/notice/NoticeCard.tsx` | 180 | `<button>` | handler:onClick |
+| `src/components/notice/NoticeCard.tsx` | 192 | `<button>` | handler:onClick |
+| `src/components/notice/NoticeCard.tsx` | 223 | `<Button>` | handler:onClick |
+| `src/components/notice/NoticeForm.tsx` | 67 | `<button>` | handler:onClick |
+| `src/components/notice/NoticeForm.tsx` | 144 | `<Button>` | handler:onClick |
+| `src/components/notice/NoticeForm.tsx` | 153 | `<Button>` | disabled |
 | `src/components/system/ErrorBoundary.tsx` | 16 | `<Button>` | handler:onClick |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 258 | `<button>` | handler:onClick |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 267 | `<button>` | handler:onClick |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 276 | `<button>` | handler:onClick |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 287 | `<Button>` | resolver:data-action-id (open-admin-security) |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 295 | `<Button>` | resolver:data-action-id (open-admin-live-moderation) |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 303 | `<Button>` | resolver:data-action-id (open-admin-live-moderation) |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 316 | `<button>` | resolver:icon-fallback |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 379 | `<button>` | resolver:data-action-id (open-admin-live-moderation) |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 411 | `<button>` | resolver:data-action-id (open-live-ops) |
-| `src/pages/admin/FaithHubAdminOverview.tsx` | 456 | `<button>` | resolver:aria-label (Open action center settings) |
+| `src/pages/admin/FaithHubAdminCounseling.tsx` | 161 | `<Button>` | handler:onClick |
+| `src/pages/admin/FaithHubAdminCounseling.tsx` | 169 | `<Button>` | handler:onClick |
+| `src/pages/admin/FaithHubAdminCounseling.tsx` | 211 | `<Button>` | handler:onClick |
+| `src/pages/admin/FaithHubAdminCounseling.tsx` | 221 | `<Button>` | handler:onClick |
 | `src/pages/admin/FaithHubChannelsRegistryDeliverability.tsx` | 136 | `<Button>` | resolver:text-content (Open registry) |
 | `src/pages/admin/FaithHubChannelsRegistryDeliverability.tsx` | 137 | `<Button>` | handler:onClick |
 | `src/pages/admin/FaithHubChannelsRegistryDeliverability.tsx` | 268 | `<button>` | handler:onClick |
@@ -105,17 +116,17 @@ Generated: 2026-03-29T14:41:27.392Z
 | `src/pages/provider/FaithHubChannelsContactManager.tsx` | 336 | `<Button>` | handler:onClick |
 | `src/pages/provider/FaithHubChannelsContactManager.tsx` | 379 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubChannelsContactManager.tsx` | 388 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 108 | `<button>` | resolver:icon-fallback |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 147 | `<Button>` | resolver:text-content (Create fund) |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 148 | `<Button>` | handler:onClick |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 170 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 205 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 222 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 269 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 290 | `<button>` | handler:onClick |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 111 | `<button>` | resolver:icon-fallback |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 150 | `<Button>` | handler:onClick |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 157 | `<Button>` | handler:onClick |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 179 | `<button>` | handler:onClick |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 214 | `<button>` | handler:onClick |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 231 | `<button>` | handler:onClick |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 278 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubDonationsFunds.tsx` | 299 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 336 | `<Button>` | disabled |
-| `src/pages/provider/FaithHubDonationsFunds.tsx` | 356 | `<Button>` | resolver:dynamic-content |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 308 | `<button>` | handler:onClick |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 345 | `<Button>` | disabled |
+| `src/pages/provider/FaithHubDonationsFunds.tsx` | 365 | `<Button>` | resolver:dynamic-content |
 | `src/pages/provider/FaithHubEpisodeBuilder.tsx` | 101 | `<button>` | resolver:icon-fallback |
 | `src/pages/provider/FaithHubEpisodeBuilder.tsx` | 124 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubEpisodeBuilder.tsx` | 163 | `<button>` | handler:onClick |
@@ -136,6 +147,9 @@ Generated: 2026-03-29T14:41:27.392Z
 | `src/pages/provider/FaithHubEventsManager.tsx` | 304 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubEventsManager.tsx` | 342 | `<Button>` | resolver:text-content (Open merch and ticket revenue setup) |
 | `src/pages/provider/FaithHubEventsManager.tsx` | 362 | `<Button>` | resolver:dynamic-content |
+| `src/pages/provider/FaithHubFundCreate.tsx` | 57 | `<Button>` | handler:onClick |
+| `src/pages/provider/FaithHubFundCreate.tsx` | 125 | `<Button>` | handler:onClick |
+| `src/pages/provider/FaithHubFundCreate.tsx` | 128 | `<Button>` | handler:onClick |
 | `src/pages/provider/FaithHubLiveBuilderSeriesAware.tsx` | 92 | `<button>` | resolver:icon-fallback |
 | `src/pages/provider/FaithHubLiveBuilderSeriesAware.tsx` | 115 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubLiveBuilderSeriesAware.tsx` | 141 | `<button>` | handler:onClick |
@@ -199,13 +213,9 @@ Generated: 2026-03-29T14:41:27.392Z
 | `src/pages/provider/FaithHubPostLivePublishing.tsx` | 319 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubPostLivePublishing.tsx` | 335 | `<Button>` | resolver:text-content (Save publishing draft) |
 | `src/pages/provider/FaithHubPostLivePublishing.tsx` | 355 | `<Button>` | resolver:dynamic-content |
-| `src/pages/provider/FaithHubProviderDashboard.tsx` | 303 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubProviderDashboard.tsx` | 312 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubProviderDashboard.tsx` | 321 | `<button>` | handler:onClick |
-| `src/pages/provider/FaithHubProviderDashboard.tsx` | 333 | `<Button>` | resolver:dynamic-content |
-| `src/pages/provider/FaithHubProviderDashboard.tsx` | 442 | `<button>` | resolver:data-action-id (open-live-schedule) |
-| `src/pages/provider/FaithHubProviderDashboard.tsx` | 474 | `<button>` | resolver:data-action-id (open-live-schedule) |
-| `src/pages/provider/FaithHubProviderDashboard.tsx` | 519 | `<button>` | resolver:aria-label (Open action center settings) |
+| `src/pages/provider/FaithHubProviderCounseling.tsx` | 155 | `<Button>` | handler:onClick |
+| `src/pages/provider/FaithHubProviderCounseling.tsx` | 165 | `<Button>` | handler:onClick |
+| `src/pages/provider/FaithHubProviderCounseling.tsx` | 216 | `<Button>` | handler:onClick |
 | `src/pages/provider/FaithHubProviderOnboarding.tsx` | 95 | `<button>` | resolver:icon-fallback |
 | `src/pages/provider/FaithHubProviderOnboarding.tsx` | 118 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubProviderOnboarding.tsx` | 215 | `<Button>` | resolver:text-content (Save draft) |
@@ -249,9 +259,60 @@ Generated: 2026-03-29T14:41:27.392Z
 | `src/pages/provider/FaithHubStreamToPlatforms.tsx` | 285 | `<Button>` | resolver:text-content (Create scheduled broadcasts) |
 | `src/pages/provider/FaithHubStreamToPlatforms.tsx` | 296 | `<button>` | handler:onClick |
 | `src/pages/provider/FaithHubStreamToPlatforms.tsx` | 305 | `<button>` | handler:onClick |
-| `src/pages/public/FaithHubAccessGateway.tsx` | 51 | `<Link>` | route:/ |
-| `src/pages/public/FaithHubAccessGateway.tsx` | 54 | `<Link>` | route:/ |
-| `src/pages/public/FaithHubAccessGateway.tsx` | 92 | `<Link>` | resolver:text-content (Open Workspace) |
+| `src/pages/public/FaithHubAccessGateway.tsx` | 76 | `<Link>` | route:/ |
+| `src/pages/public/FaithHubAccessGateway.tsx` | 79 | `<Link>` | route:/ |
+| `src/pages/public/FaithHubAccessGateway.tsx` | 117 | `<button>` | handler:onClick |
+| `src/pages/public/LoginPage.tsx` | 76 | `<Link>` | route:/ |
+| `src/pages/public/LoginPage.tsx` | 119 | `<button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 126 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 135 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 146 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 167 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 331 | `<button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 392 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 446 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 461 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 474 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 484 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 494 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubCommunity.tsx` | 541 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubFundDetail.tsx` | 101 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubFundDetail.tsx` | 167 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubFundDetail.tsx` | 241 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubFundDetail.tsx` | 261 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubFundDetail.tsx` | 275 | `<button>` | handler:onClick |
+| `src/pages/shared/FaithHubFundDetail.tsx` | 302 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubQaCenter.tsx` | 61 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubQaCenter.tsx` | 71 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubQaCenter.tsx` | 82 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubQaCenter.tsx` | 103 | `<button>` | handler:onClick |
+| `src/pages/shared/FaithHubQaCenter.tsx` | 125 | `<button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourceDetail.tsx` | 61 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourceDetail.tsx` | 91 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourceDetail.tsx` | 136 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourceDetail.tsx` | 140 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourceDetail.tsx` | 144 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 93 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 96 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 235 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 315 | `<button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 336 | `<button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 445 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 482 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 489 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 502 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubResourcesHub.tsx` | 515 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubWallet.tsx` | 144 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubWallet.tsx` | 148 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubWallet.tsx` | 157 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubWallet.tsx` | 165 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubWallet.tsx` | 176 | `<Button>` | handler:onClick |
+| `src/pages/shared/FaithHubWallet.tsx` | 187 | `<Button>` | handler:onClick |
+| `src/pages/shared/Noticeboard.tsx` | 308 | `<Button>` | handler:onClick |
+| `src/pages/shared/Noticeboard.tsx` | 322 | `<button>` | handler:onClick |
+| `src/pages/shared/Noticeboard.tsx` | 417 | `<button>` | handler:onClick |
+| `src/pages/shared/Noticeboard.tsx` | 492 | `<Button>` | handler:onClick |
+| `src/pages/shared/Noticeboard.tsx` | 501 | `<Button>` | disabled |
 | `src/pages/user/discover/components/DiscoverFiltersPanel.tsx` | 26 | `<button>` | handler:onClick |
 | `src/pages/user/discover/components/DiscoverFiltersPanel.tsx` | 62 | `<Button>` | handler:onClick |
 | `src/pages/user/discover/components/DiscoverHero.tsx` | 67 | `<Button>` | handler:onClick |
@@ -274,9 +335,22 @@ Generated: 2026-03-29T14:41:27.392Z
 | `src/pages/user/DiscoverInstitutions.tsx` | 279 | `<button>` | resolver:aria-label (Open discover settings) |
 | `src/pages/user/events/components/EventCard.tsx` | 62 | `<Button>` | resolver:data-action-label (Open event) |
 | `src/pages/user/events/components/EventCard.tsx` | 65 | `<Button>` | resolver:data-action-label (Join live) |
+| `src/pages/user/events/components/EventDetailsPanel.tsx` | 63 | `<Button>` | handler:onClick |
+| `src/pages/user/events/components/EventsCalendar.tsx` | 142 | `<Button>` | handler:onClick |
+| `src/pages/user/events/components/EventsCalendar.tsx` | 151 | `<Button>` | handler:onClick |
+| `src/pages/user/events/components/EventsCalendar.tsx` | 159 | `<Button>` | handler:onClick |
+| `src/pages/user/events/components/EventsCalendar.tsx` | 204 | `<button>` | handler:onClick |
+| `src/pages/user/events/components/EventsCalendar.tsx` | 249 | `<button>` | handler:onClick |
+| `src/pages/user/events/components/EventsCalendar.tsx` | 282 | `<button>` | handler:onClick |
 | `src/pages/user/events/components/EventsHero.tsx` | 58 | `<Button>` | handler:onClick |
 | `src/pages/user/events/components/MyPassesCard.tsx` | 31 | `<Button>` | resolver:data-action-label (Open event) |
 | `src/pages/user/events/components/MyPassesCard.tsx` | 64 | `<Button>` | resolver:text-content (Open ticketing workflows) |
+| `src/pages/user/events/EventsPage.tsx` | 255 | `<Button>` | handler:onClick |
+| `src/pages/user/events/EventsPage.tsx` | 267 | `<button>` | handler:onClick |
+| `src/pages/user/events/EventsPage.tsx` | 308 | `<button>` | handler:onClick |
+| `src/pages/user/events/EventsPage.tsx` | 358 | `<button>` | handler:onClick |
+| `src/pages/user/events/EventsPage.tsx` | 466 | `<Button>` | handler:onClick |
+| `src/pages/user/events/EventsPage.tsx` | 469 | `<Button>` | form:submit |
 | `src/pages/user/FaithHubAuthCenter.tsx` | 46 | `<button>` | handler:onClick |
 | `src/pages/user/FaithHubAuthCenter.tsx` | 61 | `<button>` | handler:onClick |
 | `src/pages/user/FaithHubAuthCenter.tsx` | 129 | `<button>` | resolver:icon-fallback |
@@ -304,6 +378,37 @@ Generated: 2026-03-29T14:41:27.392Z
 | `src/pages/user/FaithHubClipViewer.tsx` | 314 | `<Button>` | resolver:text-content (Copy clip link) |
 | `src/pages/user/FaithHubClipViewer.tsx` | 317 | `<Button>` | resolver:text-content (Open full replay) |
 | `src/pages/user/FaithHubClipViewer.tsx` | 337 | `<Button>` | resolver:dynamic-content |
+| `src/pages/user/FaithHubCounselingBooking.tsx` | 77 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingBooking.tsx` | 187 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHistory.tsx` | 63 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHistory.tsx` | 66 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHistory.tsx` | 95 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHistory.tsx` | 107 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHistory.tsx` | 114 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHistory.tsx` | 157 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHistory.tsx` | 164 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHub.tsx` | 64 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHub.tsx` | 67 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHub.tsx` | 95 | `<button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHub.tsx` | 170 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingHub.tsx` | 177 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 140 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 143 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 184 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 191 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 198 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 211 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 220 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 242 | `<button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 250 | `<button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 259 | `<button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 297 | `<button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 335 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 338 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselingSession.tsx` | 346 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselorProfile.tsx` | 56 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselorProfile.tsx` | 59 | `<Button>` | handler:onClick |
+| `src/pages/user/FaithHubCounselorProfile.tsx` | 117 | `<button>` | handler:onClick |
 | `src/pages/user/FaithHubEntry.tsx` | 56 | `<button>` | handler:onClick |
 | `src/pages/user/FaithHubEntry.tsx` | 116 | `<button>` | resolver:icon-fallback |
 | `src/pages/user/FaithHubEntry.tsx` | 178 | `<Button>` | resolver:text-content (Continue with EVzone account) |
@@ -332,31 +437,9 @@ Generated: 2026-03-29T14:41:27.392Z
 | `src/pages/user/FaithHubEventDetail.tsx` | 339 | `<button>` | handler:onClick |
 | `src/pages/user/FaithHubEventDetail.tsx` | 376 | `<Button>` | resolver:text-content (Open pass preview) |
 | `src/pages/user/FaithHubEventDetail.tsx` | 395 | `<Button>` | resolver:dynamic-content |
-| `src/pages/user/FaithHubEventsHub.tsx` | 144 | `<button>` | handler:onClick |
-| `src/pages/user/FaithHubEventsHub.tsx` | 153 | `<button>` | handler:onClick |
-| `src/pages/user/FaithHubEventsHub.tsx` | 164 | `<Button>` | resolver:data-action-label (Open event) |
-| `src/pages/user/FaithHubEventsHub.tsx` | 171 | `<Button>` | resolver:data-action-label (Join live) |
-| `src/pages/user/FaithHubEventsHub.tsx` | 248 | `<button>` | resolver:data-action-label (Open event) |
-| `src/pages/user/FaithHubEventsHub.tsx` | 263 | `<button>` | resolver:data-action-label (Open event) |
-| `src/pages/user/FaithHubEventsHub.tsx` | 279 | `<button>` | resolver:data-action-label (Open event) |
-| `src/pages/user/FaithHubEventsHub.tsx` | 315 | `<button>` | resolver:data-action-label (Open event) |
-| `src/pages/user/FaithHubEventsHub.tsx` | 353 | `<button>` | resolver:aria-label (Open event settings) |
-| `src/pages/user/FaithHubEventsHub.tsx` | 455 | `<button>` | resolver:dynamic-content |
-| `src/pages/user/FaithHubGiving.tsx` | 87 | `<Button>` | resolver:data-action-label (Manage plan) |
-| `src/pages/user/FaithHubGiving.tsx` | 94 | `<Button>` | resolver:data-action-label (Open institution) |
-| `src/pages/user/FaithHubGiving.tsx` | 101 | `<Button>` | resolver:data-action-label (Continue to payment) |
-| `src/pages/user/FaithHubGiving.tsx` | 167 | `<button>` | resolver:data-action-label (Open institution) |
-| `src/pages/user/FaithHubGiving.tsx` | 181 | `<button>` | handler:onClick |
-| `src/pages/user/FaithHubGiving.tsx` | 209 | `<button>` | resolver:data-action-label (Continue to payment) |
-| `src/pages/user/FaithHubGiving.tsx` | 249 | `<Button>` | resolver:data-action-label (Continue to payment) |
-| `src/pages/user/FaithHubGiving.tsx` | 265 | `<button>` | resolver:aria-label (Open giving settings) |
-| `src/pages/user/FaithHubHome.tsx` | 309 | `<button>` | handler:onClick |
-| `src/pages/user/FaithHubHome.tsx` | 316 | `<button>` | handler:onClick |
-| `src/pages/user/FaithHubHome.tsx` | 323 | `<button>` | handler:onClick |
-| `src/pages/user/FaithHubHome.tsx` | 333 | `<Button>` | resolver:dynamic-content |
-| `src/pages/user/FaithHubHome.tsx` | 442 | `<button>` | resolver:data-action-id (open-events) |
-| `src/pages/user/FaithHubHome.tsx` | 475 | `<button>` | resolver:data-action-id (open-events) |
-| `src/pages/user/FaithHubHome.tsx` | 522 | `<button>` | resolver:aria-label (Open action center settings) |
+| `src/pages/user/FaithHubGiving.tsx` | 147 | `<button>` | handler:onClick |
+| `src/pages/user/FaithHubGiving.tsx` | 154 | `<button>` | handler:onClick |
+| `src/pages/user/FaithHubGiving.tsx` | 168 | `<Button>` | handler:onClick |
 | `src/pages/user/FaithHubLiveChatQA.tsx` | 129 | `<Button>` | resolver:dynamic-content |
 | `src/pages/user/FaithHubLiveChatQA.tsx` | 180 | `<button>` | resolver:icon-fallback |
 | `src/pages/user/FaithHubLiveChatQA.tsx` | 228 | `<button>` | handler:onClick |

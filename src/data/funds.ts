@@ -1,4 +1,7 @@
 import { appendWalletTransaction } from "@/data/wallet";
+import { getFundsStoreSync, saveFundsStoreSync } from "@/data/services/fundsService";
+import { seedFundsStore } from "@/data/repositories/fundsRepository";
+import type { FundsStore } from "@/data/interfaces/funds-repository";
 import type {
   Fund,
   FundContribution,
@@ -9,115 +12,7 @@ import type {
 } from "@/types/funds";
 import type { WalletRole } from "@/types/wallet";
 
-const STORAGE_KEY = "faithhub.funds.v1";
-
-type FundStore = {
-  funds: Fund[];
-  pledges: Pledge[];
-  contributions: FundContribution[];
-};
-
 const defaultProviderId = "faithhub-provider";
-
-const seedStore: FundStore = {
-  funds: [
-    {
-      id: "fund-community-kitchen",
-      slug: "community-kitchen-expansion",
-      provider_id: defaultProviderId,
-      title: "Community Kitchen Expansion",
-      description:
-        "Support kitchen upgrades, weekly meal distribution, and volunteer coordination for vulnerable families.",
-      target_amount: 5000,
-      current_amount: 1825,
-      type: "crowdfunding",
-      status: "active",
-      created_at: "2026-03-15T10:00:00.000Z",
-      end_date: "2026-06-30T23:59:59.000Z",
-    },
-    {
-      id: "fund-mission-outreach",
-      slug: "mission-outreach",
-      provider_id: defaultProviderId,
-      title: "Mission Outreach",
-      description:
-        "Fund missions, travel, materials, and local community outreach support for ongoing care initiatives.",
-      target_amount: 20000,
-      current_amount: 12900,
-      type: "crowdfunding",
-      status: "active",
-      created_at: "2026-03-17T07:25:00.000Z",
-      end_date: "2026-07-15T23:59:59.000Z",
-    },
-    {
-      id: "fund-studio-upgrade",
-      slug: "live-studio-equipment",
-      provider_id: defaultProviderId,
-      title: "Live Studio Equipment",
-      description:
-        "Fund camera, audio, and streaming reliability upgrades for better worship and teaching broadcasts.",
-      target_amount: 3500,
-      current_amount: 1260,
-      type: "one-time",
-      status: "active",
-      created_at: "2026-03-18T08:30:00.000Z",
-      end_date: null,
-    },
-  ],
-  pledges: [
-    {
-      id: "pledge-001",
-      user_id: "member-naomi",
-      fund_id: "fund-community-kitchen",
-      pledged_amount: 240,
-      paid_amount: 120,
-      status: "partial",
-      created_at: "2026-03-19T11:00:00.000Z",
-    },
-    {
-      id: "pledge-002",
-      user_id: "member-john",
-      fund_id: "fund-studio-upgrade",
-      pledged_amount: 150,
-      paid_amount: 150,
-      status: "completed",
-      created_at: "2026-03-21T09:20:00.000Z",
-    },
-  ],
-  contributions: [
-    {
-      id: "contribution-001",
-      user_id: "member-naomi",
-      fund_id: "fund-community-kitchen",
-      amount: 120,
-      created_at: "2026-03-20T08:15:00.000Z",
-      source: "wallet",
-      type: "pledge_payment",
-    },
-    {
-      id: "contribution-002",
-      user_id: "member-esther",
-      fund_id: "fund-community-kitchen",
-      amount: 310,
-      created_at: "2026-03-22T13:40:00.000Z",
-      source: "wallet",
-      type: "donation",
-    },
-    {
-      id: "contribution-003",
-      user_id: "member-john",
-      fund_id: "fund-studio-upgrade",
-      amount: 150,
-      created_at: "2026-03-23T17:10:00.000Z",
-      source: "wallet",
-      type: "pledge_payment",
-    },
-  ],
-};
-
-function isBrowser() {
-  return typeof window !== "undefined";
-}
 
 function slugifyFundTitle(value: string) {
   return value
@@ -139,7 +34,7 @@ function normalizeFund(rawFund: Fund, index: number): Fund {
 function ensureRequiredSeedFunds(funds: Fund[]) {
   const normalized = funds.map(normalizeFund);
   const existingSlugs = new Set(normalized.map((fund) => fund.slug));
-  const missingSeedFunds = seedStore.funds
+  const missingSeedFunds = seedFundsStore.funds
     .map((fund, index) => normalizeFund(fund, index))
     .filter((fund) => !existingSlugs.has(fund.slug));
   return sortFunds([...normalized, ...missingSeedFunds]);
@@ -159,28 +54,17 @@ function createUniqueFundSlug(title: string, funds: Fund[]) {
   return candidate;
 }
 
-function readStore(): FundStore {
-  if (!isBrowser()) return { ...seedStore, funds: ensureRequiredSeedFunds(seedStore.funds) };
-  const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) return { ...seedStore, funds: ensureRequiredSeedFunds(seedStore.funds) };
-  try {
-    const parsed = JSON.parse(raw) as Partial<FundStore>;
-    const parsedFunds = Array.isArray(parsed.funds) ? (parsed.funds as Fund[]) : seedStore.funds;
-    return {
-      funds: ensureRequiredSeedFunds(parsedFunds),
-      pledges: Array.isArray(parsed.pledges) ? parsed.pledges : seedStore.pledges,
-      contributions: Array.isArray(parsed.contributions)
-        ? parsed.contributions
-        : seedStore.contributions,
-    };
-  } catch {
-    return { ...seedStore, funds: ensureRequiredSeedFunds(seedStore.funds) };
-  }
+function readStore(): FundsStore {
+  const store = getFundsStoreSync();
+  return {
+    funds: ensureRequiredSeedFunds(Array.isArray(store.funds) ? store.funds : seedFundsStore.funds),
+    pledges: Array.isArray(store.pledges) ? store.pledges : seedFundsStore.pledges,
+    contributions: Array.isArray(store.contributions) ? store.contributions : seedFundsStore.contributions,
+  };
 }
 
-function writeStore(store: FundStore) {
-  if (!isBrowser()) return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+function writeStore(store: FundsStore) {
+  saveFundsStoreSync(store);
 }
 
 function sortFunds(funds: Fund[]) {

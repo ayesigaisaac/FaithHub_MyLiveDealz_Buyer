@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { CalendarDays, Clock3, MapPin, PencilLine } from "lucide-react";
 import AgendaList from "@/pages/user/events/components/AgendaList";
-import type { CalendarEvent } from "@/pages/user/events/components/EventsCalendar";
+import type { CalendarEvent } from "@/types/events";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

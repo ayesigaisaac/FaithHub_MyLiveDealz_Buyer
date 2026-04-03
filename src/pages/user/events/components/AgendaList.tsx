@@ -1,6 +1,6 @@
 import React from "react";
 import { Clock3 } from "lucide-react";
-import type { EventAgendaItem } from "@/pages/user/events/components/EventsCalendar";
+import type { EventAgendaItem } from "@/types/events";
 
 type AgendaListProps = {
   items: EventAgendaItem[];

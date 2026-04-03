@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
 import type { GlobalSearchResult } from "@/data/globalSearch";
 
@@ -21,6 +21,15 @@ interface AppHeaderProps {
   onToggleAccountSwitcher: () => void;
 }
 
+const typeLabel: Record<GlobalSearchResult["type"], string> = {
+  institution: "Institutions",
+  series: "Series",
+  resource: "Resources",
+  live: "Live sessions",
+};
+
+const resultTypeOrder: GlobalSearchResult["type"][] = ["institution", "series", "resource", "live"];
+
 export default function AppHeader({
   mobileOpen,
   navQuery,
@@ -36,6 +45,33 @@ export default function AppHeader({
   onNavigate,
   onToggleAccountSwitcher,
 }: AppHeaderProps) {
+  const groupedResults = useMemo(() => {
+    const grouped: Array<{ type: GlobalSearchResult["type"]; label: string; items: GlobalSearchResult[] }> = [];
+    for (const type of resultTypeOrder) {
+      const items = searchResults.filter((result) => result.type === type);
+      if (!items.length) continue;
+      grouped.push({
+        type,
+        label: typeLabel[type],
+        items,
+      });
+    }
+    return grouped;
+  }, [searchResults]);
+
+  const flattenedResults = useMemo(() => groupedResults.flatMap((group) => group.items), [groupedResults]);
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
+
+  useEffect(() => {
+    if (!searchOpen || navQuery.trim().length < 2 || !flattenedResults.length) {
+      setActiveIndex(-1);
+      return;
+    }
+    setActiveIndex(0);
+  }, [flattenedResults.length, navQuery, searchOpen]);
+
+  const activeResult = activeIndex >= 0 ? flattenedResults[activeIndex] : null;
+
   return (
     <header className="fh-shell-topbar fixed inset-x-0 top-0 z-50 h-14 border-b">
       <div className="h-full w-full px-2.5 sm:px-3 lg:px-4">
@@ -83,43 +119,104 @@ export default function AppHeader({
               <Search className="h-4 w-4 shrink-0 text-[var(--text-secondary)]" />
               <input
                 type="search"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded={searchOpen && navQuery.trim().length >= 2}
+                aria-controls="global-search-listbox"
+                aria-activedescendant={
+                  activeResult ? `search-result-${activeResult.type}-${activeResult.id}` : undefined
+                }
                 aria-label="Search institutions, series, resources, and live sessions"
                 value={navQuery}
                 onChange={(event) => onChangeQuery(event.target.value)}
                 onFocus={() => onToggleSearchOpen(true)}
+                onKeyDown={(event) => {
+                  if (!searchOpen || navQuery.trim().length < 2) return;
+                  if (!flattenedResults.length) return;
+
+                  if (event.key === "ArrowDown") {
+                    event.preventDefault();
+                    setActiveIndex((prev) => (prev + 1) % flattenedResults.length);
+                    return;
+                  }
+
+                  if (event.key === "ArrowUp") {
+                    event.preventDefault();
+                    setActiveIndex((prev) => {
+                      if (prev <= 0) return flattenedResults.length - 1;
+                      return prev - 1;
+                    });
+                    return;
+                  }
+
+                  if (event.key === "Enter" && activeResult) {
+                    event.preventDefault();
+                    onNavigate(activeResult.path);
+                    onToggleSearchOpen(false);
+                    return;
+                  }
+
+                  if (event.key === "Escape") {
+                    onToggleSearchOpen(false);
+                  }
+                }}
                 placeholder="Search institutions, series, resources, live..."
                 className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted,#6B7280)]"
               />
+
               {searchOpen && navQuery.trim().length >= 2 ? (
                 <div
+                  id="global-search-listbox"
+                  role="listbox"
                   className="absolute left-0 right-0 top-[calc(100%+0.45rem)] z-50 rounded-xl border border-[var(--border)] bg-[var(--panel)] p-1.5 shadow-[var(--shadow-soft)]"
                   data-no-nav
                 >
-                  {searchResults.length ? (
-                    <div className="max-h-72 overflow-y-auto">
-                      {searchResults.map((result) => (
-                        <button
-                          key={`${result.type}:${result.id}`}
-                          type="button"
-                          onClick={() => {
-                            onNavigate(result.path);
-                            onToggleSearchOpen(false);
-                          }}
-                          className="flex w-full items-start justify-between gap-2 rounded-lg px-2.5 py-2 text-left transition hover:bg-[var(--fh-elevated-surface)]"
-                          data-no-nav
-                        >
-                          <span className="min-w-0">
-                            <span className="block truncate text-sm font-semibold text-[var(--text-primary)]">
-                              {result.title}
-                            </span>
-                            <span className="block truncate text-xs text-[var(--text-secondary)]">
-                              {result.subtitle}
-                            </span>
-                          </span>
-                          <span className="rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
-                            {result.type}
-                          </span>
-                        </button>
+                  {flattenedResults.length ? (
+                    <div className="max-h-72 space-y-2 overflow-y-auto pr-0.5">
+                      {groupedResults.map((group) => (
+                        <div key={group.type} className="space-y-1">
+                          <div className="px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--text-muted,#6B7280)]">
+                            {group.label}
+                          </div>
+                          {group.items.map((result) => {
+                            const globalIndex = flattenedResults.findIndex(
+                              (entry) => entry.id === result.id && entry.type === result.type,
+                            );
+                            const isActive = globalIndex === activeIndex;
+                            return (
+                              <button
+                                id={`search-result-${result.type}-${result.id}`}
+                                key={`${result.type}:${result.id}`}
+                                type="button"
+                                role="option"
+                                aria-selected={isActive}
+                                onMouseEnter={() => setActiveIndex(globalIndex)}
+                                onClick={() => {
+                                  onNavigate(result.path);
+                                  onToggleSearchOpen(false);
+                                }}
+                                className={`flex w-full items-start justify-between gap-2 rounded-lg px-2.5 py-2 text-left transition ${
+                                  isActive
+                                    ? "bg-[rgba(3,205,140,0.16)]"
+                                    : "hover:bg-[var(--fh-elevated-surface)]"
+                                }`}
+                                data-no-nav
+                              >
+                                <span className="min-w-0">
+                                  <span className="block truncate text-sm font-semibold text-[var(--text-primary)]">
+                                    {result.title}
+                                  </span>
+                                  <span className="block truncate text-xs text-[var(--text-secondary)]">
+                                    {result.subtitle}
+                                  </span>
+                                </span>
+                                <span className="rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--accent)]">
+                                  {result.type}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
                       ))}
                     </div>
                   ) : (
@@ -164,3 +261,4 @@ export default function AppHeader({
     </header>
   );
 }
+

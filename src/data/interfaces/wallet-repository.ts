@@ -6,9 +6,8 @@ export type WalletStore = {
 };
 
 export interface WalletRepository {
-  getStore(): WalletStore;
-  saveStore(store: WalletStore): void;
-  getWallet(role: WalletRole): Wallet;
-  saveWallet(role: WalletRole, wallet: Wallet): void;
+  getStore(): Promise<WalletStore>;
+  saveStore(store: WalletStore): Promise<WalletStore>;
+  getWallet(role: WalletRole): Promise<Wallet>;
+  saveWallet(role: WalletRole, wallet: Wallet): Promise<Wallet>;
 }
-

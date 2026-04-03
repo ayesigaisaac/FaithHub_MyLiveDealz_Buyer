@@ -1,6 +1,8 @@
+import { repositoryFactory } from "@/data/repositories/factory";
+import { readFinanceLedgerSync, writeFinanceLedgerSync } from "@/data/repositories/financeRepository";
+import { simulateLatency } from "@/data/services/runtime";
 import type { FinanceLedgerEntry } from "@/types/finance";
 import type { WalletRole, WalletTransaction, WalletTransactionType } from "@/types/wallet";
-import { readFinanceLedgerSync, writeFinanceLedgerSync } from "@/data/repositories/financeRepository";
 
 const debitTypes = new Set<WalletTransactionType | "pledge_payment">([
   "donation",
@@ -17,11 +19,11 @@ function sortLedger(entries: FinanceLedgerEntry[]) {
   return entries.slice().sort((a, b) => b.timestamp.localeCompare(a.timestamp));
 }
 
-export function getFinanceLedgerEntries() {
+export function getLedgerEntriesSync() {
   return sortLedger(readFinanceLedgerSync());
 }
 
-export function appendFinanceLedgerEntry(
+export function appendLedgerEntrySync(
   input: Omit<FinanceLedgerEntry, "id" | "timestamp" | "direction"> & {
     id?: string;
     timestamp?: string;
@@ -45,7 +47,7 @@ export function appendFinanceLedgerEntry(
   return entry;
 }
 
-export function appendFinanceLedgerFromWallet(
+export function appendLedgerFromWalletSync(
   role: WalletRole,
   transaction: WalletTransaction,
   options?: {
@@ -54,18 +56,23 @@ export function appendFinanceLedgerFromWallet(
     note?: string;
   },
 ) {
-  const channel = options?.channel || transaction.source;
-  return appendFinanceLedgerEntry({
+  return appendLedgerEntrySync({
     id: `ledger-${transaction.id}`,
     timestamp: transaction.date,
     wallet_role: role,
     type: transaction.type,
     amount: transaction.amount,
     status: transaction.status,
-    channel,
+    channel: options?.channel || transaction.source,
     source: transaction.source,
     reference_id: options?.reference_id ?? null,
     note: options?.note || `${transaction.type} from ${transaction.source.replace("_", " ")}`,
   });
+}
+
+export async function getLedgerEntries() {
+  await simulateLatency();
+  const entries = await repositoryFactory.finance.getLedgerEntries();
+  return sortLedger(entries);
 }
 

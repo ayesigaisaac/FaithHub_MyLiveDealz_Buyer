@@ -8,8 +8,7 @@ import type {
   Session,
   SessionType,
 } from "@/types/counseling";
-
-const STORAGE_KEY = "faithhub.counseling.bookings";
+import { getStoredBookingsSync, saveStoredBookingsSync } from "@/data/services/counselingService";
 
 export const counselors: Counselor[] = [
   {
@@ -170,35 +169,6 @@ export const counselorApprovals: CounselorApproval[] = counselors.map((counselor
   note: counselor.verified ? "Credentials verified" : "Awaiting final review",
 }));
 
-function isBrowser() {
-  return typeof window !== "undefined";
-}
-
-function parseBookings(raw: string | null): Booking[] {
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((item): item is Booking => {
-      if (!item || typeof item !== "object") return false;
-      const candidate = item as Booking;
-      return Boolean(candidate.id && candidate.counselorId && candidate.startsAt && candidate.endsAt);
-    });
-  } catch {
-    return [];
-  }
-}
-
-function readStoredBookings(): Booking[] {
-  if (!isBrowser()) return [];
-  return parseBookings(window.localStorage.getItem(STORAGE_KEY));
-}
-
-function writeStoredBookings(bookings: Booking[]) {
-  if (!isBrowser()) return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-}
-
 function mergeBookings(bookings: Booking[]) {
   const map = new Map<string, Booking>();
   for (const booking of bookings) {
@@ -226,7 +196,7 @@ export function getAvailabilityForCounselor(counselorId: string) {
 }
 
 export function getCounselingBookings() {
-  return mergeBookings([...seededBookings, ...readStoredBookings()]);
+  return mergeBookings([...seededBookings, ...getStoredBookingsSync()]);
 }
 
 export function getCounselingHistory() {
@@ -259,13 +229,13 @@ export function createCounselingBooking(input: {
     createdAt: new Date(timestamp).toISOString(),
   };
 
-  const existing = readStoredBookings();
-  writeStoredBookings([booking, ...existing]);
+  const existing = getStoredBookingsSync();
+  saveStoredBookingsSync([booking, ...existing]);
   return booking;
 }
 
 export function updateBookingStatus(sessionId: string, status: BookingStatus) {
-  const existing = readStoredBookings();
+  const existing = getStoredBookingsSync();
   const updated = existing.map((booking) =>
     booking.sessionId === sessionId
       ? {
@@ -274,7 +244,7 @@ export function updateBookingStatus(sessionId: string, status: BookingStatus) {
         }
       : booking,
   );
-  writeStoredBookings(updated);
+  saveStoredBookingsSync(updated);
 }
 
 export function getSessionById(sessionId: string): Session | null {

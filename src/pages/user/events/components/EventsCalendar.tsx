@@ -2,26 +2,9 @@ import React, { memo, useMemo } from "react";
 import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import type { CalendarEvent, CalendarView } from "@/types/events";
 
-export type CalendarView = "day" | "week" | "month";
-
-export interface EventAgendaItem {
-  time: string;
-  title: string;
-  description?: string;
-}
-
-export interface CalendarEvent {
-  id: string;
-  title: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  location?: string;
-  description?: string;
-  eventType?: "service" | "conference" | "community" | "urgent";
-  agenda?: EventAgendaItem[];
-}
+export type { CalendarEvent, CalendarView, EventAgendaItem } from "@/types/events";
 
 type EventsCalendarProps = {
   events: CalendarEvent[];

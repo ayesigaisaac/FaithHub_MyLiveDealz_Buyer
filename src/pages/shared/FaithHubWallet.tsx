@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { appendWalletTransaction, faithMartWalletUrl, getWalletByRole } from "@/data/wallet";
 import { getFinanceLedgerEntries } from "@/data/financeLedger";
+import { trackEvent } from "@/data/tracker";
 import { routes } from "@/constants/routes";
 import type { WalletRole, WalletTransaction, WalletTransactionType } from "@/types/wallet";
 import type { FinanceLedgerEntry } from "@/types/finance";
@@ -75,14 +76,23 @@ export default function FaithHubWallet() {
     source: WalletTransaction["source"],
   ) => {
     if (!Number.isFinite(amountValue) || amountValue <= 0) return;
-    setWallet(
-      appendWalletTransaction(walletRole, {
+    const nextWallet = appendWalletTransaction(walletRole, {
+      type,
+      amount: amountValue,
+      source,
+    });
+    setWallet(nextWallet);
+    setLedgerEntries(getFinanceLedgerEntries().filter((entry) => entry.wallet_role === walletRole));
+    trackEvent(
+      "WALLET_TRANSACTION",
+      {
+        walletRole,
         type,
         amount: amountValue,
         source,
-      }),
+      },
+      { role },
     );
-    setLedgerEntries(getFinanceLedgerEntries().filter((entry) => entry.wallet_role === walletRole));
   };
 
   return (

@@ -5,8 +5,10 @@ import type {
   CommunityReaction,
   CommunityRole,
 } from "@/types/community";
-
-const COMMUNITY_STORAGE_KEY = "faithhub.community.posts.v1";
+import {
+  getStoredCommunityPostsSync,
+  saveStoredCommunityPostsSync,
+} from "@/data/services/communityService";
 
 const communityAuthors: Record<string, CommunityAuthor> = {
   "user-grace": {
@@ -140,21 +142,6 @@ const seedCommunityPosts: CommunityPost[] = [
   },
 ];
 
-function isBrowser() {
-  return typeof window !== "undefined";
-}
-
-function parsePosts(raw: string | null) {
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((entry) => entry && typeof entry === "object") as CommunityPost[];
-  } catch {
-    return [];
-  }
-}
-
 function mergePosts(posts: CommunityPost[]) {
   const map = new Map<string, CommunityPost>();
   for (const post of posts) {
@@ -172,16 +159,6 @@ function mergePosts(posts: CommunityPost[]) {
     if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
     return b.timestamp.localeCompare(a.timestamp);
   });
-}
-
-function readStoredPosts() {
-  if (!isBrowser()) return [];
-  return parsePosts(window.localStorage.getItem(COMMUNITY_STORAGE_KEY));
-}
-
-function writeStoredPosts(posts: CommunityPost[]) {
-  if (!isBrowser()) return;
-  window.localStorage.setItem(COMMUNITY_STORAGE_KEY, JSON.stringify(posts));
 }
 
 export function getDefaultCommunityAuthor(role: CommunityRole): CommunityAuthor {
@@ -215,11 +192,11 @@ export function extractMentions(content: string) {
 }
 
 export function getCommunityPosts() {
-  return mergePosts([...seedCommunityPosts, ...readStoredPosts()]);
+  return mergePosts([...seedCommunityPosts, ...getStoredCommunityPostsSync()]);
 }
 
 export function saveCommunityPosts(posts: CommunityPost[]) {
-  writeStoredPosts(posts);
+  saveStoredCommunityPostsSync(posts);
 }
 
 function appendReplyById(comments: CommunityComment[], parentId: string, reply: CommunityComment): CommunityComment[] {

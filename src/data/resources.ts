@@ -1,6 +1,5 @@
 import type { FaithHubResource, ResourceCategory, ResourceType } from "@/types/resources";
-
-const STORAGE_KEY = "faithhub.resources.v1";
+import { getStoredResourcesSync, saveStoredResourcesSync } from "@/data/services/resourcesService";
 
 export const faithMartUrl = (import.meta.env.VITE_FAITHMART_URL as string | undefined) || "https://faithmart.app";
 
@@ -82,10 +81,6 @@ const seedResources: FaithHubResource[] = [
   },
 ];
 
-function isBrowser() {
-  return typeof window !== "undefined";
-}
-
 function normalizeResources(resources: FaithHubResource[]) {
   return resources
     .slice()
@@ -95,33 +90,8 @@ function normalizeResources(resources: FaithHubResource[]) {
     });
 }
 
-function parseStoredResources(raw: string | null) {
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((entry): entry is FaithHubResource => {
-      if (!entry || typeof entry !== "object") return false;
-      const resource = entry as FaithHubResource;
-      return Boolean(resource.id && resource.title && resource.file_url);
-    });
-  } catch {
-    return [];
-  }
-}
-
-function readStoredResources() {
-  if (!isBrowser()) return [];
-  return parseStoredResources(window.localStorage.getItem(STORAGE_KEY));
-}
-
-function writeStoredResources(resources: FaithHubResource[]) {
-  if (!isBrowser()) return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(resources));
-}
-
 export function getFaithHubResources() {
-  const merged = [...seedResources, ...readStoredResources()];
+  const merged = [...seedResources, ...getStoredResourcesSync()];
   const dedupe = new Map<string, FaithHubResource>();
   for (const resource of merged) {
     dedupe.set(resource.id, resource);
@@ -130,7 +100,7 @@ export function getFaithHubResources() {
 }
 
 export function saveFaithHubResources(resources: FaithHubResource[]) {
-  writeStoredResources(resources);
+  saveStoredResourcesSync(resources);
 }
 
 export function getResourceById(resourceId: string) {

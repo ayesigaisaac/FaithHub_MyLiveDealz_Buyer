@@ -1,20 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
   BadgeCheck,
-  CornerDownRight,
   Flag,
   Heart,
   HeartHandshake,
-  MessageSquare,
+  MessageSquareText,
   Pin,
+  Send,
   ShieldCheck,
   Sparkles,
   UserRound,
 } from "lucide-react";
 import { useAuth } from "@/auth/AuthContext";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   addComment,
   addReply,
@@ -27,71 +27,209 @@ import {
   saveCommunityPosts,
   togglePostFlag,
 } from "@/data/community";
+import { trackEvent } from "@/data/tracker";
 import type {
   CommunityComment,
   CommunityPost,
+  CommunityReaction,
   CommunityRole,
 } from "@/types/community";
 
-type FeedFilter = "all" | "providers" | "pinned";
+type FeedFilter = "all" | "providers" | "pinned" | "discussions";
 
 function formatTime(value: string) {
-  return new Date(value).toLocaleString();
+  return new Date(value).toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
 }
 
 function renderMentionText(content: string) {
   return content.split(/(\s+)/).map((token, index) =>
     token.startsWith("@") ? (
-      <span key={index} className="font-semibold text-[var(--accent)]">
+      <span key={`${token}-${index}`} className="font-semibold text-[var(--accent)]">
         {token}
       </span>
     ) : (
       token
-    )
+    ),
+  );
+}
+
+function roleBadge(role: CommunityRole, title?: string) {
+  if (role === "provider") {
+    return title || "Provider";
+  }
+  return "Member";
+}
+
+function reactionLabel(reaction: CommunityReaction) {
+  if (reaction === "like") return "Amen";
+  if (reaction === "pray") return "Pray";
+  return "Support";
+}
+
+interface CommentThreadProps {
+  comments: CommunityComment[];
+  postId: string;
+  canModerate: boolean;
+  openReplyTarget: string | null;
+  replyDrafts: Record<string, string>;
+  onOpenReply: (commentId: string | null) => void;
+  onReplyDraftChange: (commentId: string, value: string) => void;
+  onSubmitReply: (postId: string, commentId: string) => void;
+  onToggleModeration: (postId: string, commentId: string) => void;
+  onToggleReport: (postId: string, commentId: string) => void;
+}
+
+function CommentThread({
+  comments,
+  postId,
+  canModerate,
+  openReplyTarget,
+  replyDrafts,
+  onOpenReply,
+  onReplyDraftChange,
+  onSubmitReply,
+  onToggleModeration,
+  onToggleReport,
+}: CommentThreadProps) {
+  if (!comments.length) return null;
+
+  return (
+    <div className="space-y-2.5">
+      {comments.map((comment) => (
+        <div key={comment.id} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-semibold text-[var(--text-primary)]">{comment.author.name}</span>
+            <Badge className="fh-pill fh-pill-slate">{roleBadge(comment.author.role, comment.author.title)}</Badge>
+            <span className="text-xs text-[var(--text-secondary)]">{formatTime(comment.timestamp)}</span>
+            {comment.author.verified ? (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--accent)]">
+                <BadgeCheck className="h-3.5 w-3.5" />
+                Verified
+              </span>
+            ) : null}
+            {comment.moderated ? (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#f77f00]">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                Moderated
+              </span>
+            ) : null}
+          </div>
+
+          <div className="mt-1 text-sm leading-relaxed text-[var(--text-primary)]">{renderMentionText(comment.content)}</div>
+
+          <div className="mt-2 flex flex-wrap gap-2">
+            <Button
+              type="button"
+              variant="ghost"
+              uiSize="sm"
+              className="h-8 rounded-lg px-2 text-xs"
+              onClick={() => onOpenReply(openReplyTarget === comment.id ? null : comment.id)}
+            >
+              Reply
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              uiSize="sm"
+              className="h-8 rounded-lg px-2 text-xs"
+              onClick={() => onToggleReport(postId, comment.id)}
+            >
+              <Flag className="h-3.5 w-3.5" />
+              {comment.reported ? "Reported" : "Report"}
+            </Button>
+            {canModerate ? (
+              <Button
+                type="button"
+                variant="ghost"
+                uiSize="sm"
+                className="h-8 rounded-lg px-2 text-xs"
+                onClick={() => onToggleModeration(postId, comment.id)}
+              >
+                <ShieldCheck className="h-3.5 w-3.5" />
+                {comment.moderated ? "Unmoderate" : "Moderate"}
+              </Button>
+            ) : null}
+          </div>
+
+          {openReplyTarget === comment.id ? (
+            <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+              <input
+                value={replyDrafts[comment.id] || ""}
+                onChange={(event) => onReplyDraftChange(comment.id, event.target.value)}
+                placeholder="Reply to this comment..."
+                className="min-h-[40px] w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)]"
+              />
+              <Button
+                type="button"
+                uiSize="sm"
+                className="h-10 min-w-[104px]"
+                onClick={() => onSubmitReply(postId, comment.id)}
+              >
+                <Send className="h-3.5 w-3.5" />
+                Reply
+              </Button>
+            </div>
+          ) : null}
+
+          {comment.replies.length ? (
+            <div className="mt-2 border-l border-[var(--border)] pl-3">
+              <CommentThread
+                comments={comment.replies}
+                postId={postId}
+                canModerate={canModerate}
+                openReplyTarget={openReplyTarget}
+                replyDrafts={replyDrafts}
+                onOpenReply={onOpenReply}
+                onReplyDraftChange={onReplyDraftChange}
+                onSubmitReply={onSubmitReply}
+                onToggleModeration={onToggleModeration}
+                onToggleReport={onToggleReport}
+              />
+            </div>
+          ) : null}
+        </div>
+      ))}
+    </div>
   );
 }
 
 export default function FaithHubCommunity() {
   const { role } = useAuth();
-  const currentRole: CommunityRole =
-    role === "provider" ? "provider" : "user";
-  const isProvider = currentRole === "provider";
+  const currentRole: CommunityRole = role === "provider" ? "provider" : "user";
+  const canModerate = currentRole === "provider";
 
-  const currentAuthor = useMemo(
-    () => getDefaultCommunityAuthor(currentRole),
-    [currentRole]
-  );
-
-  const [posts, setPosts] = useState<CommunityPost[]>(() =>
-    getCommunityPosts()
-  );
-
-  const [feedFilter, setFeedFilter] =
-    useState<FeedFilter>("all");
+  const currentAuthor = useMemo(() => getDefaultCommunityAuthor(currentRole), [currentRole]);
+  const [posts, setPosts] = useState<CommunityPost[]>(() => getCommunityPosts());
+  const [feedFilter, setFeedFilter] = useState<FeedFilter>("all");
   const [composerText, setComposerText] = useState("");
   const [discussionTopic, setDiscussionTopic] = useState("");
-  const [commentDrafts, setCommentDrafts] = useState<
-    Record<string, string>
-  >({});
-  const [replyDrafts, setReplyDrafts] = useState<
-    Record<string, string>
-  >({});
-  const [openReplyTarget, setOpenReplyTarget] =
-    useState<string | null>(null);
+  const [pinOnPublish, setPinOnPublish] = useState(false);
+  const [highlightOnPublish, setHighlightOnPublish] = useState(true);
+  const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
+  const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({});
+  const [openReplyTarget, setOpenReplyTarget] = useState<string | null>(null);
 
   useEffect(() => {
     saveCommunityPosts(posts);
   }, [posts]);
 
   const filteredPosts = useMemo(() => {
-    if (feedFilter === "providers")
-      return posts.filter((p) => p.authorRole === "provider");
-    if (feedFilter === "pinned")
-      return posts.filter((p) => p.pinned);
+    if (feedFilter === "providers") {
+      return posts.filter((post) => post.authorRole === "provider");
+    }
+    if (feedFilter === "pinned") {
+      return posts.filter((post) => post.pinned);
+    }
+    if (feedFilter === "discussions") {
+      return posts.filter((post) => post.threadStarter || Boolean(post.discussionTopic));
+    }
     return posts;
   }, [feedFilter, posts]);
-
-  // 🔥 CLEAN ACTIONS
 
   const publishPost = () => {
     const content = composerText.trim();
@@ -100,161 +238,330 @@ export default function FaithHubCommunity() {
     const result = createPost(posts, {
       content,
       author: currentAuthor,
-      threadStarter: isProvider && !!discussionTopic.trim(),
+      threadStarter: canModerate && Boolean(discussionTopic.trim()),
       discussionTopic: discussionTopic.trim() || null,
     });
 
-    setPosts(result.posts);
+    const nextPosts = result.posts.map((post) => {
+      if (post.id !== result.created.id) return post;
+      return {
+        ...post,
+        pinned: canModerate ? pinOnPublish : post.pinned,
+        highlighted: canModerate ? highlightOnPublish : post.highlighted,
+      };
+    });
+
+    setPosts(nextPosts);
     setComposerText("");
     setDiscussionTopic("");
+    setPinOnPublish(false);
+    setHighlightOnPublish(true);
+
+    trackEvent(
+      "CLICK_BUTTON",
+      {
+        id: "community-publish",
+        label: "Publish Post",
+        location: "community-composer",
+      },
+      { role: currentRole },
+    );
   };
 
   const submitComment = (postId: string) => {
     const content = commentDrafts[postId]?.trim();
     if (!content) return;
-
-    setPosts((prev) =>
-      addComment(prev, { postId, content, author: currentAuthor })
-    );
-
-    setCommentDrafts((prev) => ({ ...prev, [postId]: "" }));
+    setPosts((previous) => addComment(previous, { postId, content, author: currentAuthor }));
+    setCommentDrafts((previous) => ({ ...previous, [postId]: "" }));
   };
 
   const submitReply = (postId: string, commentId: string) => {
     const content = replyDrafts[commentId]?.trim();
     if (!content) return;
-
-    setPosts((prev) =>
-      addReply(prev, {
+    setPosts((previous) =>
+      addReply(previous, {
         postId,
         parentCommentId: commentId,
         content,
         author: currentAuthor,
-      })
+      }),
     );
-
-    setReplyDrafts((prev) => ({ ...prev, [commentId]: "" }));
+    setReplyDrafts((previous) => ({ ...previous, [commentId]: "" }));
     setOpenReplyTarget(null);
   };
 
-  const handleReaction = (
-    postId: string,
-    reaction: "like" | "pray" | "support"
-  ) => {
-    setPosts((prev) =>
-      reactToPost(prev, { postId, reaction })
-    );
-  };
-
-  const handleReport = (postId: string, commentId?: string) => {
-    setPosts((prev) =>
-      commentId
-        ? reportComment(prev, { postId, commentId })
-        : togglePostFlag(prev, postId, "reported")
+  const handleReaction = (postId: string, reaction: CommunityReaction) => {
+    setPosts((previous) => reactToPost(previous, { postId, reaction }));
+    trackEvent(
+      "REACTION_ADDED",
+      {
+        postId,
+        reaction,
+      },
+      { role: currentRole },
     );
   };
 
   return (
     <div className="space-y-4">
-      {/* HEADER */}
-      <Card>
-        <CardContent className="p-5">
-          <h2 className="text-2xl font-bold">
-            FaithHub Community
-          </h2>
+      <Card className="fh-surface-card rounded-[24px]">
+        <CardContent className="p-5 sm:p-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div>
+              <div className="fh-label text-[var(--text-muted)]">Community</div>
+              <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--text-primary)]">
+                Community Conversations
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm text-[var(--text-secondary)]">
+                Share testimonies, prayer requests, and leadership guidance in one moderated, trust-first feed.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Badge className="fh-pill fh-pill-slate">{posts.length} posts</Badge>
+                <Badge className="fh-pill fh-pill-emerald">
+                  {posts.filter((post) => post.authorRole === "provider").length} provider posts
+                </Badge>
+                <Badge className="fh-pill fh-pill-slate">
+                  {currentRole === "provider" ? "Provider role" : "User role"}
+                </Badge>
+              </div>
+            </div>
 
-          <div className="mt-3 flex gap-2">
-            <Badge>{posts.length} posts</Badge>
-            <Badge>
-              {posts.filter((p) => p.authorRole === "provider").length} providers
-            </Badge>
+            <div className="flex flex-wrap items-center gap-2">
+              {(["all", "providers", "pinned", "discussions"] as FeedFilter[]).map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setFeedFilter(item)}
+                  className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition ${
+                    feedFilter === item
+                      ? "border-[rgba(3,205,140,0.34)] bg-[rgba(3,205,140,0.16)] text-[var(--accent)]"
+                      : "border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] hover:bg-[var(--surface)]"
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* CREATE POST */}
-      <Card>
-        <CardContent className="p-4">
+      <Card className="fh-surface-card rounded-2xl">
+        <CardContent className="p-4 sm:p-5">
+          <div className="mb-2 text-sm font-semibold text-[var(--text-primary)]">Create a post</div>
           <textarea
             value={composerText}
-            onChange={(e) => setComposerText(e.target.value)}
-            placeholder="Share something..."
-            className="w-full border p-2"
+            onChange={(event) => setComposerText(event.target.value)}
+            rows={4}
+            placeholder="Share encouragement, testimony, or prayer needs. Mention members with @name."
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)]"
           />
 
-          {isProvider && (
-            <input
-              value={discussionTopic}
-              onChange={(e) =>
-                setDiscussionTopic(e.target.value)
-              }
-              placeholder="Topic"
-              className="mt-2 w-full border p-2"
-            />
-          )}
+          {canModerate ? (
+            <div className="mt-2 grid gap-2 sm:grid-cols-2">
+              <input
+                value={discussionTopic}
+                onChange={(event) => setDiscussionTopic(event.target.value)}
+                placeholder="Discussion topic (optional)"
+                className="min-h-[40px] rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)]"
+              />
+              <div className="flex flex-wrap gap-2">
+                <label className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--card)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
+                  <input
+                    type="checkbox"
+                    checked={pinOnPublish}
+                    onChange={(event) => setPinOnPublish(event.target.checked)}
+                    className="h-3.5 w-3.5 accent-[var(--accent)]"
+                  />
+                  Pin
+                </label>
+                <label className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--card)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
+                  <input
+                    type="checkbox"
+                    checked={highlightOnPublish}
+                    onChange={(event) => setHighlightOnPublish(event.target.checked)}
+                    className="h-3.5 w-3.5 accent-[var(--accent)]"
+                  />
+                  Highlight
+                </label>
+              </div>
+            </div>
+          ) : null}
 
-          <Button className="mt-2" onClick={publishPost}>
-            Publish
-          </Button>
+          <div className="mt-3 flex justify-end">
+            <Button type="button" className="fh-user-primary-btn" onClick={publishPost}>
+              <Send className="h-4 w-4" />
+              Publish
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
-      {/* POSTS */}
-      {filteredPosts.map((post) => (
-        <Card key={post.id}>
-          <CardContent className="p-4">
-            <div className="font-semibold">
-              {post.author.name}
-            </div>
+      <div className="space-y-3">
+        {filteredPosts.map((post) => (
+          <Card
+            key={post.id}
+            className={`fh-surface-card rounded-2xl ${
+              post.authorRole === "provider"
+                ? "border-[rgba(3,205,140,0.3)]"
+                : "border-[var(--border)]"
+            } ${
+              post.highlighted ? "ring-1 ring-[rgba(3,205,140,0.2)]" : ""
+            }`}
+          >
+            <CardContent className="p-4 sm:p-5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)]">
+                  <UserRound className="h-4 w-4 text-[var(--text-secondary)]" />
+                </span>
+                <span className="font-semibold text-[var(--text-primary)]">{post.author.name}</span>
+                <Badge className={post.authorRole === "provider" ? "fh-pill fh-pill-emerald" : "fh-pill fh-pill-slate"}>
+                  {roleBadge(post.authorRole, post.author.title)}
+                </Badge>
+                {post.author.verified ? (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--accent)]">
+                    <BadgeCheck className="h-3.5 w-3.5" />
+                    Verified
+                  </span>
+                ) : null}
+                <span className="text-xs text-[var(--text-secondary)]">{formatTime(post.timestamp)}</span>
+                {post.pinned ? (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(3,205,140,0.3)] bg-[rgba(3,205,140,0.14)] px-2 py-0.5 text-[11px] font-semibold text-[var(--accent)]">
+                    <Pin className="h-3.5 w-3.5" />
+                    Pinned
+                  </span>
+                ) : null}
+                {post.discussionTopic ? (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--surface)] px-2 py-0.5 text-[11px] font-semibold text-[var(--text-secondary)]">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    {post.discussionTopic}
+                  </span>
+                ) : null}
+              </div>
 
-            <div className="mt-2">
-              {renderMentionText(post.content)}
-            </div>
+              <div className="mt-3 text-sm leading-relaxed text-[var(--text-primary)]">{renderMentionText(post.content)}</div>
 
-            {/* REACTIONS */}
-            <div className="mt-3 flex gap-2">
-              <Button onClick={() => handleReaction(post.id, "like")}>
-                ❤️ {post.reactions.like}
-              </Button>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {(["like", "pray", "support"] as CommunityReaction[]).map((reaction) => (
+                  <Button
+                    key={reaction}
+                    type="button"
+                    variant="outline"
+                    uiSize="sm"
+                    className="h-8 rounded-lg px-2 text-xs"
+                    onClick={() => handleReaction(post.id, reaction)}
+                  >
+                    {reaction === "like" ? <Heart className="h-3.5 w-3.5" /> : null}
+                    {reaction === "pray" ? <HeartHandshake className="h-3.5 w-3.5" /> : null}
+                    {reaction === "support" ? <ShieldCheck className="h-3.5 w-3.5" /> : null}
+                    {reactionLabel(reaction)} ({post.reactions[reaction]})
+                  </Button>
+                ))}
 
-              <Button onClick={() => handleReaction(post.id, "pray")}>
-                🙏 {post.reactions.pray}
-              </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  uiSize="sm"
+                  className="h-8 rounded-lg px-2 text-xs"
+                  onClick={() => setPosts((previous) => togglePostFlag(previous, post.id, "reported"))}
+                >
+                  <Flag className="h-3.5 w-3.5" />
+                  {post.reported ? "Reported" : "Report"}
+                </Button>
 
-              <Button onClick={() => handleReaction(post.id, "support")}>
-                💪 {post.reactions.support}
-              </Button>
-            </div>
+                {canModerate ? (
+                  <>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      uiSize="sm"
+                      className="h-8 rounded-lg px-2 text-xs"
+                      onClick={() => setPosts((previous) => togglePostFlag(previous, post.id, "pinned"))}
+                    >
+                      <Pin className="h-3.5 w-3.5" />
+                      {post.pinned ? "Unpin" : "Pin"}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      uiSize="sm"
+                      className="h-8 rounded-lg px-2 text-xs"
+                      onClick={() => setPosts((previous) => togglePostFlag(previous, post.id, "highlighted"))}
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      {post.highlighted ? "Unhighlight" : "Highlight"}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      uiSize="sm"
+                      className="h-8 rounded-lg px-2 text-xs"
+                      onClick={() => setPosts((previous) => togglePostFlag(previous, post.id, "threadStarter"))}
+                    >
+                      <MessageSquareText className="h-3.5 w-3.5" />
+                      {post.threadStarter ? "Close Thread" : "Start Thread"}
+                    </Button>
+                  </>
+                ) : null}
+              </div>
 
-            {/* COMMENTS */}
-            <div className="mt-4">
-              {post.comments.map((comment) => (
-                <div key={comment.id} className="mt-2">
-                  {comment.content}
+              <div className="mt-3 space-y-2">
+                <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+                  Comments ({post.comments.length})
                 </div>
-              ))}
-            </div>
 
-            {/* COMMENT INPUT */}
-            <div className="mt-3 flex gap-2">
-              <input
-                value={commentDrafts[post.id] || ""}
-                onChange={(e) =>
-                  setCommentDrafts((prev) => ({
-                    ...prev,
-                    [post.id]: e.target.value,
-                  }))
-                }
-                className="flex-1 border p-2"
-              />
+                <CommentThread
+                  comments={post.comments}
+                  postId={post.id}
+                  canModerate={canModerate}
+                  openReplyTarget={openReplyTarget}
+                  replyDrafts={replyDrafts}
+                  onOpenReply={setOpenReplyTarget}
+                  onReplyDraftChange={(commentId, value) =>
+                    setReplyDrafts((previous) => ({ ...previous, [commentId]: value }))
+                  }
+                  onSubmitReply={submitReply}
+                  onToggleModeration={(postId, commentId) =>
+                    setPosts((previous) => moderateComment(previous, { postId, commentId }))
+                  }
+                  onToggleReport={(postId, commentId) =>
+                    setPosts((previous) => reportComment(previous, { postId, commentId }))
+                  }
+                />
 
-              <Button onClick={() => submitComment(post.id)}>
-                Comment
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+                <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+                  <input
+                    value={commentDrafts[post.id] || ""}
+                    onChange={(event) =>
+                      setCommentDrafts((previous) => ({ ...previous, [post.id]: event.target.value }))
+                    }
+                    placeholder="Comment on this post..."
+                    className="min-h-[40px] w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)]"
+                  />
+                  <Button
+                    type="button"
+                    uiSize="sm"
+                    className="h-10 min-w-[104px]"
+                    onClick={() => submitComment(post.id)}
+                  >
+                    <MessageSquareText className="h-3.5 w-3.5" />
+                    Comment
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+
+        {!filteredPosts.length ? (
+          <Card className="fh-surface-card rounded-2xl">
+            <CardContent className="p-6 text-center text-sm text-[var(--text-secondary)]">
+              No posts match this filter yet.
+            </CardContent>
+          </Card>
+        ) : null}
+      </div>
     </div>
   );
 }
+
