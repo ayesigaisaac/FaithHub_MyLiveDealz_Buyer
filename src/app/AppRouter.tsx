@@ -134,7 +134,7 @@ export default function AppRouter() {
   const { isAuthenticated, role } = useAuth();
   const muiTheme = useMemo(() => evzoneTheme(mode), [mode]);
   const roleHomePath = defaultPageForRole[role];
-  const landingPath = isAuthenticated ? roleHomePath : routes.public.access;
+  const landingPath = isAuthenticated ? roleHomePath : routes.public.login;
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -142,58 +142,65 @@ export default function AppRouter() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route element={<Layout />}>
-            <Route path={routes.public.landing} element={<Navigate to={landingPath} replace />} />
-            <Route path={routes.public.access} element={<LoginPage />} />
-            <Route path={routes.public.shellPreview} element={<Navigate to={roleHomePath} replace />} />
-            <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
-            <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
-            <Route path="/tenant-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
-            <Route
-              path="/ops/*"
-              element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
-            />
-            <Route path="/resources" element={<Navigate to={resourcesRouteByRole[role]} replace />} />
-            <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
-            <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
-            <Route path="/wallet" element={<Navigate to={walletRouteByRole[role]} replace />} />
-            <Route path="/noticeboard" element={<Navigate to={noticeboardRouteByRole[role]} replace />} />
-            <Route path="/qa" element={<Navigate to={qaRouteByRole[role]} replace />} />
-            <Route path="/fund/:slug" element={<FundAliasRedirect />} />
-            {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
+          <Route
+            path={routes.public.login}
+            element={isAuthenticated ? <Navigate to="/home" replace /> : <LoginPage />}
+          />
+          <Route path={routes.public.access} element={<Navigate to={routes.public.login} replace />} />
+          <Route element={<ProtectedRoute />}>
+            <Route element={<Layout />}>
+              <Route path={routes.public.landing} element={<Navigate to={landingPath} replace />} />
+              <Route path={routes.public.shellPreview} element={<Navigate to={roleHomePath} replace />} />
+              <Route path="/home" element={<Navigate to={roleHomePath} replace />} />
+              <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
+              <Route path="/super-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
+              <Route path="/tenant-admin/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
               <Route
-                key={`shortcut:${legacyPath}`}
-                path={legacyPath}
-                element={<Navigate to={targetPath} replace />}
+                path="/ops/*"
+                element={<Navigate to={`${routes.app.admin.liveModeration}?admin=1`} replace />}
               />
-            ))}
-            <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
-            <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
-            <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
-            <Route path={routes.app.shell} element={<Navigate to={landingPath} replace />} />
-            <Route path={routes.app.root} element={<Navigate to={landingPath} replace />} />
-            {roleOrder.map((role) => (
-              <Route key={role} path={roleBasePath[role]} element={<ProtectedRoute roles={[role]} />}>
-                <Route index element={<Navigate to={defaultPageForRole[role]} replace />} />
-                {(pagesByRole[role] || []).map((page) => {
-                  const Component = page.element;
-                  const paths = getRoutePatterns(page);
-                  return paths.map((path) => (
-                    <Route
-                      key={`${page.id}:${path}`}
-                      path={getNestedRoutePath(path, role)}
-                      element={
-                        <Suspense fallback={<RouteFallback />}>
-                          <Component />
-                        </Suspense>
-                      }
-                    />
-                  ));
-                })}
-                <Route path="*" element={<RoleRouteNotFound role={role} />} />
-              </Route>
-            ))}
-            <Route path="*" element={<RoleRouteNotFound role={role} />} />
+              <Route path="/resources" element={<Navigate to={resourcesRouteByRole[role]} replace />} />
+              <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
+              <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
+              <Route path="/wallet" element={<Navigate to={walletRouteByRole[role]} replace />} />
+              <Route path="/noticeboard" element={<Navigate to={noticeboardRouteByRole[role]} replace />} />
+              <Route path="/qa" element={<Navigate to={qaRouteByRole[role]} replace />} />
+              <Route path="/fund/:slug" element={<FundAliasRedirect />} />
+              {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
+                <Route
+                  key={`shortcut:${legacyPath}`}
+                  path={legacyPath}
+                  element={<Navigate to={targetPath} replace />}
+                />
+              ))}
+              <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
+              <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
+              <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
+              <Route path={routes.app.shell} element={<Navigate to={landingPath} replace />} />
+              <Route path={routes.app.root} element={<Navigate to={landingPath} replace />} />
+              {roleOrder.map((role) => (
+                <Route key={role} path={roleBasePath[role]} element={<ProtectedRoute roles={[role]} />}>
+                  <Route index element={<Navigate to={defaultPageForRole[role]} replace />} />
+                  {(pagesByRole[role] || []).map((page) => {
+                    const Component = page.element;
+                    const paths = getRoutePatterns(page);
+                    return paths.map((path) => (
+                      <Route
+                        key={`${page.id}:${path}`}
+                        path={getNestedRoutePath(path, role)}
+                        element={
+                          <Suspense fallback={<RouteFallback />}>
+                            <Component />
+                          </Suspense>
+                        }
+                      />
+                    ));
+                  })}
+                  <Route path="*" element={<RoleRouteNotFound role={role} />} />
+                </Route>
+              ))}
+              <Route path="*" element={<RoleRouteNotFound role={role} />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

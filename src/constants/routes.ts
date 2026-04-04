@@ -7,6 +7,7 @@ function encodeSegment(value: RouteParam) {
 export const routes = {
   public: {
     landing: "/",
+    login: "/login",
     access: "/access",
     shellPreview: "/shell-preview",
   },

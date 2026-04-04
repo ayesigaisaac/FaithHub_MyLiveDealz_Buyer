@@ -306,7 +306,7 @@ export default function AppShellLayout() {
         }}
         onLogout={() => {
           logout();
-          navigate(routes.public.access);
+          navigate(routes.public.login);
           setAccountSwitcherOpen(false);
         }}
       />

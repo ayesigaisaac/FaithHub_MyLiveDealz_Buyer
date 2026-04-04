@@ -54,9 +54,7 @@ export default function LoginPage() {
   ]);
 
   const redirectAfterLogin = (nextRole: Role) => {
-    if (nextRole === "provider") return routes.app.provider.dashboard;
-    if (nextRole === "admin") return routes.app.admin.overview;
-    return routes.app.user.home;
+    return "/home";
   };
 
   const handleLogin = async (event?: React.FormEvent) => {
@@ -95,7 +93,7 @@ export default function LoginPage() {
       );
       trackEvent(
         "CLICK_BUTTON",
-        { id: `social-${provider}`, label: `Social ${provider}`, location: routes.public.access },
+        { id: `social-${provider}`, label: `Social ${provider}`, location: routes.public.login },
         { role: user.role },
       );
       navigate(redirectAfterLogin(user.role));

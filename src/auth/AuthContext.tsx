@@ -21,6 +21,7 @@ type AuthContextValue = {
   role: Role;
   currentRole: Role;
   isAuthenticated: boolean;
+  isAuthLoading: boolean;
   login: (input: LoginInput) => Promise<AuthUser>;
   mockLoginAsRole: (role: Role) => Promise<AuthUser>;
   logout: () => void;
@@ -35,7 +36,13 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-const SESSION_STORAGE_KEY = "faithhub.auth.session.v1";
+const USER_STORAGE_KEY = "faithhub_user";
+const LEGACY_STORAGE_KEY = "faithhub.auth.session.v1";
+
+type StoredFaithHubUser = {
+  email: string;
+  role: Role;
+};
 
 function isRole(value: unknown): value is Role {
   return value === "admin" || value === "provider" || value === "user";
@@ -67,23 +74,29 @@ function resolveRoleFromEmail(email: string): Role {
 function parseStoredUser(raw: string | null): AuthUser | null {
   if (!raw) return null;
   try {
-    const parsed = JSON.parse(raw) as Partial<AuthUser>;
+    const parsed = JSON.parse(raw) as Partial<AuthUser> | Partial<StoredFaithHubUser>;
     if (!parsed || typeof parsed !== "object") return null;
-    if (
-      typeof parsed.id !== "string" ||
-      typeof parsed.name !== "string" ||
-      typeof parsed.email !== "string" ||
-      !isRole(parsed.role)
-    ) {
+    if (typeof parsed.email !== "string" || !isRole(parsed.role)) {
       return null;
     }
+    const normalizedEmail = parsed.email.trim().toLowerCase();
+    const normalizedRole = parsed.role;
+    const legacyAuthUser = parsed as Partial<AuthUser>;
     return {
-      id: parsed.id,
-      name: parsed.name,
-      email: parsed.email,
-      role: parsed.role,
-      community: typeof parsed.community === "string" ? parsed.community : "FaithHub Community",
-      status: parsed.status === "idle" ? "idle" : "active",
+      id: typeof legacyAuthUser.id === "string" ? legacyAuthUser.id : `auth-${normalizedRole}-persisted`,
+      name:
+        typeof legacyAuthUser.name === "string" && legacyAuthUser.name.trim().length > 0
+          ? legacyAuthUser.name
+          : normalizeNameFromEmail(normalizedEmail),
+      email: normalizedEmail,
+      role: normalizedRole,
+      community:
+        typeof legacyAuthUser.community === "string"
+          ? legacyAuthUser.community
+          : normalizedRole === "admin"
+          ? "FaithHub Command Center"
+          : "FaithHub Community",
+      status: legacyAuthUser.status === "idle" ? "idle" : "active",
     };
   } catch {
     return null;
@@ -92,16 +105,24 @@ function parseStoredUser(raw: string | null): AuthUser | null {
 
 function getStoredUser(): AuthUser | null {
   if (typeof window === "undefined") return null;
-  return parseStoredUser(window.localStorage.getItem(SESSION_STORAGE_KEY));
+  const current = parseStoredUser(window.localStorage.getItem(USER_STORAGE_KEY));
+  if (current) return current;
+  return parseStoredUser(window.localStorage.getItem(LEGACY_STORAGE_KEY));
 }
 
 function persistUser(user: AuthUser | null) {
   if (typeof window === "undefined") return;
   if (!user) {
-    window.localStorage.removeItem(SESSION_STORAGE_KEY);
+    window.localStorage.removeItem(USER_STORAGE_KEY);
+    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
     return;
   }
-  window.localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
+  const storedUser: StoredFaithHubUser = {
+    email: user.email,
+    role: user.role,
+  };
+  window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(storedUser));
+  window.localStorage.removeItem(LEGACY_STORAGE_KEY);
 }
 
 function buildMockUser(email: string, role: Role): AuthUser {
@@ -117,13 +138,20 @@ function buildMockUser(email: string, role: Role): AuthUser {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(() => getStoredUser());
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   const role: Role = user?.role || "user";
 
   useEffect(() => {
+    setUser(getStoredUser());
+    setIsAuthLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (isAuthLoading) return;
     persistUser(user);
-  }, [user]);
+  }, [isAuthLoading, user]);
 
   const value = useMemo<AuthContextValue>(() => {
     const login = async ({ email, password, role: preferredRole }: LoginInput) => {
@@ -163,7 +191,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user,
       role,
       currentRole: role,
-      isAuthenticated: Boolean(user),
+      isAuthenticated: Boolean(user) && !isAuthLoading,
+      isAuthLoading,
       login,
       mockLoginAsRole,
       logout: () => setUser(null),
@@ -175,7 +204,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isProvider: hasRole("provider"),
       isUser: hasRole("user"),
     };
-  }, [role, user]);
+  }, [isAuthLoading, role, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
@@ -187,4 +216,3 @@ export function useAuth() {
   }
   return context;
 }
-

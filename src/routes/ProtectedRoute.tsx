@@ -11,10 +11,21 @@ type ProtectedRouteProps = {
 };
 
 export default function ProtectedRoute({ roles, children }: ProtectedRouteProps) {
-  const { user, role } = useAuth();
+  const { user, role, isAuthLoading } = useAuth();
+  const storedUser = typeof window !== "undefined" ? window.localStorage.getItem("faithhub_user") : null;
 
-  if (!user) {
-    return <Navigate to={routes.public.access} replace />;
+  if (isAuthLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[var(--bg)] px-4">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-5 text-sm text-[var(--text-secondary)]">
+          Checking authentication...
+        </div>
+      </div>
+    );
+  }
+
+  if (!user || !storedUser) {
+    return <Navigate to={routes.public.login} replace />;
   }
 
   if (roles?.length && !roles.includes(role)) {
