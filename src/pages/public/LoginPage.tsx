@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/auth/AuthContext";
 import { routes } from "@/constants/routes";
 import { trackEvent } from "@/data/tracker";
+import { useColorMode } from "@/theme/color-mode";
 import type { Role } from "@/types/roles";
 
 const logoPortraitSrc = "/assets/branding/logo-portrait.png";
@@ -50,6 +51,8 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login, mockLoginAsRole, role: currentRole } = useAuth();
+  const { mode } = useColorMode();
+  const isDark = mode === "dark";
 
   const [email, setEmail] = useState("ayesigai921@gmail.com");
   const [password, setPassword] = useState("password");
@@ -142,11 +145,21 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] px-4 py-6 text-[#F9FAFB] sm:px-6 sm:py-8">
+    <div
+      className={`min-h-screen px-4 py-6 sm:px-6 sm:py-8 ${
+        isDark ? "bg-[#020617] text-[#F9FAFB]" : "bg-[#f3f6fb] text-[#0f172a]"
+      }`}
+    >
       <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-[1040px] items-center">
-        <Card className="w-full overflow-hidden rounded-[24px] border border-white/10 bg-[#0b1220] shadow-[0_30px_80px_-42px_rgba(0,0,0,0.8)]">
+        <Card
+          className={`w-full overflow-hidden rounded-[24px] shadow-[0_30px_80px_-42px_rgba(0,0,0,0.35)] ${
+            isDark ? "border border-white/10 bg-[#0b1220]" : "border border-slate-200 bg-white"
+          }`}
+        >
           <div className="grid lg:grid-cols-2">
-            <aside className="relative bg-gradient-to-br from-[#0f172a] to-[#022c22] p-6 sm:p-10">
+            <aside
+              className={`relative p-6 sm:p-10 ${isDark ? "bg-gradient-to-br from-[#0f172a] to-[#022c22]" : "bg-gradient-to-br from-[#0f172a] to-[#14345b]"}`}
+            >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_18%,rgba(3,200,220,0.28),transparent_38%),radial-gradient(circle_at_84%_10%,rgba(247,127,0,0.23),transparent_30%)]" />
               <div className="relative z-10 space-y-8">
                 <img src={logoLandscapeSrc} alt="FaithHub" className="h-9 w-auto object-contain" />
@@ -166,7 +179,7 @@ export default function LoginPage() {
                         type="button"
                         onClick={() => handleSocialLogin(provider.id)}
                         disabled={isSubmitting}
-                        className="flex min-h-[50px] w-full items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 text-left transition-all duration-200 hover:bg-white/5 hover:shadow-[0_0_0_1px_rgba(3,200,220,0.22)] disabled:cursor-not-allowed disabled:opacity-70"
+                        className="flex min-h-[50px] w-full items-center gap-3 rounded-xl border border-white/15 bg-white/[0.06] px-4 text-left transition-all duration-200 hover:bg-white/12 hover:shadow-[0_0_0_1px_rgba(3,200,220,0.22)] disabled:cursor-not-allowed disabled:opacity-70"
                         aria-label={provider.label}
                       >
                         <span
@@ -187,16 +200,34 @@ export default function LoginPage() {
                 <img src={logoPortraitSrc} alt="FaithHub" className="h-12 w-auto object-contain" />
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-[#0f172a] p-6 shadow-xl sm:p-10">
+              <div
+                className={`rounded-2xl p-6 shadow-xl sm:p-10 ${
+                  isDark
+                    ? "border border-white/10 bg-[#0f172a]"
+                    : "border border-slate-200 bg-[#f8fbff]"
+                }`}
+              >
                 <div>
-                  <h2 className="text-2xl font-semibold text-[#F9FAFB]">Login to your account</h2>
-                  <p className="mt-2 text-sm text-[#9CA3AF]">
+                  <h2 className={`text-2xl font-semibold ${isDark ? "text-[#F9FAFB]" : "text-[#0f172a]"}`}>
+                    Login to your account
+                  </h2>
+                  <p className={`mt-2 text-sm ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
                     Use your email credentials and continue to your dashboard.
                   </p>
                 </div>
 
-                <section className="mt-8 rounded-xl border border-white/10 bg-[#020617] p-2">
-                  <div className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#9CA3AF]">
+                <section
+                  className={`mt-8 rounded-xl p-2 ${
+                    isDark
+                      ? "border border-white/10 bg-[#020617]"
+                      : "border border-slate-200 bg-white"
+                  }`}
+                >
+                  <div
+                    className={`mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.16em] ${
+                      isDark ? "text-[#9CA3AF]" : "text-slate-500"
+                    }`}
+                  >
                     Role
                   </div>
                   <div className="grid grid-cols-3 gap-2">
@@ -211,7 +242,9 @@ export default function LoginPage() {
                           className={`min-h-[44px] rounded-lg px-2 py-2 text-sm font-semibold transition-all duration-200 ${
                             active
                               ? "border border-[#03c8dc] bg-[#03c8dc]/10 text-[#03c8dc]"
-                              : "border border-transparent text-[#9CA3AF] hover:bg-white/5 hover:text-[#F9FAFB]"
+                              : isDark
+                                ? "border border-transparent text-[#9CA3AF] hover:bg-white/5 hover:text-[#F9FAFB]"
+                                : "border border-transparent text-slate-500 hover:bg-slate-100 hover:text-slate-900"
                           }`}
                         >
                           {option.label}
@@ -223,12 +256,16 @@ export default function LoginPage() {
 
                 <form className="mt-8 space-y-8" onSubmit={handleLogin}>
                   <label htmlFor="login-email" className="block space-y-2">
-                    <span className="text-sm font-medium text-[#E5E7EB]">Email address</span>
+                    <span className={`text-sm font-medium ${isDark ? "text-[#E5E7EB]" : "text-slate-700"}`}>
+                      Email address
+                    </span>
                     <div
-                      className={`flex min-h-[48px] items-center gap-2 rounded-xl border bg-[#020617] px-3 transition-all duration-200 focus-within:ring-1 ${
+                      className={`flex min-h-[48px] items-center gap-2 rounded-xl border px-3 transition-all duration-200 focus-within:ring-1 ${
                         fieldErrors.email
                           ? "border-[#f77f00]/70 focus-within:border-[#f77f00] focus-within:ring-[#f77f00]/70"
-                          : "border-white/10 focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
+                          : isDark
+                            ? "border-white/10 bg-[#020617] focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
+                            : "border-slate-200 bg-white focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
                       }`}
                     >
                       <Mail className="h-4 w-4 text-gray-400" />
@@ -238,7 +275,9 @@ export default function LoginPage() {
                         value={email}
                         onBlur={validateFields}
                         onChange={(event) => setEmail(event.target.value)}
-                        className="w-full bg-transparent text-sm text-[#F9FAFB] outline-none placeholder:text-gray-400"
+                        className={`w-full bg-transparent text-sm outline-none placeholder:text-gray-400 ${
+                          isDark ? "text-[#F9FAFB]" : "text-slate-900"
+                        }`}
                         placeholder="you@example.com"
                         autoComplete="email"
                         required
@@ -248,12 +287,16 @@ export default function LoginPage() {
                   </label>
 
                   <label htmlFor="login-password" className="block space-y-2">
-                    <span className="text-sm font-medium text-[#E5E7EB]">Password</span>
+                    <span className={`text-sm font-medium ${isDark ? "text-[#E5E7EB]" : "text-slate-700"}`}>
+                      Password
+                    </span>
                     <div
-                      className={`flex min-h-[48px] items-center gap-2 rounded-xl border bg-[#020617] px-3 transition-all duration-200 focus-within:ring-1 ${
+                      className={`flex min-h-[48px] items-center gap-2 rounded-xl border px-3 transition-all duration-200 focus-within:ring-1 ${
                         fieldErrors.password
                           ? "border-[#f77f00]/70 focus-within:border-[#f77f00] focus-within:ring-[#f77f00]/70"
-                          : "border-white/10 focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
+                          : isDark
+                            ? "border-white/10 bg-[#020617] focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
+                            : "border-slate-200 bg-white focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
                       }`}
                     >
                       <Lock className="h-4 w-4 text-gray-400" />
@@ -263,7 +306,9 @@ export default function LoginPage() {
                         value={password}
                         onBlur={validateFields}
                         onChange={(event) => setPassword(event.target.value)}
-                        className="w-full bg-transparent text-sm text-[#F9FAFB] outline-none placeholder:text-gray-400"
+                        className={`w-full bg-transparent text-sm outline-none placeholder:text-gray-400 ${
+                          isDark ? "text-[#F9FAFB]" : "text-slate-900"
+                        }`}
                         placeholder="Enter your password"
                         autoComplete="current-password"
                         required
@@ -282,7 +327,11 @@ export default function LoginPage() {
                     ) : null}
                   </label>
 
-                  <div className="flex flex-col items-start justify-between gap-2 text-sm text-[#9CA3AF] sm:flex-row sm:items-center">
+                  <div
+                    className={`flex flex-col items-start justify-between gap-2 text-sm sm:flex-row sm:items-center ${
+                      isDark ? "text-[#9CA3AF]" : "text-slate-600"
+                    }`}
+                  >
                     <label className="flex items-center gap-2">
                       <input
                         type="checkbox"
@@ -302,7 +351,11 @@ export default function LoginPage() {
                   </div>
 
                   {message ? (
-                    <div className="rounded-xl border border-[#03c8dc]/30 bg-[#03c8dc]/10 px-4 py-3 text-sm text-[#E5E7EB]">
+                    <div
+                      className={`rounded-xl border border-[#03c8dc]/30 px-4 py-3 text-sm ${
+                        isDark ? "bg-[#03c8dc]/10 text-[#E5E7EB]" : "bg-[#e8fbff] text-slate-700"
+                      }`}
+                    >
                       {message}
                     </div>
                   ) : null}
@@ -317,7 +370,7 @@ export default function LoginPage() {
                 </form>
               </div>
 
-              <p className="mt-4 text-xs leading-5 text-[#9CA3AF]">
+              <p className={`mt-4 text-xs leading-5 ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
                 New here?{" "}
                 <button
                   type="button"
@@ -334,4 +387,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
