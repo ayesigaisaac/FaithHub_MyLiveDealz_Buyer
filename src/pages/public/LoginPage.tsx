@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Apple, Building2, Eye, EyeOff, Lock, Mail, Sparkles, UserCircle2 } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/auth/AuthContext";
@@ -49,7 +49,8 @@ type LoginFieldErrors = {
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, mockLoginAsRole, role: currentRole } = useAuth();
+  const { role: roleParam } = useParams<{ role?: string }>();
+  const { login, mockLoginAsRole, role: currentRole, isAuthenticated } = useAuth();
   const { mode } = useColorMode();
   const isDark = mode === "dark";
 
@@ -61,6 +62,19 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
+  const routeRole = roleParam === "user" || roleParam === "provider" || roleParam === "admin" ? roleParam : null;
+  const roleLocked = Boolean(routeRole);
+
+  useEffect(() => {
+    if (routeRole) {
+      setRole(routeRole);
+    }
+  }, [routeRole]);
+
+  useEffect(() => {
+    if (!routeRole || !isAuthenticated || currentRole !== routeRole) return;
+    navigate("/home", { replace: true });
+  }, [currentRole, isAuthenticated, navigate, routeRole]);
 
   useEffect(() => {
     const reasonFromState = (location.state as { reason?: string } | null)?.reason;
@@ -71,6 +85,8 @@ export default function LoginPage() {
 
     if (reason === "session_expired") setMessage("Your session expired. Please sign in again.");
     else if (reason === "logout") setMessage("You have been signed out successfully.");
+    else if (reason === "role_login_required" && routeRole)
+      setMessage(`Please sign in as ${routeRole} to continue.`);
     else if (reason === "auth_required") setMessage("Please sign in to continue.");
 
     if (typeof window !== "undefined") {
@@ -84,7 +100,11 @@ export default function LoginPage() {
     [email, password],
   );
 
-  const redirectAfterLogin = () => "/home";
+  const redirectAfterLogin = (nextRole: Role) => {
+    if (nextRole === "admin") return routes.app.admin.overview;
+    if (nextRole === "provider") return routes.app.provider.dashboard;
+    return routes.app.user.home;
+  };
 
   const validateFields = () => {
     const errors: LoginFieldErrors = {};
@@ -109,7 +129,7 @@ export default function LoginPage() {
         { fromRole: currentRole, toRole: user.role, trigger: "access" },
         { role: user.role },
       );
-      navigate(redirectAfterLogin());
+      navigate(redirectAfterLogin(user.role));
     } catch (error) {
       const detail = error instanceof Error ? error.message : "Unable to sign in.";
       setMessage(detail);
@@ -133,7 +153,7 @@ export default function LoginPage() {
         { id: `social-${provider}`, label: `Social ${provider}`, location: routes.public.login },
         { role: user.role },
       );
-      navigate(redirectAfterLogin());
+      navigate(redirectAfterLogin(user.role));
     } finally {
       setIsSubmitting(false);
     }
@@ -189,6 +209,7 @@ export default function LoginPage() {
                   <button
                     key={option.value}
                     type="button"
+                    disabled={roleLocked}
                     onClick={() => setRole(option.value)}
                     className={`min-h-[42px] rounded-lg text-sm font-semibold transition-all duration-200 ${
                       role === option.value
@@ -196,7 +217,7 @@ export default function LoginPage() {
                         : isDark
                           ? "text-[#9CA3AF] hover:bg-white/5 hover:text-[#F9FAFB]"
                           : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-                    }`}
+                    } ${roleLocked ? "cursor-not-allowed opacity-70" : ""}`}
                   >
                     {option.label}
                   </button>

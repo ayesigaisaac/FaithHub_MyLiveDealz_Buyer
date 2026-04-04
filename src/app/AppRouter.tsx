@@ -149,6 +149,10 @@ export default function AppRouter() {
             element={isAuthenticated ? <Navigate to="/home" replace /> : <LoginPage />}
           />
           <Route
+            path={routes.public.loginRolePattern}
+            element={<LoginPage />}
+          />
+          <Route
             path={routes.public.signup}
             element={isAuthenticated ? <Navigate to="/home" replace /> : <SignupPage />}
           />

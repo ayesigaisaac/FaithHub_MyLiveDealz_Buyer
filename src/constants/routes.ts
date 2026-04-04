@@ -8,6 +8,8 @@ export const routes = {
   public: {
     landing: "/",
     login: "/login",
+    loginRolePattern: "/login/:role",
+    loginByRole: (role: "user" | "provider" | "admin") => `/login/${encodeSegment(role)}`,
     signup: "/signup",
     forgotPassword: "/forgot-password",
     access: "/access",

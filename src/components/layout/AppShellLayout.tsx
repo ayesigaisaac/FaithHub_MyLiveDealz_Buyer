@@ -64,15 +64,6 @@ function getCurrentRole(pathname: string): RoleKey {
   return "user";
 }
 
-function parseRoleFromSearch(search: string): RoleKey | null {
-  const params = new URLSearchParams(search);
-  const as = (params.get("as") || "").toLowerCase();
-  if (as === "admin" || as === "super_admin" || as === "tenant_admin" || as === "ops") return "admin";
-  if (as === "provider") return "provider";
-  if (as === "user") return "user";
-  return null;
-}
-
 function matchesPagePath(page: Pick<PageRegistryItem, "path" | "routePatterns">, pathname: string) {
   return getRoutePatterns(page).some((pattern) => Boolean(matchPath({ path: pattern, end: true }, pathname)));
 }
@@ -146,7 +137,7 @@ export default function AppShellLayout() {
     );
     navigate(path);
   };
-  const handleRoleSwitch = (nextRole: Role, path: string) => {
+  const handleRoleSwitch = (nextRole: Role, _path: string) => {
     trackEvent(
       "ROLE_SWITCH",
       {
@@ -159,7 +150,7 @@ export default function AppShellLayout() {
     flushSync(() => {
       setRole(nextRole);
     });
-    navigateToPath(path);
+    navigate(routes.public.loginByRole(nextRole));
     setMobileOpen(false);
   };
 
@@ -223,12 +214,6 @@ export default function AppShellLayout() {
     setAccountSwitcherOpen(false);
     setSearchOpen(false);
   }, [location.pathname]);
-
-  useEffect(() => {
-    const requestedRole = parseRoleFromSearch(location.search);
-    if (!requestedRole || requestedRole === currentRole) return;
-    setRole(requestedRole);
-  }, [currentRole, location.search, setRole]);
 
   useEffect(() => {
     if (!searchOpen) return;

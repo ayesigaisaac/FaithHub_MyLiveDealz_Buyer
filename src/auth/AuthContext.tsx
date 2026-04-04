@@ -38,6 +38,8 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const USER_STORAGE_KEY = "faithhub_user";
 const LEGACY_STORAGE_KEY = "faithhub.auth.session.v1";
+const ACTIVE_ROLE_STORAGE_KEY = "faithhub_active_role";
+const SESSION_KEY_PREFIX = "faithhub_session_";
 const NOTICE_STORAGE_KEY = "faithhub_auth_notice";
 const SESSION_EXPIRY_MS = 1000 * 60 * 60 * 12;
 
@@ -113,18 +115,44 @@ function parseStoredUser(raw: string | null): AuthUser | null {
   }
 }
 
-function getStoredUser(): AuthUser | null {
-  if (typeof window === "undefined") return null;
-  const current = parseStoredUser(window.localStorage.getItem(USER_STORAGE_KEY));
-  if (current) return current;
-  return parseStoredUser(window.localStorage.getItem(LEGACY_STORAGE_KEY));
+function getSessionStorageKey(role: Role) {
+  return `${SESSION_KEY_PREFIX}${role}`;
 }
 
-function persistUser(user: AuthUser | null) {
+function readActiveRole(): Role {
+  if (typeof window === "undefined") return "user";
+  const raw = window.localStorage.getItem(ACTIVE_ROLE_STORAGE_KEY);
+  return isRole(raw) ? raw : "user";
+}
+
+function persistActiveRole(role: Role) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(ACTIVE_ROLE_STORAGE_KEY, role);
+}
+
+function readStoredSession(role: Role): AuthUser | null {
+  if (typeof window === "undefined") return null;
+  return parseStoredUser(window.localStorage.getItem(getSessionStorageKey(role)));
+}
+
+function persistSession(role: Role, user: AuthUser | null) {
+  if (typeof window === "undefined") return;
+  if (!user) {
+    window.localStorage.removeItem(getSessionStorageKey(role));
+    return;
+  }
+  const storedUser: StoredFaithHubUser = {
+    email: user.email,
+    role,
+    expiresAt: Date.now() + SESSION_EXPIRY_MS,
+  };
+  window.localStorage.setItem(getSessionStorageKey(role), JSON.stringify(storedUser));
+}
+
+function mirrorActiveSession(user: AuthUser | null) {
   if (typeof window === "undefined") return;
   if (!user) {
     window.localStorage.removeItem(USER_STORAGE_KEY);
-    window.localStorage.removeItem(LEGACY_STORAGE_KEY);
     return;
   }
   const storedUser: StoredFaithHubUser = {
@@ -133,6 +161,17 @@ function persistUser(user: AuthUser | null) {
     expiresAt: Date.now() + SESSION_EXPIRY_MS,
   };
   window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(storedUser));
+}
+
+function consumeLegacySession(): AuthUser | null {
+  if (typeof window === "undefined") return null;
+  const current = parseStoredUser(window.localStorage.getItem(USER_STORAGE_KEY));
+  if (current) return current;
+  return parseStoredUser(window.localStorage.getItem(LEGACY_STORAGE_KEY));
+}
+
+function clearLegacySessionKeys() {
+  if (typeof window === "undefined") return;
   window.localStorage.removeItem(LEGACY_STORAGE_KEY);
 }
 
@@ -150,19 +189,40 @@ function buildMockUser(email: string, role: Role): AuthUser {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [activeRole, setActiveRole] = useState<Role>("user");
   const [isAuthLoading, setIsAuthLoading] = useState(true);
 
-  const role: Role = user?.role || "user";
+  const role: Role = user?.role || activeRole;
 
   useEffect(() => {
-    setUser(getStoredUser());
+    const bootstrapRole = readActiveRole();
+    const roleSession = readStoredSession(bootstrapRole);
+
+    if (roleSession) {
+      setActiveRole(bootstrapRole);
+      setUser(roleSession);
+      mirrorActiveSession(roleSession);
+      setIsAuthLoading(false);
+      return;
+    }
+
+    const legacySession = consumeLegacySession();
+    if (legacySession) {
+      persistSession(legacySession.role, legacySession);
+      persistActiveRole(legacySession.role);
+      setActiveRole(legacySession.role);
+      setUser(legacySession);
+      mirrorActiveSession(legacySession);
+      clearLegacySessionKeys();
+      setIsAuthLoading(false);
+      return;
+    }
+
+    setActiveRole(bootstrapRole);
+    setUser(null);
+    mirrorActiveSession(null);
     setIsAuthLoading(false);
   }, []);
-
-  useEffect(() => {
-    if (isAuthLoading) return;
-    persistUser(user);
-  }, [isAuthLoading, user]);
 
   const value = useMemo<AuthContextValue>(() => {
     const login = async ({ email, password, role: preferredRole }: LoginInput) => {
@@ -172,6 +232,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       const nextRole = preferredRole || resolveRoleFromEmail(safeEmail);
       const nextUser = buildMockUser(safeEmail, nextRole);
+      persistSession(nextRole, nextUser);
+      persistActiveRole(nextRole);
+      mirrorActiveSession(nextUser);
+      clearLegacySessionKeys();
+      setActiveRole(nextRole);
       setUser(nextUser);
       return nextUser;
     };
@@ -179,34 +244,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const mockLoginAsRole = async (requestedRole: Role) => {
       const email = `${requestedRole}@faithhub.app`;
       const nextUser = buildMockUser(email, requestedRole);
+      persistSession(requestedRole, nextUser);
+      persistActiveRole(requestedRole);
+      mirrorActiveSession(nextUser);
+      clearLegacySessionKeys();
+      setActiveRole(requestedRole);
       setUser(nextUser);
       return nextUser;
     };
 
     const switchRole = (nextRole: Role) => {
-      setUser((previous) => {
-        if (!previous) {
-          return buildMockUser(`${nextRole}@faithhub.app`, nextRole);
-        }
-        return {
-          ...previous,
-          role: nextRole,
-          community: nextRole === "admin" ? "FaithHub Command Center" : "FaithHub Community",
-        };
-      });
+      persistActiveRole(nextRole);
+      persistSession(nextRole, null);
+      mirrorActiveSession(null);
+      setActiveRole(nextRole);
+      setUser(null);
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "role_login_required");
+      }
     };
 
-    const hasRole = (targetRole: Role) => role === targetRole;
+    const hasRole = (targetRole: Role) => role === targetRole && Boolean(user);
 
     return {
       user,
       role,
-      currentRole: role,
-      isAuthenticated: Boolean(user) && !isAuthLoading,
+      currentRole: activeRole,
+      isAuthenticated: Boolean(user) && !isAuthLoading && user.role === activeRole,
       isAuthLoading,
       login,
       mockLoginAsRole,
       logout: () => {
+        persistSession(activeRole, null);
+        mirrorActiveSession(null);
         if (typeof window !== "undefined") {
           window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "logout");
         }
@@ -220,7 +290,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isProvider: hasRole("provider"),
       isUser: hasRole("user"),
     };
-  }, [isAuthLoading, role, user]);
+  }, [activeRole, isAuthLoading, role, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
