@@ -131,9 +131,10 @@ function FundAliasRedirect() {
 
 export default function AppRouter() {
   const { mode } = useColorMode();
-  const { role } = useAuth();
+  const { isAuthenticated, role } = useAuth();
   const muiTheme = useMemo(() => evzoneTheme(mode), [mode]);
   const roleHomePath = defaultPageForRole[role];
+  const landingPath = isAuthenticated ? roleHomePath : routes.public.access;
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -142,7 +143,7 @@ export default function AppRouter() {
         <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
-            <Route path={routes.public.landing} element={<Navigate to={roleHomePath} replace />} />
+            <Route path={routes.public.landing} element={<Navigate to={landingPath} replace />} />
             <Route path={routes.public.access} element={<LoginPage />} />
             <Route path={routes.public.shellPreview} element={<Navigate to={roleHomePath} replace />} />
             <Route path="/enterprise/*" element={<Navigate to={`${routes.app.admin.overview}?admin=1`} replace />} />
@@ -169,8 +170,8 @@ export default function AppRouter() {
             <Route path={`${routes.aliases.user}/*`} element={<LegacyRoleRedirect role="user" />} />
             <Route path={`${routes.aliases.provider}/*`} element={<LegacyRoleRedirect role="provider" />} />
             <Route path={`${routes.aliases.admin}/*`} element={<LegacyRoleRedirect role="admin" />} />
-            <Route path={routes.app.shell} element={<Navigate to={roleHomePath} replace />} />
-            <Route path={routes.app.root} element={<Navigate to={roleHomePath} replace />} />
+            <Route path={routes.app.shell} element={<Navigate to={landingPath} replace />} />
+            <Route path={routes.app.root} element={<Navigate to={landingPath} replace />} />
             {roleOrder.map((role) => (
               <Route key={role} path={roleBasePath[role]} element={<ProtectedRoute roles={[role]} />}>
                 <Route index element={<Navigate to={defaultPageForRole[role]} replace />} />
