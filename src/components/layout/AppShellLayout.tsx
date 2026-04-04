@@ -79,6 +79,14 @@ function matchesPagePath(page: Pick<PageRegistryItem, "path" | "routePatterns">,
 
 function resolveIconOnlyFallbackPath(button: HTMLButtonElement, role: RoleKey) {
   const iconRoutes = iconFallbackRouteByRole[role];
+  if (
+    button.querySelector(".lucide-arrow-left") ||
+    button.querySelector(".lucide-chevron-left") ||
+    button.querySelector(".lucide-chevrons-left")
+  ) {
+    return "__back__";
+  }
+  if (button.querySelector(".lucide-house")) return "/home";
   if (button.querySelector(".lucide-bell")) return alertRouteByRole[role];
   if (button.querySelector(".lucide-sparkles")) return iconRoutes.settings;
   if (button.querySelector(".lucide-settings")) return iconRoutes.settings;
@@ -186,6 +194,19 @@ export default function AppShellLayout() {
       (hasIconOnlyContent ? alertRouteByRole[shellRole] : null);
     if (!actionPath) return;
     event.preventDefault();
+    if (actionPath === "__back__") {
+      trackEvent(
+        "CLICK_BUTTON",
+        {
+          id: actionId || "shell-back-action",
+          label: label || "Back",
+          location: currentPage?.path || location.pathname,
+        },
+        { role: shellRole },
+      );
+      navigate(-1);
+      return;
+    }
     trackEvent(
       "CLICK_BUTTON",
       {
