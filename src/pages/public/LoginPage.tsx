@@ -168,33 +168,10 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="space-y-2.5">
-              {socialProviders.map((provider) => (
-                <button
-                  key={provider.id}
-                  type="button"
-                  onClick={() => handleSocialLogin(provider.id)}
-                  disabled={isSubmitting}
-                  className={`group flex min-h-[48px] w-full items-center gap-3 rounded-xl border px-4 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
-                    isDark
-                      ? "border-white/10 bg-[#020617] hover:border-[#03c8dc]/40 hover:bg-white/5"
-                      : "border-slate-200 bg-white hover:border-[#03c8dc]/35 hover:bg-slate-50"
-                  }`}
-                >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#03c8dc]/12 text-[#03c8dc] transition group-hover:bg-[#03c8dc]/20">
-                    {providerIcon(provider.id)}
-                  </span>
-                  <span className={`text-sm font-medium ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
-                    {provider.label}
-                  </span>
-                </button>
-              ))}
-            </div>
-
             <div className="flex items-center gap-3">
               <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
               <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
-                or login with email
+                login with email
               </span>
               <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
             </div>
@@ -330,6 +307,37 @@ export default function LoginPage() {
                 {isSubmitting ? "Signing in..." : "Login with email"}
               </Button>
             </form>
+
+            <div className="flex items-center gap-3">
+              <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
+              <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
+                or continue with
+              </span>
+              <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
+            </div>
+
+            <div className="space-y-2.5">
+              {socialProviders.map((provider) => (
+                <button
+                  key={provider.id}
+                  type="button"
+                  onClick={() => handleSocialLogin(provider.id)}
+                  disabled={isSubmitting}
+                  className={`group flex min-h-[48px] w-full items-center gap-3 rounded-xl border px-4 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
+                    isDark
+                      ? "border-white/10 bg-[#020617] hover:border-[#03c8dc]/40 hover:bg-white/5"
+                      : "border-slate-200 bg-white hover:border-[#03c8dc]/35 hover:bg-slate-50"
+                  }`}
+                >
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#03c8dc]/12 text-[#03c8dc] transition group-hover:bg-[#03c8dc]/20">
+                    {providerIcon(provider.id)}
+                  </span>
+                  <span className={`text-sm font-medium ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
+                    {provider.label}
+                  </span>
+                </button>
+              ))}
+            </div>
 
             <p className={`text-center text-xs ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
               New here?{" "}
