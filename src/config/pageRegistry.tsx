@@ -14,6 +14,7 @@ const FaithHubResourcesHub = lazy(() => import("@/pages/shared/FaithHubResources
 const FaithHubResourceDetail = lazy(() => import("@/pages/shared/FaithHubResourceDetail"));
 const FaithHubWallet = lazy(() => import("@/pages/shared/FaithHubWallet"));
 const FaithHubQaCenter = lazy(() => import("@/pages/shared/FaithHubQaCenter"));
+const FaithHubAuthAuditLog = lazy(() => import("@/pages/shared/FaithHubAuthAuditLog"));
 const DiscoverInstitutions = lazy(() => import("@/pages/user/DiscoverInstitutions"));
 const InstitutionProfile = lazy(() => import("@/pages/user/InstitutionProfile"));
 const FaithHubSeriesLibrary = lazy(() => import("@/pages/user/FaithHubSeriesLibrary"));
@@ -112,6 +113,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "u-counseling-session", role: "user", section: "Counseling Care", label: "Counseling Session", path: "/app/user/counseling/session", template: "T6", description: "Secure online counseling via video or chat room.", icon: Video, element: FaithHubCounselingSession },
   { id: "u-counseling-history", role: "user", section: "Counseling Care", label: "Counseling History", path: "/app/user/counseling/history", template: "T4", description: "Past sessions, upcoming bookings, and rebook actions.", icon: Clock3, element: FaithHubCounselingHistory },
   { id: "u-settings", role: "user", section: "Trust & Settings", label: "Settings", path: "/app/user/settings", template: "T3", description: "Language, notifications, privacy, and downloads.", icon: Settings2, element: FaithHubSettings },
+  { id: "u-auth-audit", role: "user", section: "Trust & Settings", label: "Auth Audit Log", path: "/app/user/auth-audit", template: "T2", description: "Authentication events, role switches, and redirects.", icon: ShieldCheck, element: FaithHubAuthAuditLog },
   { id: "u-qa", role: "user", section: "Trust & Settings", label: "QA Center", path: "/app/user/qa", template: "T2", description: "Manual route and interaction checks for user workspace.", icon: ShieldCheck, element: FaithHubQaCenter },
   { id: "p-onboarding", role: "provider", section: "Onboarding & Core HQ", label: "Provider Onboarding", path: "/app/provider/onboarding", template: "T3", description: "Institution onboarding and verification setup.", icon: Building2, element: FaithHubProviderOnboarding },
   { id: "p-dashboard", role: "provider", section: "Onboarding & Core HQ", label: "Provider Dashboard", path: "/app/provider/dashboard", template: "T1", description: "Operations, KPIs, and live health.", icon: LayoutDashboard, element: FaithHubProviderDashboard },
@@ -136,6 +138,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "p-fund-create", role: "provider", section: "Commerce, Funds & Trust", label: "Create Fund", path: "/app/provider/funds/create", template: "T3", description: "Create one-time, crowdfunding, and recurring provider funds.", icon: Wallet, element: FaithHubFundCreate },
   { id: "p-fund-detail", role: "provider", section: "Commerce, Funds & Trust", label: "Fund Detail", path: "/app/provider/fund", template: "T2", description: "Track fund supporters, pledges, and wallet-backed contributions.", icon: HeartHandshake, element: FaithHubFundDetail },
   { id: "p-reviews-mod", role: "provider", section: "Commerce, Funds & Trust", label: "Reviews & Moderation", path: "/app/provider/reviews-moderation", template: "T8", description: "Provider-side review response and moderation workflows.", icon: ShieldCheck, element: FaithHubReviewsModeration },
+  { id: "p-auth-audit", role: "provider", section: "Onboarding & Core HQ", label: "Auth Audit Log", path: "/app/provider/auth-audit", template: "T2", description: "Authentication events, role switches, and redirects.", icon: ShieldCheck, element: FaithHubAuthAuditLog },
   { id: "p-qa", role: "provider", section: "Onboarding & Core HQ", label: "QA Center", path: "/app/provider/qa", template: "T2", description: "Manual route and interaction checks for provider workspace.", icon: ShieldCheck, element: FaithHubQaCenter },
   { id: "a-overview", role: "admin", section: "Global Control", label: "Admin Overview", path: "/app/admin/overview", template: "T8", description: "Global KPIs, incidents, and anomalies.", icon: LayoutDashboard, element: FaithHubAdminOverview },
   { id: "a-verification", role: "admin", section: "Verification & Trust", label: "Institution Verification & Compliance", path: "/app/admin/verification", template: "T8", description: "Provider approvals, badges, and disputes.", icon: BadgeCheck, element: FaithHubInstitutionVerificationCompliance },
@@ -146,6 +149,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "a-finance", role: "admin", section: "Finance & Channels", label: "Payments, Donations & Disputes", path: "/app/admin/finance", template: "T8", description: "Fees, disputes, refunds, payouts, and risk scoring.", icon: Wallet, element: FaithHubPaymentsDonationsDisputes },
   { id: "a-channels", role: "admin", section: "Finance & Channels", label: "Channels Registry & Deliverability", path: "/app/admin/channels", template: "T8", description: "Templates, sender reputation, and deliverability oversight.", icon: Send, element: FaithHubChannelsRegistryDeliverability },
   { id: "a-security", role: "admin", section: "Security & Evidence", label: "Security & Audit Logs", path: "/app/admin/security", template: "T8", description: "Audit trails, immutable logs, and SIEM posture.", icon: Settings2, element: FaithHubSecurityAuditLogs },
+  { id: "a-auth-audit", role: "admin", section: "Security & Evidence", label: "Auth Audit Log", path: "/app/admin/auth-audit", template: "T2", description: "Authentication events, role switches, and redirects.", icon: ShieldCheck, element: FaithHubAuthAuditLog },
   { id: "a-qa", role: "admin", section: "Security & Evidence", label: "QA Center", path: "/app/admin/qa", template: "T2", description: "Manual route and interaction checks for admin workspace.", icon: ShieldCheck, element: FaithHubQaCenter },
 ];
 
@@ -182,6 +186,7 @@ const navTagById: Record<string, string> = {
   "u-counseling-session": "Session",
   "u-counseling-history": "History",
   "u-settings": "Settings",
+  "u-auth-audit": "Auth",
   "u-qa": "QA",
   "p-onboarding": "Onboard",
   "p-dashboard": "Dashboard",
@@ -206,6 +211,7 @@ const navTagById: Record<string, string> = {
   "p-fund-create": "Create",
   "p-fund-detail": "Fund",
   "p-reviews-mod": "Moderate",
+  "p-auth-audit": "Auth",
   "p-qa": "QA",
   "a-overview": "Overview",
   "a-verification": "Verify",
@@ -216,6 +222,7 @@ const navTagById: Record<string, string> = {
   "a-finance": "Finance",
   "a-channels": "Channels",
   "a-security": "Security",
+  "a-auth-audit": "Auth",
   "a-qa": "QA",
 };
 

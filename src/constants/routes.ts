@@ -65,6 +65,7 @@ export const routes = {
       membership: "/app/user/membership",
       reviews: "/app/user/reviews",
       settings: "/app/user/settings",
+      authAudit: "/app/user/auth-audit",
       qa: "/app/user/qa",
       resources: "/app/user/resources",
       resourceDetail: "/app/user/resources/detail",
@@ -114,6 +115,7 @@ export const routes = {
       wallet: "/app/provider/wallet",
       reviewsModeration: "/app/provider/reviews-moderation",
       counseling: "/app/provider/counseling",
+      authAudit: "/app/provider/auth-audit",
       qa: "/app/provider/qa",
     },
     admin: {
@@ -127,6 +129,7 @@ export const routes = {
       security: "/app/admin/security",
       counseling: "/app/admin/counseling",
       noticeboard: "/app/admin/noticeboard",
+      authAudit: "/app/admin/auth-audit",
       qa: "/app/admin/qa",
     },
   },

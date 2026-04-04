@@ -9,9 +9,9 @@ import { pagesByRole } from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
 
 const roleHomeRoute = {
-  user: routes.app.user.home,
-  provider: routes.app.provider.dashboard,
-  admin: routes.app.admin.overview,
+  user: routes.public.loginByRole("user"),
+  provider: routes.public.loginByRole("provider"),
+  admin: routes.public.loginByRole("admin"),
 } as const;
 
 const roleCoreChecks = {
@@ -156,4 +156,3 @@ export default function FaithHubQaCenter() {
     </div>
   );
 }
-

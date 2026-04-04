@@ -13,6 +13,7 @@ import { buildUnifiedSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 import { searchGlobalContent } from "@/data/globalSearch";
 import { trackEvent } from "@/data/tracker";
+import { addAuthAuditRecord } from "@/data/authAudit";
 import { routes } from "@/constants/routes";
 import type { Role } from "@/types/roles";
 
@@ -32,6 +33,12 @@ const profileSettingsRouteByRole: Record<RoleKey, string> = {
   user: routes.app.user.profile,
   provider: routes.app.provider.onboarding,
   admin: routes.app.admin.security,
+};
+
+const roleDisplayName: Record<RoleKey, string> = {
+  user: "User",
+  provider: "Provider",
+  admin: "Admin",
 };
 
 const iconFallbackRouteByRole: Record<
@@ -90,7 +97,7 @@ function resolveIconOnlyFallbackPath(button: HTMLButtonElement, role: RoleKey) {
 export default function AppShellLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentRole, setRole, logout } = useAuth();
+  const { currentRole, setRole, logout, logoutAllRoles, sessionExpiresAt, user } = useAuth();
   const { mode, toggle } = useColorMode();
 
   const routeRole = getCurrentRole(location.pathname);
@@ -101,6 +108,8 @@ export default function AppShellLayout() {
   const [navQuery, setNavQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [accountSwitcherOpen, setAccountSwitcherOpen] = useState(false);
+  const [pendingRoleSwitch, setPendingRoleSwitch] = useState<{ role: RoleKey } | null>(null);
+  const [sessionMsRemaining, setSessionMsRemaining] = useState<number | null>(null);
   const searchContainerRef = useRef<HTMLLabelElement | null>(null);
 
   const sidebarSections = useMemo(
@@ -119,6 +128,13 @@ export default function AppShellLayout() {
       location.pathname.includes("/live") ||
       location.pathname.includes("/community") ||
       location.pathname.includes("/institution"));
+  const showSessionWarning = Boolean(
+    sessionMsRemaining !== null &&
+      sessionMsRemaining <= 1000 * 60 * 5 &&
+      sessionMsRemaining > 0 &&
+      user,
+  );
+  const sessionMinutesRemaining = sessionMsRemaining ? Math.ceil(sessionMsRemaining / 60000) : 0;
   const globalSearchResults = useMemo(
     () => searchGlobalContent(navQuery, shellRole),
     [navQuery, shellRole],
@@ -138,6 +154,19 @@ export default function AppShellLayout() {
     navigate(path);
   };
   const handleRoleSwitch = (nextRole: Role, _path: string) => {
+    setPendingRoleSwitch({ role: nextRole as RoleKey });
+  };
+
+  const confirmRoleSwitch = () => {
+    if (!pendingRoleSwitch) return;
+    const nextRole = pendingRoleSwitch.role;
+    addAuthAuditRecord({
+      action: "ROLE_SWITCH_CONFIRMED",
+      role: nextRole,
+      email: user?.email,
+      detail: `Confirmed from ${shellRole} to ${nextRole}`,
+      route: location.pathname,
+    });
     trackEvent(
       "ROLE_SWITCH",
       {
@@ -152,6 +181,7 @@ export default function AppShellLayout() {
     });
     navigate(routes.public.loginByRole(nextRole));
     setMobileOpen(false);
+    setPendingRoleSwitch(null);
   };
 
   const handlePageAction = (event: React.MouseEvent<HTMLElement>) => {
@@ -226,6 +256,17 @@ export default function AppShellLayout() {
     return () => window.removeEventListener("pointerdown", handlePointerDown);
   }, [searchOpen]);
 
+  useEffect(() => {
+    if (!sessionExpiresAt || !user) {
+      setSessionMsRemaining(null);
+      return;
+    }
+    const update = () => setSessionMsRemaining(Math.max(0, sessionExpiresAt - Date.now()));
+    update();
+    const timer = window.setInterval(update, 1000);
+    return () => window.clearInterval(timer);
+  }, [sessionExpiresAt, user]);
+
   return (
     <div className="fh-page-canvas h-[100dvh] overflow-hidden bg-[var(--bg)] text-[var(--text-primary)]">
       <AppHeader
@@ -293,6 +334,23 @@ export default function AppShellLayout() {
           onClickCapture={handlePageAction}
         >
           <div className="fh-app-content min-h-full">
+            {showSessionWarning ? (
+              <div className="mb-4 rounded-2xl border border-amber-300/40 bg-amber-50/70 px-4 py-3 text-sm text-amber-800 dark:border-amber-400/25 dark:bg-amber-500/10 dark:text-amber-200">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <span>
+                    Session expires in about {sessionMinutesRemaining} minute
+                    {sessionMinutesRemaining === 1 ? "" : "s"}.
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => navigate(routes.public.loginByRole(shellRole))}
+                    className="rounded-lg border border-amber-400/50 px-3 py-1.5 font-semibold transition hover:bg-amber-100/60 dark:hover:bg-amber-400/10"
+                  >
+                    Re-authenticate now
+                  </button>
+                </div>
+              </div>
+            ) : null}
             {showGivingCta ? <GiveSupportCTA role={shellRole} /> : null}
             <Outlet />
           </div>
@@ -315,7 +373,44 @@ export default function AppShellLayout() {
           navigate(routes.public.login);
           setAccountSwitcherOpen(false);
         }}
+        onLogoutAllRoles={() => {
+          logoutAllRoles();
+          navigate(routes.public.login);
+          setAccountSwitcherOpen(false);
+        }}
       />
+
+      {pendingRoleSwitch ? (
+        <div className="fixed inset-0 z-[85] flex items-center justify-center bg-slate-950/60 p-4">
+          <div className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-5 shadow-[var(--shadow-soft)]">
+            <div className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--text-muted,#6B7280)]">
+              Confirm role switch
+            </div>
+            <div className="mt-1 text-lg font-semibold text-[var(--text-primary)]">
+              Sign in again as {roleDisplayName[pendingRoleSwitch.role]}
+            </div>
+            <p className="mt-2 text-sm text-[var(--text-secondary)]">
+              For security, switching roles requires a fresh login for that workspace.
+            </p>
+            <div className="mt-4 flex gap-2">
+              <button
+                type="button"
+                onClick={() => setPendingRoleSwitch(null)}
+                className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--text-secondary)] transition hover:bg-[var(--surface)]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmRoleSwitch}
+                className="flex-1 rounded-xl bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white transition hover:brightness-110"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

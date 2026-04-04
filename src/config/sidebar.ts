@@ -233,6 +233,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           activePrefixes: [routes.app.user.settings, routes.app.user.profile],
         },
         {
+          id: "user-auth-audit",
+          label: "Auth Audit",
+          path: routes.app.user.authAudit,
+          icon: ShieldCheck,
+          activePrefixes: [routes.app.user.authAudit],
+        },
+        {
           id: "user-qa",
           label: "QA Center",
           path: routes.app.user.qa,
@@ -375,6 +382,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           activePrefixes: [routes.app.provider.reviewsModeration],
         },
         {
+          id: "provider-auth-audit",
+          label: "Auth Audit",
+          path: routes.app.provider.authAudit,
+          icon: ShieldCheck,
+          activePrefixes: [routes.app.provider.authAudit],
+        },
+        {
           id: "provider-qa",
           label: "QA Center",
           path: routes.app.provider.qa,
@@ -480,6 +494,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.admin.security,
           icon: Settings2,
           activePrefixes: [routes.app.admin.security],
+        },
+        {
+          id: "admin-auth-audit",
+          label: "Auth Audit",
+          path: routes.app.admin.authAudit,
+          icon: ShieldCheck,
+          activePrefixes: [routes.app.admin.authAudit],
         },
         {
           id: "admin-qa",

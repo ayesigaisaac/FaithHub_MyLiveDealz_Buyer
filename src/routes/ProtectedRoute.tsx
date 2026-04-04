@@ -4,6 +4,7 @@ import { useAuth } from "@/auth/AuthContext";
 import { defaultPageForRole } from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
 import type { Role } from "@/types/roles";
+import { addAuthAuditRecord } from "@/data/authAudit";
 
 type ProtectedRouteProps = {
   roles?: Role[];
@@ -39,6 +40,13 @@ export default function ProtectedRoute({ roles, children }: ProtectedRouteProps)
   }
 
   if (!user || !roleSession || user.role !== requiredRole) {
+    addAuthAuditRecord({
+      action: "AUTH_REDIRECT_REQUIRED",
+      role: requiredRole,
+      email: user?.email,
+      detail: !user ? "Missing user session" : `Role mismatch or missing role session for ${requiredRole}`,
+      route: location.pathname,
+    });
     return (
       <Navigate
         to={routes.public.loginByRole(requiredRole)}

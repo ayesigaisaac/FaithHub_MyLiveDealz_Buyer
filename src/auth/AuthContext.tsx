@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Role } from "@/types/roles";
+import { addAuthAuditRecord } from "@/data/authAudit";
 
 export type AuthUser = {
   id: string;
@@ -22,9 +23,11 @@ type AuthContextValue = {
   currentRole: Role;
   isAuthenticated: boolean;
   isAuthLoading: boolean;
+  sessionExpiresAt: number | null;
   login: (input: LoginInput) => Promise<AuthUser>;
-  mockLoginAsRole: (role: Role) => Promise<AuthUser>;
+  mockLoginAsRole: (role: Role, source?: "social" | "access") => Promise<AuthUser>;
   logout: () => void;
+  logoutAllRoles: () => void;
   switchRole: (role: Role) => void;
   setRole: (role: Role) => void;
   setUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
@@ -119,6 +122,10 @@ function getSessionStorageKey(role: Role) {
   return `${SESSION_KEY_PREFIX}${role}`;
 }
 
+function getAllRoleSessionKeys() {
+  return [getSessionStorageKey("user"), getSessionStorageKey("provider"), getSessionStorageKey("admin")];
+}
+
 function readActiveRole(): Role {
   if (typeof window === "undefined") return "user";
   const raw = window.localStorage.getItem(ACTIVE_ROLE_STORAGE_KEY);
@@ -190,6 +197,7 @@ function buildMockUser(email: string, role: Role): AuthUser {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [activeRole, setActiveRole] = useState<Role>("user");
+  const [sessionExpiresAt, setSessionExpiresAt] = useState<number | null>(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
 
   const role: Role = user?.role || activeRole;
@@ -199,6 +207,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const roleSession = readStoredSession(bootstrapRole);
 
     if (roleSession) {
+      const raw = window.localStorage.getItem(getSessionStorageKey(bootstrapRole));
+      try {
+        const parsed = raw ? (JSON.parse(raw) as Partial<StoredFaithHubUser>) : null;
+        setSessionExpiresAt(typeof parsed?.expiresAt === "number" ? parsed.expiresAt : null);
+      } catch {
+        setSessionExpiresAt(null);
+      }
       setActiveRole(bootstrapRole);
       setUser(roleSession);
       mirrorActiveSession(roleSession);
@@ -212,6 +227,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       persistActiveRole(legacySession.role);
       setActiveRole(legacySession.role);
       setUser(legacySession);
+      setSessionExpiresAt(Date.now() + SESSION_EXPIRY_MS);
       mirrorActiveSession(legacySession);
       clearLegacySessionKeys();
       setIsAuthLoading(false);
@@ -220,9 +236,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setActiveRole(bootstrapRole);
     setUser(null);
+    setSessionExpiresAt(null);
     mirrorActiveSession(null);
     setIsAuthLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (isAuthLoading || !sessionExpiresAt || !user) return;
+    if (Date.now() >= sessionExpiresAt) {
+      addAuthAuditRecord({
+        action: "SESSION_EXPIRED",
+        role: activeRole,
+        email: user.email,
+        detail: "Session expired from active timer guard",
+      });
+      persistSession(activeRole, null);
+      mirrorActiveSession(null);
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "session_expired");
+      }
+      setUser(null);
+      setSessionExpiresAt(null);
+      return;
+    }
+    const timeoutMs = Math.max(500, sessionExpiresAt - Date.now() + 200);
+    const timer = window.setTimeout(() => {
+      persistSession(activeRole, null);
+      mirrorActiveSession(null);
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "session_expired");
+      }
+      addAuthAuditRecord({
+        action: "SESSION_EXPIRED",
+        role: activeRole,
+        email: user.email,
+        detail: "Session expired by timeout callback",
+      });
+      setUser(null);
+      setSessionExpiresAt(null);
+    }, timeoutMs);
+    return () => window.clearTimeout(timer);
+  }, [activeRole, isAuthLoading, sessionExpiresAt, user]);
 
   const value = useMemo<AuthContextValue>(() => {
     const login = async ({ email, password, role: preferredRole }: LoginInput) => {
@@ -232,33 +286,56 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       const nextRole = preferredRole || resolveRoleFromEmail(safeEmail);
       const nextUser = buildMockUser(safeEmail, nextRole);
+      const expiresAt = Date.now() + SESSION_EXPIRY_MS;
       persistSession(nextRole, nextUser);
       persistActiveRole(nextRole);
       mirrorActiveSession(nextUser);
       clearLegacySessionKeys();
       setActiveRole(nextRole);
+      setSessionExpiresAt(expiresAt);
       setUser(nextUser);
+      addAuthAuditRecord({
+        action: "LOGIN_SUCCESS",
+        role: nextRole,
+        email: nextUser.email,
+        detail: "Email/password login",
+      });
       return nextUser;
     };
 
-    const mockLoginAsRole = async (requestedRole: Role) => {
+    const mockLoginAsRole = async (requestedRole: Role, source: "social" | "access" = "access") => {
       const email = `${requestedRole}@faithhub.app`;
       const nextUser = buildMockUser(email, requestedRole);
+      const expiresAt = Date.now() + SESSION_EXPIRY_MS;
       persistSession(requestedRole, nextUser);
       persistActiveRole(requestedRole);
       mirrorActiveSession(nextUser);
       clearLegacySessionKeys();
       setActiveRole(requestedRole);
+      setSessionExpiresAt(expiresAt);
       setUser(nextUser);
+      addAuthAuditRecord({
+        action: source === "social" ? "LOGIN_SOCIAL" : "LOGIN_SUCCESS",
+        role: requestedRole,
+        email: nextUser.email,
+        detail: source === "social" ? "Social sign-in" : "Mock role access sign-in",
+      });
       return nextUser;
     };
 
     const switchRole = (nextRole: Role) => {
+      addAuthAuditRecord({
+        action: "ROLE_SWITCH_REQUESTED",
+        role: nextRole,
+        email: user?.email,
+        detail: "Role switch requires new login",
+      });
       persistActiveRole(nextRole);
       persistSession(nextRole, null);
       mirrorActiveSession(null);
       setActiveRole(nextRole);
       setUser(null);
+      setSessionExpiresAt(null);
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "role_login_required");
       }
@@ -272,15 +349,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       currentRole: activeRole,
       isAuthenticated: Boolean(user) && !isAuthLoading && user.role === activeRole,
       isAuthLoading,
+      sessionExpiresAt,
       login,
       mockLoginAsRole,
       logout: () => {
+        addAuthAuditRecord({
+          action: "LOGOUT_ROLE",
+          role: activeRole,
+          email: user?.email,
+          detail: "Manual logout from current role",
+        });
         persistSession(activeRole, null);
         mirrorActiveSession(null);
         if (typeof window !== "undefined") {
           window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "logout");
         }
         setUser(null);
+        setSessionExpiresAt(null);
+      },
+      logoutAllRoles: () => {
+        for (const key of getAllRoleSessionKeys()) {
+          if (typeof window !== "undefined") {
+            window.localStorage.removeItem(key);
+          }
+        }
+        addAuthAuditRecord({
+          action: "LOGOUT_ALL_ROLES",
+          role: activeRole,
+          email: user?.email,
+          detail: "Cleared all role sessions",
+        });
+        mirrorActiveSession(null);
+        setUser(null);
+        setSessionExpiresAt(null);
+        if (typeof window !== "undefined") {
+          window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "logout");
+        }
       },
       switchRole,
       setRole: switchRole,
@@ -290,7 +394,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isProvider: hasRole("provider"),
       isUser: hasRole("user"),
     };
-  }, [activeRole, isAuthLoading, role, user]);
+  }, [activeRole, isAuthLoading, role, sessionExpiresAt, user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

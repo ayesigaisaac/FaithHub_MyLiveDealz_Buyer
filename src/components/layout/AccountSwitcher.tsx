@@ -15,6 +15,7 @@ interface AccountSwitcherProps {
   onToggleColorMode: () => void;
   onOpenProfileSettings: () => void;
   onLogout: () => void;
+  onLogoutAllRoles: () => void;
 }
 
 export default function AccountSwitcher({
@@ -24,6 +25,7 @@ export default function AccountSwitcher({
   onToggleColorMode,
   onOpenProfileSettings,
   onLogout,
+  onLogoutAllRoles,
 }: AccountSwitcherProps) {
   useEffect(() => {
     if (!isOpen) return;
@@ -102,14 +104,24 @@ export default function AccountSwitcher({
           </div>
 
           <div className="border-t border-[var(--border)] p-4">
-            <button
-              type="button"
-              onClick={onLogout}
-              className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-rose-400 transition hover:bg-[var(--fh-elevated-surface)]"
-            >
-              <LogOut className="h-4 w-4" />
-              Logout
-            </button>
+            <div className="space-y-2">
+              <button
+                type="button"
+                onClick={onLogout}
+                className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-rose-400 transition hover:bg-[var(--fh-elevated-surface)]"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout current role
+              </button>
+              <button
+                type="button"
+                onClick={onLogoutAllRoles}
+                className="flex min-h-10 w-full items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-left text-sm font-medium text-rose-500 transition hover:bg-[var(--fh-elevated-surface)]"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout all roles
+              </button>
+            </div>
           </div>
         </div>
       </aside>

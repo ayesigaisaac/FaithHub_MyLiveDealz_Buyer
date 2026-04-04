@@ -30,6 +30,24 @@ const roleOptions: Array<{ value: Role; label: string }> = [
   { value: "admin", label: "Admin" },
 ];
 
+const roleHeading: Record<Role, { title: string; subtitle: string; chip: string }> = {
+  user: {
+    title: "Welcome back, Member",
+    subtitle: "Sign in to continue your FaithHub community journey.",
+    chip: "User access",
+  },
+  provider: {
+    title: "Provider workspace access",
+    subtitle: "Sign in to manage content, events, and engagement.",
+    chip: "Provider access",
+  },
+  admin: {
+    title: "Admin command sign-in",
+    subtitle: "Authenticate to access governance, trust, and operations controls.",
+    chip: "Admin access",
+  },
+};
+
 function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
@@ -64,6 +82,7 @@ export default function LoginPage() {
   const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
   const routeRole = roleParam === "user" || roleParam === "provider" || roleParam === "admin" ? roleParam : null;
   const roleLocked = Boolean(routeRole);
+  const activeRoleMeta = roleHeading[role];
 
   useEffect(() => {
     if (routeRole) {
@@ -142,7 +161,7 @@ export default function LoginPage() {
     setIsSubmitting(true);
     setMessage("");
     try {
-      const user = await mockLoginAsRole(role);
+      const user = await mockLoginAsRole(role, "social");
       trackEvent(
         "ROLE_SWITCH",
         { fromRole: currentRole, toRole: user.role, trigger: "access" },
@@ -179,11 +198,12 @@ export default function LoginPage() {
             <div className="space-y-3 text-center">
               <img src={logoPortraitSrc} alt="FaithHub" className="mx-auto h-12 w-auto object-contain" />
               <div>
-                <h1 className={`text-2xl font-semibold ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
-                  Login to your account
-                </h1>
+                <div className="mb-2 inline-flex rounded-full border border-[#03c8dc]/35 bg-[#03c8dc]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#03c8dc]">
+                  {activeRoleMeta.chip}
+                </div>
+                <h1 className={`text-2xl font-semibold ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>{activeRoleMeta.title}</h1>
                 <p className={`mt-2 text-sm ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
-                  Continue to your FaithHub workspace.
+                  {activeRoleMeta.subtitle}
                 </p>
               </div>
             </div>
