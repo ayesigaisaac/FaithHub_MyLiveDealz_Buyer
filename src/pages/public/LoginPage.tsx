@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/auth/AuthContext";
@@ -10,6 +10,7 @@ import type { Role } from "@/types/roles";
 
 const logoPortraitSrc = "/assets/branding/logo-portrait.png";
 const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
+const NOTICE_STORAGE_KEY = "faithhub_auth_notice";
 
 type SocialProvider = "google" | "microsoft" | "apple" | "evzone";
 
@@ -36,8 +37,18 @@ function getSocialBadge(provider: SocialProvider) {
   return { mark: "EV", tone: "bg-[#e8fbff] text-[#03c8dc]" };
 }
 
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+}
+
+type LoginFieldErrors = {
+  email?: string;
+  password?: string;
+};
+
 export default function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, mockLoginAsRole, role: currentRole } = useAuth();
 
   const [email, setEmail] = useState("ayesigai921@gmail.com");
@@ -47,18 +58,48 @@ export default function LoginPage() {
   const [keepSignedIn, setKeepSignedIn] = useState(true);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
+
+  useEffect(() => {
+    const reasonFromState = (location.state as { reason?: string } | null)?.reason;
+    const reasonFromSession =
+      typeof window !== "undefined" ? window.sessionStorage.getItem(NOTICE_STORAGE_KEY) : null;
+    const reason = reasonFromState || reasonFromSession;
+    if (!reason) return;
+
+    if (reason === "session_expired") {
+      setMessage("Your session expired. Please sign in again.");
+    } else if (reason === "logout") {
+      setMessage("You have been signed out successfully.");
+    } else if (reason === "auth_required") {
+      setMessage("Please sign in to continue.");
+    }
+
+    if (typeof window !== "undefined") {
+      window.sessionStorage.removeItem(NOTICE_STORAGE_KEY);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   const canSubmit = useMemo(
-    () => email.trim().length > 3 && password.trim().length > 3,
+    () => isValidEmail(email) && password.trim().length >= 6,
     [email, password],
   );
 
   const redirectAfterLogin = () => "/home";
 
+  const validateFields = () => {
+    const errors: LoginFieldErrors = {};
+    if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
+    if (password.trim().length < 6) errors.password = "Password must be at least 6 characters.";
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleLogin = async (event?: React.FormEvent) => {
     event?.preventDefault();
-    if (!canSubmit) {
-      setMessage("Enter a valid email and password.");
+    if (!validateFields()) {
+      setMessage("Please fix the highlighted fields.");
       return;
     }
     setIsSubmitting(true);
@@ -181,85 +222,110 @@ export default function LoginPage() {
                 </section>
 
                 <form className="mt-8 space-y-8" onSubmit={handleLogin}>
-                <label htmlFor="login-email" className="block space-y-2">
-                  <span className="text-sm font-medium text-[#E5E7EB]">Email address</span>
-                  <div className="flex min-h-[48px] items-center gap-2 rounded-xl border border-white/10 bg-[#020617] px-3 transition-all duration-200 focus-within:border-[#03c8dc] focus-within:ring-1 focus-within:ring-[#03c8dc]">
-                    <Mail className="h-4 w-4 text-gray-400" />
-                    <input
-                      id="login-email"
-                      type="email"
-                      value={email}
-                      onChange={(event) => setEmail(event.target.value)}
-                      className="w-full bg-transparent text-sm text-[#F9FAFB] outline-none placeholder:text-gray-400"
-                      placeholder="you@example.com"
-                      autoComplete="email"
-                      required
-                    />
-                  </div>
-                </label>
+                  <label htmlFor="login-email" className="block space-y-2">
+                    <span className="text-sm font-medium text-[#E5E7EB]">Email address</span>
+                    <div
+                      className={`flex min-h-[48px] items-center gap-2 rounded-xl border bg-[#020617] px-3 transition-all duration-200 focus-within:ring-1 ${
+                        fieldErrors.email
+                          ? "border-[#f77f00]/70 focus-within:border-[#f77f00] focus-within:ring-[#f77f00]/70"
+                          : "border-white/10 focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
+                      }`}
+                    >
+                      <Mail className="h-4 w-4 text-gray-400" />
+                      <input
+                        id="login-email"
+                        type="email"
+                        value={email}
+                        onBlur={validateFields}
+                        onChange={(event) => setEmail(event.target.value)}
+                        className="w-full bg-transparent text-sm text-[#F9FAFB] outline-none placeholder:text-gray-400"
+                        placeholder="you@example.com"
+                        autoComplete="email"
+                        required
+                      />
+                    </div>
+                    {fieldErrors.email ? <p className="text-xs text-[#f77f00]">{fieldErrors.email}</p> : null}
+                  </label>
 
-                <label htmlFor="login-password" className="block space-y-2">
-                  <span className="text-sm font-medium text-[#E5E7EB]">Password</span>
-                  <div className="flex min-h-[48px] items-center gap-2 rounded-xl border border-white/10 bg-[#020617] px-3 transition-all duration-200 focus-within:border-[#03c8dc] focus-within:ring-1 focus-within:ring-[#03c8dc]">
-                    <Lock className="h-4 w-4 text-gray-400" />
-                    <input
-                      id="login-password"
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(event) => setPassword(event.target.value)}
-                      className="w-full bg-transparent text-sm text-[#F9FAFB] outline-none placeholder:text-gray-400"
-                      placeholder="Enter your password"
-                      autoComplete="current-password"
-                      required
-                    />
+                  <label htmlFor="login-password" className="block space-y-2">
+                    <span className="text-sm font-medium text-[#E5E7EB]">Password</span>
+                    <div
+                      className={`flex min-h-[48px] items-center gap-2 rounded-xl border bg-[#020617] px-3 transition-all duration-200 focus-within:ring-1 ${
+                        fieldErrors.password
+                          ? "border-[#f77f00]/70 focus-within:border-[#f77f00] focus-within:ring-[#f77f00]/70"
+                          : "border-white/10 focus-within:border-[#03c8dc] focus-within:ring-[#03c8dc]"
+                      }`}
+                    >
+                      <Lock className="h-4 w-4 text-gray-400" />
+                      <input
+                        id="login-password"
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onBlur={validateFields}
+                        onChange={(event) => setPassword(event.target.value)}
+                        className="w-full bg-transparent text-sm text-[#F9FAFB] outline-none placeholder:text-gray-400"
+                        placeholder="Enter your password"
+                        autoComplete="current-password"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="min-h-[40px] min-w-[40px] text-gray-400 transition hover:text-[#03c8dc]"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
+                    {fieldErrors.password ? (
+                      <p className="text-xs text-[#f77f00]">{fieldErrors.password}</p>
+                    ) : null}
+                  </label>
+
+                  <div className="flex flex-col items-start justify-between gap-2 text-sm text-[#9CA3AF] sm:flex-row sm:items-center">
+                    <label className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={keepSignedIn}
+                        onChange={(event) => setKeepSignedIn(event.target.checked)}
+                        className="h-4 w-4 rounded border-white/20 bg-[#020617] text-[#03c8dc] focus:ring-[#03c8dc]"
+                      />
+                      Keep me signed in
+                    </label>
                     <button
                       type="button"
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      className="min-h-[40px] min-w-[40px] text-gray-400 transition hover:text-[#03c8dc]"
-                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      onClick={() => navigate(routes.public.forgotPassword)}
+                      className="font-semibold text-[#f77f00] transition hover:underline"
                     >
-                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      Forgot password?
                     </button>
                   </div>
-                </label>
 
-                <div className="flex flex-col items-start justify-between gap-2 text-sm text-[#9CA3AF] sm:flex-row sm:items-center">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={keepSignedIn}
-                      onChange={(event) => setKeepSignedIn(event.target.checked)}
-                      className="h-4 w-4 rounded border-white/20 bg-[#020617] text-[#03c8dc] focus:ring-[#03c8dc]"
-                    />
-                    Keep me signed in
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => setMessage("Password recovery is coming soon in this mock flow.")}
-                    className="font-semibold text-[#f77f00] transition hover:underline"
+                  {message ? (
+                    <div className="rounded-xl border border-[#03c8dc]/30 bg-[#03c8dc]/10 px-4 py-3 text-sm text-[#E5E7EB]">
+                      {message}
+                    </div>
+                  ) : null}
+
+                  <Button
+                    type="submit"
+                    className="h-12 w-full rounded-xl bg-[#03c8dc] py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.01] hover:bg-[#02b4c6]"
+                    disabled={!canSubmit || isSubmitting}
                   >
-                    Forgot password?
-                  </button>
-                </div>
-
-                {message ? (
-                  <div className="rounded-xl border border-[#03c8dc]/30 bg-[#03c8dc]/10 px-4 py-3 text-sm text-[#E5E7EB]">
-                    {message}
-                  </div>
-                ) : null}
-
-                <Button
-                  type="submit"
-                  className="h-12 w-full rounded-xl bg-[#03c8dc] py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:scale-[1.01] hover:bg-[#02b4c6]"
-                  disabled={!canSubmit || isSubmitting}
-                >
-                  Login with email
-                </Button>
+                    {isSubmitting ? "Signing in..." : "Login with email"}
+                  </Button>
                 </form>
               </div>
 
               <p className="mt-4 text-xs leading-5 text-[#9CA3AF]">
-                Access is protected. Session data is stored locally for frontend authentication.
+                New here?{" "}
+                <button
+                  type="button"
+                  onClick={() => navigate(routes.public.signup)}
+                  className="font-semibold text-[#03c8dc] transition hover:underline"
+                >
+                  Create an account
+                </button>
               </p>
             </main>
           </div>
@@ -268,3 +334,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

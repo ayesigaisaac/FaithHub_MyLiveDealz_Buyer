@@ -38,10 +38,13 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const USER_STORAGE_KEY = "faithhub_user";
 const LEGACY_STORAGE_KEY = "faithhub.auth.session.v1";
+const NOTICE_STORAGE_KEY = "faithhub_auth_notice";
+const SESSION_EXPIRY_MS = 1000 * 60 * 60 * 12;
 
 type StoredFaithHubUser = {
   email: string;
   role: Role;
+  expiresAt?: number;
 };
 
 function isRole(value: unknown): value is Role {
@@ -82,6 +85,13 @@ function parseStoredUser(raw: string | null): AuthUser | null {
     const normalizedEmail = parsed.email.trim().toLowerCase();
     const normalizedRole = parsed.role;
     const legacyAuthUser = parsed as Partial<AuthUser>;
+    const withExpiry = parsed as Partial<StoredFaithHubUser>;
+    if (typeof withExpiry.expiresAt === "number" && withExpiry.expiresAt < Date.now()) {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "session_expired");
+      }
+      return null;
+    }
     return {
       id: typeof legacyAuthUser.id === "string" ? legacyAuthUser.id : `auth-${normalizedRole}-persisted`,
       name:
@@ -120,6 +130,7 @@ function persistUser(user: AuthUser | null) {
   const storedUser: StoredFaithHubUser = {
     email: user.email,
     role: user.role,
+    expiresAt: Date.now() + SESSION_EXPIRY_MS,
   };
   window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(storedUser));
   window.localStorage.removeItem(LEGACY_STORAGE_KEY);
@@ -195,7 +206,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isAuthLoading,
       login,
       mockLoginAsRole,
-      logout: () => setUser(null),
+      logout: () => {
+        if (typeof window !== "undefined") {
+          window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "logout");
+        }
+        setUser(null);
+      },
       switchRole,
       setRole: switchRole,
       setUser,

@@ -8,6 +8,8 @@ export const routes = {
   public: {
     landing: "/",
     login: "/login",
+    signup: "/signup",
+    forgotPassword: "/forgot-password",
     access: "/access",
     shellPreview: "/shell-preview",
   },

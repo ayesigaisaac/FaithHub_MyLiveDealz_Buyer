@@ -25,6 +25,8 @@ import { routes } from "@/constants/routes";
 import { routeShortcuts } from "@/constants/routeShortcuts";
 import Layout from "@/components/layout/Layout";
 import LoginPage from "@/pages/public/LoginPage";
+import SignupPage from "@/pages/public/SignupPage";
+import ForgotPasswordPage from "@/pages/public/ForgotPasswordPage";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 
 const roleBasePath: Record<RoleKey, string> = {
@@ -145,6 +147,14 @@ export default function AppRouter() {
           <Route
             path={routes.public.login}
             element={isAuthenticated ? <Navigate to="/home" replace /> : <LoginPage />}
+          />
+          <Route
+            path={routes.public.signup}
+            element={isAuthenticated ? <Navigate to="/home" replace /> : <SignupPage />}
+          />
+          <Route
+            path={routes.public.forgotPassword}
+            element={isAuthenticated ? <Navigate to="/home" replace /> : <ForgotPasswordPage />}
           />
           <Route path={routes.public.access} element={<Navigate to={routes.public.login} replace />} />
           <Route element={<ProtectedRoute />}>
