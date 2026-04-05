@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Apple, Building2, Eye, EyeOff, Lock, Mail, Sparkles, UserCircle2 } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,11 +22,12 @@ type SocialProvider = "google" | "microsoft" | "apple" | "evzone";
 const socialProviders: Array<{
   id: SocialProvider;
   label: string;
+  logoSrc: string;
 }> = [
-  { id: "google", label: "Continue with Google" },
-  { id: "microsoft", label: "Continue with Microsoft" },
-  { id: "apple", label: "Continue with Apple" },
-  { id: "evzone", label: "Continue with EVzone" },
+  { id: "google", label: "Continue with Google", logoSrc: "/assets/auth/google.svg" },
+  { id: "microsoft", label: "Continue with Microsoft", logoSrc: "/assets/auth/microsoft.svg" },
+  { id: "apple", label: "Continue with Apple", logoSrc: "/assets/auth/apple.svg" },
+  { id: "evzone", label: "Continue with EVzone", logoSrc: "/assets/auth/evzone.svg" },
 ];
 
 const roleOptions: Array<{ value: Role; label: string }> = [
@@ -34,13 +35,6 @@ const roleOptions: Array<{ value: Role; label: string }> = [
   { value: "provider", label: "Provider" },
   { value: "admin", label: "Admin" },
 ];
-
-function providerIcon(provider: SocialProvider) {
-  if (provider === "google") return <Sparkles className="h-4 w-4" />;
-  if (provider === "microsoft") return <Building2 className="h-4 w-4" />;
-  if (provider === "apple") return <Apple className="h-4 w-4" />;
-  return <UserCircle2 className="h-4 w-4" />;
-}
 
 type LoginFieldErrors = {
   email?: string;
@@ -171,29 +165,29 @@ export default function LoginPage() {
 
   return (
     <div
-      className={`min-h-screen px-4 py-8 ${
+      className={`min-h-screen px-4 py-4 ${
         isDark
           ? "bg-[radial-gradient(circle_at_top,rgba(3,200,220,0.12),transparent_35%),#020617] text-[#F9FAFB]"
           : "bg-[radial-gradient(circle_at_top,rgba(3,200,220,0.12),transparent_35%),#f3f6fb] text-[#0f172a]"
       }`}
     >
-      <div className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-md items-center justify-center">
+      <div className="mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-md items-center justify-center">
         <Card
-          className={`w-full rounded-2xl shadow-lg transition-all duration-300 ${
+          className={`max-h-[95vh] w-full overflow-hidden rounded-2xl shadow-lg transition-all duration-300 ${
             isDark
               ? "border border-white/10 bg-[#0f172a]"
               : "border border-slate-200 bg-white"
           }`}
         >
-          <CardContent className="space-y-5 p-6 sm:space-y-6 sm:p-8">
-            <div className="space-y-3 text-center">
-              <img src={logoPortraitSrc} alt="FaithHub" className="mx-auto h-12 w-auto object-contain" />
+          <CardContent className="space-y-4 p-6">
+            <div className="space-y-2 text-center">
+              <img src={logoPortraitSrc} alt="FaithHub" className="mx-auto h-10 w-auto object-contain" />
               <div>
-                <div className="mb-2 inline-flex rounded-full border border-[#03c8dc]/35 bg-[#03c8dc]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#03c8dc]">
+                <div className="mb-1.5 inline-flex rounded-full border border-[#03c8dc]/35 bg-[#03c8dc]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#03c8dc]">
                   {activeRoleMeta.chip}
                 </div>
-                <h1 className={`text-2xl font-semibold ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>{activeRoleMeta.title}</h1>
-                <p className={`mt-2 text-sm ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
+                <h1 className={`text-xl font-semibold ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>{activeRoleMeta.title}</h1>
+                <p className={`mt-1 text-sm ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
                   {activeRoleMeta.subtitle}
                 </p>
               </div>
@@ -335,7 +329,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="h-12 w-full rounded-xl bg-[#03c8dc] text-base font-semibold text-white shadow-[0_10px_24px_-12px_rgba(3,200,220,0.75)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#02b4c6]"
+                className="h-10 w-full rounded-xl bg-[#03c8dc] text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgba(3,200,220,0.75)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#02b4c6]"
                 disabled={!canSubmit || isSubmitting}
               >
                 {isSubmitting ? "Signing in..." : "Login with email"}
@@ -350,21 +344,21 @@ export default function LoginPage() {
               <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {socialProviders.map((provider) => (
                 <button
                   key={provider.id}
                   type="button"
                   onClick={() => handleSocialLogin(provider.id)}
                   disabled={isSubmitting}
-                  className={`group flex min-h-[48px] w-full items-center gap-3 rounded-xl border px-4 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
+                  className={`group flex min-h-[42px] w-full items-center gap-2 rounded-xl border px-3 py-2 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
                     isDark
                       ? "border-white/10 bg-[#020617] hover:border-[#03c8dc]/40 hover:bg-white/5"
                       : "border-slate-200 bg-white hover:border-[#03c8dc]/35 hover:bg-slate-50"
                   }`}
                 >
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[#03c8dc]/12 text-[#03c8dc] transition group-hover:bg-[#03c8dc]/20">
-                    {providerIcon(provider.id)}
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#03c8dc]/12 transition group-hover:bg-[#03c8dc]/20">
+                    <img src={provider.logoSrc} alt={`${provider.id} logo`} className="h-4 w-4 object-contain" />
                   </span>
                   <span className={`text-sm font-medium ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
                     {provider.label}
