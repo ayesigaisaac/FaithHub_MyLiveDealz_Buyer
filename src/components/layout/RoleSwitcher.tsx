@@ -59,7 +59,7 @@ export default function RoleSwitcher({
               title={option.label}
               aria-label={`Switch to ${option.label}`}
               onClick={() => onSelectRole(option.role, option.path)}
-              className={`fh-sidebar-item group relative flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+              className={`fh-sidebar-item group relative flex min-h-10 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
                 collapsed ? "h-10 w-10 justify-center px-0" : ""
               } ${active ? "is-active" : ""}`}
               aria-pressed={active}

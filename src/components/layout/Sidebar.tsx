@@ -82,7 +82,7 @@ export default function Sidebar({
             type="button"
             aria-label="Close navigation menu"
             onClick={onClose}
-            className="fh-shell-control inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--text-secondary)]"
+            className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-xl text-[var(--text-secondary)]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -91,7 +91,7 @@ export default function Sidebar({
             type="button"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             onClick={onToggleCollapse}
-            className="fh-shell-control inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--text-secondary)]"
+            className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-xl text-[var(--text-secondary)]"
           >
             {collapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />}
           </button>
@@ -133,7 +133,7 @@ export default function Sidebar({
                 <button
                   type="button"
                   onClick={() => (canCollapseSection ? toggleSection(section.id) : undefined)}
-                  className={`fh-sidebar-section-toggle flex w-full items-center justify-between rounded-lg px-2 py-1 text-left text-[11px] font-semibold uppercase tracking-[0.14em] ${
+                  className={`fh-sidebar-section-toggle flex min-h-9 w-full items-center justify-between rounded-lg px-2 py-1 text-left text-[11px] font-semibold uppercase tracking-[0.14em] ${
                     canCollapseSection ? "" : "opacity-85"
                   }`}
                 >
@@ -160,7 +160,7 @@ export default function Sidebar({
                             openExternalSidebarItem(item);
                             onNavigate?.(item.url);
                           }}
-                          className={`fh-sidebar-item group flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                          className={`fh-sidebar-item group flex min-h-10 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
                             collapsed ? "justify-center px-0" : ""
                           }`}
                         >
@@ -186,7 +186,7 @@ export default function Sidebar({
                         onClick={() => onNavigate?.(item.path)}
                         className={({ isActive }) => {
                           const navActive = active || isActive;
-                          return `fh-sidebar-item group flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                          return `fh-sidebar-item group flex min-h-10 items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
                             collapsed ? "justify-center px-0" : ""
                           } ${navActive ? "is-active" : ""}`;
                         }}
