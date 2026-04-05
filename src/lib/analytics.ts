@@ -45,30 +45,59 @@ export function getAnalyticsEvents(): StoredAnalyticsEvent[] {
   }
 }
 
+export function saveAnalyticsEvents(events: StoredAnalyticsEvent[]) {
+  if (typeof window === "undefined") return;
+  try {
+    const safeEvents = Array.isArray(events) ? events.slice(-MAX_ANALYTICS_EVENTS) : [];
+    window.localStorage.setItem(ANALYTICS_STORAGE_KEY, JSON.stringify(safeEvents));
+  } catch {
+    // no-op fallback for storage errors
+  }
+}
+
 export function clearAnalyticsEvents() {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(ANALYTICS_STORAGE_KEY);
 }
 
-export function trackEvent(event: AnalyticsEvent): StoredAnalyticsEvent {
-  const normalizedTimestamp =
-    typeof event.timestamp === "number" && Number.isFinite(event.timestamp) ? event.timestamp : Date.now();
+type TrackEventInput = AnalyticsEvent | string;
+
+export function trackEvent(name: string, category: AnalyticsCategory, payload?: Record<string, any>): StoredAnalyticsEvent;
+export function trackEvent(event: AnalyticsEvent): StoredAnalyticsEvent;
+export function trackEvent(
+  input: TrackEventInput,
+  category?: AnalyticsCategory,
+  payload?: Record<string, any>,
+): StoredAnalyticsEvent {
+  const normalizedEvent: AnalyticsEvent =
+    typeof input === "string"
+      ? {
+          name: input,
+          category: category || "navigation",
+          payload,
+          timestamp: Date.now(),
+        }
+      : {
+          ...input,
+          timestamp:
+            typeof input.timestamp === "number" && Number.isFinite(input.timestamp)
+              ? input.timestamp
+              : Date.now(),
+        };
 
   const trackedEvent: StoredAnalyticsEvent = {
-    ...event,
-    timestamp: normalizedTimestamp,
+    ...normalizedEvent,
     role: getCurrentRole(),
   };
 
-  if (typeof window !== "undefined") {
-    const existing = getAnalyticsEvents();
-    const next = [...existing, trackedEvent].slice(-MAX_ANALYTICS_EVENTS);
-    window.localStorage.setItem(ANALYTICS_STORAGE_KEY, JSON.stringify(next));
+  const existing = getAnalyticsEvents();
+  saveAnalyticsEvents([...existing, trackedEvent]);
+
+  if (import.meta.env.DEV) {
+    // Safe fallback while analytics service is not connected.
+    // eslint-disable-next-line no-console
+    console.log("[FaithHub analytics]", trackedEvent);
   }
 
-  // Safe fallback while analytics service is not connected.
-  // eslint-disable-next-line no-console
-  console.log("[FaithHub analytics]", trackedEvent);
   return trackedEvent;
 }
-

@@ -138,12 +138,7 @@ function PageViewTracker() {
 
   useEffect(() => {
     const path = `${location.pathname}${location.search}${location.hash}`;
-    trackAnalyticsEvent({
-      name: "page_view",
-      category: "navigation",
-      payload: { path },
-      timestamp: Date.now(),
-    });
+    trackAnalyticsEvent("page_view", "navigation", { path });
   }, [location.hash, location.pathname, location.search]);
 
   return null;

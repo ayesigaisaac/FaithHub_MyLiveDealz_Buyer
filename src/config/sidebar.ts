@@ -138,7 +138,6 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
     {
       id: "user-content",
       label: "Content",
-      collapsible: true,
       items: [
         {
           id: "user-series",
@@ -155,15 +154,8 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           activePrefixes: ["/app/user/live"],
         },
         {
-          id: "user-events",
-          label: "Events",
-          path: routes.app.user.events,
-          icon: CalendarDays,
-          activePrefixes: [routes.app.user.events, routes.app.user.eventDetail],
-        },
-        {
           id: "user-resources",
-          label: "Books & Resources",
+          label: "Books",
           path: routes.app.user.resources,
           icon: Library,
           activePrefixes: [routes.app.user.resources],
@@ -173,7 +165,6 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
     {
       id: "user-community",
       label: "Community",
-      collapsible: true,
       items: [
         {
           id: "user-community-feed",
@@ -190,10 +181,10 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           activePrefixes: [routes.app.user.noticeboard],
         },
         {
-          id: "user-counseling",
-          label: "Counseling",
+          id: "user-prayer",
+          label: "Prayer",
           path: routes.app.user.counseling,
-          icon: Stethoscope,
+          icon: HeartHandshake,
           activePrefixes: [routes.app.user.counseling],
         },
       ],
@@ -201,8 +192,14 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
     {
       id: "user-giving",
       label: "Giving",
-      collapsible: true,
       items: [
+        {
+          id: "user-giving-main",
+          label: "Give",
+          path: routes.app.user.giving,
+          icon: HeartHandshake,
+          activePrefixes: [routes.app.user.giving, routes.app.user.fundDetail],
+        },
         {
           id: "user-wallet",
           label: "Wallet",
@@ -210,20 +207,11 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           icon: Wallet,
           activePrefixes: [routes.app.user.wallet],
         },
-        {
-          id: "user-giving-main",
-          label: "Giving",
-          path: routes.app.user.giving,
-          icon: HeartHandshake,
-          activePrefixes: [routes.app.user.giving, routes.app.user.fundDetail],
-        },
-        buildFaithMartItem("user-faithmart"),
       ],
     },
     {
       id: "user-settings",
       label: "Settings",
-      collapsible: true,
       items: [
         {
           id: "user-settings-main",
@@ -231,20 +219,6 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.user.settings,
           icon: Settings2,
           activePrefixes: [routes.app.user.settings, routes.app.user.profile],
-        },
-        {
-          id: "user-auth-audit",
-          label: "Auth Audit",
-          path: routes.app.user.authAudit,
-          icon: ShieldCheck,
-          activePrefixes: [routes.app.user.authAudit],
-        },
-        {
-          id: "user-qa",
-          label: "QA Center",
-          path: routes.app.user.qa,
-          icon: ShieldCheck,
-          activePrefixes: [routes.app.user.qa],
         },
       ],
     },
