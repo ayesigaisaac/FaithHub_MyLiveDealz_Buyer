@@ -5,6 +5,8 @@ import { useAuth } from "@/auth/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import EmptyState from "@/components/system/EmptyState";
+import LoadingState from "@/components/system/LoadingState";
 import {
   bumpResourceDownload,
   createResource,
@@ -111,7 +113,8 @@ export default function FaithHubResourcesHub() {
   const viewerRole = role === "provider" ? "provider" : "user";
   const isProvider = viewerRole === "provider";
 
-  const [resources, setResources] = useState<FaithHubResource[]>(() => getFaithHubResources());
+  const [resources, setResources] = useState<FaithHubResource[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string>(ALL_CATEGORIES);
   const [resourceType, setResourceType] = useState<"all" | ResourceType>("all");
@@ -126,8 +129,17 @@ export default function FaithHubResourcesHub() {
   const [tagDraftById, setTagDraftById] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setResources(getFaithHubResources());
+      setIsLoading(false);
+    }, 120);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isLoading) return;
     saveFaithHubResources(resources);
-  }, [resources]);
+  }, [isLoading, resources]);
 
   const categories = useMemo(() => [ALL_CATEGORIES, ...getResourceCategories()], []);
 
@@ -213,6 +225,7 @@ export default function FaithHubResourcesHub() {
 
   return (
     <div className="space-y-4">
+      {isLoading ? <LoadingState title="Loading resources" message="Syncing free library content..." /> : null}
       <Card className="fh-surface-card rounded-[28px]">
         <CardContent className="p-5 sm:p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -293,17 +306,21 @@ export default function FaithHubResourcesHub() {
           <Sparkles className="h-5 w-5 text-[var(--accent)]" />
           Featured resources
         </div>
-        <div className="grid gap-3 md:grid-cols-2">
-          {featuredResources.map((resource) => (
-            <ResourceCard
-              key={resource.id}
-              resource={resource}
-              role={viewerRole}
-              onOpen={() => openResourceDetail(resource.id)}
-              onDownload={() => downloadResource(resource)}
-            />
-          ))}
-        </div>
+        {featuredResources.length ? (
+          <div className="grid gap-3 md:grid-cols-2">
+            {featuredResources.map((resource) => (
+              <ResourceCard
+                key={resource.id}
+                resource={resource}
+                role={viewerRole}
+                onOpen={() => openResourceDetail(resource.id)}
+                onDownload={() => downloadResource(resource)}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyState title="No featured resources yet" message="Featured items will appear here when curated." />
+        )}
       </section>
 
       <section className="grid gap-4 xl:grid-cols-2">
@@ -355,17 +372,30 @@ export default function FaithHubResourcesHub() {
           <BookOpen className="h-5 w-5 text-[var(--accent)]" />
           Resource library
         </div>
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-          {filteredResources.map((resource) => (
-            <ResourceCard
-              key={resource.id}
-              resource={resource}
-              role={viewerRole}
-              onOpen={() => openResourceDetail(resource.id)}
-              onDownload={() => downloadResource(resource)}
-            />
-          ))}
-        </div>
+        {filteredResources.length ? (
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {filteredResources.map((resource) => (
+              <ResourceCard
+                key={resource.id}
+                resource={resource}
+                role={viewerRole}
+                onOpen={() => openResourceDetail(resource.id)}
+                onDownload={() => downloadResource(resource)}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            title="No resources match your filters"
+            message="Try another category, type, or search term."
+            actionLabel="Clear filters"
+            onAction={() => {
+              setSearch("");
+              setCategory(ALL_CATEGORIES);
+              setResourceType("all");
+            }}
+          />
+        )}
       </section>
 
       {isProvider ? (
@@ -454,74 +484,81 @@ export default function FaithHubResourcesHub() {
             <CardContent className="p-4 sm:p-5">
               <div className="text-base font-semibold text-[var(--text-primary)]">Manage provider resources</div>
               <div className="mt-3 space-y-3">
-                {providerOwnedResources.map((resource) => (
-                  <div key={resource.id} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
-                    <div className="text-sm font-semibold text-[var(--text-primary)]">{resource.title}</div>
-                    <div className="mt-1 text-xs text-[var(--text-secondary)]">
-                      {resource.download_count} downloads â€¢ {resource.category}
-                    </div>
-                    <div className="mt-2 grid gap-2">
-                      <label className="text-xs font-semibold text-[var(--text-secondary)]">
-                        <span className="inline-flex items-center gap-1">
-                          <Tag className="h-3.5 w-3.5" />
-                          Tags
-                        </span>
-                        <input
-                          value={tagDraftById[resource.id] ?? resource.tags.join(", ")}
-                          onChange={(event) =>
-                            setTagDraftById((prev) => ({
-                              ...prev,
-                              [resource.id]: event.target.value,
-                            }))
+                {providerOwnedResources.length ? (
+                  providerOwnedResources.map((resource) => (
+                    <div key={resource.id} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+                      <div className="text-sm font-semibold text-[var(--text-primary)]">{resource.title}</div>
+                      <div className="mt-1 text-xs text-[var(--text-secondary)]">
+                        {resource.download_count} downloads • {resource.category}
+                      </div>
+                      <div className="mt-2 grid gap-2">
+                        <label className="text-xs font-semibold text-[var(--text-secondary)]">
+                          <span className="inline-flex items-center gap-1">
+                            <Tag className="h-3.5 w-3.5" />
+                            Tags
+                          </span>
+                          <input
+                            value={tagDraftById[resource.id] ?? resource.tags.join(", ")}
+                            onChange={(event) =>
+                              setTagDraftById((prev) => ({
+                                ...prev,
+                                [resource.id]: event.target.value,
+                              }))
+                            }
+                            className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm"
+                          />
+                        </label>
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        <Button
+                          variant="outline"
+                          className="fh-user-secondary-btn"
+                          onClick={() => saveProviderTags(resource.id)}
+                        >
+                          Save tags
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="fh-user-secondary-btn"
+                          onClick={() =>
+                            setResources(
+                              updateResource(resources, resource.id, {
+                                featured: !resource.featured,
+                              }),
+                            )
                           }
-                          className="mt-1 w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm"
-                        />
-                      </label>
+                        >
+                          {resource.featured ? "Unfeature" : "Feature"}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="fh-user-secondary-btn"
+                          onClick={() =>
+                            setResources(
+                              updateResource(resources, resource.id, {
+                                recommended: !resource.recommended,
+                              }),
+                            )
+                          }
+                        >
+                          {resource.recommended ? "Unrecommend" : "Recommend"}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="fh-user-secondary-btn"
+                          onClick={() => setResources(removeResource(resources, resource.id))}
+                        >
+                          Remove
+                        </Button>
+                      </div>
                     </div>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      <Button
-                        variant="outline"
-                        className="fh-user-secondary-btn"
-                        onClick={() => saveProviderTags(resource.id)}
-                      >
-                        Save tags
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="fh-user-secondary-btn"
-                        onClick={() =>
-                          setResources(
-                            updateResource(resources, resource.id, {
-                              featured: !resource.featured,
-                            }),
-                          )
-                        }
-                      >
-                        {resource.featured ? "Unfeature" : "Feature"}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="fh-user-secondary-btn"
-                        onClick={() =>
-                          setResources(
-                            updateResource(resources, resource.id, {
-                              recommended: !resource.recommended,
-                            }),
-                          )
-                        }
-                      >
-                        {resource.recommended ? "Unrecommend" : "Recommend"}
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="fh-user-secondary-btn"
-                        onClick={() => setResources(removeResource(resources, resource.id))}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <EmptyState
+                    title="No provider uploads yet"
+                    message="Publish your first free resource to start serving the community."
+                  />
+                )}
               </div>
             </CardContent>
           </Card>

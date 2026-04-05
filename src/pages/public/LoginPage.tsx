@@ -12,6 +12,7 @@ import type { Role } from "@/types/roles";
 import { isRole } from "@/auth/roleRouting";
 import { roleLoginHeadings } from "@/features/auth/roleMeta";
 import { consumeAuthNotice } from "@/auth/noticeStorage";
+import { isValidEmail, isValidPassword } from "@/features/auth/validation";
 
 const logoPortraitSrc = "/assets/branding/logo-portrait.png";
 
@@ -32,10 +33,6 @@ const roleOptions: Array<{ value: Role; label: string }> = [
   { value: "provider", label: "Provider" },
   { value: "admin", label: "Admin" },
 ];
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
 
 function providerIcon(provider: SocialProvider) {
   if (provider === "google") return <Sparkles className="h-4 w-4" />;
@@ -98,7 +95,7 @@ export default function LoginPage() {
   }, [location.state]);
 
   const canSubmit = useMemo(
-    () => isValidEmail(email) && password.trim().length >= 6,
+    () => isValidEmail(email) && isValidPassword(password),
     [email, password],
   );
 
@@ -111,7 +108,7 @@ export default function LoginPage() {
   const validateFields = () => {
     const errors: LoginFieldErrors = {};
     if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
-    if (password.trim().length < 6) errors.password = "Password must be at least 6 characters.";
+    if (!isValidPassword(password)) errors.password = "Password must be at least 6 characters.";
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };

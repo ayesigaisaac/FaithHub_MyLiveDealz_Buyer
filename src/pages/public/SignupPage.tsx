@@ -7,6 +7,11 @@ import { routes } from "@/constants/routes";
 import { useAuth } from "@/auth/AuthContext";
 import { useColorMode } from "@/theme/color-mode";
 import type { Role } from "@/types/roles";
+import {
+  isValidEmail,
+  isValidPassword,
+  validateConfirmPassword,
+} from "@/features/auth/validation";
 
 const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
 
@@ -15,10 +20,6 @@ const roleOptions: Array<{ value: Role; label: string }> = [
   { value: "provider", label: "Provider" },
   { value: "admin", label: "Admin" },
 ];
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function SignupPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const canSubmit = useMemo(
-    () => isValidEmail(email) && password.trim().length >= 6 && confirmPassword === password,
+    () => isValidEmail(email) && isValidPassword(password) && validateConfirmPassword(password, confirmPassword),
     [email, password, confirmPassword],
   );
 
@@ -43,11 +44,11 @@ export default function SignupPage() {
       setError("Enter a valid email address.");
       return;
     }
-    if (password.trim().length < 6) {
+    if (!isValidPassword(password)) {
       setError("Password must be at least 6 characters.");
       return;
     }
-    if (password !== confirmPassword) {
+    if (!validateConfirmPassword(password, confirmPassword)) {
       setError("Passwords do not match.");
       return;
     }

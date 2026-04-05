@@ -5,12 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { routes } from "@/constants/routes";
 import { useColorMode } from "@/theme/color-mode";
+import { isValidEmail } from "@/features/auth/validation";
 
 const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
-
-function isValidEmail(value: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
 
 export default function ForgotPasswordPage() {
   const navigate = useNavigate();
