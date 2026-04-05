@@ -26,6 +26,7 @@ import {
   reportComment,
   saveCommunityPosts,
   togglePostFlag,
+  undoPostReaction,
 } from "@/data/community";
 import { trackEvent } from "@/data/tracker";
 import type {
@@ -213,6 +214,9 @@ export default function FaithHubCommunity() {
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({});
   const [openReplyTarget, setOpenReplyTarget] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const pageSize = 4;
+  const [lastReaction, setLastReaction] = useState<{ postId: string; reaction: CommunityReaction } | null>(null);
 
   useEffect(() => {
     saveCommunityPosts(posts);
@@ -230,6 +234,13 @@ export default function FaithHubCommunity() {
     }
     return posts;
   }, [feedFilter, posts]);
+
+  const paginatedPosts = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filteredPosts.slice(start, start + pageSize);
+  }, [filteredPosts, page]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / pageSize));
 
   const publishPost = () => {
     const content = composerText.trim();
@@ -292,6 +303,7 @@ export default function FaithHubCommunity() {
 
   const handleReaction = (postId: string, reaction: CommunityReaction) => {
     setPosts((previous) => reactToPost(previous, { postId, reaction }));
+    setLastReaction({ postId, reaction });
     trackEvent(
       "REACTION_ADDED",
       {
@@ -301,6 +313,16 @@ export default function FaithHubCommunity() {
       { role: currentRole },
     );
   };
+
+  const undoLastReaction = () => {
+    if (!lastReaction) return;
+    setPosts((previous) => undoPostReaction(previous, lastReaction));
+    setLastReaction(null);
+  };
+
+  useEffect(() => {
+    setPage(1);
+  }, [feedFilter, posts.length]);
 
   return (
     <div className="space-y-4">
@@ -394,11 +416,28 @@ export default function FaithHubCommunity() {
               Publish
             </Button>
           </div>
+
+          {lastReaction ? (
+            <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-[rgba(3,205,140,0.25)] bg-[rgba(3,205,140,0.1)] px-3 py-2">
+              <div className="text-xs font-semibold text-[var(--text-secondary)]">
+                Reaction added successfully.
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                uiSize="sm"
+                className="h-8 rounded-lg px-2 text-xs"
+                onClick={undoLastReaction}
+              >
+                Undo
+              </Button>
+            </div>
+          ) : null}
         </CardContent>
       </Card>
 
       <div className="space-y-3">
-        {filteredPosts.map((post) => (
+        {paginatedPosts.map((post) => (
           <Card
             key={post.id}
             className={`fh-surface-card rounded-2xl ${
@@ -560,8 +599,39 @@ export default function FaithHubCommunity() {
             </CardContent>
           </Card>
         ) : null}
+
+        {filteredPosts.length > pageSize ? (
+          <Card className="fh-surface-card rounded-2xl">
+            <CardContent className="flex items-center justify-between gap-3 p-4">
+              <div className="text-xs text-[var(--text-secondary)]">
+                Page {page} of {totalPages}
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  uiSize="sm"
+                  className="h-8 rounded-lg px-3 text-xs"
+                  onClick={() => setPage((previous) => Math.max(1, previous - 1))}
+                  disabled={page === 1}
+                >
+                  Previous
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  uiSize="sm"
+                  className="h-8 rounded-lg px-3 text-xs"
+                  onClick={() => setPage((previous) => Math.min(totalPages, previous + 1))}
+                  disabled={page === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        ) : null}
       </div>
     </div>
   );
 }
-

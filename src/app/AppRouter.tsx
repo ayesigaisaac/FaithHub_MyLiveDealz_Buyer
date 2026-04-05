@@ -29,6 +29,7 @@ import SignupPage from "@/pages/public/SignupPage";
 import ForgotPasswordPage from "@/pages/public/ForgotPasswordPage";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 import FaithHubAnalyticsDev from "@/pages/shared/FaithHubAnalyticsDev";
+import FaithHubQaCenter from "@/pages/shared/FaithHubQaCenter";
 import { trackEvent as trackAnalyticsEvent } from "@/lib/analytics";
 
 const roleBasePath: Record<RoleKey, string> = {
@@ -194,6 +195,7 @@ export default function AppRouter() {
               <Route path="/noticeboard" element={<Navigate to={noticeboardRouteByRole[role]} replace />} />
               <Route path="/qa" element={<Navigate to={qaRouteByRole[role]} replace />} />
               <Route path="/dev/analytics" element={<FaithHubAnalyticsDev />} />
+              <Route path="/dev/qa" element={<FaithHubQaCenter />} />
               <Route path="/fund/:slug" element={<FundAliasRedirect />} />
               {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
                 <Route

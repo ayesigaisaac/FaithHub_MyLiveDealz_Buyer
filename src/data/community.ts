@@ -276,6 +276,22 @@ export function reactToPost(posts: CommunityPost[], input: {
   });
 }
 
+export function undoPostReaction(posts: CommunityPost[], input: {
+  postId: string;
+  reaction: CommunityReaction;
+}) {
+  return posts.map((post) => {
+    if (post.id !== input.postId) return post;
+    return {
+      ...post,
+      reactions: {
+        ...post.reactions,
+        [input.reaction]: Math.max(0, (post.reactions?.[input.reaction] || 0) - 1),
+      },
+    };
+  });
+}
+
 export function addComment(posts: CommunityPost[], input: {
   postId: string;
   content: string;

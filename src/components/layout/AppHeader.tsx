@@ -13,23 +13,26 @@ interface AppHeaderProps {
   homePath: string;
   alertPath: string;
   searchResults: GlobalSearchResult[];
+  hasSearchQuery: boolean;
   searchContainerRef: React.RefObject<HTMLLabelElement | null>;
   onOpenMobileMenu: () => void;
   onGoToLanding: () => void;
   onChangeQuery: (value: string) => void;
   onToggleSearchOpen: (open: boolean) => void;
   onNavigate: (path: string) => void;
+  onSelectSearchResult: (result: GlobalSearchResult) => void;
   onToggleAccountSwitcher: () => void;
 }
 
 const typeLabel: Record<GlobalSearchResult["type"], string> = {
-  institution: "Institutions",
-  series: "Series",
-  resource: "Resources",
-  live: "Live sessions",
+  page: "Pages",
+  event: "Events",
+  community: "Community",
+  content: "Content",
+  recent: "Recent searches",
 };
 
-const resultTypeOrder: GlobalSearchResult["type"][] = ["institution", "series", "resource", "live"];
+const resultTypeOrder: GlobalSearchResult["type"][] = ["recent", "page", "event", "community", "content"];
 
 export default function AppHeader({
   mobileOpen,
@@ -40,11 +43,13 @@ export default function AppHeader({
   homePath,
   alertPath,
   searchResults,
+  hasSearchQuery,
   searchContainerRef,
   onOpenMobileMenu,
   onChangeQuery,
   onToggleSearchOpen,
   onNavigate,
+  onSelectSearchResult,
   onToggleAccountSwitcher,
 }: AppHeaderProps) {
   const groupedResults = useMemo(() => {
@@ -65,7 +70,7 @@ export default function AppHeader({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   useEffect(() => {
-    if (!searchOpen || navQuery.trim().length < 2 || !flattenedResults.length) {
+    if (!searchOpen || !flattenedResults.length) {
       setActiveIndex(-1);
       return;
     }
@@ -123,7 +128,7 @@ export default function AppHeader({
                 type="search"
                 role="combobox"
                 aria-autocomplete="list"
-                aria-expanded={searchOpen && navQuery.trim().length >= 2}
+                aria-expanded={searchOpen && flattenedResults.length > 0}
                 aria-controls="global-search-listbox"
                 aria-activedescendant={
                   activeResult ? `search-result-${activeResult.type}-${activeResult.id}` : undefined
@@ -133,7 +138,7 @@ export default function AppHeader({
                 onChange={(event) => onChangeQuery(event.target.value)}
                 onFocus={() => onToggleSearchOpen(true)}
                 onKeyDown={(event) => {
-                  if (!searchOpen || navQuery.trim().length < 2) return;
+                  if (!searchOpen) return;
                   if (!flattenedResults.length) return;
 
                   if (event.key === "ArrowDown") {
@@ -153,6 +158,7 @@ export default function AppHeader({
 
                   if (event.key === "Enter" && activeResult) {
                     event.preventDefault();
+                    onSelectSearchResult(activeResult);
                     onNavigate(activeResult.path);
                     onToggleSearchOpen(false);
                     return;
@@ -166,7 +172,7 @@ export default function AppHeader({
                 className="h-8 w-full border-0 bg-transparent text-sm font-semibold text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted,#6B7280)]"
               />
 
-              {searchOpen && navQuery.trim().length >= 2 ? (
+              {searchOpen ? (
                 <div
                   id="global-search-listbox"
                   role="listbox"
@@ -194,6 +200,7 @@ export default function AppHeader({
                                 aria-selected={isActive}
                                 onMouseEnter={() => setActiveIndex(globalIndex)}
                                 onClick={() => {
+                                  onSelectSearchResult(result);
                                   onNavigate(result.path);
                                   onToggleSearchOpen(false);
                                 }}
@@ -221,9 +228,13 @@ export default function AppHeader({
                         </div>
                       ))}
                     </div>
-                  ) : (
+                  ) : hasSearchQuery ? (
                     <div className="px-2 py-3 text-xs text-[var(--text-secondary)]">
                       No results found for "{navQuery.trim()}".
+                    </div>
+                  ) : (
+                    <div className="px-2 py-3 text-xs text-[var(--text-secondary)]">
+                      Start typing to search, or use recent searches.
                     </div>
                   )}
                 </div>

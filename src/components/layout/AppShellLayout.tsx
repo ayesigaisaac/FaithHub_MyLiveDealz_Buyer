@@ -17,7 +17,7 @@ import {
 } from "@/config/pageRegistry";
 import { buildUnifiedSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
-import { searchGlobalContent } from "@/data/globalSearch";
+import { rememberRecentSearch, searchGlobalContent } from "@/data/globalSearch";
 import { trackEvent } from "@/data/tracker";
 import { addAuthAuditRecord } from "@/data/authAudit";
 import { routes } from "@/constants/routes";
@@ -146,6 +146,7 @@ export default function AppShellLayout() {
     () => searchGlobalContent(navQuery, shellRole),
     [navQuery, shellRole],
   );
+  const hasSearchQuery = navQuery.trim().length >= 2;
 
   const resolveNavPath = (path: string) => path;
   const navigateToPath = (path: string) => {
@@ -304,12 +305,25 @@ export default function AppShellLayout() {
         homePath={defaultPageForRole[shellRole]}
         alertPath={alertRouteByRole[shellRole]}
         searchResults={globalSearchResults}
+        hasSearchQuery={hasSearchQuery}
         searchContainerRef={searchContainerRef}
         onOpenMobileMenu={() => setMobileOpen(true)}
         onGoToLanding={() => navigate(routes.public.landing)}
         onChangeQuery={setNavQuery}
         onToggleSearchOpen={setSearchOpen}
         onNavigate={navigateToPath}
+        onSelectSearchResult={(result) => {
+          rememberRecentSearch(shellRole, result);
+          trackEvent(
+            "CLICK_BUTTON",
+            {
+              id: "global-search-select",
+              label: result.title,
+              location: "app-header-search",
+            },
+            { role: shellRole },
+          );
+        }}
         onToggleAccountSwitcher={() => setAccountSwitcherOpen((prev) => !prev)}
       />
 
