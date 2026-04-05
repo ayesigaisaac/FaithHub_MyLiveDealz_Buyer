@@ -13,6 +13,7 @@ import {
   isValidPassword,
   validateConfirmPassword,
 } from "@/features/auth/validation";
+import { trackEvent } from "@/data/tracker";
 
 const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
 
@@ -58,6 +59,7 @@ export default function SignupPage() {
     setIsSubmitting(true);
     try {
       const user = await login({ email, password, role });
+      trackEvent("SIGNUP_SUCCESS", { role: user.role, email: user.email }, { role: user.role });
       navigate(defaultPageForRole[user.role]);
     } catch (exception) {
       const detail = exception instanceof Error ? exception.message : "Unable to create account.";

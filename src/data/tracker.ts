@@ -1,6 +1,7 @@
 import type { Role } from "@/types/roles";
 import type { WalletRole, WalletTransactionType } from "@/types/wallet";
 import type { CommunityReaction } from "@/types/community";
+import { trackEvent as pushAnalyticsEvent, type AnalyticsCategory } from "@/lib/analytics";
 
 export type AnalyticsEventName =
   | "NAVIGATE_PAGE"
@@ -8,7 +9,10 @@ export type AnalyticsEventName =
   | "GIVE_DONATION"
   | "WALLET_TRANSACTION"
   | "REACTION_ADDED"
-  | "ROLE_SWITCH";
+  | "ROLE_SWITCH"
+  | "LOGIN_SUCCESS"
+  | "SIGNUP_SUCCESS"
+  | "EVENT_JOIN";
 
 type AnalyticsPayloadMap = {
   NAVIGATE_PAGE: {
@@ -41,6 +45,20 @@ type AnalyticsPayloadMap = {
     toRole: Role;
     trigger?: "sidebar" | "access" | "profile" | "unknown";
   };
+  LOGIN_SUCCESS: {
+    method: "password" | "social";
+    role: Role;
+    email: string;
+  };
+  SIGNUP_SUCCESS: {
+    role: Role;
+    email: string;
+  };
+  EVENT_JOIN: {
+    eventId?: string;
+    action: "rsvp" | "join_chat" | "join_live";
+    source?: string;
+  };
 };
 
 export type AnalyticsEvent<TName extends AnalyticsEventName = AnalyticsEventName> = {
@@ -72,12 +90,33 @@ export function trackEvent<TName extends AnalyticsEventName>(
 
   if (sink) {
     sink(event);
-    return event;
+  } else {
+    // Safe fallback while analytics service is not connected.
+    // eslint-disable-next-line no-console
+    console.log("[FaithHub analytics]", event);
   }
 
-  // Safe fallback while analytics service is not connected.
-  // eslint-disable-next-line no-console
-  console.log("[FaithHub analytics]", event);
+  const categoryByEvent: Record<AnalyticsEventName, AnalyticsCategory> = {
+    NAVIGATE_PAGE: "navigation",
+    CLICK_BUTTON: "navigation",
+    GIVE_DONATION: "giving",
+    WALLET_TRANSACTION: "wallet",
+    REACTION_ADDED: "community",
+    ROLE_SWITCH: "auth",
+    LOGIN_SUCCESS: "auth",
+    SIGNUP_SUCCESS: "auth",
+    EVENT_JOIN: "navigation",
+  };
+
+  pushAnalyticsEvent({
+    name,
+    category: categoryByEvent[name],
+    payload: {
+      ...payload,
+      role: event.role,
+    },
+    timestamp: Date.now(),
+  });
+
   return event;
 }
-

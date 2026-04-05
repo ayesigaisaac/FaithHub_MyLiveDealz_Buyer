@@ -125,6 +125,11 @@ export default function LoginPage() {
     try {
       const user = await login({ email, password, role });
       trackEvent(
+        "LOGIN_SUCCESS",
+        { method: "password", role: user.role, email: user.email },
+        { role: user.role },
+      );
+      trackEvent(
         "ROLE_SWITCH",
         { fromRole: currentRole, toRole: user.role, trigger: "access" },
         { role: user.role },
@@ -143,6 +148,11 @@ export default function LoginPage() {
     setMessage("");
     try {
       const user = await mockLoginAsRole(role, "social");
+      trackEvent(
+        "LOGIN_SUCCESS",
+        { method: "social", role: user.role, email: user.email },
+        { role: user.role },
+      );
       trackEvent(
         "ROLE_SWITCH",
         { fromRole: currentRole, toRole: user.role, trigger: "access" },

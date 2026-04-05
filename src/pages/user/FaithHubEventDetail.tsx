@@ -24,6 +24,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { trackEvent } from "@/data/tracker";
 
 const schedule = [
   { time: "Day 1  9:00 AM", title: "Arrival, accreditation, orientation" },
@@ -64,6 +65,31 @@ export default function FaithHubEventDetail() {
   const [vipPreview, setVipPreview] = useState(true);
   const [waiverAccepted, setWaiverAccepted] = useState(true);
   const [chatEnabled, setChatEnabled] = useState(true);
+
+  const handleRsvp = () => {
+    setRsvp("Going");
+    trackEvent(
+      "EVENT_JOIN",
+      {
+        eventId: "youth-worship-camp",
+        action: "rsvp",
+        source: "event-detail",
+      },
+      { role: "user" },
+    );
+  };
+
+  const handleJoinEventChat = () => {
+    trackEvent(
+      "EVENT_JOIN",
+      {
+        eventId: "youth-worship-camp",
+        action: "join_chat",
+        source: "event-detail",
+      },
+      { role: "user" },
+    );
+  };
 
   return (
     <div className="fh-page-canvas min-h-0 text-slate-900">
@@ -153,7 +179,9 @@ export default function FaithHubEventDetail() {
                       <div className="mb-2 text-sm font-semibold text-slate-700">Your event status</div>
                       <div className="mb-3 text-2xl font-semibold text-slate-900">{rsvp}</div>
                       <div className="fh-actions-grid">
-                        <Button className="fh-user-primary-btn rounded-2xl">RSVP</Button>
+                        <Button className="fh-user-primary-btn rounded-2xl" onClick={handleRsvp}>
+                          RSVP
+                        </Button>
                         <Button
                           variant="outline"
                           className="fh-user-secondary-btn rounded-2xl text-[var(--text-secondary)] hover:bg-[var(--accent-soft)]"
@@ -246,7 +274,7 @@ export default function FaithHubEventDetail() {
                       <div className="space-y-3">
                         <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-3 text-sm text-slate-600">Travel coordination, updates, FAQs, and community preparation can happen here before and during the event.</div>
                         <div className="rounded-2xl border border-slate-100 bg-[#f8fafc] p-3 text-sm text-slate-600">Moderation and safety notices remain pinned at the top of the event conversation.</div>
-                        <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]">
+                        <Button className="rounded-2xl bg-[#03cd8c] hover:bg-[#02b67c]" onClick={handleJoinEventChat}>
                           <MessageSquare className="mr-2 h-4 w-4" /> Join event chat
                         </Button>
                       </div>

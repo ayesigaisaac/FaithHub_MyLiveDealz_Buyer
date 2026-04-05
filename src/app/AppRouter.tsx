@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from "react";
+import React, { Suspense, useEffect, useMemo } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -28,6 +28,8 @@ import LoginPage from "@/pages/public/LoginPage";
 import SignupPage from "@/pages/public/SignupPage";
 import ForgotPasswordPage from "@/pages/public/ForgotPasswordPage";
 import ProtectedRoute from "@/routes/ProtectedRoute";
+import FaithHubAnalyticsDev from "@/pages/shared/FaithHubAnalyticsDev";
+import { trackEvent as trackAnalyticsEvent } from "@/lib/analytics";
 
 const roleBasePath: Record<RoleKey, string> = {
   user: routes.app.user.base,
@@ -131,6 +133,22 @@ function FundAliasRedirect() {
   return <Navigate to={targetPath} replace />;
 }
 
+function PageViewTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = `${location.pathname}${location.search}${location.hash}`;
+    trackAnalyticsEvent({
+      name: "page_view",
+      category: "navigation",
+      payload: { path },
+      timestamp: Date.now(),
+    });
+  }, [location.hash, location.pathname, location.search]);
+
+  return null;
+}
+
 export default function AppRouter() {
   const { mode } = useColorMode();
   const { isAuthenticated, role } = useAuth();
@@ -143,6 +161,7 @@ export default function AppRouter() {
       <CssBaseline />
       <BrowserRouter>
         <ScrollToTop />
+        <PageViewTracker />
         <Routes>
           <Route
             path={routes.public.login}
@@ -179,6 +198,7 @@ export default function AppRouter() {
               <Route path="/wallet" element={<Navigate to={walletRouteByRole[role]} replace />} />
               <Route path="/noticeboard" element={<Navigate to={noticeboardRouteByRole[role]} replace />} />
               <Route path="/qa" element={<Navigate to={qaRouteByRole[role]} replace />} />
+              <Route path="/dev/analytics" element={<FaithHubAnalyticsDev />} />
               <Route path="/fund/:slug" element={<FundAliasRedirect />} />
               {Object.entries(routeShortcuts).map(([legacyPath, targetPath]) => (
                 <Route
