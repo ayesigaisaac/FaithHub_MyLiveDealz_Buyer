@@ -10,6 +10,7 @@ interface AppHeaderProps {
   searchOpen: boolean;
   accountSwitcherOpen: boolean;
   currentRoleLabel: string;
+  homePath: string;
   alertPath: string;
   searchResults: GlobalSearchResult[];
   searchContainerRef: React.RefObject<HTMLLabelElement | null>;
@@ -36,6 +37,7 @@ export default function AppHeader({
   searchOpen,
   accountSwitcherOpen,
   currentRoleLabel,
+  homePath,
   alertPath,
   searchResults,
   searchContainerRef,
@@ -90,7 +92,7 @@ export default function AppHeader({
             <button
               type="button"
               aria-label="Go to home"
-              onClick={() => onNavigate("/home")}
+              onClick={() => onNavigate(homePath)}
               className="inline-flex min-h-[42px] min-w-0 items-center gap-2 rounded-2xl px-2.5 py-1.5 transition-colors duration-200 hover:bg-[rgba(3,200,220,0.1)] dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,200,220,0.34)] sm:px-3"
             >
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1 sm:h-10 sm:w-10">
@@ -261,4 +263,3 @@ export default function AppHeader({
     </header>
   );
 }
-

@@ -8,7 +8,13 @@ import AppHeader from "@/components/layout/AppHeader";
 import Sidebar from "@/components/layout/Sidebar";
 import GiveSupportCTA from "@/components/giving/GiveSupportCTA";
 import { useColorMode } from "@/theme/color-mode";
-import { getRoutePatterns, pageRegistry, type PageRegistryItem, type RoleKey } from "@/config/pageRegistry";
+import {
+  defaultPageForRole,
+  getRoutePatterns,
+  pageRegistry,
+  type PageRegistryItem,
+  type RoleKey,
+} from "@/config/pageRegistry";
 import { buildUnifiedSidebarSections } from "@/config/sidebar";
 import { resolvePageButtonAction } from "@/config/pageActionRegistry";
 import { searchGlobalContent } from "@/data/globalSearch";
@@ -295,6 +301,7 @@ export default function AppShellLayout() {
         searchOpen={searchOpen}
         accountSwitcherOpen={accountSwitcherOpen}
         currentRoleLabel={currentRoleLabel}
+        homePath={defaultPageForRole[shellRole]}
         alertPath={alertRouteByRole[shellRole]}
         searchResults={globalSearchResults}
         searchContainerRef={searchContainerRef}
