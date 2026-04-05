@@ -13,6 +13,7 @@ import { isRole } from "@/auth/roleRouting";
 import { roleLoginHeadings } from "@/features/auth/roleMeta";
 import { consumeAuthNotice } from "@/auth/noticeStorage";
 import { isValidEmail, isValidPassword } from "@/features/auth/validation";
+import { defaultPageForRole } from "@/config/pageRegistry";
 
 const logoPortraitSrc = "/assets/branding/logo-portrait.png";
 
@@ -74,7 +75,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!routeRole || !isAuthenticated || currentRole !== routeRole) return;
-    navigate("/home", { replace: true });
+    navigate(defaultPageForRole[routeRole], { replace: true });
   }, [currentRole, isAuthenticated, navigate, routeRole]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   LogOut,
   Moon,
@@ -27,12 +27,15 @@ export default function AccountSwitcher({
   onLogout,
   onLogoutAllRoles,
 }: AccountSwitcherProps) {
+  const panelRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKeyDown);
+    panelRef.current?.focus();
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [isOpen, onClose]);
 
@@ -53,11 +56,14 @@ export default function AccountSwitcher({
       />
 
       <aside
+        ref={panelRef}
         role="dialog"
+        aria-modal="true"
         aria-label="Account switcher"
+        tabIndex={-1}
         className={`absolute right-0 top-0 h-full w-[min(22rem,92vw)] border-l border-[var(--border)] bg-[var(--panel)] shadow-[0_0_0_1px_rgba(255,255,255,0.04)] transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        } focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)]`}
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">

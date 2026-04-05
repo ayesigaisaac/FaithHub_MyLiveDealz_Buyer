@@ -7,6 +7,7 @@ import { routes } from "@/constants/routes";
 import { useAuth } from "@/auth/AuthContext";
 import { useColorMode } from "@/theme/color-mode";
 import type { Role } from "@/types/roles";
+import { defaultPageForRole } from "@/config/pageRegistry";
 import {
   isValidEmail,
   isValidPassword,
@@ -56,8 +57,8 @@ export default function SignupPage() {
     setError("");
     setIsSubmitting(true);
     try {
-      await login({ email, password, role });
-      navigate("/home");
+      const user = await login({ email, password, role });
+      navigate(defaultPageForRole[user.role]);
     } catch (exception) {
       const detail = exception instanceof Error ? exception.message : "Unable to create account.";
       setError(detail);

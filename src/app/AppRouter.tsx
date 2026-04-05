@@ -146,7 +146,7 @@ export default function AppRouter() {
         <Routes>
           <Route
             path={routes.public.login}
-            element={isAuthenticated ? <Navigate to="/home" replace /> : <LoginPage />}
+            element={isAuthenticated ? <Navigate to={roleHomePath} replace /> : <LoginPage />}
           />
           <Route
             path={routes.public.loginRolePattern}
@@ -154,11 +154,11 @@ export default function AppRouter() {
           />
           <Route
             path={routes.public.signup}
-            element={isAuthenticated ? <Navigate to="/home" replace /> : <SignupPage />}
+            element={isAuthenticated ? <Navigate to={roleHomePath} replace /> : <SignupPage />}
           />
           <Route
             path={routes.public.forgotPassword}
-            element={isAuthenticated ? <Navigate to="/home" replace /> : <ForgotPasswordPage />}
+            element={isAuthenticated ? <Navigate to={roleHomePath} replace /> : <ForgotPasswordPage />}
           />
           <Route path={routes.public.access} element={<Navigate to={routes.public.login} replace />} />
           <Route element={<ProtectedRoute />}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -29,8 +29,22 @@ function optionLabel(type: NoticeType) {
 
 export default function NoticeForm({ open, submitting = false, onClose, onSubmit }: NoticeFormProps) {
   const [values, setValues] = useState<NoticeFormValues>(initialValues);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   if (!open) return null;
+
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        handleClose();
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    cardRef.current?.focus();
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,8 +67,22 @@ export default function NoticeForm({ open, submitting = false, onClose, onSubmit
   };
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/45 px-4 py-6 backdrop-blur-sm">
-      <Card className="fh-surface-card w-full max-w-xl rounded-2xl">
+    <div
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/45 px-4 py-6 backdrop-blur-sm"
+      onClick={(event) => {
+        if (event.target === event.currentTarget) {
+          handleClose();
+        }
+      }}
+    >
+      <Card
+        ref={cardRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Create notice"
+        tabIndex={-1}
+        className="fh-surface-card w-full max-w-xl rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)]"
+      >
         <CardContent className="p-5 sm:p-6">
           <div className="flex items-start justify-between gap-3">
             <div>
