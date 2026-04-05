@@ -5,8 +5,10 @@ import { defaultPageForRole } from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
 import type { Role } from "@/types/roles";
 import { addAuthAuditRecord } from "@/data/authAudit";
-import { AUTH_NOTICE_REASONS, AUTH_STORAGE_KEYS, getRoleSessionStorageKey } from "@/constants/auth";
+import { AUTH_NOTICE_REASONS } from "@/constants/auth";
 import { roleFromPath } from "@/auth/roleRouting";
+import { getAuthNotice } from "@/auth/noticeStorage";
+import { getRoleSessionRaw } from "@/auth/sessionStore";
 
 type ProtectedRouteProps = {
   roles?: Role[];
@@ -17,12 +19,8 @@ export default function ProtectedRoute({ roles, children }: ProtectedRouteProps)
   const location = useLocation();
   const { user, role, currentRole, isAuthLoading } = useAuth();
   const requiredRole = roles?.[0] || roleFromPath(location.pathname) || currentRole;
-  const roleSession =
-    typeof window !== "undefined"
-      ? window.localStorage.getItem(getRoleSessionStorageKey(requiredRole))
-      : null;
-  const authNotice =
-    typeof window !== "undefined" ? window.sessionStorage.getItem(AUTH_STORAGE_KEYS.notice) : null;
+  const roleSession = getRoleSessionRaw(requiredRole);
+  const authNotice = getAuthNotice();
 
   if (isAuthLoading) {
     return (

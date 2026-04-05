@@ -1,8 +1,9 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type { CommunityRepository } from "@/data/interfaces/community-repository";
 import type { CommunityPost } from "@/types/community";
 
 const STORAGE_KEY = "faithhub.community.posts.v1";
+const SCHEMA_VERSION = 1;
 
 function isCommunityPost(candidate: unknown): candidate is CommunityPost {
   if (!candidate || typeof candidate !== "object") return false;
@@ -16,11 +17,15 @@ function revivePosts(value: unknown): CommunityPost[] | null {
 }
 
 export function readCommunityPostsSync() {
-  return readJson(STORAGE_KEY, [] as CommunityPost[], revivePosts);
+  return readJsonVersioned(STORAGE_KEY, [] as CommunityPost[], {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: revivePosts,
+    migrate: (legacyData) => revivePosts(legacyData),
+  });
 }
 
 export function writeCommunityPostsSync(posts: CommunityPost[]) {
-  writeJson(STORAGE_KEY, posts);
+  writeJsonVersioned(STORAGE_KEY, posts, SCHEMA_VERSION);
 }
 
 class MockCommunityRepository implements CommunityRepository {
@@ -35,4 +40,3 @@ class MockCommunityRepository implements CommunityRepository {
 }
 
 export const communityRepository: CommunityRepository = new MockCommunityRepository();
-

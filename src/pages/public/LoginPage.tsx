@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/auth/AuthContext";
 import { routes } from "@/constants/routes";
-import { AUTH_NOTICE_REASONS, AUTH_STORAGE_KEYS } from "@/constants/auth";
+import { AUTH_NOTICE_REASONS } from "@/constants/auth";
 import { trackEvent } from "@/data/tracker";
 import { useColorMode } from "@/theme/color-mode";
 import type { Role } from "@/types/roles";
 import { isRole } from "@/auth/roleRouting";
 import { roleLoginHeadings } from "@/features/auth/roleMeta";
+import { consumeAuthNotice } from "@/auth/noticeStorage";
 
 const logoPortraitSrc = "/assets/branding/logo-portrait.png";
 
@@ -81,8 +82,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     const reasonFromState = (location.state as { reason?: string } | null)?.reason;
-    const reasonFromSession =
-      typeof window !== "undefined" ? window.sessionStorage.getItem(AUTH_STORAGE_KEYS.notice) : null;
+    const reasonFromSession = consumeAuthNotice();
     const reason = reasonFromState || reasonFromSession;
     if (!reason) return;
 
@@ -93,7 +93,6 @@ export default function LoginPage() {
     else if (reason === AUTH_NOTICE_REASONS.authRequired) setMessage("Please sign in to continue.");
 
     if (typeof window !== "undefined") {
-      window.sessionStorage.removeItem(AUTH_STORAGE_KEYS.notice);
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);

@@ -1,8 +1,9 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type { FundsRepository, FundsStore } from "@/data/interfaces/funds-repository";
 import type { Fund, FundContribution, Pledge } from "@/types/funds";
 
 const STORAGE_KEY = "faithhub.funds.v1";
+const SCHEMA_VERSION = 1;
 
 const defaultProviderId = "faithhub-provider";
 
@@ -136,11 +137,15 @@ function reviveStore(value: unknown): FundsStore | null {
 }
 
 export function readFundsStoreSync() {
-  return readJson(STORAGE_KEY, seedFundsStore, reviveStore);
+  return readJsonVersioned(STORAGE_KEY, seedFundsStore, {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: reviveStore,
+    migrate: (legacyData) => reviveStore(legacyData),
+  });
 }
 
 export function writeFundsStoreSync(store: FundsStore) {
-  writeJson(STORAGE_KEY, store);
+  writeJsonVersioned(STORAGE_KEY, store, SCHEMA_VERSION);
 }
 
 class MockFundsRepository implements FundsRepository {
@@ -155,4 +160,3 @@ class MockFundsRepository implements FundsRepository {
 }
 
 export const fundsRepository: FundsRepository = new MockFundsRepository();
-

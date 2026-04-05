@@ -1,5 +1,6 @@
 import type { Role } from "@/types/roles";
 import { AUTH_STORAGE_KEYS } from "@/constants/auth";
+import { readJsonVersioned, writeJsonVersioned, clearJson } from "@/data/adapters/storage";
 
 export type AuthAuditAction =
   | "LOGIN_SUCCESS"
@@ -22,28 +23,25 @@ export type AuthAuditRecord = {
 };
 
 const STORAGE_KEY = AUTH_STORAGE_KEYS.audit;
+const SCHEMA_VERSION = 1;
 const MAX_RECORDS = 150;
 
-function canUseStorage() {
-  return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
-}
-
 function readAll(): AuthAuditRecord[] {
-  if (!canUseStorage()) return [];
-  const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw) as AuthAuditRecord[];
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((entry) => Boolean(entry && entry.id && entry.action && entry.role));
-  } catch {
-    return [];
-  }
+  return readJsonVersioned(STORAGE_KEY, [] as AuthAuditRecord[], {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: (value) => {
+      if (!Array.isArray(value)) return [];
+      return value.filter((entry) => Boolean(entry && entry.id && entry.action && entry.role));
+    },
+    migrate: (legacyData) => {
+      if (!Array.isArray(legacyData)) return [];
+      return legacyData.filter((entry) => Boolean(entry && entry.id && entry.action && entry.role));
+    },
+  });
 }
 
 function writeAll(entries: AuthAuditRecord[]) {
-  if (!canUseStorage()) return;
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(entries.slice(0, MAX_RECORDS)));
+  writeJsonVersioned(STORAGE_KEY, entries.slice(0, MAX_RECORDS), SCHEMA_VERSION);
 }
 
 export function addAuthAuditRecord(
@@ -69,6 +67,5 @@ export function getAuthAuditRecords() {
 }
 
 export function clearAuthAuditRecords() {
-  if (!canUseStorage()) return;
-  window.localStorage.removeItem(STORAGE_KEY);
+  clearJson(STORAGE_KEY);
 }

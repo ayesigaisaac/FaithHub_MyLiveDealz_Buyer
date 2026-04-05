@@ -1,8 +1,9 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type { EventsRepository } from "@/data/interfaces/events-repository";
 import type { CalendarEvent } from "@/types/events";
 
 const STORAGE_KEY = "faithhub.events.v1";
+const SCHEMA_VERSION = 1;
 
 export const seedEvents: CalendarEvent[] = [
   {
@@ -69,11 +70,15 @@ function reviveEvents(value: unknown): CalendarEvent[] | null {
 }
 
 export function readEventsSync() {
-  return readJson(STORAGE_KEY, [] as CalendarEvent[], reviveEvents);
+  return readJsonVersioned(STORAGE_KEY, [] as CalendarEvent[], {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: reviveEvents,
+    migrate: (legacyData) => reviveEvents(legacyData),
+  });
 }
 
 export function writeEventsSync(events: CalendarEvent[]) {
-  writeJson(STORAGE_KEY, events);
+  writeJsonVersioned(STORAGE_KEY, events, SCHEMA_VERSION);
 }
 
 class MockEventsRepository implements EventsRepository {

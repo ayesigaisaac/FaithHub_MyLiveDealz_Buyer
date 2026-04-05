@@ -1,8 +1,9 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type { ResourcesRepository } from "@/data/interfaces/resources-repository";
 import type { FaithHubResource } from "@/types/resources";
 
 const STORAGE_KEY = "faithhub.resources.v1";
+const SCHEMA_VERSION = 1;
 
 function isResource(candidate: unknown): candidate is FaithHubResource {
   if (!candidate || typeof candidate !== "object") return false;
@@ -16,11 +17,15 @@ function reviveResources(value: unknown): FaithHubResource[] | null {
 }
 
 export function readResourcesSync() {
-  return readJson(STORAGE_KEY, [] as FaithHubResource[], reviveResources);
+  return readJsonVersioned(STORAGE_KEY, [] as FaithHubResource[], {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: reviveResources,
+    migrate: (legacyData) => reviveResources(legacyData),
+  });
 }
 
 export function writeResourcesSync(resources: FaithHubResource[]) {
-  writeJson(STORAGE_KEY, resources);
+  writeJsonVersioned(STORAGE_KEY, resources, SCHEMA_VERSION);
 }
 
 class MockResourcesRepository implements ResourcesRepository {
@@ -35,4 +40,3 @@ class MockResourcesRepository implements ResourcesRepository {
 }
 
 export const resourcesRepository: ResourcesRepository = new MockResourcesRepository();
-

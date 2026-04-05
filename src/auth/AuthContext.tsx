@@ -9,6 +9,7 @@ import {
   getRoleSessionStorageKey,
 } from "@/constants/auth";
 import { isRole } from "@/auth/roleRouting";
+import { setAuthNotice } from "@/auth/noticeStorage";
 
 export type AuthUser = {
   id: string;
@@ -89,9 +90,7 @@ function parseStoredUser(raw: string | null): AuthUser | null {
     const legacyAuthUser = parsed as Partial<AuthUser>;
     const withExpiry = parsed as Partial<StoredFaithHubUser>;
     if (typeof withExpiry.expiresAt === "number" && withExpiry.expiresAt < Date.now()) {
-      if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.sessionExpired);
-      }
+      setAuthNotice(AUTH_NOTICE_REASONS.sessionExpired);
       return null;
     }
     return {
@@ -242,7 +241,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       persistSession(activeRole, null);
       mirrorActiveSession(null);
       if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.sessionExpired);
+        setAuthNotice(AUTH_NOTICE_REASONS.sessionExpired);
       }
       setUser(null);
       setSessionExpiresAt(null);
@@ -252,9 +251,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const timer = window.setTimeout(() => {
       persistSession(activeRole, null);
       mirrorActiveSession(null);
-      if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.sessionExpired);
-      }
+      setAuthNotice(AUTH_NOTICE_REASONS.sessionExpired);
       addAuthAuditRecord({
         action: "SESSION_EXPIRED",
         role: activeRole,
@@ -325,9 +322,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setActiveRole(nextRole);
       setUser(null);
       setSessionExpiresAt(null);
-      if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.roleLoginRequired);
-      }
+      setAuthNotice(AUTH_NOTICE_REASONS.roleLoginRequired);
     };
 
     const hasRole = (targetRole: Role) => role === targetRole && Boolean(user);
@@ -350,9 +345,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
         persistSession(activeRole, null);
         mirrorActiveSession(null);
-        if (typeof window !== "undefined") {
-          window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.logout);
-        }
+        setAuthNotice(AUTH_NOTICE_REASONS.logout);
         setUser(null);
         setSessionExpiresAt(null);
       },
@@ -371,9 +364,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         mirrorActiveSession(null);
         setUser(null);
         setSessionExpiresAt(null);
-        if (typeof window !== "undefined") {
-          window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.logout);
-        }
+        setAuthNotice(AUTH_NOTICE_REASONS.logout);
       },
       switchRole,
       setRole: switchRole,

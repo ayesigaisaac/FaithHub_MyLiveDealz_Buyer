@@ -1,4 +1,4 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type {
   Notice,
   NoticeRepository,
@@ -6,6 +6,7 @@ import type {
 } from "@/data/interfaces/notice-repository";
 
 const STORAGE_KEY = "faithhub.noticeboard.v1";
+const SCHEMA_VERSION = 1;
 
 export const seedNotices: Notice[] = [
   {
@@ -76,11 +77,15 @@ function reviveNotices(value: unknown): Notice[] | null {
 }
 
 export function readStoredNoticesSync() {
-  return readJson(STORAGE_KEY, [] as Notice[], reviveNotices);
+  return readJsonVersioned(STORAGE_KEY, [] as Notice[], {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: reviveNotices,
+    migrate: (legacyData) => reviveNotices(legacyData),
+  });
 }
 
 export function writeStoredNoticesSync(notices: Notice[]) {
-  writeJson(STORAGE_KEY, notices);
+  writeJsonVersioned(STORAGE_KEY, notices, SCHEMA_VERSION);
 }
 
 class MockNoticeRepository implements NoticeRepository {
@@ -95,4 +100,3 @@ class MockNoticeRepository implements NoticeRepository {
 }
 
 export const mockNoticeRepository: NoticeRepository = new MockNoticeRepository();
-

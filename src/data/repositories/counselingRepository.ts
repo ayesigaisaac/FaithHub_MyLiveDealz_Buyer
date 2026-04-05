@@ -1,8 +1,9 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type { CounselingRepository } from "@/data/interfaces/counseling-repository";
 import type { Booking } from "@/types/counseling";
 
 const STORAGE_KEY = "faithhub.counseling.bookings";
+const SCHEMA_VERSION = 1;
 
 function isBooking(candidate: unknown): candidate is Booking {
   if (!candidate || typeof candidate !== "object") return false;
@@ -16,11 +17,15 @@ function reviveBookings(value: unknown): Booking[] | null {
 }
 
 export function readCounselingBookingsSync() {
-  return readJson(STORAGE_KEY, [] as Booking[], reviveBookings);
+  return readJsonVersioned(STORAGE_KEY, [] as Booking[], {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: reviveBookings,
+    migrate: (legacyData) => reviveBookings(legacyData),
+  });
 }
 
 export function writeCounselingBookingsSync(bookings: Booking[]) {
-  writeJson(STORAGE_KEY, bookings);
+  writeJsonVersioned(STORAGE_KEY, bookings, SCHEMA_VERSION);
 }
 
 class MockCounselingRepository implements CounselingRepository {
@@ -35,4 +40,3 @@ class MockCounselingRepository implements CounselingRepository {
 }
 
 export const counselingRepository: CounselingRepository = new MockCounselingRepository();
-

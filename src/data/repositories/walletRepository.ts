@@ -1,8 +1,9 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type { WalletRepository, WalletStore } from "@/data/interfaces/wallet-repository";
 import type { Wallet, WalletRole } from "@/types/wallet";
 
 const STORAGE_KEY = "faithhub.wallet.v1";
+const SCHEMA_VERSION = 1;
 
 export const seedWalletStore: WalletStore = {
   user: {
@@ -88,11 +89,15 @@ function reviveStore(value: unknown): WalletStore | null {
 }
 
 export function readWalletStoreSync() {
-  return readJson(STORAGE_KEY, seedWalletStore, reviveStore);
+  return readJsonVersioned(STORAGE_KEY, seedWalletStore, {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: reviveStore,
+    migrate: (legacyData) => reviveStore(legacyData),
+  });
 }
 
 export function writeWalletStoreSync(store: WalletStore) {
-  writeJson(STORAGE_KEY, store);
+  writeJsonVersioned(STORAGE_KEY, store, SCHEMA_VERSION);
 }
 
 class MockWalletRepository implements WalletRepository {
@@ -119,4 +124,3 @@ class MockWalletRepository implements WalletRepository {
 }
 
 export const walletRepository: WalletRepository = new MockWalletRepository();
-

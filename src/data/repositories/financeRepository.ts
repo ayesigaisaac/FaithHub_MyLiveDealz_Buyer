@@ -1,8 +1,9 @@
-import { readJson, writeJson } from "@/data/adapters/storage";
+import { readJsonVersioned, writeJsonVersioned } from "@/data/adapters/storage";
 import type { FinanceRepository } from "@/data/interfaces/finance-repository";
 import type { FinanceLedgerEntry } from "@/types/finance";
 
 const STORAGE_KEY = "faithhub.finance.ledger.v1";
+const SCHEMA_VERSION = 1;
 
 function isLedgerEntry(candidate: unknown): candidate is FinanceLedgerEntry {
   if (!candidate || typeof candidate !== "object") return false;
@@ -23,11 +24,15 @@ function reviveLedger(value: unknown): FinanceLedgerEntry[] | null {
 }
 
 export function readFinanceLedgerSync() {
-  return readJson(STORAGE_KEY, [] as FinanceLedgerEntry[], reviveLedger);
+  return readJsonVersioned(STORAGE_KEY, [] as FinanceLedgerEntry[], {
+    currentVersion: SCHEMA_VERSION,
+    reviveData: reviveLedger,
+    migrate: (legacyData) => reviveLedger(legacyData),
+  });
 }
 
 export function writeFinanceLedgerSync(entries: FinanceLedgerEntry[]) {
-  writeJson(STORAGE_KEY, entries);
+  writeJsonVersioned(STORAGE_KEY, entries, SCHEMA_VERSION);
 }
 
 class MockFinanceRepository implements FinanceRepository {
@@ -42,4 +47,3 @@ class MockFinanceRepository implements FinanceRepository {
 }
 
 export const financeRepository: FinanceRepository = new MockFinanceRepository();
-
