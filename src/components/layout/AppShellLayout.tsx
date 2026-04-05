@@ -200,6 +200,10 @@ export default function AppShellLayout() {
     const button = target.closest("button");
     if (!button || button.hasAttribute("disabled")) return;
     if ((button.getAttribute("type") || "").toLowerCase() === "submit") return;
+    if (button.getAttribute("aria-haspopup")) return;
+    if (button.getAttribute("role") === "switch") return;
+    if (button.getAttribute("aria-pressed") !== null) return;
+    if (!button.hasAttribute("data-action-id") && button.getAttribute("aria-expanded") !== null) return;
 
     const actionId = button.getAttribute("data-action-id") || "";
     const rawLabel =
