@@ -1,6 +1,14 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Role } from "@/types/roles";
 import { addAuthAuditRecord } from "@/data/authAudit";
+import {
+  AUTH_NOTICE_REASONS,
+  AUTH_SESSION_EXPIRY_MS,
+  AUTH_STORAGE_KEYS,
+  getAllRoleSessionStorageKeys,
+  getRoleSessionStorageKey,
+} from "@/constants/auth";
+import { isRole } from "@/auth/roleRouting";
 
 export type AuthUser = {
   id: string;
@@ -39,22 +47,11 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-const USER_STORAGE_KEY = "faithhub_user";
-const LEGACY_STORAGE_KEY = "faithhub.auth.session.v1";
-const ACTIVE_ROLE_STORAGE_KEY = "faithhub_active_role";
-const SESSION_KEY_PREFIX = "faithhub_session_";
-const NOTICE_STORAGE_KEY = "faithhub_auth_notice";
-const SESSION_EXPIRY_MS = 1000 * 60 * 60 * 12;
-
 type StoredFaithHubUser = {
   email: string;
   role: Role;
   expiresAt?: number;
 };
-
-function isRole(value: unknown): value is Role {
-  return value === "admin" || value === "provider" || value === "user";
-}
 
 function normalizeNameFromEmail(email: string) {
   const local = email.split("@")[0] || "faithhub-user";
@@ -93,7 +90,7 @@ function parseStoredUser(raw: string | null): AuthUser | null {
     const withExpiry = parsed as Partial<StoredFaithHubUser>;
     if (typeof withExpiry.expiresAt === "number" && withExpiry.expiresAt < Date.now()) {
       if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "session_expired");
+        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.sessionExpired);
       }
       return null;
     }
@@ -118,68 +115,60 @@ function parseStoredUser(raw: string | null): AuthUser | null {
   }
 }
 
-function getSessionStorageKey(role: Role) {
-  return `${SESSION_KEY_PREFIX}${role}`;
-}
-
-function getAllRoleSessionKeys() {
-  return [getSessionStorageKey("user"), getSessionStorageKey("provider"), getSessionStorageKey("admin")];
-}
-
 function readActiveRole(): Role {
   if (typeof window === "undefined") return "user";
-  const raw = window.localStorage.getItem(ACTIVE_ROLE_STORAGE_KEY);
+  const raw = window.localStorage.getItem(AUTH_STORAGE_KEYS.activeRole);
   return isRole(raw) ? raw : "user";
 }
 
 function persistActiveRole(role: Role) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(ACTIVE_ROLE_STORAGE_KEY, role);
+  window.localStorage.setItem(AUTH_STORAGE_KEYS.activeRole, role);
 }
 
 function readStoredSession(role: Role): AuthUser | null {
   if (typeof window === "undefined") return null;
-  return parseStoredUser(window.localStorage.getItem(getSessionStorageKey(role)));
+  return parseStoredUser(window.localStorage.getItem(getRoleSessionStorageKey(role)));
 }
 
 function persistSession(role: Role, user: AuthUser | null) {
   if (typeof window === "undefined") return;
   if (!user) {
-    window.localStorage.removeItem(getSessionStorageKey(role));
+    window.localStorage.removeItem(getRoleSessionStorageKey(role));
     return;
   }
   const storedUser: StoredFaithHubUser = {
     email: user.email,
     role,
-    expiresAt: Date.now() + SESSION_EXPIRY_MS,
+    expiresAt: Date.now() + AUTH_SESSION_EXPIRY_MS,
   };
-  window.localStorage.setItem(getSessionStorageKey(role), JSON.stringify(storedUser));
+  window.localStorage.setItem(getRoleSessionStorageKey(role), JSON.stringify(storedUser));
 }
 
 function mirrorActiveSession(user: AuthUser | null) {
   if (typeof window === "undefined") return;
   if (!user) {
-    window.localStorage.removeItem(USER_STORAGE_KEY);
+    window.localStorage.removeItem(AUTH_STORAGE_KEYS.activeUser);
     return;
   }
   const storedUser: StoredFaithHubUser = {
     email: user.email,
     role: user.role,
-    expiresAt: Date.now() + SESSION_EXPIRY_MS,
+    expiresAt: Date.now() + AUTH_SESSION_EXPIRY_MS,
   };
-  window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(storedUser));
+  window.localStorage.setItem(AUTH_STORAGE_KEYS.activeUser, JSON.stringify(storedUser));
 }
 
 function consumeLegacySession(): AuthUser | null {
   if (typeof window === "undefined") return null;
-  const current = parseStoredUser(window.localStorage.getItem(USER_STORAGE_KEY));
+  const current = parseStoredUser(window.localStorage.getItem(AUTH_STORAGE_KEYS.activeUser));
   if (current) return current;
-  return parseStoredUser(window.localStorage.getItem(LEGACY_STORAGE_KEY));
+  return parseStoredUser(window.localStorage.getItem(AUTH_STORAGE_KEYS.legacySession));
 }
 
 function clearLegacySessionKeys() {
   if (typeof window === "undefined") return;
-  window.localStorage.removeItem(LEGACY_STORAGE_KEY);
+  window.localStorage.removeItem(AUTH_STORAGE_KEYS.legacySession);
 }
 
 function buildMockUser(email: string, role: Role): AuthUser {
@@ -207,7 +196,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const roleSession = readStoredSession(bootstrapRole);
 
     if (roleSession) {
-      const raw = window.localStorage.getItem(getSessionStorageKey(bootstrapRole));
+      const raw = window.localStorage.getItem(getRoleSessionStorageKey(bootstrapRole));
       try {
         const parsed = raw ? (JSON.parse(raw) as Partial<StoredFaithHubUser>) : null;
         setSessionExpiresAt(typeof parsed?.expiresAt === "number" ? parsed.expiresAt : null);
@@ -227,7 +216,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       persistActiveRole(legacySession.role);
       setActiveRole(legacySession.role);
       setUser(legacySession);
-      setSessionExpiresAt(Date.now() + SESSION_EXPIRY_MS);
+      setSessionExpiresAt(Date.now() + AUTH_SESSION_EXPIRY_MS);
       mirrorActiveSession(legacySession);
       clearLegacySessionKeys();
       setIsAuthLoading(false);
@@ -253,7 +242,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       persistSession(activeRole, null);
       mirrorActiveSession(null);
       if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "session_expired");
+        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.sessionExpired);
       }
       setUser(null);
       setSessionExpiresAt(null);
@@ -264,7 +253,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       persistSession(activeRole, null);
       mirrorActiveSession(null);
       if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "session_expired");
+        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.sessionExpired);
       }
       addAuthAuditRecord({
         action: "SESSION_EXPIRED",
@@ -286,7 +275,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       const nextRole = preferredRole || resolveRoleFromEmail(safeEmail);
       const nextUser = buildMockUser(safeEmail, nextRole);
-      const expiresAt = Date.now() + SESSION_EXPIRY_MS;
+      const expiresAt = Date.now() + AUTH_SESSION_EXPIRY_MS;
       persistSession(nextRole, nextUser);
       persistActiveRole(nextRole);
       mirrorActiveSession(nextUser);
@@ -306,7 +295,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const mockLoginAsRole = async (requestedRole: Role, source: "social" | "access" = "access") => {
       const email = `${requestedRole}@faithhub.app`;
       const nextUser = buildMockUser(email, requestedRole);
-      const expiresAt = Date.now() + SESSION_EXPIRY_MS;
+      const expiresAt = Date.now() + AUTH_SESSION_EXPIRY_MS;
       persistSession(requestedRole, nextUser);
       persistActiveRole(requestedRole);
       mirrorActiveSession(nextUser);
@@ -337,7 +326,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       setSessionExpiresAt(null);
       if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "role_login_required");
+        window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.roleLoginRequired);
       }
     };
 
@@ -362,13 +351,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         persistSession(activeRole, null);
         mirrorActiveSession(null);
         if (typeof window !== "undefined") {
-          window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "logout");
+          window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.logout);
         }
         setUser(null);
         setSessionExpiresAt(null);
       },
       logoutAllRoles: () => {
-        for (const key of getAllRoleSessionKeys()) {
+        for (const key of getAllRoleSessionStorageKeys()) {
           if (typeof window !== "undefined") {
             window.localStorage.removeItem(key);
           }
@@ -383,7 +372,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(null);
         setSessionExpiresAt(null);
         if (typeof window !== "undefined") {
-          window.sessionStorage.setItem(NOTICE_STORAGE_KEY, "logout");
+          window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, AUTH_NOTICE_REASONS.logout);
         }
       },
       switchRole,

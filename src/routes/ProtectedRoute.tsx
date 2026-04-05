@@ -5,18 +5,13 @@ import { defaultPageForRole } from "@/config/pageRegistry";
 import { routes } from "@/constants/routes";
 import type { Role } from "@/types/roles";
 import { addAuthAuditRecord } from "@/data/authAudit";
+import { AUTH_NOTICE_REASONS, AUTH_STORAGE_KEYS, getRoleSessionStorageKey } from "@/constants/auth";
+import { roleFromPath } from "@/auth/roleRouting";
 
 type ProtectedRouteProps = {
   roles?: Role[];
   children?: React.ReactNode;
 };
-
-function roleFromPath(pathname: string): Role | null {
-  if (pathname.startsWith("/app/admin") || pathname.startsWith("/admin")) return "admin";
-  if (pathname.startsWith("/app/provider") || pathname.startsWith("/provider")) return "provider";
-  if (pathname.startsWith("/app/user") || pathname.startsWith("/user") || pathname === "/home") return "user";
-  return null;
-}
 
 export default function ProtectedRoute({ roles, children }: ProtectedRouteProps) {
   const location = useLocation();
@@ -24,10 +19,10 @@ export default function ProtectedRoute({ roles, children }: ProtectedRouteProps)
   const requiredRole = roles?.[0] || roleFromPath(location.pathname) || currentRole;
   const roleSession =
     typeof window !== "undefined"
-      ? window.localStorage.getItem(`faithhub_session_${requiredRole}`)
+      ? window.localStorage.getItem(getRoleSessionStorageKey(requiredRole))
       : null;
   const authNotice =
-    typeof window !== "undefined" ? window.sessionStorage.getItem("faithhub_auth_notice") : null;
+    typeof window !== "undefined" ? window.sessionStorage.getItem(AUTH_STORAGE_KEYS.notice) : null;
 
   if (isAuthLoading) {
     return (
@@ -52,7 +47,7 @@ export default function ProtectedRoute({ roles, children }: ProtectedRouteProps)
         to={routes.public.loginByRole(requiredRole)}
         replace
         state={{
-          reason: authNotice || "auth_required",
+          reason: authNotice || AUTH_NOTICE_REASONS.authRequired,
           requiredRole,
         }}
       />

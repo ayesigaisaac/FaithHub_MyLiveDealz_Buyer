@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/auth/AuthContext";
 import { routes } from "@/constants/routes";
+import { AUTH_NOTICE_REASONS, AUTH_STORAGE_KEYS } from "@/constants/auth";
 import { trackEvent } from "@/data/tracker";
 import { useColorMode } from "@/theme/color-mode";
 import type { Role } from "@/types/roles";
+import { isRole } from "@/auth/roleRouting";
+import { roleLoginHeadings } from "@/features/auth/roleMeta";
 
 const logoPortraitSrc = "/assets/branding/logo-portrait.png";
-const NOTICE_STORAGE_KEY = "faithhub_auth_notice";
 
 type SocialProvider = "google" | "microsoft" | "apple" | "evzone";
 
@@ -29,24 +31,6 @@ const roleOptions: Array<{ value: Role; label: string }> = [
   { value: "provider", label: "Provider" },
   { value: "admin", label: "Admin" },
 ];
-
-const roleHeading: Record<Role, { title: string; subtitle: string; chip: string }> = {
-  user: {
-    title: "Welcome back, Member",
-    subtitle: "Sign in to continue your FaithHub community journey.",
-    chip: "User access",
-  },
-  provider: {
-    title: "Provider workspace access",
-    subtitle: "Sign in to manage content, events, and engagement.",
-    chip: "Provider access",
-  },
-  admin: {
-    title: "Admin command sign-in",
-    subtitle: "Authenticate to access governance, trust, and operations controls.",
-    chip: "Admin access",
-  },
-};
 
 function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -80,9 +64,9 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
-  const routeRole = roleParam === "user" || roleParam === "provider" || roleParam === "admin" ? roleParam : null;
+  const routeRole = isRole(roleParam) ? roleParam : null;
   const roleLocked = Boolean(routeRole);
-  const activeRoleMeta = roleHeading[role];
+  const activeRoleMeta = roleLoginHeadings[role];
 
   useEffect(() => {
     if (routeRole) {
@@ -98,18 +82,18 @@ export default function LoginPage() {
   useEffect(() => {
     const reasonFromState = (location.state as { reason?: string } | null)?.reason;
     const reasonFromSession =
-      typeof window !== "undefined" ? window.sessionStorage.getItem(NOTICE_STORAGE_KEY) : null;
+      typeof window !== "undefined" ? window.sessionStorage.getItem(AUTH_STORAGE_KEYS.notice) : null;
     const reason = reasonFromState || reasonFromSession;
     if (!reason) return;
 
-    if (reason === "session_expired") setMessage("Your session expired. Please sign in again.");
-    else if (reason === "logout") setMessage("You have been signed out successfully.");
-    else if (reason === "role_login_required" && routeRole)
+    if (reason === AUTH_NOTICE_REASONS.sessionExpired) setMessage("Your session expired. Please sign in again.");
+    else if (reason === AUTH_NOTICE_REASONS.logout) setMessage("You have been signed out successfully.");
+    else if (reason === AUTH_NOTICE_REASONS.roleLoginRequired && routeRole)
       setMessage(`Please sign in as ${routeRole} to continue.`);
-    else if (reason === "auth_required") setMessage("Please sign in to continue.");
+    else if (reason === AUTH_NOTICE_REASONS.authRequired) setMessage("Please sign in to continue.");
 
     if (typeof window !== "undefined") {
-      window.sessionStorage.removeItem(NOTICE_STORAGE_KEY);
+      window.sessionStorage.removeItem(AUTH_STORAGE_KEYS.notice);
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);

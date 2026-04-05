@@ -1,4 +1,5 @@
 import type { Role } from "@/types/roles";
+import { AUTH_STORAGE_KEYS } from "@/constants/auth";
 
 export type AuthAuditAction =
   | "LOGIN_SUCCESS"
@@ -20,7 +21,7 @@ export type AuthAuditRecord = {
   createdAt: string;
 };
 
-const STORAGE_KEY = "faithhub_auth_audit.v1";
+const STORAGE_KEY = AUTH_STORAGE_KEYS.audit;
 const MAX_RECORDS = 150;
 
 function canUseStorage() {
@@ -71,4 +72,3 @@ export function clearAuthAuditRecords() {
   if (!canUseStorage()) return;
   window.localStorage.removeItem(STORAGE_KEY);
 }
-
