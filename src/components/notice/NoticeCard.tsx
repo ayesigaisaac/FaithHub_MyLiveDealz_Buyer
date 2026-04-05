@@ -85,8 +85,11 @@ function NoticeCardComponent({
 }: NoticeCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const menuListRef = useRef<HTMLDivElement | null>(null);
   const meta = useMemo(() => typeMeta(notice.type), [notice.type]);
   const TypeIcon = meta.icon;
+  const menuId = `notice-actions-${notice.id}`;
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -101,6 +104,7 @@ function NoticeCardComponent({
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMenuOpen(false);
+        menuButtonRef.current?.focus();
       }
     };
 
@@ -110,6 +114,12 @@ function NoticeCardComponent({
       document.removeEventListener("mousedown", handleOutsideClick);
       document.removeEventListener("keydown", handleEscape);
     };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const firstMenuItem = menuListRef.current?.querySelector<HTMLButtonElement>("button[role='menuitem']");
+    firstMenuItem?.focus();
   }, [menuOpen]);
 
   const cardClass = [
@@ -154,22 +164,64 @@ function NoticeCardComponent({
               {canManage ? (
                 <div className="relative" ref={menuRef}>
                   <button
+                    ref={menuButtonRef}
                     type="button"
                     onClick={() => setMenuOpen((prev) => !prev)}
+                    onKeyDown={(event) => {
+                      if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setMenuOpen(true);
+                      }
+                    }}
                     className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] transition hover:bg-[var(--accent-soft)] hover:text-[var(--text-primary)]"
                     aria-label="Open notice actions"
+                    aria-haspopup="menu"
+                    aria-controls={menuOpen ? menuId : undefined}
                     aria-expanded={menuOpen}
                   >
                     <MoreVertical className="h-4 w-4" />
                   </button>
 
                   {menuOpen ? (
-                    <div className="absolute right-0 top-10 z-20 w-40 rounded-xl border border-[var(--border)] bg-[var(--card)] p-1.5 shadow-[var(--fh-shadow-card)]">
+                    <div
+                      id={menuId}
+                      ref={menuListRef}
+                      role="menu"
+                      aria-label="Notice actions"
+                      onKeyDown={(event) => {
+                        const menuItems = Array.from(
+                          menuListRef.current?.querySelectorAll<HTMLButtonElement>("button[role='menuitem']") || [],
+                        );
+                        if (!menuItems.length) return;
+                        const activeElement = document.activeElement;
+                        const currentIndex = menuItems.findIndex((item) => item === activeElement);
+                        if (event.key === "Escape") {
+                          event.preventDefault();
+                          setMenuOpen(false);
+                          menuButtonRef.current?.focus();
+                          return;
+                        }
+                        if (event.key === "ArrowDown") {
+                          event.preventDefault();
+                          const nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % menuItems.length;
+                          menuItems[nextIndex]?.focus();
+                        }
+                        if (event.key === "ArrowUp") {
+                          event.preventDefault();
+                          const prevIndex =
+                            currentIndex < 0 ? menuItems.length - 1 : (currentIndex - 1 + menuItems.length) % menuItems.length;
+                          menuItems[prevIndex]?.focus();
+                        }
+                      }}
+                      className="absolute right-0 top-10 z-20 w-40 rounded-xl border border-[var(--border)] bg-[var(--card)] p-1.5 shadow-[var(--fh-shadow-card)]"
+                    >
                       <button
                         type="button"
+                        role="menuitem"
                         onClick={() => {
                           onTogglePin?.(notice.id);
                           setMenuOpen(false);
+                          menuButtonRef.current?.focus();
                         }}
                         className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm text-[var(--text-primary)] transition hover:bg-[var(--accent-soft)]"
                       >
@@ -179,9 +231,11 @@ function NoticeCardComponent({
 
                       <button
                         type="button"
+                        role="menuitem"
                         onClick={() => {
                           onEdit?.(notice);
                           setMenuOpen(false);
+                          menuButtonRef.current?.focus();
                         }}
                         className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm text-[var(--text-primary)] transition hover:bg-[var(--accent-soft)]"
                       >
@@ -191,9 +245,11 @@ function NoticeCardComponent({
 
                       <button
                         type="button"
+                        role="menuitem"
                         onClick={() => {
                           onDelete?.(notice.id);
                           setMenuOpen(false);
+                          menuButtonRef.current?.focus();
                         }}
                         className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm text-[var(--warning)] transition hover:bg-[rgba(247,127,0,0.12)]"
                       >

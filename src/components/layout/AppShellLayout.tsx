@@ -111,6 +111,7 @@ export default function AppShellLayout() {
   const [pendingRoleSwitch, setPendingRoleSwitch] = useState<{ role: RoleKey } | null>(null);
   const [sessionMsRemaining, setSessionMsRemaining] = useState<number | null>(null);
   const searchContainerRef = useRef<HTMLLabelElement | null>(null);
+  const pendingRoleDialogRef = useRef<HTMLDivElement | null>(null);
 
   const sidebarSections = useMemo(
     () => buildUnifiedSidebarSections({ role: shellRole, query: navQuery }),
@@ -208,11 +209,11 @@ export default function AppShellLayout() {
       button.textContent ||
       "";
     const label = rawLabel.replace(/\s+/g, " ").trim();
-    const hasIconOnlyContent = !label && !actionId && Boolean(button.querySelector("svg"));
+    if (!label && !actionId) return;
+
     const actionPath =
       resolvePageButtonAction(currentPage?.path || location.pathname, label, actionId) ||
-      resolveIconOnlyFallbackPath(button, shellRole) ||
-      (hasIconOnlyContent ? alertRouteByRole[shellRole] : null);
+      resolveIconOnlyFallbackPath(button, shellRole);
     if (!actionPath) return;
     event.preventDefault();
     if (actionPath === "__back__") {
@@ -241,6 +242,7 @@ export default function AppShellLayout() {
   };
 
   useEffect(() => {
+    setMobileOpen(false);
     setAccountSwitcherOpen(false);
     setSearchOpen(false);
   }, [location.pathname]);
@@ -266,6 +268,20 @@ export default function AppShellLayout() {
     const timer = window.setInterval(update, 1000);
     return () => window.clearInterval(timer);
   }, [sessionExpiresAt, user]);
+
+  useEffect(() => {
+    if (!pendingRoleSwitch) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setPendingRoleSwitch(null);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    pendingRoleDialogRef.current?.focus();
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [pendingRoleSwitch]);
 
   return (
     <div className="fh-page-canvas h-[100dvh] overflow-hidden bg-[var(--bg)] text-[var(--text-primary)]">
@@ -381,8 +397,22 @@ export default function AppShellLayout() {
       />
 
       {pendingRoleSwitch ? (
-        <div className="fixed inset-0 z-[85] flex items-center justify-center bg-slate-950/60 p-4">
-          <div className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-5 shadow-[var(--shadow-soft)]">
+        <div
+          className="fixed inset-0 z-[85] flex items-center justify-center bg-slate-950/60 p-4"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setPendingRoleSwitch(null);
+            }
+          }}
+        >
+          <div
+            ref={pendingRoleDialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Confirm role switch"
+            tabIndex={-1}
+            className="w-full max-w-md rounded-2xl border border-[var(--border)] bg-[var(--panel)] p-5 shadow-[var(--shadow-soft)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)]"
+          >
             <div className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--text-muted,#6B7280)]">
               Confirm role switch
             </div>
