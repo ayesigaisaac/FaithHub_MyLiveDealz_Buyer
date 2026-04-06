@@ -171,29 +171,29 @@ export default function LoginPage() {
           : "bg-[radial-gradient(circle_at_top,rgba(3,200,220,0.12),transparent_35%),#f3f6fb] text-[#0f172a]"
       }`}
     >
-      <div className="mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-md items-center justify-center">
+      <div className="mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-md items-center justify-center overflow-hidden">
         <Card
-          className={`max-h-[95vh] w-full overflow-hidden rounded-2xl shadow-lg transition-all duration-300 ${
+          className={`h-[90vh] w-full overflow-hidden rounded-2xl shadow-lg transition-all duration-300 ${
             isDark
               ? "border border-white/10 bg-[#0f172a]"
               : "border border-slate-200 bg-white"
           }`}
         >
-          <CardContent className="space-y-4 p-6">
-            <div className="space-y-2 text-center">
+          <CardContent className="flex h-full flex-col gap-3 p-5">
+            <div className="space-y-1.5 text-center">
               <img src={logoPortraitSrc} alt="FaithHub" className="mx-auto h-10 w-auto object-contain" />
               <div>
                 <div className="mb-1.5 inline-flex rounded-full border border-[#03c8dc]/35 bg-[#03c8dc]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#03c8dc]">
                   {activeRoleMeta.chip}
                 </div>
-                <h1 className={`text-xl font-semibold ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>{activeRoleMeta.title}</h1>
-                <p className={`mt-1 text-sm ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
+                <h1 className={`text-lg font-semibold ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>{activeRoleMeta.title}</h1>
+                <p className={`mt-0.5 text-xs ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
                   {activeRoleMeta.subtitle}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
               <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
                 login with email
@@ -201,42 +201,43 @@ export default function LoginPage() {
               <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
             </div>
 
-            <section
-              className={`rounded-xl p-2 ${
-                isDark ? "border border-white/10 bg-[#020617]" : "border border-slate-200 bg-slate-50"
-              }`}
-            >
-              <div className={`mb-2 px-2 text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
-                Role
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                {roleOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    disabled={roleLocked}
-                    onClick={() => setRole(option.value)}
-                    className={`min-h-[42px] rounded-lg text-sm font-semibold transition-all duration-200 ${
-                      role === option.value
-                        ? "border border-[#03c8dc] bg-[#03c8dc]/10 text-[#03c8dc]"
-                        : isDark
-                          ? "text-[#9CA3AF] hover:bg-white/5 hover:text-[#F9FAFB]"
-                          : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-                    } ${roleLocked ? "cursor-not-allowed opacity-70" : ""}`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </section>
+            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
+              <section
+                className={`rounded-xl p-2 ${
+                  isDark ? "border border-white/10 bg-[#020617]" : "border border-slate-200 bg-slate-50"
+                }`}
+              >
+                <div className={`mb-1.5 px-2 text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
+                  Role
+                </div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {roleOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      disabled={roleLocked}
+                      onClick={() => setRole(option.value)}
+                      className={`min-h-[36px] rounded-lg text-sm font-semibold transition-all duration-200 ${
+                        role === option.value
+                          ? "border border-[#03c8dc] bg-[#03c8dc]/10 text-[#03c8dc]"
+                          : isDark
+                            ? "text-[#9CA3AF] hover:bg-white/5 hover:text-[#F9FAFB]"
+                            : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+                      } ${roleLocked ? "cursor-not-allowed opacity-70" : ""}`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </section>
 
-            <form className="space-y-4" onSubmit={handleLogin}>
-              <label className="block space-y-2" htmlFor="login-email">
+              <form className="space-y-3" onSubmit={handleLogin}>
+                <label className="block space-y-1.5" htmlFor="login-email">
                 <span className={`text-sm font-medium ${isDark ? "text-[#E5E7EB]" : "text-slate-700"}`}>
                   Email address
                 </span>
                 <div
-                  className={`flex min-h-[48px] items-center gap-2 rounded-xl border px-3 transition-all duration-200 focus-within:ring-2 ${
+                  className={`flex min-h-[42px] items-center gap-2 rounded-xl border px-3 transition-all duration-200 focus-within:ring-2 ${
                     fieldErrors.email
                       ? "border-[#f77f00]/70 focus-within:ring-[#f77f00]/20"
                       : isDark
@@ -261,12 +262,12 @@ export default function LoginPage() {
                 {fieldErrors.email ? <p className="text-xs text-[#f77f00]">{fieldErrors.email}</p> : null}
               </label>
 
-              <label className="block space-y-2" htmlFor="login-password">
+              <label className="block space-y-1.5" htmlFor="login-password">
                 <span className={`text-sm font-medium ${isDark ? "text-[#E5E7EB]" : "text-slate-700"}`}>
                   Password
                 </span>
                 <div
-                  className={`flex min-h-[48px] items-center gap-2 rounded-xl border px-3 transition-all duration-200 focus-within:ring-2 ${
+                  className={`flex min-h-[42px] items-center gap-2 rounded-xl border px-3 transition-all duration-200 focus-within:ring-2 ${
                     fieldErrors.password
                       ? "border-[#f77f00]/70 focus-within:ring-[#f77f00]/20"
                       : isDark
@@ -292,7 +293,7 @@ export default function LoginPage() {
                     onClick={() => setShowPassword((prev) => !prev)}
                     aria-label={showPassword ? "Hide password" : "Show password"}
                     aria-pressed={showPassword}
-                    className="min-h-[40px] min-w-[40px] text-gray-400 transition hover:text-[#03c8dc]"
+                    className="min-h-[34px] min-w-[34px] text-gray-400 transition hover:text-[#03c8dc]"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -302,7 +303,7 @@ export default function LoginPage() {
                 ) : null}
               </label>
 
-              <div className={`flex items-center justify-between text-sm ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
+              <div className={`flex items-center justify-between text-xs ${isDark ? "text-[#9CA3AF]" : "text-slate-600"}`}>
                 <label className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -329,14 +330,14 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="h-10 w-full rounded-xl bg-[#03c8dc] text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgba(3,200,220,0.75)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#02b4c6]"
+                className="h-9 w-full rounded-xl bg-[#03c8dc] text-sm font-semibold text-white shadow-[0_10px_24px_-12px_rgba(3,200,220,0.75)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#02b4c6]"
                 disabled={!canSubmit || isSubmitting}
               >
                 {isSubmitting ? "Signing in..." : "Login with email"}
               </Button>
             </form>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
               <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
                 or continue with
@@ -344,24 +345,24 @@ export default function LoginPage() {
               <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
             </div>
 
-            <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
               {socialProviders.map((provider) => (
                 <button
                   key={provider.id}
                   type="button"
                   onClick={() => handleSocialLogin(provider.id)}
                   disabled={isSubmitting}
-                  className={`group flex min-h-[42px] w-full items-center gap-2 rounded-xl border px-3 py-2 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
+                  className={`group flex min-h-[38px] w-full items-center gap-2 rounded-xl border px-2.5 py-1.5 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
                     isDark
                       ? "border-white/10 bg-[#020617] hover:border-[#03c8dc]/40 hover:bg-white/5"
                       : "border-slate-200 bg-white hover:border-[#03c8dc]/35 hover:bg-slate-50"
                   }`}
                 >
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#03c8dc]/12 transition group-hover:bg-[#03c8dc]/20">
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-[#03c8dc]/12 transition group-hover:bg-[#03c8dc]/20">
                     <img src={provider.logoSrc} alt={`${provider.id} logo`} className="h-4 w-4 object-contain" />
                   </span>
-                  <span className={`text-sm font-medium ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
-                    {provider.label}
+                  <span className={`text-xs font-medium ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
+                    {provider.label.replace("Continue with ", "")}
                   </span>
                 </button>
               ))}
@@ -377,6 +378,7 @@ export default function LoginPage() {
                 Create an account
               </button>
             </p>
+            </div>
           </CardContent>
         </Card>
       </div>
