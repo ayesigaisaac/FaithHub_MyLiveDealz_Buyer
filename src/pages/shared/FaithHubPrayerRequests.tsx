@@ -48,6 +48,7 @@ export default function FaithHubPrayerRequests() {
   const [requests, setRequests] = useState<PrayerRequestRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [sortMode, setSortMode] = useState<"recent" | "trending">("recent");
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<PrayerRequestRecord["category"] | "all">("all");
   const [urgencyFilter, setUrgencyFilter] = useState<PrayerRequestRecord["urgency"] | "all">("all");
@@ -57,12 +58,17 @@ export default function FaithHubPrayerRequests() {
   const [openRepliesByComment, setOpenRepliesByComment] = useState<Record<string, boolean>>({});
   const [openCommentsByRequest, setOpenCommentsByRequest] = useState<Record<string, boolean>>({});
   const [prayedByRequest, setPrayedByRequest] = useState<Record<string, boolean>>({});
+  const [followedByRequest, setFollowedByRequest] = useState<Record<string, boolean>>({});
   const [testimonyDrafts, setTestimonyDrafts] = useState<Record<string, string>>({});
   const [openTestimonyComposer, setOpenTestimonyComposer] = useState<Record<string, boolean>>({});
   const [testimonyByPrayer, setTestimonyByPrayer] = useState<Record<string, Testimony>>({});
 
   const prayedStorageKey = useMemo(
     () => `faithhub_prayer_prayed_${user?.email || user?.name || "guest"}`,
+    [user?.email, user?.name],
+  );
+  const followedStorageKey = useMemo(
+    () => `faithhub_prayer_followed_${user?.email || user?.name || "guest"}`,
     [user?.email, user?.name],
   );
 
@@ -77,10 +83,30 @@ export default function FaithHubPrayerRequests() {
     }
   }, [prayedStorageKey]);
 
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(followedStorageKey);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Record<string, boolean>;
+      setFollowedByRequest(parsed || {});
+    } catch {
+      setFollowedByRequest({});
+    }
+  }, [followedStorageKey]);
+
   const persistPrayedState = (next: Record<string, boolean>) => {
     setPrayedByRequest(next);
     try {
       window.localStorage.setItem(prayedStorageKey, JSON.stringify(next));
+    } catch {
+      // ignore storage errors
+    }
+  };
+
+  const persistFollowedState = (next: Record<string, boolean>) => {
+    setFollowedByRequest(next);
+    try {
+      window.localStorage.setItem(followedStorageKey, JSON.stringify(next));
     } catch {
       // ignore storage errors
     }
@@ -113,7 +139,7 @@ export default function FaithHubPrayerRequests() {
 
   const filteredRequests = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    return requests.filter((item) => {
+    const next = requests.filter((item) => {
       if (categoryFilter !== "all" && item.category !== categoryFilter) return false;
       if (urgencyFilter !== "all" && item.urgency !== urgencyFilter) return false;
       if (statusFilter !== "all" && item.status !== statusFilter) return false;
@@ -123,7 +149,20 @@ export default function FaithHubPrayerRequests() {
         item.description.toLowerCase().includes(q)
       );
     });
-  }, [requests, searchQuery, categoryFilter, urgencyFilter, statusFilter]);
+    if (sortMode === "trending") {
+      return next.slice().sort((a, b) => {
+        if (b.prayedCount !== a.prayedCount) return b.prayedCount - a.prayedCount;
+        return b.createdAt.localeCompare(a.createdAt);
+      });
+    }
+    return next.slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }, [requests, searchQuery, categoryFilter, urgencyFilter, statusFilter, sortMode]);
+
+  const getSimilarPrayers = (request: PrayerRequestRecord) =>
+    requests
+      .filter((item) => item.id !== request.id && item.category === request.category)
+      .sort((a, b) => b.prayedCount - a.prayedCount)
+      .slice(0, 2);
 
   const handleCreate = async (input: {
     title: string;
@@ -323,6 +362,9 @@ export default function FaithHubPrayerRequests() {
                 <Badge className="fh-pill fh-pill-emerald">{activeCount} active</Badge>
                 <Badge className="fh-pill fh-pill-slate">{urgentCount} urgent</Badge>
                 <Badge className="fh-pill fh-pill-slate">{filteredRequests.length} shown</Badge>
+                {sortMode === "trending" ? (
+                  <Badge className="fh-pill bg-[rgba(3,205,140,0.18)] text-[var(--accent)]">Trending</Badge>
+                ) : null}
               </div>
             </div>
             <Button className="fh-user-primary-btn" onClick={() => setIsFormOpen((previous) => !previous)}>
@@ -330,7 +372,7 @@ export default function FaithHubPrayerRequests() {
               {isFormOpen ? "Close Form" : "New Prayer Request"}
             </Button>
           </div>
-          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
             <input
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
@@ -356,6 +398,14 @@ export default function FaithHubPrayerRequests() {
               <option value="all">All urgency</option>
               <option value="normal">Normal</option>
               <option value="urgent">Urgent</option>
+            </select>
+            <select
+              value={sortMode}
+              onChange={(event) => setSortMode(event.target.value as "recent" | "trending")}
+              className="h-10 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.36)]"
+            >
+              <option value="recent">Sort: Recent</option>
+              <option value="trending">Sort: Trending</option>
             </select>
             <select
               value={statusFilter}
@@ -448,6 +498,24 @@ export default function FaithHubPrayerRequests() {
                   >
                     <Heart className="h-3.5 w-3.5" />
                     Support
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    uiSize="sm"
+                    className={`h-8 rounded-lg px-2 text-xs ${
+                      followedByRequest[request.id]
+                        ? "border-[rgba(3,205,140,0.35)] bg-[rgba(3,205,140,0.14)] text-[var(--accent)]"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      persistFollowedState({
+                        ...followedByRequest,
+                        [request.id]: !followedByRequest[request.id],
+                      })
+                    }
+                  >
+                    {followedByRequest[request.id] ? "Following" : "Follow"}
                   </Button>
                   {request.status !== "answered" ? (
                     <Button
@@ -606,6 +674,19 @@ export default function FaithHubPrayerRequests() {
                     </div>
                   ) : null}
                 </div>
+
+                {getSimilarPrayers(request).length ? (
+                  <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2">
+                    <div className="text-xs font-semibold text-[var(--text-primary)]">Similar prayers</div>
+                    <div className="mt-1 flex flex-wrap gap-1.5">
+                      {getSimilarPrayers(request).map((item) => (
+                        <Badge key={item.id} className="fh-pill fh-pill-slate">
+                          {item.title}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </CardContent>
             </Card>
           ))}
