@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   addPrayerComment,
+  adjustPrayerReaction,
   createPrayerRequest,
   getPrayerRequests,
-  incrementPrayerReaction,
 } from "@/data/repositories/prayerRepository";
 import { trackEvent } from "@/data/tracker";
 import type { PrayerRequestRecord } from "@/types/prayer";
@@ -42,6 +42,32 @@ export default function FaithHubPrayerRequests() {
   const [isLoading, setIsLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
+  const [prayedByRequest, setPrayedByRequest] = useState<Record<string, boolean>>({});
+
+  const prayedStorageKey = useMemo(
+    () => `faithhub_prayer_prayed_${user?.email || user?.name || "guest"}`,
+    [user?.email, user?.name],
+  );
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(prayedStorageKey);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Record<string, boolean>;
+      setPrayedByRequest(parsed || {});
+    } catch {
+      setPrayedByRequest({});
+    }
+  }, [prayedStorageKey]);
+
+  const persistPrayedState = (next: Record<string, boolean>) => {
+    setPrayedByRequest(next);
+    try {
+      window.localStorage.setItem(prayedStorageKey, JSON.stringify(next));
+    } catch {
+      // ignore storage errors
+    }
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -80,13 +106,51 @@ export default function FaithHubPrayerRequests() {
     );
   };
 
-  const handleReaction = async (id: string, type: "prayed" | "support") => {
-    const updated = await incrementPrayerReaction(id, type);
-    if (!updated) return;
-    setRequests((previous) => previous.map((item) => (item.id === id ? updated : item)));
+  const handleSupport = async (id: string) => {
+    const prevRequests = requests;
+    setRequests((previous) =>
+      previous.map((item) => (item.id === id ? { ...item, supportCount: item.supportCount + 1 } : item)),
+    );
+
+    const updated = await adjustPrayerReaction(id, "support", 1);
+    if (updated) {
+      setRequests((previous) => previous.map((item) => (item.id === id ? updated : item)));
+    } else {
+      setRequests(prevRequests);
+    }
+
     trackEvent(
       "REACTION_ADDED",
-      { postId: id, reaction: type === "prayed" ? "pray" : "support" },
+      { postId: id, reaction: "support" },
+      { role },
+    );
+  };
+
+  const handlePrayedToggle = async (id: string) => {
+    const wasPrayed = Boolean(prayedByRequest[id]);
+    const delta = wasPrayed ? -1 : 1;
+    const previousMap = prayedByRequest;
+    const nextMap = { ...previousMap, [id]: !wasPrayed };
+    const previousRequests = requests;
+
+    persistPrayedState(nextMap);
+    setRequests((previous) =>
+      previous.map((item) =>
+        item.id === id ? { ...item, prayedCount: Math.max(0, item.prayedCount + delta) } : item,
+      ),
+    );
+
+    const updated = await adjustPrayerReaction(id, "prayed", delta);
+    if (updated) {
+      setRequests((previous) => previous.map((item) => (item.id === id ? updated : item)));
+    } else {
+      persistPrayedState(previousMap);
+      setRequests(previousRequests);
+    }
+
+    trackEvent(
+      "REACTION_ADDED",
+      { postId: id, reaction: "pray" },
       { role },
     );
   };
@@ -94,10 +158,36 @@ export default function FaithHubPrayerRequests() {
   const handleComment = async (id: string) => {
     const message = (commentDrafts[id] || "").trim();
     if (!message) return;
-    const updated = await addPrayerComment(id, message, user?.name || user?.email || "Faith member");
-    if (!updated) return;
-    setRequests((previous) => previous.map((item) => (item.id === id ? updated : item)));
+
+    const author = user?.name || user?.email || "Faith member";
+    const optimisticComment = {
+      id: `temp-${Date.now()}`,
+      author,
+      message,
+      createdAt: new Date().toISOString(),
+    };
+    const prevRequests = requests;
+
+    setRequests((previous) =>
+      previous.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              comments: [...item.comments, optimisticComment],
+              commentCount: item.commentCount + 1,
+            }
+          : item,
+      ),
+    );
     setCommentDrafts((previous) => ({ ...previous, [id]: "" }));
+
+    const updated = await addPrayerComment(id, message, author);
+    if (updated) {
+      setRequests((previous) => previous.map((item) => (item.id === id ? updated : item)));
+    } else {
+      setRequests(prevRequests);
+    }
+
     trackEvent(
       "CLICK_BUTTON",
       { id: "prayer-comment", label: "Add comment", location: "community-prayer" },
@@ -144,39 +234,67 @@ export default function FaithHubPrayerRequests() {
 
       {isLoading ? (
         <Card className="fh-surface-card rounded-2xl">
-          <CardContent className="p-6 text-center text-sm text-[var(--text-secondary)]">Loading prayer requests...</CardContent>
+          <CardContent className="p-6 text-center text-sm text-[var(--text-secondary)]">
+            Loading prayer requests...
+          </CardContent>
         </Card>
       ) : (
         <div className="grid gap-3 lg:grid-cols-2">
           {requests.map((request) => (
-            <Card key={request.id} className={`fh-surface-card rounded-2xl ${request.urgency === "urgent" ? "border-[rgba(247,127,0,0.38)]" : ""}`}>
+            <Card
+              key={request.id}
+              className={`fh-surface-card rounded-2xl ${request.urgency === "urgent" ? "border-[rgba(247,127,0,0.38)]" : ""}`}
+            >
               <CardContent className="space-y-3 p-4 sm:p-5">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <h3 className="text-base font-semibold text-[var(--text-primary)]">{request.title}</h3>
                     <p className="mt-1 text-xs text-[var(--text-secondary)]">
-                      {request.createdBy} · {formatDate(request.createdAt)}
+                      {request.createdBy} • {formatDate(request.createdAt)}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     <Badge className="fh-pill fh-pill-slate">{categoryLabel(request.category)}</Badge>
                     <Badge className={statusClass(request.status)}>{request.status}</Badge>
-                    {request.urgency === "urgent" ? <Badge className="fh-pill bg-[#f77f00]/20 text-[#f77f00]">Urgent</Badge> : null}
+                    {request.urgency === "urgent" ? (
+                      <Badge className="fh-pill bg-[#f77f00]/20 text-[#f77f00]">Urgent</Badge>
+                    ) : null}
                   </div>
                 </div>
 
                 <p className="text-sm leading-relaxed text-[var(--text-primary)]">{request.description}</p>
 
                 <div className="flex flex-wrap gap-2">
-                  <Button type="button" variant="outline" uiSize="sm" className="h-8 rounded-lg px-2 text-xs" onClick={() => handleReaction(request.id, "prayed")}>
+                  <Badge className="fh-pill fh-pill-emerald">{request.prayedCount} people prayed</Badge>
+                  <Badge className="fh-pill fh-pill-slate">{request.supportCount} supports</Badge>
+                  <Badge className="fh-pill fh-pill-slate">{request.commentCount} comments</Badge>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    uiSize="sm"
+                    className={`h-8 rounded-lg px-2 text-xs ${
+                      prayedByRequest[request.id]
+                        ? "border-[rgba(3,205,140,0.35)] bg-[rgba(3,205,140,0.14)] text-[var(--accent)]"
+                        : ""
+                    }`}
+                    onClick={() => handlePrayedToggle(request.id)}
+                  >
                     <HeartHandshake className="h-3.5 w-3.5" />
-                    I prayed ({request.prayedCount})
+                    {prayedByRequest[request.id] ? "Undo Prayer" : "I Prayed"}
                   </Button>
-                  <Button type="button" variant="outline" uiSize="sm" className="h-8 rounded-lg px-2 text-xs" onClick={() => handleReaction(request.id, "support")}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    uiSize="sm"
+                    className="h-8 rounded-lg px-2 text-xs"
+                    onClick={() => handleSupport(request.id)}
+                  >
                     <Heart className="h-3.5 w-3.5" />
-                    Support ({request.supportCount})
+                    Support
                   </Button>
-                  <Badge className="fh-pill fh-pill-slate">Comments {request.commentCount}</Badge>
                 </div>
 
                 <div className="space-y-2">
@@ -195,7 +313,12 @@ export default function FaithHubPrayerRequests() {
                       placeholder="Add a prayer comment..."
                       className="min-h-[36px] w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-xs text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.36)]"
                     />
-                    <Button type="button" uiSize="sm" className="h-9 px-3 text-xs" onClick={() => handleComment(request.id)}>
+                    <Button
+                      type="button"
+                      uiSize="sm"
+                      className="h-9 px-3 text-xs"
+                      onClick={() => handleComment(request.id)}
+                    >
                       <MessageCircle className="h-3.5 w-3.5" />
                       Comment
                     </Button>

@@ -135,13 +135,22 @@ export async function createPrayerRequest(input: CreatePrayerRequestInput) {
 }
 
 export async function incrementPrayerReaction(requestId: string, reaction: "prayed" | "support") {
+  return adjustPrayerReaction(requestId, reaction, 1);
+}
+
+export async function adjustPrayerReaction(
+  requestId: string,
+  reaction: "prayed" | "support",
+  delta: number,
+) {
   await wait(80);
   const records = readStore().map((record) => {
     if (record.id !== requestId) return record;
+    const safeDelta = Number.isFinite(delta) ? delta : 0;
     if (reaction === "prayed") {
-      return { ...record, prayedCount: record.prayedCount + 1 };
+      return { ...record, prayedCount: Math.max(0, record.prayedCount + safeDelta) };
     }
-    return { ...record, supportCount: record.supportCount + 1 };
+    return { ...record, supportCount: Math.max(0, record.supportCount + safeDelta) };
   });
   writeStore(records);
   return records.find((record) => record.id === requestId) || null;
