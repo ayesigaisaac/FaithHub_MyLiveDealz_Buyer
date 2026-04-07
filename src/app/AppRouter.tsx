@@ -62,6 +62,12 @@ const prayerRouteByRole: Record<RoleKey, string> = {
   admin: routes.app.admin.noticeboard,
 };
 
+const journalRouteByRole: Record<RoleKey, string> = {
+  user: routes.app.user.journal,
+  provider: routes.app.provider.journal,
+  admin: routes.app.admin.noticeboard,
+};
+
 const testimoniesRouteByRole: Record<RoleKey, string> = {
   user: routes.app.user.testimonies,
   provider: routes.app.provider.testimonies,
@@ -203,6 +209,7 @@ export default function AppRouter() {
               <Route path="/resources" element={<Navigate to={resourcesRouteByRole[role]} replace />} />
               <Route path="/community" element={<Navigate to={communityRouteByRole[role]} replace />} />
               <Route path="/community/prayer" element={<Navigate to={prayerRouteByRole[role]} replace />} />
+              <Route path="/community/journal" element={<Navigate to={journalRouteByRole[role]} replace />} />
               <Route path="/community/testimonies" element={<Navigate to={testimoniesRouteByRole[role]} replace />} />
               <Route path="/counseling" element={<Navigate to={counselingRouteByRole[role]} replace />} />
               <Route path="/wallet" element={<Navigate to={walletRouteByRole[role]} replace />} />

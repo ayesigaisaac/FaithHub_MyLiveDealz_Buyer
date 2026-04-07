@@ -45,3 +45,9 @@ export interface Testimony {
   message: string;
   createdAt: string;
 }
+
+export interface PrayerJournalEntry {
+  id: string;
+  content: string;
+  createdAt: string;
+}

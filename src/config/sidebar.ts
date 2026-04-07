@@ -5,6 +5,7 @@ import {
   CalendarDays,
   HeartHandshake,
   Library,
+  NotebookPen,
   type LucideIcon,
   LayoutDashboard,
   Radio,
@@ -189,6 +190,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           activePrefixes: [routes.app.user.prayer],
         },
         {
+          id: "user-journal",
+          label: "Journal",
+          path: routes.app.user.journal,
+          icon: NotebookPen,
+          activePrefixes: [routes.app.user.journal],
+        },
+        {
           id: "user-testimonies",
           label: "Testimonies",
           path: routes.app.user.testimonies,
@@ -312,6 +320,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.provider.prayer,
           icon: HeartHandshake,
           activePrefixes: [routes.app.provider.prayer],
+        },
+        {
+          id: "provider-journal",
+          label: "Journal",
+          path: routes.app.provider.journal,
+          icon: NotebookPen,
+          activePrefixes: [routes.app.provider.journal],
         },
         {
           id: "provider-testimonies",
