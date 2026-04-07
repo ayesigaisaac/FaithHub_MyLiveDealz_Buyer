@@ -16,9 +16,11 @@ export interface PrayerRequest {
 
 export interface PrayerComment {
   id: string;
-  author: string;
+  prayerId: string;
+  user: string;
   message: string;
   createdAt: string;
+  replies?: PrayerComment[];
 }
 
 export interface PrayerRequestRecord extends PrayerRequest {

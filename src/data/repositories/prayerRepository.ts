@@ -40,9 +40,11 @@ function createSeedRequest(
     comments: [
       {
         id: `${id}-comment-1`,
-        author: "Faith member",
+        prayerId: id,
+        user: "Faith member",
         message: "Standing with you in prayer.",
         createdAt: new Date(Date.now() - (hoursAgo - 1) * 60 * 60 * 1000).toISOString(),
+        replies: [],
       },
     ],
   };
@@ -86,7 +88,27 @@ function parseRecords(raw: string | null): PrayerRequestRecord[] {
   try {
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed as PrayerRequestRecord[];
+    return (parsed as PrayerRequestRecord[]).map((record) => {
+      const comments = Array.isArray(record.comments)
+        ? record.comments.map((comment) => ({
+            ...comment,
+            prayerId: (comment as PrayerComment).prayerId || record.id,
+            user: (comment as PrayerComment).user || (comment as { author?: string }).author || "Faith member",
+            replies: Array.isArray((comment as PrayerComment).replies)
+              ? (comment as PrayerComment).replies!.map((reply) => ({
+                  ...reply,
+                  prayerId: reply.prayerId || record.id,
+                  user: reply.user || "Faith member",
+                }))
+              : [],
+          }))
+        : [];
+      return {
+        ...record,
+        comments,
+        commentCount: comments.reduce((total, comment) => total + 1 + (comment.replies?.length || 0), 0),
+      };
+    });
   } catch {
     return [];
   }
@@ -181,21 +203,40 @@ export async function adjustPrayerReaction(
   return records.find((record) => record.id === requestId) || null;
 }
 
-export async function addPrayerComment(requestId: string, message: string, author: string) {
+export async function addPrayerComment(
+  requestId: string,
+  message: string,
+  user: string,
+  parentCommentId?: string,
+) {
   await wait(100);
   const nextComment: PrayerComment = {
     id: `comment-${Date.now()}`,
-    author,
+    prayerId: requestId,
+    user,
     message: message.trim(),
     createdAt: new Date().toISOString(),
+    replies: [],
   };
   const records = readStore().map((record) => {
     if (record.id !== requestId) return record;
-    const comments = [...record.comments, nextComment];
+    let comments: PrayerComment[] = [];
+    if (parentCommentId) {
+      comments = record.comments.map((comment) =>
+        comment.id === parentCommentId
+          ? {
+              ...comment,
+              replies: [...(comment.replies || []), nextComment],
+            }
+          : comment,
+      );
+    } else {
+      comments = [...record.comments, nextComment];
+    }
     return {
       ...record,
       comments,
-      commentCount: comments.length,
+      commentCount: comments.reduce((total, comment) => total + 1 + (comment.replies?.length || 0), 0),
     };
   });
   writeStore(records);
