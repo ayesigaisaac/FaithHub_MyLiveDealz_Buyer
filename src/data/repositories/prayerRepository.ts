@@ -4,9 +4,11 @@ import type {
   PrayerComment,
   PrayerRequestRecord,
   PrayerStatus,
+  Testimony,
 } from "@/types/prayer";
 
 const STORAGE_KEY = "faithhub_prayer_requests";
+const TESTIMONY_STORAGE_KEY = "faithhub_prayer_testimonies";
 
 function wait(ms = 120) {
   return new Promise((resolve) => window.setTimeout(resolve, ms));
@@ -107,6 +109,29 @@ function writeStore(records: PrayerRequestRecord[]) {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(sortRecords(records)));
 }
 
+function parseTestimonies(raw: string | null): Testimony[] {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed as Testimony[];
+  } catch {
+    return [];
+  }
+}
+
+function readTestimoniesStore() {
+  if (typeof window === "undefined") return [] as Testimony[];
+  return parseTestimonies(window.localStorage.getItem(TESTIMONY_STORAGE_KEY)).sort((a, b) =>
+    b.createdAt.localeCompare(a.createdAt),
+  );
+}
+
+function writeTestimoniesStore(items: Testimony[]) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(TESTIMONY_STORAGE_KEY, JSON.stringify(items));
+}
+
 export async function getPrayerRequests() {
   await wait();
   return readStore();
@@ -175,4 +200,33 @@ export async function addPrayerComment(requestId: string, message: string, autho
   });
   writeStore(records);
   return records.find((record) => record.id === requestId) || null;
+}
+
+export async function markPrayerAnswered(
+  requestId: string,
+  testimonyMessage: string,
+) {
+  await wait(120);
+  const records = readStore().map((record) =>
+    record.id === requestId ? { ...record, status: "answered" as PrayerStatus } : record,
+  );
+  const nextRequest = records.find((record) => record.id === requestId) || null;
+  if (!nextRequest) return { request: null, testimony: null };
+
+  const nextTestimony: Testimony = {
+    id: `testimony-${Date.now()}`,
+    linkedPrayerId: requestId,
+    message: testimonyMessage.trim(),
+    createdAt: new Date().toISOString(),
+  };
+
+  const testimonies = [nextTestimony, ...readTestimoniesStore().filter((item) => item.linkedPrayerId !== requestId)];
+  writeStore(records);
+  writeTestimoniesStore(testimonies);
+  return { request: nextRequest, testimony: nextTestimony };
+}
+
+export async function getTestimonies() {
+  await wait(80);
+  return readTestimoniesStore();
 }

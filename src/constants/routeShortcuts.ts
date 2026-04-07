@@ -8,6 +8,7 @@ export const routeShortcuts: Record<string, string> = {
   "/provider/wallet": routes.app.provider.wallet,
   "/provider/community": routes.app.provider.community,
   "/provider/community/prayer": routes.app.provider.prayer,
+  "/provider/community/testimonies": routes.app.provider.testimonies,
   "/provider/resources": routes.app.provider.resources,
   "/provider/noticeboard": routes.app.provider.noticeboard,
   "/provider/content": routes.app.provider.seriesBuilder,
@@ -23,4 +24,5 @@ export const routeShortcuts: Record<string, string> = {
   "/qa": routes.app.user.qa,
   "/noticeboard": routes.app.user.noticeboard,
   "/community/prayer": routes.app.user.prayer,
+  "/community/testimonies": routes.app.user.testimonies,
 };

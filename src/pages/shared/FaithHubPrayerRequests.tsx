@@ -10,9 +10,11 @@ import {
   adjustPrayerReaction,
   createPrayerRequest,
   getPrayerRequests,
+  getTestimonies,
+  markPrayerAnswered,
 } from "@/data/repositories/prayerRepository";
 import { trackEvent } from "@/data/tracker";
-import type { PrayerRequestRecord } from "@/types/prayer";
+import type { PrayerRequestRecord, Testimony } from "@/types/prayer";
 
 function formatDate(value: string) {
   return new Date(value).toLocaleString(undefined, {
@@ -43,6 +45,9 @@ export default function FaithHubPrayerRequests() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [prayedByRequest, setPrayedByRequest] = useState<Record<string, boolean>>({});
+  const [testimonyDrafts, setTestimonyDrafts] = useState<Record<string, string>>({});
+  const [openTestimonyComposer, setOpenTestimonyComposer] = useState<Record<string, boolean>>({});
+  const [testimonyByPrayer, setTestimonyByPrayer] = useState<Record<string, Testimony>>({});
 
   const prayedStorageKey = useMemo(
     () => `faithhub_prayer_prayed_${user?.email || user?.name || "guest"}`,
@@ -71,9 +76,15 @@ export default function FaithHubPrayerRequests() {
 
   useEffect(() => {
     let mounted = true;
-    getPrayerRequests().then((data) => {
+    Promise.all([getPrayerRequests(), getTestimonies()]).then(([prayerData, testimonyData]) => {
       if (!mounted) return;
-      setRequests(data);
+      setRequests(prayerData);
+      setTestimonyByPrayer(
+        testimonyData.reduce<Record<string, Testimony>>((acc, item) => {
+          acc[item.linkedPrayerId] = item;
+          return acc;
+        }, {}),
+      );
       setIsLoading(false);
     });
     return () => {
@@ -195,6 +206,43 @@ export default function FaithHubPrayerRequests() {
     );
   };
 
+  const handleMarkAnswered = async (requestId: string) => {
+    const testimonyMessage = (testimonyDrafts[requestId] || "").trim();
+    if (!testimonyMessage) return;
+
+    const previousRequests = requests;
+    const previousTestimony = testimonyByPrayer;
+
+    setRequests((previous) =>
+      previous.map((item) => (item.id === requestId ? { ...item, status: "answered" } : item)),
+    );
+    const optimisticTestimony: Testimony = {
+      id: `temp-testimony-${Date.now()}`,
+      linkedPrayerId: requestId,
+      message: testimonyMessage,
+      createdAt: new Date().toISOString(),
+    };
+    setTestimonyByPrayer((previous) => ({ ...previous, [requestId]: optimisticTestimony }));
+    setOpenTestimonyComposer((previous) => ({ ...previous, [requestId]: false }));
+    setTestimonyDrafts((previous) => ({ ...previous, [requestId]: "" }));
+
+    const result = await markPrayerAnswered(requestId, testimonyMessage);
+    if (!result.request || !result.testimony) {
+      setRequests(previousRequests);
+      setTestimonyByPrayer(previousTestimony);
+      return;
+    }
+
+    setRequests((previous) => previous.map((item) => (item.id === requestId ? result.request! : item)));
+    setTestimonyByPrayer((previous) => ({ ...previous, [requestId]: result.testimony! }));
+
+    trackEvent(
+      "CLICK_BUTTON",
+      { id: "prayer-mark-answered", label: "Mark answered", location: "community-prayer" },
+      { role },
+    );
+  };
+
   return (
     <div className="space-y-4">
       <Card className="fh-surface-card rounded-[24px]">
@@ -256,6 +304,9 @@ export default function FaithHubPrayerRequests() {
                   <div className="flex flex-wrap gap-1.5">
                     <Badge className="fh-pill fh-pill-slate">{categoryLabel(request.category)}</Badge>
                     <Badge className={statusClass(request.status)}>{request.status}</Badge>
+                    {request.status === "answered" ? (
+                      <Badge className="fh-pill bg-[rgba(3,205,140,0.18)] text-[var(--accent)]">🙌 Answered</Badge>
+                    ) : null}
                     {request.urgency === "urgent" ? (
                       <Badge className="fh-pill bg-[#f77f00]/20 text-[#f77f00]">Urgent</Badge>
                     ) : null}
@@ -295,7 +346,57 @@ export default function FaithHubPrayerRequests() {
                     <Heart className="h-3.5 w-3.5" />
                     Support
                   </Button>
+                  {request.status !== "answered" ? (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      uiSize="sm"
+                      className="h-8 rounded-lg px-2 text-xs"
+                      onClick={() =>
+                        setOpenTestimonyComposer((previous) => ({
+                          ...previous,
+                          [request.id]: !previous[request.id],
+                        }))
+                      }
+                    >
+                      🙌 Mark Answered
+                    </Button>
+                  ) : null}
                 </div>
+
+                {request.status === "answered" && testimonyByPrayer[request.id] ? (
+                  <div className="rounded-xl border border-[rgba(3,205,140,0.28)] bg-[rgba(3,205,140,0.1)] px-3 py-2">
+                    <div className="text-xs font-semibold text-[var(--accent)]">Testimony</div>
+                    <div className="mt-1 text-sm text-[var(--text-primary)]">
+                      {testimonyByPrayer[request.id].message}
+                    </div>
+                  </div>
+                ) : null}
+
+                {openTestimonyComposer[request.id] ? (
+                  <div className="space-y-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3">
+                    <div className="text-xs font-semibold text-[var(--text-primary)]">
+                      Share testimony for this answered prayer
+                    </div>
+                    <textarea
+                      value={testimonyDrafts[request.id] || ""}
+                      onChange={(event) =>
+                        setTestimonyDrafts((previous) => ({
+                          ...previous,
+                          [request.id]: event.target.value,
+                        }))
+                      }
+                      rows={2}
+                      placeholder="How did God answer this request?"
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-xs text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.36)]"
+                    />
+                    <div className="flex justify-end">
+                      <Button type="button" uiSize="sm" className="h-8 px-3 text-xs" onClick={() => handleMarkAnswered(request.id)}>
+                        Save Testimony
+                      </Button>
+                    </div>
+                  </div>
+                ) : null}
 
                 <div className="space-y-2">
                   {request.comments.slice(-2).map((comment) => (

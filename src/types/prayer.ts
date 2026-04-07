@@ -36,3 +36,10 @@ export interface CreatePrayerRequestInput {
   urgency: PrayerUrgency;
   createdBy: string;
 }
+
+export interface Testimony {
+  id: string;
+  linkedPrayerId: string;
+  message: string;
+  createdAt: string;
+}

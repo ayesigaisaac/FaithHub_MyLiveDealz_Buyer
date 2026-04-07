@@ -17,6 +17,7 @@ import {
   MessageSquare,
   MonitorPlay,
   Compass,
+  Sparkles,
 } from "lucide-react";
 import { routes } from "@/constants/routes";
 import type { RoleKey } from "@/config/pageRegistry";
@@ -187,6 +188,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           icon: HeartHandshake,
           activePrefixes: [routes.app.user.prayer],
         },
+        {
+          id: "user-testimonies",
+          label: "Testimonies",
+          path: routes.app.user.testimonies,
+          icon: Sparkles,
+          activePrefixes: [routes.app.user.testimonies],
+        },
       ],
     },
     {
@@ -304,6 +312,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.provider.prayer,
           icon: HeartHandshake,
           activePrefixes: [routes.app.provider.prayer],
+        },
+        {
+          id: "provider-testimonies",
+          label: "Testimonies",
+          path: routes.app.provider.testimonies,
+          icon: Sparkles,
+          activePrefixes: [routes.app.provider.testimonies],
         },
         {
           id: "provider-counseling",

@@ -85,6 +85,7 @@ function getPageIndex(role: RoleKey): GlobalSearchResult[] {
       { id: "page-live", title: "Live", subtitle: "Join live sessions", path: routes.app.user.liveHub },
       { id: "page-community", title: "Community", subtitle: "Conversations and prayer", path: routes.app.user.community },
       { id: "page-prayer", title: "Prayer Requests", subtitle: "Community prayer wall", path: routes.app.user.prayer },
+      { id: "page-testimonies", title: "Testimonies", subtitle: "Answered prayer stories", path: routes.app.user.testimonies },
       { id: "page-give", title: "Giving", subtitle: "Give and support funds", path: routes.app.user.giving },
       { id: "page-wallet", title: "Wallet", subtitle: "Balance and transactions", path: routes.app.user.wallet },
       { id: "page-settings", title: "Settings", subtitle: "Profile and preferences", path: routes.app.user.settings },
@@ -95,6 +96,7 @@ function getPageIndex(role: RoleKey): GlobalSearchResult[] {
       { id: "page-provider-events", title: "Events", subtitle: "Schedule and manage events", path: routes.app.provider.events },
       { id: "page-provider-community", title: "Community", subtitle: "Provider engagement feed", path: routes.app.provider.community },
       { id: "page-provider-prayer", title: "Prayer Requests", subtitle: "Provider prayer support board", path: routes.app.provider.prayer },
+      { id: "page-provider-testimonies", title: "Testimonies", subtitle: "Answered prayer stories", path: routes.app.provider.testimonies },
       { id: "page-provider-wallet", title: "Wallet", subtitle: "Earnings and payouts", path: routes.app.provider.wallet },
     ],
     admin: [
