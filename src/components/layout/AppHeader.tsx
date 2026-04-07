@@ -1,6 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Bell, CircleUserRound, Menu, Search } from "lucide-react";
 import type { GlobalSearchResult } from "@/data/globalSearch";
+import {
+  getNotifications,
+  markAllNotificationsRead,
+  markNotificationRead,
+  notificationEvents,
+} from "@/data/notifications";
+import type { FaithHubNotification } from "@/types/notification";
 
 const logoIconSrc = "/assets/branding/logo-icon.png";
 
@@ -68,6 +75,14 @@ export default function AppHeader({
 
   const flattenedResults = useMemo(() => groupedResults.flatMap((group) => group.items), [groupedResults]);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const [notifications, setNotifications] = useState<FaithHubNotification[]>([]);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const notificationRef = useRef<HTMLDivElement | null>(null);
+  const unreadCount = useMemo(() => notifications.filter((item) => !item.read).length, [notifications]);
+
+  const reloadNotifications = () => {
+    setNotifications(getNotifications().slice(0, 12));
+  };
 
   useEffect(() => {
     if (!searchOpen || !flattenedResults.length) {
@@ -76,6 +91,32 @@ export default function AppHeader({
     }
     setActiveIndex(0);
   }, [flattenedResults.length, navQuery, searchOpen]);
+
+  useEffect(() => {
+    reloadNotifications();
+    const onUpdated = () => reloadNotifications();
+    const onStorage = (event: StorageEvent) => {
+      if (event.key && event.key !== "faithhub_notifications") return;
+      reloadNotifications();
+    };
+    window.addEventListener(notificationEvents.updated, onUpdated);
+    window.addEventListener("storage", onStorage);
+    return () => {
+      window.removeEventListener(notificationEvents.updated, onUpdated);
+      window.removeEventListener("storage", onStorage);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isNotificationsOpen) return;
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!notificationRef.current?.contains(event.target as Node)) {
+        setIsNotificationsOpen(false);
+      }
+    };
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, [isNotificationsOpen]);
 
   const activeResult = activeIndex >= 0 ? flattenedResults[activeIndex] : null;
 
@@ -243,19 +284,90 @@ export default function AppHeader({
           </div>
 
           <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
-            <button
-              type="button"
-              aria-label="Open alerts"
-              data-action-id="open-alerts"
-              title="Open alerts"
-              onClick={() => onNavigate(alertPath)}
-              className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
-            >
-              <Bell className="h-5 w-5" />
-              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white">
-                2
-              </span>
-            </button>
+            <div className="relative" ref={notificationRef}>
+              <button
+                type="button"
+                aria-label="Open notifications"
+                data-action-id="open-alerts"
+                title="Open notifications"
+                onClick={() => setIsNotificationsOpen((prev) => !prev)}
+                className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
+              >
+                <Bell className="h-5 w-5" />
+                {unreadCount > 0 ? (
+                  <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white">
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                ) : null}
+              </button>
+
+              {isNotificationsOpen ? (
+                <div
+                  className="absolute right-0 top-[calc(100%+0.45rem)] z-50 w-[22rem] rounded-xl border border-[var(--border)] bg-[var(--panel)] p-2 shadow-[var(--shadow-soft)]"
+                  data-no-nav
+                >
+                  <div className="mb-1.5 flex items-center justify-between px-1.5">
+                    <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+                      Notifications
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {unreadCount > 0 ? (
+                        <button
+                          type="button"
+                          className="text-[11px] font-semibold text-[var(--accent)] hover:underline"
+                          onClick={() => {
+                            markAllNotificationsRead();
+                            reloadNotifications();
+                          }}
+                        >
+                          Mark all read
+                        </button>
+                      ) : null}
+                      <button
+                        type="button"
+                        className="text-[11px] font-semibold text-[var(--text-secondary)] hover:underline"
+                        onClick={() => {
+                          setIsNotificationsOpen(false);
+                          onNavigate(alertPath);
+                        }}
+                      >
+                        View all
+                      </button>
+                    </div>
+                  </div>
+                  {notifications.length ? (
+                    <div className="max-h-80 space-y-1 overflow-y-auto pr-0.5">
+                      {notifications.map((notification) => (
+                        <button
+                          key={notification.id}
+                          type="button"
+                          onClick={() => {
+                            if (!notification.read) {
+                              markNotificationRead(notification.id);
+                              reloadNotifications();
+                            }
+                          }}
+                          className={`w-full rounded-lg border px-2.5 py-2 text-left transition ${
+                            notification.read
+                              ? "border-[var(--border)] bg-[var(--card)]"
+                              : "border-[rgba(3,205,140,0.28)] bg-[rgba(3,205,140,0.1)]"
+                          }`}
+                        >
+                          <div className="text-xs font-semibold text-[var(--text-primary)]">{notification.message}</div>
+                          <div className="mt-1 text-[11px] text-[var(--text-secondary)]">
+                            {new Date(notification.createdAt).toLocaleString()}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="px-2 py-3 text-xs text-[var(--text-secondary)]">
+                      No notifications yet.
+                    </div>
+                  )}
+                </div>
+              ) : null}
+            </div>
             <div className="relative">
               <button
                 type="button"

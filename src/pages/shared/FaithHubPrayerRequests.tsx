@@ -13,6 +13,7 @@ import {
   getTestimonies,
   markPrayerAnswered,
 } from "@/data/repositories/prayerRepository";
+import { createNotification } from "@/data/notifications";
 import { trackEvent } from "@/data/tracker";
 import type { PrayerRequestRecord, Testimony } from "@/types/prayer";
 
@@ -36,6 +37,10 @@ function statusClass(status: PrayerRequestRecord["status"]) {
   if (status === "answered") return "fh-pill fh-pill-emerald";
   if (status === "ongoing") return "fh-pill fh-pill-slate";
   return "fh-pill fh-pill-slate";
+}
+
+function normalizeIdentity(value: string | undefined | null) {
+  return (value || "").trim().toLowerCase();
 }
 
 export default function FaithHubPrayerRequests() {
@@ -138,6 +143,7 @@ export default function FaithHubPrayerRequests() {
   };
 
   const handlePrayedToggle = async (id: string) => {
+    const request = requests.find((item) => item.id === id);
     const wasPrayed = Boolean(prayedByRequest[id]);
     const delta = wasPrayed ? -1 : 1;
     const previousMap = prayedByRequest;
@@ -159,6 +165,13 @@ export default function FaithHubPrayerRequests() {
       setRequests(previousRequests);
     }
 
+    if (!wasPrayed && request) {
+      const actor = user?.name || user?.email || "A member";
+      if (normalizeIdentity(request.createdBy) !== normalizeIdentity(actor)) {
+        createNotification("prayed", `${actor} prayed for your request: "${request.title}"`);
+      }
+    }
+
     trackEvent(
       "REACTION_ADDED",
       { postId: id, reaction: "pray" },
@@ -167,6 +180,7 @@ export default function FaithHubPrayerRequests() {
   };
 
   const handleComment = async (id: string) => {
+    const request = requests.find((item) => item.id === id);
     const message = (commentDrafts[id] || "").trim();
     if (!message) return;
 
@@ -199,6 +213,12 @@ export default function FaithHubPrayerRequests() {
       setRequests(prevRequests);
     }
 
+    if (request) {
+      if (normalizeIdentity(request.createdBy) !== normalizeIdentity(author)) {
+        createNotification("comment", `${author} commented on your prayer: "${request.title}"`);
+      }
+    }
+
     trackEvent(
       "CLICK_BUTTON",
       { id: "prayer-comment", label: "Add comment", location: "community-prayer" },
@@ -207,6 +227,7 @@ export default function FaithHubPrayerRequests() {
   };
 
   const handleMarkAnswered = async (requestId: string) => {
+    const request = requests.find((item) => item.id === requestId);
     const testimonyMessage = (testimonyDrafts[requestId] || "").trim();
     if (!testimonyMessage) return;
 
@@ -235,6 +256,10 @@ export default function FaithHubPrayerRequests() {
 
     setRequests((previous) => previous.map((item) => (item.id === requestId ? result.request! : item)));
     setTestimonyByPrayer((previous) => ({ ...previous, [requestId]: result.testimony! }));
+
+    if (request) {
+      createNotification("answered", `Prayer answered: "${request.title}"`);
+    }
 
     trackEvent(
       "CLICK_BUTTON",
@@ -298,7 +323,7 @@ export default function FaithHubPrayerRequests() {
                   <div>
                     <h3 className="text-base font-semibold text-[var(--text-primary)]">{request.title}</h3>
                     <p className="mt-1 text-xs text-[var(--text-secondary)]">
-                      {request.createdBy} • {formatDate(request.createdAt)}
+                      {request.createdBy} - {formatDate(request.createdAt)}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
