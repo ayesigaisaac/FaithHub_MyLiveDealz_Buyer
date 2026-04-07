@@ -48,6 +48,10 @@ export default function FaithHubPrayerRequests() {
   const [requests, setRequests] = useState<PrayerRequestRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<PrayerRequestRecord["category"] | "all">("all");
+  const [urgencyFilter, setUrgencyFilter] = useState<PrayerRequestRecord["urgency"] | "all">("all");
+  const [statusFilter, setStatusFilter] = useState<PrayerRequestRecord["status"] | "all">("all");
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({});
   const [openRepliesByComment, setOpenRepliesByComment] = useState<Record<string, boolean>>({});
@@ -106,6 +110,20 @@ export default function FaithHubPrayerRequests() {
   );
 
   const urgentCount = useMemo(() => requests.filter((item) => item.urgency === "urgent").length, [requests]);
+
+  const filteredRequests = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return requests.filter((item) => {
+      if (categoryFilter !== "all" && item.category !== categoryFilter) return false;
+      if (urgencyFilter !== "all" && item.urgency !== urgencyFilter) return false;
+      if (statusFilter !== "all" && item.status !== statusFilter) return false;
+      if (!q) return true;
+      return (
+        item.title.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q)
+      );
+    });
+  }, [requests, searchQuery, categoryFilter, urgencyFilter, statusFilter]);
 
   const handleCreate = async (input: {
     title: string;
@@ -304,12 +322,51 @@ export default function FaithHubPrayerRequests() {
                 <Badge className="fh-pill fh-pill-slate">{requests.length} requests</Badge>
                 <Badge className="fh-pill fh-pill-emerald">{activeCount} active</Badge>
                 <Badge className="fh-pill fh-pill-slate">{urgentCount} urgent</Badge>
+                <Badge className="fh-pill fh-pill-slate">{filteredRequests.length} shown</Badge>
               </div>
             </div>
             <Button className="fh-user-primary-btn" onClick={() => setIsFormOpen((previous) => !previous)}>
               <Plus className="h-4 w-4" />
               {isFormOpen ? "Close Form" : "New Prayer Request"}
             </Button>
+          </div>
+          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            <input
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search title or description..."
+              className="h-10 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.36)]"
+            />
+            <select
+              value={categoryFilter}
+              onChange={(event) => setCategoryFilter(event.target.value as PrayerRequestRecord["category"] | "all")}
+              className="h-10 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.36)]"
+            >
+              <option value="all">All categories</option>
+              <option value="healing">Healing</option>
+              <option value="family">Family</option>
+              <option value="finance">Finance</option>
+              <option value="spiritual">Spiritual</option>
+            </select>
+            <select
+              value={urgencyFilter}
+              onChange={(event) => setUrgencyFilter(event.target.value as PrayerRequestRecord["urgency"] | "all")}
+              className="h-10 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.36)]"
+            >
+              <option value="all">All urgency</option>
+              <option value="normal">Normal</option>
+              <option value="urgent">Urgent</option>
+            </select>
+            <select
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value as PrayerRequestRecord["status"] | "all")}
+              className="h-10 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.36)]"
+            >
+              <option value="all">All status</option>
+              <option value="active">Active</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="answered">Answered</option>
+            </select>
           </div>
         </CardContent>
       </Card>
@@ -334,7 +391,7 @@ export default function FaithHubPrayerRequests() {
         </Card>
       ) : (
         <div className="grid gap-3 lg:grid-cols-2">
-          {requests.map((request) => (
+          {filteredRequests.map((request) => (
             <Card
               key={request.id}
               className={`fh-surface-card rounded-2xl ${request.urgency === "urgent" ? "border-[rgba(247,127,0,0.38)]" : ""}`}
@@ -552,6 +609,13 @@ export default function FaithHubPrayerRequests() {
               </CardContent>
             </Card>
           ))}
+          {!filteredRequests.length ? (
+            <Card className="fh-surface-card rounded-2xl lg:col-span-2">
+              <CardContent className="p-6 text-center text-sm text-[var(--text-secondary)]">
+                No prayer requests match your current search or filters.
+              </CardContent>
+            </Card>
+          ) : null}
         </div>
       )}
     </div>
