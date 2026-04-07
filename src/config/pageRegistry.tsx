@@ -9,6 +9,7 @@ const FaithHubAuthCenter = lazy(() => import("@/pages/user/FaithHubAuthCenter"))
 const FaithHubProfilePreferences = lazy(() => import("@/pages/user/FaithHubProfilePreferences"));
 const FaithHubHome = lazy(() => import("@/pages/user/FaithHubHome"));
 const FaithHubCommunity = lazy(() => import("@/pages/shared/FaithHubCommunity"));
+const FaithHubPrayerRequests = lazy(() => import("@/pages/shared/FaithHubPrayerRequests"));
 const Noticeboard = lazy(() => import("@/pages/shared/Noticeboard"));
 const FaithHubResourcesHub = lazy(() => import("@/pages/shared/FaithHubResourcesHub"));
 const FaithHubResourceDetail = lazy(() => import("@/pages/shared/FaithHubResourceDetail"));
@@ -86,6 +87,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "u-profile", role: "user", section: "Start & Identity", label: "Profile & Faith Preferences", path: "/app/user/profile", template: "T3", description: "Profile, faith preferences, privacy, and audience groups.", icon: Users, element: FaithHubProfilePreferences },
   { id: "u-home", role: "user", section: "Discovery & Institutions", label: "Home", path: "/app/user/home", template: "T1", description: "Personalized feed, continue watching, and intent buckets.", icon: Home, element: FaithHubHome },
   { id: "u-community", role: "user", section: "Community", label: "Community Hub", path: "/app/user/community", template: "T1", description: "Shared member and provider social interactions.", icon: Users, element: FaithHubCommunity },
+  { id: "u-prayer", role: "user", section: "Community", label: "Prayer Requests", path: "/app/user/community/prayer", template: "T2", description: "Community-driven prayer requests with support and comments.", icon: HeartHandshake, element: FaithHubPrayerRequests },
   { id: "u-noticeboard", role: "user", section: "Community", label: "Noticeboard", path: "/app/user/noticeboard", template: "T2", description: "Community notices and updates from providers and admins.", icon: BellRing, element: Noticeboard },
   { id: "u-resources", role: "user", section: "Resources", label: "Books & Resources", path: "/app/user/resources", template: "T1", description: "Free books, PDFs, audio, and devotionals.", icon: BookOpen, element: FaithHubResourcesHub },
   { id: "u-resource-detail", role: "user", section: "Resources", label: "Resource Detail", path: "/app/user/resources/detail", template: "T2", description: "Detail page for free resources.", icon: FileText, element: FaithHubResourceDetail },
@@ -118,6 +120,7 @@ const basePageRegistry: BasePageRegistryItem[] = [
   { id: "p-onboarding", role: "provider", section: "Onboarding & Core HQ", label: "Provider Onboarding", path: "/app/provider/onboarding", template: "T3", description: "Institution onboarding and verification setup.", icon: Building2, element: FaithHubProviderOnboarding },
   { id: "p-dashboard", role: "provider", section: "Onboarding & Core HQ", label: "Provider Dashboard", path: "/app/provider/dashboard", template: "T1", description: "Operations, KPIs, and live health.", icon: LayoutDashboard, element: FaithHubProviderDashboard },
   { id: "p-community", role: "provider", section: "Audience & Distribution", label: "Community Hub", path: "/app/provider/community", template: "T1", description: "Provider-led community participation and moderation.", icon: Users, element: FaithHubCommunity },
+  { id: "p-prayer", role: "provider", section: "Audience & Distribution", label: "Prayer Requests", path: "/app/provider/community/prayer", template: "T2", description: "Provider-accessible prayer support board.", icon: HeartHandshake, element: FaithHubPrayerRequests },
   { id: "p-noticeboard", role: "provider", section: "Audience & Distribution", label: "Noticeboard", path: "/app/provider/noticeboard", template: "T2", description: "Create and manage provider and admin notices for members.", icon: BellRing, element: Noticeboard },
   { id: "p-resources", role: "provider", section: "Resources", label: "Books & Resources", path: "/app/provider/resources", template: "T1", description: "Upload and manage free resource library.", icon: BookOpen, element: FaithHubResourcesHub },
   { id: "p-resource-detail", role: "provider", section: "Resources", label: "Resource Detail", path: "/app/provider/resources/detail", template: "T2", description: "Detail page for provider and user free resources.", icon: FileText, element: FaithHubResourceDetail },
@@ -159,6 +162,7 @@ const navTagById: Record<string, string> = {
   "u-profile": "Profile",
   "u-home": "Home",
   "u-community": "Community",
+  "u-prayer": "Prayer",
   "u-noticeboard": "Notice",
   "u-resources": "Resources",
   "u-resource-detail": "Resource",
@@ -191,6 +195,7 @@ const navTagById: Record<string, string> = {
   "p-onboarding": "Onboard",
   "p-dashboard": "Dashboard",
   "p-community": "Community",
+  "p-prayer": "Prayer",
   "p-noticeboard": "Notice",
   "p-resources": "Resources",
   "p-resource-detail": "Resource",

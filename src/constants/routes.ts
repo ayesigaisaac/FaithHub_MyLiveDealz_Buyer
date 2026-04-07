@@ -25,6 +25,7 @@ export const routes = {
       profile: "/app/user/profile",
       home: "/app/user/home",
       community: "/app/user/community",
+      prayer: "/app/user/community/prayer",
       noticeboard: "/app/user/noticeboard",
       discover: "/app/user/discover",
       institution: "/app/user/institution",
@@ -105,6 +106,7 @@ export const routes = {
       resourceDetailById: (resourceId: RouteParam) =>
         `/app/provider/resources/${encodeSegment(resourceId)}`,
       community: "/app/provider/community",
+      prayer: "/app/provider/community/prayer",
       events: "/app/provider/events",
       funds: "/app/provider/funds",
       fundCreate: "/app/provider/funds/create",

@@ -183,9 +183,9 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
         {
           id: "user-prayer",
           label: "Prayer",
-          path: routes.app.user.counseling,
+          path: routes.app.user.prayer,
           icon: HeartHandshake,
-          activePrefixes: [routes.app.user.counseling],
+          activePrefixes: [routes.app.user.prayer],
         },
       ],
     },
@@ -297,6 +297,13 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
           path: routes.app.provider.noticeboard,
           icon: BellRing,
           activePrefixes: [routes.app.provider.noticeboard],
+        },
+        {
+          id: "provider-prayer",
+          label: "Prayer",
+          path: routes.app.provider.prayer,
+          icon: HeartHandshake,
+          activePrefixes: [routes.app.provider.prayer],
         },
         {
           id: "provider-counseling",

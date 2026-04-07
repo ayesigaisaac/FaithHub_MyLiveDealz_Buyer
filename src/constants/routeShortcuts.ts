@@ -7,6 +7,7 @@ export const routeShortcuts: Record<string, string> = {
   "/provider/dashboard": routes.app.provider.dashboard,
   "/provider/wallet": routes.app.provider.wallet,
   "/provider/community": routes.app.provider.community,
+  "/provider/community/prayer": routes.app.provider.prayer,
   "/provider/resources": routes.app.provider.resources,
   "/provider/noticeboard": routes.app.provider.noticeboard,
   "/provider/content": routes.app.provider.seriesBuilder,
@@ -21,4 +22,5 @@ export const routeShortcuts: Record<string, string> = {
   "/admin/noticeboard": routes.app.admin.noticeboard,
   "/qa": routes.app.user.qa,
   "/noticeboard": routes.app.user.noticeboard,
+  "/community/prayer": routes.app.user.prayer,
 };
