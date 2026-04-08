@@ -75,8 +75,17 @@ export default function Sidebar({
   };
 
   return (
-    <div className="fh-nav-shell-card flex h-full min-h-0 flex-col px-2 py-2.5 lg:px-2.5 lg:py-3">
-      <div className="mb-2 flex items-center justify-end gap-1.5">
+    <div className="fh-nav-shell-card flex h-full min-h-0 flex-col px-2 py-2 lg:px-2.5 lg:py-2.5">
+      <div className="mb-2 flex items-center">
+        <div className={`flex flex-1 items-center gap-2 ${collapsed ? "justify-center" : ""}`}>
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
+            <img src={logoIconSrc} alt="FaithHub icon" className="h-7 w-7 object-contain" />
+          </span>
+          {!collapsed ? (
+            <div className="text-sm font-semibold text-[var(--text-primary)]">Workspace modules</div>
+          ) : null}
+        </div>
+
         {onClose ? (
           <button
             type="button"
@@ -97,21 +106,6 @@ export default function Sidebar({
           </button>
         ) : null}
       </div>
-
-      {collapsed ? (
-        <div className="mb-2 flex items-center justify-center">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
-            <img src={logoIconSrc} alt="FaithHub icon" className="h-7 w-7 object-contain" />
-          </span>
-        </div>
-      ) : (
-        <div className="mb-2 flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] px-3 py-2">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] p-1">
-            <img src={logoIconSrc} alt="FaithHub icon" className="h-6 w-6 object-contain" />
-          </span>
-          <div className="text-sm font-semibold text-[var(--text-primary)]">Workspace modules</div>
-        </div>
-      )}
 
       <RoleSwitcher
         currentRole={currentRole}
