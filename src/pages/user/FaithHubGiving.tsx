@@ -74,6 +74,19 @@ export default function FaithHubGiving() {
   const [offlineMode, setOfflineMode] = useState(false);
   const [supporterTier, setSupporterTier] = useState(true);
   const [walletMessage, setWalletMessage] = useState("");
+  const charityCategories = ["Education", "Health", "Relief", "Orphans"];
+
+  const charityCauses = useMemo(
+    () =>
+      givingFunds.slice(0, 3).map((fund, index) => ({
+        fundId: fund.id,
+        title: fund.title,
+        description: fund.description,
+        category: charityCategories[index % charityCategories.length],
+        progress: fund.progress,
+      })),
+    [givingFunds],
+  );
 
   useEffect(() => {
     if (!givingFunds.length) return;
@@ -218,6 +231,42 @@ export default function FaithHubGiving() {
           offlineMode={offlineMode}
           onToggleOfflineMode={() => setOfflineMode((prev) => !prev)}
         />
+
+        <Card className="fh-surface-card rounded-[24px]">
+          <CardContent className="p-5">
+            <DashboardSectionHeader
+              title="Charity Causes"
+              subtitle="Support mission-driven causes alongside traditional giving."
+              action={
+                <Button
+                  variant="outline"
+                  className="fh-user-secondary-btn"
+                  onClick={openSelectedFund}
+                >
+                  <HeartHandshake className="h-4 w-4" />
+                  View selected cause
+                </Button>
+              }
+            />
+            <div className="mt-3 grid gap-3 md:grid-cols-3">
+              {charityCauses.map((cause) => (
+                <button
+                  key={cause.fundId}
+                  type="button"
+                  onClick={() => setSelectedFundId(cause.fundId)}
+                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-left transition hover:border-[rgba(3,205,140,0.35)] hover:bg-[var(--accent-soft)]"
+                >
+                  <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+                    {cause.category}
+                  </div>
+                  <div className="mt-2 text-base font-semibold text-[var(--text-primary)]">{cause.title}</div>
+                  <div className="mt-1 text-sm text-[var(--text-secondary)]">{cause.description}</div>
+                  <div className="mt-3 text-xs text-[var(--text-secondary)]">Progress {cause.progress}%</div>
+                </button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         <div className="grid gap-4 md:grid-cols-3">
           <DashboardStatCard

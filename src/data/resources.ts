@@ -14,6 +14,9 @@ const seedResources: FaithHubResource[] = [
     created_at: "2026-03-25T09:30:00.000Z",
     category: "Devotionals",
     tags: ["devotional", "daily", "prayer"],
+    denominations: ["Pentecostal", "Non-denominational"],
+    audienceGroups: ["Women", "Leaders"],
+    ageGroups: ["18-25", "26-40"],
     download_count: 412,
     featured: true,
     recommended: true,
@@ -29,6 +32,9 @@ const seedResources: FaithHubResource[] = [
     created_at: "2026-03-21T11:15:00.000Z",
     category: "Books",
     tags: ["family", "prayer", "guide"],
+    denominations: ["Anglican", "Catholic"],
+    audienceGroups: ["Families", "Couples"],
+    ageGroups: ["26-40", "41+"],
     download_count: 289,
     featured: true,
     recommended: false,
@@ -44,6 +50,9 @@ const seedResources: FaithHubResource[] = [
     created_at: "2026-03-23T14:05:00.000Z",
     category: "Audio",
     tags: ["youth", "purpose", "audio"],
+    denominations: ["Evangelical"],
+    audienceGroups: ["Youth"],
+    ageGroups: ["13-17", "18-25"],
     download_count: 198,
     featured: false,
     recommended: true,
@@ -59,6 +68,9 @@ const seedResources: FaithHubResource[] = [
     created_at: "2026-03-28T08:40:00.000Z",
     category: "PDFs",
     tags: ["leadership", "community"],
+    denominations: ["Baptist", "Non-denominational"],
+    audienceGroups: ["Leaders"],
+    ageGroups: ["26-40", "41+"],
     download_count: 93,
     featured: false,
     recommended: true,
@@ -74,6 +86,9 @@ const seedResources: FaithHubResource[] = [
     created_at: "2026-03-29T06:20:00.000Z",
     category: "Audio",
     tags: ["meditation", "scripture"],
+    denominations: ["Methodist"],
+    audienceGroups: ["Adults"],
+    ageGroups: ["26-40", "41+"],
     download_count: 54,
     featured: false,
     recommended: false,
@@ -83,7 +98,13 @@ const seedResources: FaithHubResource[] = [
 
 function normalizeResources(resources: FaithHubResource[]) {
   return resources
-    .slice()
+    .map((resource) => ({
+      ...resource,
+      denominations: Array.isArray(resource.denominations) ? resource.denominations : [],
+      audienceGroups: Array.isArray(resource.audienceGroups) ? resource.audienceGroups : [],
+      ageGroups: Array.isArray(resource.ageGroups) ? resource.ageGroups : [],
+      tags: Array.isArray(resource.tags) ? resource.tags : [],
+    }))
     .sort((a, b) => {
       if (a.featured !== b.featured) return a.featured ? -1 : 1;
       return b.created_at.localeCompare(a.created_at);
@@ -121,6 +142,9 @@ export function createResource(
     author: string;
     file_url: string;
     tags?: string[];
+    denominations?: string[];
+    audienceGroups?: string[];
+    ageGroups?: string[];
     uploader_role?: "provider" | "user";
   },
 ) {
@@ -134,6 +158,9 @@ export function createResource(
     created_at: new Date().toISOString(),
     category: input.category,
     tags: (input.tags || []).map((tag) => tag.trim()).filter(Boolean),
+    denominations: (input.denominations || []).map((item) => item.trim()).filter(Boolean),
+    audienceGroups: (input.audienceGroups || []).map((item) => item.trim()).filter(Boolean),
+    ageGroups: (input.ageGroups || []).map((item) => item.trim()).filter(Boolean),
     download_count: 0,
     featured: false,
     recommended: true,

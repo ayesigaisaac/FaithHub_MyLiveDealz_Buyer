@@ -143,7 +143,7 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
       items: [
         {
           id: "user-series",
-          label: "Series",
+          label: "Series & Sermons",
           path: routes.app.user.series,
           icon: BookOpen,
           activePrefixes: [routes.app.user.series, routes.app.user.episode, routes.app.user.replay, routes.app.user.clips],
@@ -207,11 +207,11 @@ const sidebarSectionsByRole: Record<RoleKey, SidebarSectionTemplate[]> = {
     },
     {
       id: "user-giving",
-      label: "Giving",
+      label: "Charity & Giving",
       items: [
         {
           id: "user-giving-main",
-          label: "Give",
+          label: "Charity & Giving",
           path: routes.app.user.giving,
           icon: HeartHandshake,
           activePrefixes: [routes.app.user.giving, routes.app.user.fundDetail],

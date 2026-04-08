@@ -120,7 +120,7 @@ export default function FaithHubResourceDetail() {
             </div>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              {resource.tags.map((tag) => (
+              {[...resource.denominations, ...resource.audienceGroups, ...resource.ageGroups, ...resource.tags].map((tag) => (
                 <span key={`${resource.id}-${tag}`} className="fh-pill fh-pill-slate">
                   {tag}
                 </span>

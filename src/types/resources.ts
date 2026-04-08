@@ -13,6 +13,9 @@ export interface FaithHubResource {
   created_at: string;
   category: ResourceCategory;
   tags: string[];
+  denominations: string[];
+  audienceGroups: string[];
+  ageGroups: string[];
   download_count: number;
   featured: boolean;
   recommended: boolean;

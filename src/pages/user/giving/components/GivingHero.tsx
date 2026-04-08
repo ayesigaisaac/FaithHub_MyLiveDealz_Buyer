@@ -18,24 +18,24 @@ export default function GivingHero({ offlineMode, onToggleOfflineMode }: GivingH
         <div className="relative z-10 text-white">
           <div className="mb-5 flex flex-wrap items-center gap-2">
             <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">
-              Giving + receipts + supporter tiers
+              Charity + giving + receipts
             </Badge>
             <Badge className="rounded-full bg-slate-100 text-slate-700 hover:bg-slate-100">
-              One-time, recurring, and transparent funds
+              Causes, one-time, recurring, and transparent funds
             </Badge>
           </div>
 
           <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
             <div className="space-y-4">
               <div className="fh-kicker text-white/90">
-                Giving with care and clarity
+                Charity and giving with care and clarity
               </div>
               <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
-                Support faith work with one-time gifts and recurring generosity in one flow.
+                Support faith work and charity causes with one-time gifts or recurring generosity.
               </h1>
               <p className="max-w-2xl fh-body text-white/90 sm:text-base">
-                Choose a fund, set giving frequency, manage receipts, and optionally join supporter
-                membership tiers with clear trust messaging.
+                Choose a cause or fund, set giving frequency, manage receipts, and optionally join
+                supporter membership tiers with clear trust messaging.
               </p>
 
               <div className="flex flex-wrap items-center gap-2 text-sm text-white/90">

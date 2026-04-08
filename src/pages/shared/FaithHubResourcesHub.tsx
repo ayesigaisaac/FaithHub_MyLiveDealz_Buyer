@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { BookOpen, Download, ExternalLink, Filter, Search, Sparkles, Tag, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
@@ -21,6 +21,36 @@ import { routes } from "@/constants/routes";
 import type { FaithHubResource, ResourceCategory, ResourceType } from "@/types/resources";
 
 const ALL_CATEGORIES = "All categories";
+const ALL_DENOMINATIONS = "All denominations";
+const ALL_AUDIENCES = "All audiences";
+const ALL_AGES = "All ages";
+
+const DENOMINATIONS = [
+  "Catholic",
+  "Anglican",
+  "Pentecostal",
+  "Baptist",
+  "SDA",
+  "Methodist",
+  "Presbyterian",
+  "Evangelical",
+  "Non-denominational",
+];
+
+const AUDIENCE_GROUPS = [
+  "Kids",
+  "Teens",
+  "Youth",
+  "Couples",
+  "Men",
+  "Women",
+  "Leaders",
+  "Families",
+  "Adults",
+  "New Believers",
+];
+
+const AGE_GROUPS = ["0-5", "6-12", "13-17", "18-25", "26-40", "41+"];
 
 function formatDate(value: string) {
   return new Date(value).toLocaleDateString(undefined, {
@@ -64,7 +94,7 @@ function ResourceCard({
           <div>
             <div className="text-base font-semibold text-[var(--text-primary)]">{resource.title}</div>
             <div className="mt-1 text-xs text-[var(--text-secondary)]">
-              {resource.author} • {typeLabel(resource.type)} • {resource.category}
+              {resource.author} - {typeLabel(resource.type)} - {resource.category}
             </div>
           </div>
           <div className="flex flex-wrap gap-1">
@@ -76,11 +106,14 @@ function ResourceCard({
         <p className="mt-2 text-sm text-[var(--text-secondary)]">{resource.description}</p>
 
         <div className="mt-3 flex flex-wrap gap-1.5">
-          {resource.tags.slice(0, 4).map((tag) => (
-            <span key={`${resource.id}-${tag}`} className="fh-pill fh-pill-slate">
-              {tag}
-            </span>
-          ))}
+          {[...resource.denominations, ...resource.audienceGroups, ...resource.ageGroups, ...resource.tags]
+            .filter(Boolean)
+            .slice(0, 4)
+            .map((tag) => (
+              <span key={`${resource.id}-${tag}`} className="fh-pill fh-pill-slate">
+                {tag}
+              </span>
+            ))}
         </div>
 
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-[var(--text-secondary)]">
@@ -118,6 +151,9 @@ export default function FaithHubResourcesHub() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string>(ALL_CATEGORIES);
   const [resourceType, setResourceType] = useState<"all" | ResourceType>("all");
+  const [denomination, setDenomination] = useState<string>(ALL_DENOMINATIONS);
+  const [audienceGroup, setAudienceGroup] = useState<string>(ALL_AUDIENCES);
+  const [ageGroup, setAgeGroup] = useState<string>(ALL_AGES);
 
   const [uploadTitle, setUploadTitle] = useState("");
   const [uploadDescription, setUploadDescription] = useState("");
@@ -125,6 +161,9 @@ export default function FaithHubResourcesHub() {
   const [uploadCategory, setUploadCategory] = useState<ResourceCategory>("Books");
   const [uploadUrl, setUploadUrl] = useState("");
   const [uploadTags, setUploadTags] = useState("");
+  const [uploadDenominations, setUploadDenominations] = useState("");
+  const [uploadAudiences, setUploadAudiences] = useState("");
+  const [uploadAges, setUploadAges] = useState("");
 
   const [tagDraftById, setTagDraftById] = useState<Record<string, string>>({});
 
@@ -148,15 +187,23 @@ export default function FaithHubResourcesHub() {
     return resources.filter((resource) => {
       const categoryMatch = category === ALL_CATEGORIES || resource.category === category;
       const typeMatch = resourceType === "all" || resource.type === resourceType;
+      const denominationMatch =
+        denomination === ALL_DENOMINATIONS || resource.denominations.includes(denomination);
+      const audienceMatch =
+        audienceGroup === ALL_AUDIENCES || resource.audienceGroups.includes(audienceGroup);
+      const ageMatch = ageGroup === ALL_AGES || resource.ageGroups.includes(ageGroup);
       const searchMatch =
         !term ||
         resource.title.toLowerCase().includes(term) ||
         resource.description.toLowerCase().includes(term) ||
         resource.author.toLowerCase().includes(term) ||
-        resource.tags.join(" ").toLowerCase().includes(term);
-      return categoryMatch && typeMatch && searchMatch;
+        resource.tags.join(" ").toLowerCase().includes(term) ||
+        resource.denominations.join(" ").toLowerCase().includes(term) ||
+        resource.audienceGroups.join(" ").toLowerCase().includes(term) ||
+        resource.ageGroups.join(" ").toLowerCase().includes(term);
+      return categoryMatch && typeMatch && denominationMatch && audienceMatch && ageMatch && searchMatch;
     });
-  }, [category, resourceType, resources, search]);
+  }, [category, resourceType, denomination, audienceGroup, ageGroup, resources, search]);
 
   const featuredResources = useMemo(
     () => resources.filter((resource) => resource.featured).slice(0, 4),
@@ -200,6 +247,9 @@ export default function FaithHubResourcesHub() {
       author: user?.name || "Provider Team",
       file_url: uploadUrl,
       tags: uploadTags.split(",").map((tag) => tag.trim()),
+      denominations: uploadDenominations.split(",").map((entry) => entry.trim()),
+      audienceGroups: uploadAudiences.split(",").map((entry) => entry.trim()),
+      ageGroups: uploadAges.split(",").map((entry) => entry.trim()),
       uploader_role: "provider",
     });
     setResources(next);
@@ -207,6 +257,9 @@ export default function FaithHubResourcesHub() {
     setUploadDescription("");
     setUploadUrl("");
     setUploadTags("");
+    setUploadDenominations("");
+    setUploadAudiences("");
+    setUploadAges("");
     setUploadType("pdf");
     setUploadCategory("Books");
   };
@@ -298,6 +351,50 @@ export default function FaithHubResourcesHub() {
               </select>
             </label>
           </div>
+          <div className="mt-3 grid gap-3 md:grid-cols-3">
+            <label className="fh-user-filter">
+              Denomination
+              <select
+                value={denomination}
+                onChange={(event) => setDenomination(event.target.value)}
+                className="w-full"
+              >
+                {[ALL_DENOMINATIONS, ...DENOMINATIONS].map((entry) => (
+                  <option key={entry} value={entry}>
+                    {entry}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="fh-user-filter">
+              Audience
+              <select
+                value={audienceGroup}
+                onChange={(event) => setAudienceGroup(event.target.value)}
+                className="w-full"
+              >
+                {[ALL_AUDIENCES, ...AUDIENCE_GROUPS].map((entry) => (
+                  <option key={entry} value={entry}>
+                    {entry}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="fh-user-filter">
+              Age Group
+              <select
+                value={ageGroup}
+                onChange={(event) => setAgeGroup(event.target.value)}
+                className="w-full"
+              >
+                {[ALL_AGES, ...AGE_GROUPS].map((entry) => (
+                  <option key={entry} value={entry}>
+                    {entry}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
         </CardContent>
       </Card>
 
@@ -337,7 +434,7 @@ export default function FaithHubResourcesHub() {
                 >
                   <div className="text-sm font-semibold text-[var(--text-primary)]">{resource.title}</div>
                   <div className="text-xs text-[var(--text-secondary)]">
-                    {resource.author} • {formatDate(resource.created_at)}
+                    {resource.author} - {formatDate(resource.created_at)}
                   </div>
                 </button>
               ))}
@@ -358,7 +455,7 @@ export default function FaithHubResourcesHub() {
                 >
                   <div className="text-sm font-semibold text-[var(--text-primary)]">{resource.title}</div>
                   <div className="text-xs text-[var(--text-secondary)]">
-                    {resource.category} • {resource.download_count} downloads
+                    {resource.category} - {resource.download_count} downloads
                   </div>
                 </button>
               ))}
@@ -393,6 +490,9 @@ export default function FaithHubResourcesHub() {
               setSearch("");
               setCategory(ALL_CATEGORIES);
               setResourceType("all");
+              setDenomination(ALL_DENOMINATIONS);
+              setAudienceGroup(ALL_AUDIENCES);
+              setAgeGroup(ALL_AGES);
             }}
           />
         )}
@@ -472,6 +572,35 @@ export default function FaithHubResourcesHub() {
                     placeholder="prayer, discipleship, youth"
                   />
                 </label>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <label className="fh-user-filter">
+                    Denominations (comma separated)
+                    <input
+                      value={uploadDenominations}
+                      onChange={(event) => setUploadDenominations(event.target.value)}
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm"
+                      placeholder="Anglican, Catholic"
+                    />
+                  </label>
+                  <label className="fh-user-filter">
+                    Audience groups
+                    <input
+                      value={uploadAudiences}
+                      onChange={(event) => setUploadAudiences(event.target.value)}
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm"
+                      placeholder="Youth, Couples"
+                    />
+                  </label>
+                  <label className="fh-user-filter">
+                    Age groups
+                    <input
+                      value={uploadAges}
+                      onChange={(event) => setUploadAges(event.target.value)}
+                      className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm"
+                      placeholder="13-17, 18-25"
+                    />
+                  </label>
+                </div>
                 <Button className="fh-user-primary-btn w-full" onClick={handleProviderUpload}>
                   <Upload className="mr-1.5 h-4 w-4" />
                   Publish free resource
@@ -489,7 +618,7 @@ export default function FaithHubResourcesHub() {
                     <div key={resource.id} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
                       <div className="text-sm font-semibold text-[var(--text-primary)]">{resource.title}</div>
                       <div className="mt-1 text-xs text-[var(--text-secondary)]">
-                        {resource.download_count} downloads � {resource.category}
+                        {resource.download_count} downloads - {resource.category}
                       </div>
                       <div className="mt-2 grid gap-2">
                         <label className="text-xs font-semibold text-[var(--text-secondary)]">
