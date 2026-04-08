@@ -81,16 +81,6 @@ export default function Sidebar({
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
             <img src={logoIconSrc} alt="FaithHub icon" className="h-6 w-6 object-contain" />
           </span>
-          {!collapsed ? (
-            <span className="min-w-0 leading-none">
-              <span className="block text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[var(--text-muted,#6B7280)]">
-                EVzone
-              </span>
-              <span className="mt-0.5 block truncate text-[1.02rem] font-semibold text-[#f77f00]">
-                FaithHub
-              </span>
-            </span>
-          ) : null}
         </div>
 
         {onClose ? (
