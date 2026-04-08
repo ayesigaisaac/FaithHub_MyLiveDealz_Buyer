@@ -1338,6 +1338,20 @@ a,
   }
 }
 
+@media (max-width: 1024px) {
+  .fh-app-content [class*="lg:grid-cols-"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .fh-app-content [class*="md:grid-cols-3"],
+  .fh-app-content [class*="md:grid-cols-4"],
+  .fh-app-content [class*="md:grid-cols-5"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
 /* Keep sidebar pages dense and avoid empty layout gaps on common desktop widths. */
 @media (max-width: 1360px) {
   .fh-app-content [class*="xl:grid-cols-["] {
@@ -1416,6 +1430,14 @@ a,
     border-radius: 0;
     padding: 0;
     padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  }
+
+  .fh-app-content [class*="grid-cols-2"],
+  .fh-app-content [class*="grid-cols-3"],
+  .fh-app-content [class*="grid-cols-4"],
+  .fh-app-content [class*="grid-cols-5"],
+  .fh-app-content [class*="grid-cols-6"] {
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 
   .fh-app-content :is(.fh-surface-card, .fh-surface-dark, .fh-surface-warm, .fh-hero-card) {

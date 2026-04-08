@@ -98,11 +98,13 @@ export default function FaithHubWallet() {
   return (
     <div className="space-y-4">
       <Card className="fh-surface-card rounded-[28px]">
-        <CardContent className="p-5 sm:p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
               <div className="fh-label text-[var(--text-muted)]">Finance</div>
-              <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--text-primary)]">FaithHub Wallet</h1>
+              <h1 className="mt-1 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
+                FaithHub Wallet
+              </h1>
               <p className="mt-2 max-w-2xl text-sm text-[var(--text-secondary)]">
                 Manage your wallet balance, review transaction activity, and connect spending or payouts across FaithHub.
               </p>
@@ -112,7 +114,7 @@ export default function FaithHubWallet() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-3">
+            <div className="w-full rounded-2xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 sm:w-auto">
               <div className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--text-muted)]">Current balance</div>
               <div className="mt-1 text-3xl font-bold text-[var(--text-primary)]">{formatCurrency(wallet.balance)}</div>
             </div>

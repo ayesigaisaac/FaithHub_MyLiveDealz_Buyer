@@ -243,7 +243,7 @@ export default function FaithHubGiving() {
                     key={tab}
                     type="button"
                     onClick={() => setActiveTab(tab)}
-                    className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                    className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition sm:px-4 sm:py-2 sm:text-sm ${
                       isActive
                         ? "border-[rgba(3,205,140,0.34)] bg-[rgba(3,205,140,0.16)] text-[var(--accent)]"
                         : "border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] hover:bg-[var(--accent-soft)]"
@@ -281,7 +281,7 @@ export default function FaithHubGiving() {
                       key={cause.fundId}
                       type="button"
                       onClick={() => setSelectedFundId(cause.fundId)}
-                      className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-left transition hover:border-[rgba(3,205,140,0.35)] hover:bg-[var(--accent-soft)]"
+                      className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3 text-left transition hover:border-[rgba(3,205,140,0.35)] hover:bg-[var(--accent-soft)] sm:p-4"
                     >
                       <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
                         {cause.category}

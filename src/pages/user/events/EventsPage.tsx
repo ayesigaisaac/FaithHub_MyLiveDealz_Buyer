@@ -227,7 +227,7 @@ export default function EventsPage() {
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
               <div className="fh-label text-[var(--text-muted)]">Events Hub</div>
-              <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--text-primary)]">
+              <h1 className="mt-1 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
                 Events & Calendar
               </h1>
               <p className="mt-2 text-sm text-[var(--text-secondary)]">
@@ -252,7 +252,7 @@ export default function EventsPage() {
               </label>
 
               {canManage ? (
-                <Button className="fh-user-primary-btn" onClick={openCreate}>
+                <Button className="fh-user-primary-btn w-full sm:w-auto" onClick={openCreate}>
                   <Plus className="h-4 w-4" />
                   Create Event
                 </Button>
@@ -268,7 +268,7 @@ export default function EventsPage() {
                   key={viewKey}
                   type="button"
                   onClick={() => setView(viewKey)}
-                  className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition ${
+                  className={`rounded-full border px-2.5 py-1 text-xs font-semibold transition sm:px-3 sm:py-1.5 sm:text-sm ${
                     active
                       ? "border-[rgba(3,205,140,0.35)] bg-[rgba(3,205,140,0.14)] text-[var(--accent)]"
                       : "border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] hover:bg-[var(--surface)]"
@@ -344,7 +344,7 @@ export default function EventsPage() {
 
       {canManage && editorOpen ? (
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/45 px-4 py-6 backdrop-blur-sm">
-          <Card className="fh-surface-card w-full max-w-2xl rounded-2xl">
+          <Card className="fh-surface-card w-full max-w-2xl rounded-2xl max-h-[90vh] overflow-y-auto">
             <CardContent className="p-5 sm:p-6">
               <div className="flex items-start justify-between gap-3">
                 <div>

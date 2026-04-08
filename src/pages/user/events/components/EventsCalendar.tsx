@@ -171,11 +171,11 @@ function EventsCalendarComponent({
         <div className="mt-4 transition-all duration-200">
           {view === "month" ? (
             <div className="overflow-x-auto">
-              <div className="grid min-w-[760px] grid-cols-7 gap-2">
+              <div className="grid min-w-[640px] grid-cols-7 gap-2 sm:min-w-[760px]">
                 {dayHeadings.map((heading) => (
                   <div
                     key={heading}
-                    className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-2 py-1 text-center text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]"
+                    className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-1.5 py-1 text-center text-[10px] font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)] sm:px-2 sm:text-xs"
                   >
                     {heading}
                   </div>
@@ -190,7 +190,7 @@ function EventsCalendarComponent({
                   return (
                     <div
                       key={dayKey}
-                      className={`min-h-[130px] rounded-xl border p-2 transition ${
+                      className={`min-h-[96px] rounded-xl border p-2 transition sm:min-h-[130px] ${
                         isInMonth
                           ? "border-[var(--border)] bg-[var(--card)]"
                           : "border-[var(--border)] bg-[var(--surface)] opacity-70"
@@ -205,7 +205,7 @@ function EventsCalendarComponent({
                               key={event.id}
                               type="button"
                               onClick={() => onSelectEvent(event)}
-                              className={`w-full rounded-lg border px-2 py-1 text-left text-xs transition ${eventBadgeClass(
+                              className={`w-full rounded-lg border px-1.5 py-0.5 text-left text-[10px] transition sm:px-2 sm:py-1 sm:text-xs ${eventBadgeClass(
                                 event.eventType,
                               )} ${isSelected ? "ring-1 ring-[rgba(3,205,140,0.35)]" : ""}`}
                             >
@@ -228,12 +228,15 @@ function EventsCalendarComponent({
           ) : null}
 
           {view === "week" ? (
-            <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
               {weekDays.map((day) => {
                 const dayKey = formatDateKey(day);
                 const dayEventsList = eventsByDate.get(dayKey) || [];
                 return (
-                  <div key={dayKey} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
+                  <div
+                    key={dayKey}
+                    className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-2 sm:p-3"
+                  >
                     <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
                       {day.toLocaleDateString(undefined, { weekday: "short" })}
                     </div>
@@ -241,7 +244,7 @@ function EventsCalendarComponent({
                       {day.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
                     </div>
 
-                    <div className="mt-2 space-y-1.5">
+                    <div className="mt-2 space-y-1">
                       {dayEventsList.length ? (
                         dayEventsList.map((event) => {
                           const isSelected = event.id === selectedEventId;
@@ -250,7 +253,7 @@ function EventsCalendarComponent({
                               key={event.id}
                               type="button"
                               onClick={() => onSelectEvent(event)}
-                              className={`w-full rounded-lg border px-2.5 py-2 text-left text-xs transition ${eventBadgeClass(
+                              className={`w-full rounded-lg border px-2 py-1.5 text-left text-[11px] transition sm:px-2.5 sm:py-2 sm:text-xs ${eventBadgeClass(
                                 event.eventType,
                               )} ${isSelected ? "ring-1 ring-[rgba(3,205,140,0.35)]" : ""}`}
                             >
@@ -283,7 +286,7 @@ function EventsCalendarComponent({
                       key={event.id}
                       type="button"
                       onClick={() => onSelectEvent(event)}
-                      className={`w-full rounded-xl border px-3 py-3 text-left transition ${eventBadgeClass(
+                      className={`w-full rounded-xl border px-3 py-2 text-left transition sm:py-3 ${eventBadgeClass(
                         event.eventType,
                       )} ${isSelected ? "ring-1 ring-[rgba(3,205,140,0.35)]" : ""}`}
                     >

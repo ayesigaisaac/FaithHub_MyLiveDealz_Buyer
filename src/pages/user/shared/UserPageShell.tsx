@@ -18,7 +18,7 @@ export default function UserPageShell({
   return (
     <div className="fh-page-canvas fh-user-shell min-h-0 text-[var(--text-primary)]">
       <div
-        className={`w-full px-3 py-4 sm:px-5 sm:py-5 lg:px-6 lg:py-6 xl:px-8 ${
+        className={`w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-6 lg:py-6 xl:px-8 ${
           stickyFooter ? "pb-24 sm:pb-20 lg:pb-4" : ""
         }`}
       >
@@ -26,12 +26,12 @@ export default function UserPageShell({
         {hero ? <div className="fh-enter fh-enter-delay-1 mb-5">{hero}</div> : null}
 
         <div
-          className={`grid items-start gap-5 sm:gap-6 ${
+          className={`grid items-start gap-4 sm:gap-5 lg:gap-6 ${
             aside ? "xl:grid-cols-[minmax(0,1fr)_minmax(304px,0.42fr)] 2xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.4fr)]" : ""
           }`}
         >
-          <div className="fh-stagger space-y-5">{main}</div>
-          {aside ? <div className="fh-enter fh-enter-delay-2 space-y-5">{aside}</div> : null}
+          <div className="fh-stagger space-y-4 sm:space-y-5">{main}</div>
+          {aside ? <div className="fh-enter fh-enter-delay-2 space-y-4 sm:space-y-5">{aside}</div> : null}
         </div>
       </div>
 

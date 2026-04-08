@@ -16,7 +16,7 @@ export default function GivingHero({ offlineMode, onToggleOfflineMode }: GivingH
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.35),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_22%)]" />
 
         <div className="relative z-10 text-white">
-          <div className="mb-5 flex flex-wrap items-center gap-2">
+          <div className="mb-3 flex flex-wrap items-center gap-2 sm:mb-5">
             <Badge className="rounded-full bg-white/90 text-[#03cd8c] hover:bg-white">
               Charity + giving + receipts
             </Badge>
@@ -25,12 +25,12 @@ export default function GivingHero({ offlineMode, onToggleOfflineMode }: GivingH
             </Badge>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-[0.63fr_0.37fr]">
-            <div className="space-y-4">
+          <div className="grid gap-4 sm:gap-5 lg:grid-cols-[0.63fr_0.37fr]">
+            <div className="space-y-3 sm:space-y-4">
               <div className="fh-kicker text-white/90">
                 Charity and giving with care and clarity
               </div>
-              <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+              <h1 className="text-2xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
                 Support faith work and charity causes with one-time gifts or recurring generosity.
               </h1>
               <p className="max-w-2xl fh-body text-white/90 sm:text-base">

@@ -26,11 +26,11 @@ export default function MediaCard({
   actions,
 }: MediaCardProps) {
   return (
-    <div className="group fh-interactive-card min-w-[260px] max-w-[280px] rounded-[22px] border border-[var(--border)] bg-[var(--card)] p-4 transition duration-300 hover:-translate-y-1 hover:border-[rgba(3,205,140,0.3)] hover:shadow-[0_20px_45px_-30px_rgba(3,205,140,0.55)]">
-      <div className="relative mb-3 overflow-hidden rounded-[18px] border border-[var(--border)] bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.2),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_40%)]">
+    <div className="group fh-interactive-card min-w-[220px] max-w-[240px] rounded-[20px] border border-[var(--border)] bg-[var(--card)] p-3 transition duration-300 hover:-translate-y-1 hover:border-[rgba(3,205,140,0.3)] hover:shadow-[0_20px_45px_-30px_rgba(3,205,140,0.55)] sm:min-w-[260px] sm:max-w-[280px] sm:rounded-[22px] sm:p-4">
+      <div className="relative mb-3 overflow-hidden rounded-[16px] border border-[var(--border)] bg-[radial-gradient(circle_at_top_right,rgba(3,205,140,0.2),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(247,127,0,0.12),transparent_40%)] sm:rounded-[18px]">
         <div className="aspect-[16/9] w-full" />
         {badge ? (
-          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-[var(--accent)] shadow-sm">
+          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-[var(--accent)] shadow-sm sm:px-2.5 sm:py-1 sm:text-[11px]">
             {badge}
           </span>
         ) : null}
@@ -57,7 +57,7 @@ export default function MediaCard({
           <Button
             key={`${action.label}-${index}`}
             variant={action.variant === "outline" ? "outline" : "default"}
-            className={action.variant === "outline" ? "fh-user-secondary-btn" : "fh-user-primary-btn"}
+            className={`${action.variant === "outline" ? "fh-user-secondary-btn" : "fh-user-primary-btn"} h-8 px-2 text-xs sm:h-9 sm:px-3 sm:text-sm`}
             onClick={action.onClick}
           >
             {action.label === "Play" ? <Play className="h-4 w-4" /> : null}

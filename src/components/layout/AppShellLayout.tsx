@@ -350,7 +350,7 @@ export default function AppShellLayout() {
           sx={{
             display: { lg: "none" },
             "& .MuiDrawer-paper": {
-              width: "min(300px, 84vw)",
+              width: "min(320px, 90vw)",
               backgroundColor: "transparent",
               boxShadow: "none",
               border: "none",
@@ -371,7 +371,7 @@ export default function AppShellLayout() {
         </Drawer>
 
         <main
-          className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto px-6 py-6 ${sidebarWidthClass}`}
+          className={`fh-scroll-region min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5 sm:py-5 lg:px-6 lg:py-6 ${sidebarWidthClass}`}
           onClickCapture={handlePageAction}
         >
           <div className="fh-app-content min-h-full">

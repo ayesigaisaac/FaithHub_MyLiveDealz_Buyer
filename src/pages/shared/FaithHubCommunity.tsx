@@ -102,7 +102,7 @@ function CommentThread({
   return (
     <div className="space-y-2.5">
       {comments.map((comment) => (
-        <div key={comment.id} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-2.5 py-2 sm:px-3 sm:py-2.5">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-semibold text-[var(--text-primary)]">{comment.author.name}</span>
             <Badge className="fh-pill fh-pill-slate">{roleBadge(comment.author.role, comment.author.title)}</Badge>
@@ -121,7 +121,9 @@ function CommentThread({
             ) : null}
           </div>
 
-          <div className="mt-1 text-sm leading-relaxed text-[var(--text-primary)]">{renderMentionText(comment.content)}</div>
+          <div className="mt-1 text-[13px] leading-relaxed text-[var(--text-primary)] sm:text-sm">
+            {renderMentionText(comment.content)}
+          </div>
 
           <div className="mt-2 flex flex-wrap gap-2">
             <Button
@@ -163,12 +165,12 @@ function CommentThread({
                 value={replyDrafts[comment.id] || ""}
                 onChange={(event) => onReplyDraftChange(comment.id, event.target.value)}
                 placeholder="Reply to this comment..."
-                className="min-h-[40px] w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)]"
+                className="min-h-[36px] w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)] sm:min-h-[40px]"
               />
               <Button
                 type="button"
                 uiSize="sm"
-                className="h-10 min-w-[104px]"
+                className="h-9 min-w-[96px] sm:h-10 sm:min-w-[104px]"
                 onClick={() => onSubmitReply(postId, comment.id)}
               >
                 <Send className="h-3.5 w-3.5" />
@@ -325,13 +327,13 @@ export default function FaithHubCommunity() {
   }, [feedFilter, posts.length]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       <Card className="fh-surface-card rounded-[24px]">
-        <CardContent className="p-5 sm:p-6">
+        <CardContent className="p-4 sm:p-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
               <div className="fh-label text-[var(--text-muted)]">Community</div>
-              <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--text-primary)]">
+              <h1 className="mt-1 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
                 Community Conversations
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-[var(--text-secondary)]">
@@ -354,7 +356,7 @@ export default function FaithHubCommunity() {
                   key={item}
                   type="button"
                   onClick={() => setFeedFilter(item)}
-                  className={`rounded-full border px-3 py-1.5 text-sm font-semibold transition ${
+                  className={`rounded-full border px-2.5 py-1 text-xs font-semibold transition sm:px-3 sm:py-1.5 sm:text-sm ${
                     feedFilter === item
                       ? "border-[rgba(3,205,140,0.34)] bg-[rgba(3,205,140,0.16)] text-[var(--accent)]"
                       : "border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] hover:bg-[var(--surface)]"
@@ -575,12 +577,12 @@ export default function FaithHubCommunity() {
                       setCommentDrafts((previous) => ({ ...previous, [post.id]: event.target.value }))
                     }
                     placeholder="Comment on this post..."
-                    className="min-h-[40px] w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)]"
+                    className="min-h-[36px] w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none transition focus:border-[rgba(3,205,140,0.38)] sm:min-h-[40px]"
                   />
                   <Button
                     type="button"
                     uiSize="sm"
-                    className="h-10 min-w-[104px]"
+                    className="h-9 min-w-[96px] sm:h-10 sm:min-w-[104px]"
                     onClick={() => submitComment(post.id)}
                   >
                     <MessageSquareText className="h-3.5 w-3.5" />
