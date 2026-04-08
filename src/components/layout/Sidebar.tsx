@@ -76,13 +76,20 @@ export default function Sidebar({
 
   return (
     <div className="fh-nav-shell-card flex h-full min-h-0 flex-col px-2 py-2 lg:px-2.5 lg:py-2.5">
-      <div className="mb-2 flex items-center">
-        <div className={`flex flex-1 items-center gap-2 ${collapsed ? "justify-center" : ""}`}>
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
-            <img src={logoIconSrc} alt="FaithHub icon" className="h-7 w-7 object-contain" />
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <div className={`flex min-w-0 items-center gap-2 ${collapsed ? "justify-center" : ""}`}>
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
+            <img src={logoIconSrc} alt="FaithHub icon" className="h-6 w-6 object-contain" />
           </span>
           {!collapsed ? (
-            <div className="text-sm font-semibold text-[var(--text-primary)]">Workspace modules</div>
+            <span className="min-w-0 leading-none">
+              <span className="block text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[var(--text-muted,#6B7280)]">
+                EVzone
+              </span>
+              <span className="mt-0.5 block truncate text-[1.02rem] font-semibold text-[#f77f00]">
+                FaithHub
+              </span>
+            </span>
           ) : null}
         </div>
 
@@ -91,7 +98,7 @@ export default function Sidebar({
             type="button"
             aria-label="Close navigation menu"
             onClick={onClose}
-            className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-xl text-[var(--text-secondary)]"
+            className="fh-shell-control inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--text-secondary)]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -100,7 +107,7 @@ export default function Sidebar({
             type="button"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             onClick={onToggleCollapse}
-            className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-xl text-[var(--text-secondary)]"
+            className="fh-shell-control inline-flex h-9 w-9 items-center justify-center rounded-xl text-[var(--text-secondary)]"
           >
             {collapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />}
           </button>
