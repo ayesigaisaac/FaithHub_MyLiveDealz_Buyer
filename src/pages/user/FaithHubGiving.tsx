@@ -43,6 +43,7 @@ export default function FaithHubGiving() {
   const navigate = useNavigate();
   const { role, user } = useAuth();
   const [fundRefreshToken, setFundRefreshToken] = useState(0);
+  const [activeTab, setActiveTab] = useState<"giving" | "charity">("giving");
 
   const givingFunds = useMemo<GivingFund[]>(() => {
     const funds = getActiveFunds();
@@ -74,11 +75,11 @@ export default function FaithHubGiving() {
   const [offlineMode, setOfflineMode] = useState(false);
   const [supporterTier, setSupporterTier] = useState(true);
   const [walletMessage, setWalletMessage] = useState("");
-  const charityCategories = ["Education", "Health", "Relief", "Orphans"];
+  const charityCategories = ["Education", "Health", "Relief", "Orphans", "Water", "Disaster Care"];
 
   const charityCauses = useMemo(
     () =>
-      givingFunds.slice(0, 3).map((fund, index) => ({
+      givingFunds.slice(0, 6).map((fund, index) => ({
         fundId: fund.id,
         title: fund.title,
         description: fund.description,
@@ -233,69 +234,120 @@ export default function FaithHubGiving() {
         />
 
         <Card className="fh-surface-card rounded-[24px]">
-          <CardContent className="p-5">
-            <DashboardSectionHeader
-              title="Charity Causes"
-              subtitle="Support mission-driven causes alongside traditional giving."
-              action={
-                <Button
-                  variant="outline"
-                  className="fh-user-secondary-btn"
-                  onClick={openSelectedFund}
-                >
-                  <HeartHandshake className="h-4 w-4" />
-                  View selected cause
-                </Button>
-              }
-            />
-            <div className="mt-3 grid gap-3 md:grid-cols-3">
-              {charityCauses.map((cause) => (
-                <button
-                  key={cause.fundId}
-                  type="button"
-                  onClick={() => setSelectedFundId(cause.fundId)}
-                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-left transition hover:border-[rgba(3,205,140,0.35)] hover:bg-[var(--accent-soft)]"
-                >
-                  <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
-                    {cause.category}
-                  </div>
-                  <div className="mt-2 text-base font-semibold text-[var(--text-primary)]">{cause.title}</div>
-                  <div className="mt-1 text-sm text-[var(--text-secondary)]">{cause.description}</div>
-                  <div className="mt-3 text-xs text-[var(--text-secondary)]">Progress {cause.progress}%</div>
-                </button>
-              ))}
+          <CardContent className="p-4 sm:p-5">
+            <div className="flex flex-wrap gap-2">
+              {(["giving", "charity"] as const).map((tab) => {
+                const isActive = activeTab === tab;
+                return (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setActiveTab(tab)}
+                    className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                      isActive
+                        ? "border-[rgba(3,205,140,0.34)] bg-[rgba(3,205,140,0.16)] text-[var(--accent)]"
+                        : "border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] hover:bg-[var(--accent-soft)]"
+                    }`}
+                  >
+                    {tab === "giving" ? "Giving" : "Charity"}
+                  </button>
+                );
+              })}
             </div>
           </CardContent>
         </Card>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          <DashboardStatCard
-            label="ACTIVE FUNDS"
-            value={`${givingFunds.length}`}
-            hint="Open causes currently available for support."
-            tone="slate"
-            icon={<Sparkles className="h-4 w-4" />}
-          />
-          <DashboardStatCard
-            label="SELECTED FUND"
-            value={`${selectedFund.progress}%`}
-            hint={`${selectedFund.raised} raised of ${selectedFund.goal}.`}
-            tone="emerald"
-            progress={selectedFund.progress}
-            icon={<HeartHandshake className="h-4 w-4" />}
-          />
-          <DashboardStatCard
-            label="GIVING READINESS"
-            value={offlineMode ? "Queued" : "Ready"}
-            hint={
-              offlineMode
-                ? "Intent only while offline."
-                : "Wallet contribution available."
-            }
-            tone={offlineMode ? "orange" : "emerald"}
-            icon={offlineMode ? <Lock className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
-          />
-        </div>
+        {activeTab === "charity" ? (
+          <>
+            <Card className="fh-surface-card rounded-[24px]">
+              <CardContent className="p-5">
+                <DashboardSectionHeader
+                  title="Charity Causes"
+                  subtitle="Support mission-driven causes with visible impact tracking."
+                  action={
+                    <Button
+                      variant="outline"
+                      className="fh-user-secondary-btn"
+                      onClick={openSelectedFund}
+                    >
+                      <HeartHandshake className="h-4 w-4" />
+                      View selected cause
+                    </Button>
+                  }
+                />
+                <div className="mt-3 grid gap-3 md:grid-cols-3">
+                  {charityCauses.map((cause) => (
+                    <button
+                      key={cause.fundId}
+                      type="button"
+                      onClick={() => setSelectedFundId(cause.fundId)}
+                      className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 text-left transition hover:border-[rgba(3,205,140,0.35)] hover:bg-[var(--accent-soft)]"
+                    >
+                      <div className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--text-secondary)]">
+                        {cause.category}
+                      </div>
+                      <div className="mt-2 text-base font-semibold text-[var(--text-primary)]">{cause.title}</div>
+                      <div className="mt-1 text-sm text-[var(--text-secondary)]">{cause.description}</div>
+                      <div className="mt-3 text-xs text-[var(--text-secondary)]">Progress {cause.progress}%</div>
+                    </button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              <DashboardStatCard
+                label="ACTIVE CAUSES"
+                value={`${charityCauses.length}`}
+                hint="Active charity causes available for support."
+                tone="slate"
+                icon={<Sparkles className="h-4 w-4" />}
+              />
+              <DashboardStatCard
+                label="SELECTED CAUSE"
+                value={`${selectedFund.progress}%`}
+                hint={`${selectedFund.raised} raised of ${selectedFund.goal}.`}
+                tone="emerald"
+                progress={selectedFund.progress}
+                icon={<HeartHandshake className="h-4 w-4" />}
+              />
+              <DashboardStatCard
+                label="CHARITY READINESS"
+                value={offlineMode ? "Queued" : "Ready"}
+                hint={offlineMode ? "Intent only while offline." : "Wallet contribution available."}
+                tone={offlineMode ? "orange" : "emerald"}
+                icon={offlineMode ? <Lock className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="grid gap-4 md:grid-cols-3">
+              <DashboardStatCard
+                label="ACTIVE FUNDS"
+                value={`${givingFunds.length}`}
+                hint="Open funds currently available for support."
+                tone="slate"
+                icon={<Sparkles className="h-4 w-4" />}
+              />
+              <DashboardStatCard
+                label="SELECTED FUND"
+                value={`${selectedFund.progress}%`}
+                hint={`${selectedFund.raised} raised of ${selectedFund.goal}.`}
+                tone="emerald"
+                progress={selectedFund.progress}
+                icon={<HeartHandshake className="h-4 w-4" />}
+              />
+              <DashboardStatCard
+                label="GIVING READINESS"
+                value={offlineMode ? "Queued" : "Ready"}
+                hint={offlineMode ? "Intent only while offline." : "Wallet contribution available."}
+                tone={offlineMode ? "orange" : "emerald"}
+                icon={offlineMode ? <Lock className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
+              />
+            </div>
+          </>
+        )}
 
         <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-4">
@@ -308,7 +360,7 @@ export default function FaithHubGiving() {
             <Card className="fh-surface-card rounded-[24px]">
               <CardContent className="p-5">
                 <DashboardSectionHeader
-                  title="Selected Fund Overview"
+                  title={activeTab === "charity" ? "Selected Cause Overview" : "Selected Fund Overview"}
                   subtitle="Keep giving context visible while you complete your contribution."
                   action={
                     <Button
