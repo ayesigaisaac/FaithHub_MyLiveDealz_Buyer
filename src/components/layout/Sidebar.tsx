@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ChevronDown, ChevronsLeft, ChevronsRight, ExternalLink, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronsLeft,
+  ChevronsRight,
+  ExternalLink,
+  HandHeart,
+  Home,
+  Layers3,
+  Settings,
+  Users,
+  X,
+} from "lucide-react";
 import type { ExternalSidebarItem, SidebarSection } from "@/config/sidebar";
 import RoleSwitcher from "@/components/layout/RoleSwitcher";
 import type { Role } from "@/types/roles";
@@ -39,6 +50,16 @@ function openExternalSidebarItem(item: ExternalSidebarItem) {
 
   // Future-ready hook for iframe mode: currently still opens in a separate tab.
   window.open(item.url, "_blank", "noopener,noreferrer");
+}
+
+function sectionIconFor(label: string) {
+  const normalized = label.toLowerCase();
+  if (normalized.includes("home")) return Home;
+  if (normalized.includes("content")) return Layers3;
+  if (normalized.includes("community")) return Users;
+  if (normalized.includes("giving") || normalized.includes("charity")) return HandHeart;
+  if (normalized.includes("settings")) return Settings;
+  return null;
 }
 
 export default function Sidebar({
@@ -128,7 +149,16 @@ export default function Sidebar({
                     canCollapseSection ? "" : "opacity-85"
                   }`}
                 >
-                  <span>{section.label}</span>
+                  <span className="flex items-center gap-2">
+                    {sectionIconFor(section.label) ? (
+                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] opacity-70">
+                        {React.createElement(sectionIconFor(section.label)!, {
+                          className: "h-3.5 w-3.5",
+                        })}
+                      </span>
+                    ) : null}
+                    <span>{section.label}</span>
+                  </span>
                   {canCollapseSection ? (
                     <ChevronDown className={`h-3.5 w-3.5 transition ${isOpen ? "rotate-180" : "rotate-0"}`} />
                   ) : null}
@@ -151,10 +181,10 @@ export default function Sidebar({
                             openExternalSidebarItem(item);
                             onNavigate?.(item.url);
                           }}
-                        className={`fh-sidebar-item compact group flex min-h-10 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                        className={`fh-sidebar-item compact group relative flex min-h-10 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
                           collapsed ? "justify-center px-0" : ""
                         }`}
-                        >
+                      >
                           <item.icon className="h-4 w-4 shrink-0 text-[var(--text-secondary)] group-hover:text-[var(--accent)]" />
                           {!collapsed ? (
                             <>
@@ -177,15 +207,18 @@ export default function Sidebar({
                         onClick={() => onNavigate?.(item.path)}
                         className={({ isActive }) => {
                           const navActive = active || isActive;
-                          return `fh-sidebar-item compact group flex min-h-10 items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                          return `fh-sidebar-item compact group relative flex min-h-10 items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
                             collapsed ? "justify-center px-0" : ""
-                          } ${navActive ? "is-active" : ""}`;
+                          } ${navActive ? "is-active text-[var(--text-primary)]" : ""}`;
                         }}
                       >
                         {({ isActive }) => {
                           const navActive = active || isActive;
                           return (
                             <>
+                              {navActive && !collapsed ? (
+                                <span className="absolute left-1 top-1/2 h-6 w-1 -translate-y-1/2 rounded-full bg-[var(--accent)]" />
+                              ) : null}
                               <item.icon
                                 className={`h-4 w-4 shrink-0 ${
                                   navActive ? "text-[var(--accent)]" : "text-[var(--text-secondary)]"
