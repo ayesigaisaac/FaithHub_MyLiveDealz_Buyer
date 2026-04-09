@@ -16,7 +16,7 @@ import type { ExternalSidebarItem, SidebarSection } from "@/config/sidebar";
 import RoleSwitcher from "@/components/layout/RoleSwitcher";
 import type { Role } from "@/types/roles";
 
-const logoIconSrc = "/assets/branding/logo-icon.png";
+const logoIconSrc = "/EV Zone FaithHub Logo (Single).png";
 
 interface SidebarProps {
   sections: SidebarSection[];

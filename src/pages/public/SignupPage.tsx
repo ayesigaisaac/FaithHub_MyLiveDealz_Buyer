@@ -15,7 +15,7 @@ import {
 } from "@/features/auth/validation";
 import { trackEvent } from "@/data/tracker";
 
-const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
+const logoLandscapeSrc = "/EV Zone FaithHub Logo (Landscape).png";
 
 const roleOptions: Array<{ value: Role; label: string }> = [
   { value: "user", label: "User" },

@@ -15,7 +15,7 @@ import { consumeAuthNotice } from "@/auth/noticeStorage";
 import { isValidEmail, isValidPassword } from "@/features/auth/validation";
 import { defaultPageForRole } from "@/config/pageRegistry";
 
-const logoPortraitSrc = "/assets/branding/logo-portrait.png";
+const logoPortraitSrc = "/EV Zone FaithHub Logo (Potrait).png";
 
 type SocialProvider = "google" | "microsoft" | "apple" | "evzone";
 

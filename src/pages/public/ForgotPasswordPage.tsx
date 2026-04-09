@@ -7,7 +7,7 @@ import { routes } from "@/constants/routes";
 import { useColorMode } from "@/theme/color-mode";
 import { isValidEmail } from "@/features/auth/validation";
 
-const logoLandscapeSrc = "/assets/branding/logo-landscape.png";
+const logoLandscapeSrc = "/EV Zone FaithHub Logo (Landscape).png";
 
 export default function ForgotPasswordPage() {
   const navigate = useNavigate();
