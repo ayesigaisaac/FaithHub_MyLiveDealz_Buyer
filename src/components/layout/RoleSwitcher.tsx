@@ -42,7 +42,7 @@ export default function RoleSwitcher({
   onSelectRole,
 }: RoleSwitcherProps) {
   return (
-    <section className="mb-2 space-y-1.5" aria-label="Workspace role switcher">
+    <section className="mb-1.5 space-y-1.5" aria-label="Workspace role switcher">
       {!collapsed ? (
         <div className="px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted,#6B7280)]">
           Workspace role
@@ -59,8 +59,8 @@ export default function RoleSwitcher({
               title={option.label}
               aria-label={`Switch to ${option.label}`}
               onClick={() => onSelectRole(option.role, option.path)}
-              className={`fh-sidebar-item group relative flex min-h-10 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-left text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
-                collapsed ? "h-10 w-10 justify-center px-0" : ""
+              className={`fh-sidebar-item group relative flex min-h-9 w-full items-center gap-2.5 rounded-xl px-2.5 py-1.5 text-left text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                collapsed ? "h-9 w-9 justify-center px-0" : ""
               } ${active ? "is-active" : ""}`}
               aria-pressed={active}
             >

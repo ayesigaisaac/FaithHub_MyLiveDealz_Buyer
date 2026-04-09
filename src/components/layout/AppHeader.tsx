@@ -137,7 +137,7 @@ export default function AppHeader({
           <div className="hidden min-w-0 flex-1 px-1 md:flex lg:px-2">
             <label
               ref={searchContainerRef}
-              className="fh-search-shell fh-shell-control relative mx-auto flex h-10 w-full max-w-[44rem] min-w-0 items-center gap-2 rounded-2xl px-3"
+              className="fh-search-shell fh-shell-control relative flex h-10 w-full max-w-[40rem] min-w-0 items-center gap-2 rounded-2xl px-3"
             >
               <Search className="h-4 w-4 shrink-0 text-[var(--text-secondary)]" />
               <input
@@ -258,7 +258,7 @@ export default function AppHeader({
             </label>
           </div>
 
-          <div className="ml-auto flex items-center gap-1.5 sm:gap-2 md:ml-0">
+          <div className="ml-auto flex items-center gap-1 sm:gap-1.5 md:ml-0">
             <div className="relative" ref={notificationRef}>
               <button
                 type="button"
@@ -266,11 +266,11 @@ export default function AppHeader({
                 data-action-id="open-alerts"
                 title="Open notifications"
                 onClick={() => setIsNotificationsOpen((prev) => !prev)}
-                className="fh-shell-control relative inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
+                className="fh-shell-control relative inline-flex h-9 w-9 items-center justify-center rounded-2xl text-[var(--text-secondary)] sm:h-10 sm:w-10"
               >
                 <Bell className="h-5 w-5" />
                 {unreadCount > 0 ? (
-                  <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[10px] font-bold text-white">
+                  <span className="absolute -right-1 -top-1 inline-flex h-4.5 min-w-[1.1rem] items-center justify-center rounded-full bg-[var(--accent)] px-1 text-[9px] font-bold text-white sm:h-5 sm:min-w-[1.25rem] sm:text-[10px]">
                     {unreadCount > 99 ? "99+" : unreadCount}
                   </span>
                 ) : null}
@@ -350,7 +350,7 @@ export default function AppHeader({
                 aria-label={`Open account menu. Current role: ${currentRoleLabel}`}
                 aria-expanded={accountSwitcherOpen}
                 onClick={onToggleAccountSwitcher}
-                className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)]"
+                className="fh-shell-control inline-flex h-9 w-9 items-center justify-center rounded-2xl text-[var(--text-secondary)] sm:h-10 sm:w-10"
               >
                 <CircleUserRound className="h-5 w-5" />
               </button>

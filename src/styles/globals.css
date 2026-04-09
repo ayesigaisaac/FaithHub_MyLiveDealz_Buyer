@@ -1205,6 +1205,12 @@ a,
     transform 220ms ease;
 }
 
+.fh-sidebar-item.compact {
+  min-height: 2.25rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
 .fh-sidebar-item:hover {
   background: var(--fh-nav-item-hover);
   border-color: var(--fh-nav-item-hover-border);

@@ -76,7 +76,7 @@ export default function Sidebar({
 
   return (
     <div className="fh-nav-shell-card flex h-full min-h-0 flex-col px-2 py-2 lg:px-2.5 lg:py-2.5">
-      <div className="mb-2 flex items-center justify-between gap-2">
+      <div className="mb-1.5 flex items-center justify-between gap-2">
         <div className={`flex min-w-0 items-center gap-2 ${collapsed ? "justify-center" : ""}`}>
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1">
             <img src={logoIconSrc} alt="FaithHub icon" className="h-6 w-6 object-contain" />
@@ -113,7 +113,7 @@ export default function Sidebar({
         }}
       />
 
-      <nav className="fh-scroll-region min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
+      <nav className="fh-scroll-region min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
         {sections.map((section) => {
           const isOpen = openSections[section.id] ?? true;
           const canCollapseSection = Boolean(section.collapsible && !collapsed);
@@ -151,9 +151,9 @@ export default function Sidebar({
                             openExternalSidebarItem(item);
                             onNavigate?.(item.url);
                           }}
-                          className={`fh-sidebar-item group flex min-h-10 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
-                            collapsed ? "justify-center px-0" : ""
-                          }`}
+                        className={`fh-sidebar-item compact group flex min-h-10 w-full items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                          collapsed ? "justify-center px-0" : ""
+                        }`}
                         >
                           <item.icon className="h-4 w-4 shrink-0 text-[var(--text-secondary)] group-hover:text-[var(--accent)]" />
                           {!collapsed ? (
@@ -177,7 +177,7 @@ export default function Sidebar({
                         onClick={() => onNavigate?.(item.path)}
                         className={({ isActive }) => {
                           const navActive = active || isActive;
-                          return `fh-sidebar-item group flex min-h-10 items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
+                          return `fh-sidebar-item compact group flex min-h-10 items-center gap-2.5 rounded-xl px-2.5 py-2 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,205,140,0.34)] ${
                             collapsed ? "justify-center px-0" : ""
                           } ${navActive ? "is-active" : ""}`;
                         }}
