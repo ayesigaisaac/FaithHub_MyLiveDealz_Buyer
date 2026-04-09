@@ -37,6 +37,7 @@ import type {
 } from "@/types/community";
 
 type FeedFilter = "all" | "providers" | "pinned" | "discussions";
+type TopicFilter = "all" | "prayer" | "testimony" | "announcement";
 
 function formatTime(value: string) {
   return new Date(value).toLocaleString(undefined, {
@@ -70,6 +71,15 @@ function reactionLabel(reaction: CommunityReaction) {
   if (reaction === "like") return "Amen";
   if (reaction === "pray") return "Pray";
   return "Support";
+}
+
+function topicFromPost(post: CommunityPost): Exclude<TopicFilter, "all"> {
+  if (post.discussionTopic?.toLowerCase().includes("prayer")) return "prayer";
+  if (post.discussionTopic?.toLowerCase().includes("testimony")) return "testimony";
+  if (post.discussionTopic?.toLowerCase().includes("announcement")) return "announcement";
+  if (post.content.toLowerCase().includes("prayer")) return "prayer";
+  if (post.content.toLowerCase().includes("testimony")) return "testimony";
+  return "announcement";
 }
 
 interface CommentThreadProps {
@@ -209,6 +219,7 @@ export default function FaithHubCommunity() {
   const currentAuthor = useMemo(() => getDefaultCommunityAuthor(currentRole), [currentRole]);
   const [posts, setPosts] = useState<CommunityPost[]>(() => getCommunityPosts());
   const [feedFilter, setFeedFilter] = useState<FeedFilter>("all");
+  const [topicFilter, setTopicFilter] = useState<TopicFilter>("all");
   const [composerText, setComposerText] = useState("");
   const [discussionTopic, setDiscussionTopic] = useState("");
   const [pinOnPublish, setPinOnPublish] = useState(false);
@@ -237,12 +248,33 @@ export default function FaithHubCommunity() {
     return posts;
   }, [feedFilter, posts]);
 
+  const topicFilteredPosts = useMemo(() => {
+    if (topicFilter === "all") return filteredPosts;
+    return filteredPosts.filter((post) => topicFromPost(post) === topicFilter);
+  }, [filteredPosts, topicFilter]);
+
   const paginatedPosts = useMemo(() => {
     const start = (page - 1) * pageSize;
-    return filteredPosts.slice(start, start + pageSize);
-  }, [filteredPosts, page]);
+    return topicFilteredPosts.slice(start, start + pageSize);
+  }, [topicFilteredPosts, page]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / pageSize));
+  const totalPages = Math.max(1, Math.ceil(topicFilteredPosts.length / pageSize));
+
+  const pinnedPosts = useMemo(() => posts.filter((post) => post.pinned), [posts]);
+  const topContributors = useMemo(() => {
+    const counts = posts.reduce<Record<string, { name: string; role: CommunityRole; count: number; verified?: boolean }>>(
+      (acc, post) => {
+        const key = post.author.id;
+        if (!acc[key]) {
+          acc[key] = { name: post.author.name, role: post.authorRole, count: 0, verified: post.author.verified };
+        }
+        acc[key].count += 1;
+        return acc;
+      },
+      {},
+    );
+    return Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 4);
+  }, [posts]);
 
   const publishPost = () => {
     const content = composerText.trim();
@@ -324,7 +356,7 @@ export default function FaithHubCommunity() {
 
   useEffect(() => {
     setPage(1);
-  }, [feedFilter, posts.length]);
+  }, [feedFilter, topicFilter, posts.length]);
 
   return (
     <div className="space-y-3 sm:space-y-4">
@@ -348,10 +380,10 @@ export default function FaithHubCommunity() {
                   {currentRole === "provider" ? "Provider role" : "User role"}
                 </Badge>
               </div>
-            </div>
+          </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              {(["all", "providers", "pinned", "discussions"] as FeedFilter[]).map((item) => (
+          <div className="flex flex-wrap items-center gap-2">
+            {(["all", "providers", "pinned", "discussions"] as FeedFilter[]).map((item) => (
                 <button
                   key={item}
                   type="button"
@@ -367,8 +399,71 @@ export default function FaithHubCommunity() {
               ))}
             </div>
           </div>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            {(["all", "prayer", "testimony", "announcement"] as TopicFilter[]).map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setTopicFilter(item)}
+                className={`rounded-full border px-2.5 py-1 text-xs font-semibold transition sm:px-3 sm:py-1.5 sm:text-sm ${
+                  topicFilter === item
+                    ? "border-[rgba(3,205,140,0.34)] bg-[rgba(3,205,140,0.16)] text-[var(--accent)]"
+                    : "border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] hover:bg-[var(--surface)]"
+                }`}
+              >
+                {item === "all" ? "All topics" : item.charAt(0).toUpperCase() + item.slice(1)}
+              </button>
+            ))}
+          </div>
         </CardContent>
       </Card>
+
+      {pinnedPosts.length ? (
+        <Card className="fh-surface-card rounded-2xl">
+          <CardContent className="p-4 sm:p-5">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="text-sm font-semibold text-[var(--text-primary)]">Pinned updates</div>
+              <Badge className="fh-pill fh-pill-emerald">{pinnedPosts.length} pinned</Badge>
+            </div>
+            <div className="space-y-2">
+              {pinnedPosts.slice(0, 3).map((post) => (
+                <div
+                  key={post.id}
+                  className="rounded-xl border border-[rgba(3,205,140,0.28)] bg-[rgba(3,205,140,0.1)] px-3 py-2"
+                >
+                  <div className="text-xs font-semibold text-[var(--text-secondary)]">{post.author.name}</div>
+                  <div className="mt-1 text-sm font-semibold text-[var(--text-primary)]">{post.content}</div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {topContributors.length ? (
+        <Card className="fh-surface-card rounded-2xl">
+          <CardContent className="p-4 sm:p-5">
+            <div className="mb-3 text-sm font-semibold text-[var(--text-primary)]">Top Contributors</div>
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              {topContributors.map((contributor) => (
+                <div
+                  key={contributor.name}
+                  className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2"
+                >
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">{contributor.name}</div>
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">
+                    {contributor.role === "provider" ? "Provider" : "Member"} • {contributor.count} posts
+                  </div>
+                  {contributor.verified ? (
+                    <div className="mt-1 text-[11px] font-semibold text-[var(--accent)]">Verified</div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card className="fh-surface-card rounded-2xl">
         <CardContent className="p-4 sm:p-5">
@@ -594,7 +689,7 @@ export default function FaithHubCommunity() {
           </Card>
         ))}
 
-        {!filteredPosts.length ? (
+        {!topicFilteredPosts.length ? (
           <Card className="fh-surface-card rounded-2xl">
             <CardContent className="p-6 text-center text-sm text-[var(--text-secondary)]">
               No posts match this filter yet.
@@ -602,7 +697,7 @@ export default function FaithHubCommunity() {
           </Card>
         ) : null}
 
-        {filteredPosts.length > pageSize ? (
+        {topicFilteredPosts.length > pageSize ? (
           <Card className="fh-surface-card rounded-2xl">
             <CardContent className="flex items-center justify-between gap-3 p-4">
               <div className="text-xs text-[var(--text-secondary)]">
