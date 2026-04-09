@@ -217,7 +217,7 @@ export default function Sidebar({
                           return (
                             <>
                               {navActive && !collapsed ? (
-                                <span className="absolute left-1 top-1/2 h-6 w-1 -translate-y-1/2 rounded-full bg-[var(--accent)]" />
+                                <span className="absolute left-1 top-1/2 h-[70%] w-[3px] -translate-y-1/2 rounded-full bg-[var(--accent)]" />
                               ) : null}
                               <item.icon
                                 className={`h-4 w-4 shrink-0 ${
