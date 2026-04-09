@@ -9,8 +9,6 @@ import {
 } from "@/data/notifications";
 import type { FaithHubNotification } from "@/types/notification";
 
-const logoIconSrc = "/assets/branding/logo-icon.png";
-
 interface AppHeaderProps {
   mobileOpen: boolean;
   navQuery: string;
@@ -133,29 +131,6 @@ export default function AppHeader({
               className="fh-shell-control inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[var(--text-secondary)] lg:hidden"
             >
               <Menu className="h-5 w-5" />
-            </button>
-
-            <button
-              type="button"
-              aria-label="Go to home"
-              onClick={() => onNavigate(homePath)}
-              className="inline-flex min-h-[42px] min-w-0 items-center gap-2 rounded-2xl px-2.5 py-1.5 transition-colors duration-200 hover:bg-[rgba(3,200,220,0.1)] dark:hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(3,200,220,0.34)] sm:px-3"
-            >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--card)_90%,transparent_10%)] p-1 sm:h-10 sm:w-10">
-                <img
-                  src={logoIconSrc}
-                  alt="EVzone FaithHub icon"
-                  className="h-8 w-8 object-contain sm:h-9 sm:w-9"
-                />
-              </span>
-              <span className="min-w-0 text-left leading-none">
-                <span className="block text-[10px] font-medium tracking-[0.08em] text-[#03c8dc] sm:text-[11px]">
-                  EVzone
-                </span>
-                <span className="mt-0.5 block text-base font-bold tracking-tight text-[#f77f00] sm:text-[1.05rem]">
-                  FaithHub
-                </span>
-              </span>
             </button>
           </div>
 
