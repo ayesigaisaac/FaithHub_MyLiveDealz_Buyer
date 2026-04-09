@@ -1,5 +1,5 @@
 import React from "react";
-import { Bookmark, Play, Share2 } from "lucide-react";
+import { Bookmark, HeartHandshake, Play, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type MediaCardAction = {
@@ -63,6 +63,7 @@ export default function MediaCard({
             {action.label === "Play" ? <Play className="h-4 w-4" /> : null}
             {action.label === "Save" ? <Bookmark className="h-4 w-4" /> : null}
             {action.label === "Share" ? <Share2 className="h-4 w-4" /> : null}
+            {action.label === "Donate" ? <HeartHandshake className="h-4 w-4" /> : null}
             {action.label}
           </Button>
         ))}

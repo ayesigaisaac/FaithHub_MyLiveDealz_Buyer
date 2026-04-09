@@ -3,23 +3,71 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
 import { routes } from "@/constants/routes";
 import { getHomePersonalizationSnapshot } from "@/data/homePersonalization";
+import { trackEvent } from "@/data/tracker";
 import LoadingState from "@/components/system/LoadingState";
 import MediaCard from "@/pages/user/home/components/MediaCard";
 import MediaRail from "@/pages/user/home/components/MediaRail";
 import HomeHeroPremium from "@/pages/user/home/components/HomeHeroPremium";
+import ContinueWatchingBanner from "@/pages/user/home/components/ContinueWatchingBanner";
 
 export default function FaithHubHome() {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   const personalization = useMemo(() => getHomePersonalizationSnapshot(), []);
   const featured = personalization.liveNow[0] || personalization.recommendedContent[0];
+  const continueWatching = personalization.continueWatching[0];
+  const continueProgress = continueWatching ? 56 : 0;
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLoading(false), 350);
     return () => window.clearTimeout(timer);
   }, []);
+
+  const handleSaveItem = (item: { id: string; title: string; path: string }) => {
+    try {
+      const key = "faithhub_saved_content";
+      const existing = JSON.parse(localStorage.getItem(key) || "[]") as Array<{ id: string } & Record<string, string>>;
+      if (!existing.some((entry) => entry.id === item.id)) {
+        localStorage.setItem(key, JSON.stringify([{ ...item, savedAt: new Date().toISOString() }, ...existing]));
+      }
+      trackEvent(
+        "CLICK_BUTTON",
+        { id: "save-content", label: item.title, location: routes.app.user.home },
+        { role },
+      );
+    } catch {
+      // no-op
+    }
+  };
+
+  const handleShareItem = async (item: { title: string; path: string }) => {
+    const shareUrl = `${window.location.origin}${item.path}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: item.title, url: shareUrl, text: item.title });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
+      }
+      trackEvent(
+        "CLICK_BUTTON",
+        { id: "share-content", label: item.title, location: routes.app.user.home },
+        { role },
+      );
+    } catch {
+      // ignore share errors
+    }
+  };
+
+  const handleDonate = (item: { title: string; path: string }) => {
+    trackEvent(
+      "CLICK_BUTTON",
+      { id: "donate-action", label: item.title, location: routes.app.user.home },
+      { role },
+    );
+    navigate(item.path || routes.app.user.giving);
+  };
 
   if (loading) {
     return (
@@ -39,6 +87,17 @@ export default function FaithHubHome() {
         onPrimaryAction={() => navigate(featured?.path || routes.app.user.liveHub)}
       />
 
+      {continueWatching ? (
+        <ContinueWatchingBanner
+          title={continueWatching.title}
+          detail={continueWatching.detail}
+          progress={continueProgress}
+          onContinue={() => navigate(continueWatching.path)}
+          onSave={() => handleSaveItem(continueWatching)}
+          onShare={() => handleShareItem(continueWatching)}
+        />
+      ) : null}
+
       <Suspense fallback={<div className="h-40 animate-pulse rounded-[24px] bg-[var(--surface)]" />}>
         <MediaRail
           title="Continue watching"
@@ -56,8 +115,8 @@ export default function FaithHubHome() {
               progress={40 + index * 20}
               actions={[
                 { label: "Play", onClick: () => navigate(item.path) },
-                { label: "Save", onClick: () => {}, variant: "outline" },
-                { label: "Share", onClick: () => {}, variant: "outline" },
+                { label: "Save", onClick: () => handleSaveItem(item), variant: "outline" },
+                { label: "Share", onClick: () => handleShareItem(item), variant: "outline" },
               ]}
             />
           ))}
@@ -79,7 +138,7 @@ export default function FaithHubHome() {
             badge="Live"
             actions={[
               { label: "Play", onClick: () => navigate(item.path) },
-              { label: "Share", onClick: () => {}, variant: "outline" },
+              { label: "Share", onClick: () => handleShareItem(item), variant: "outline" },
             ]}
           />
         ))}
@@ -100,7 +159,7 @@ export default function FaithHubHome() {
             badge="Recommended"
             actions={[
               { label: "Play", onClick: () => navigate(item.path) },
-              { label: "Save", onClick: () => {}, variant: "outline" },
+              { label: "Save", onClick: () => handleSaveItem(item), variant: "outline" },
             ]}
           />
         ))}
@@ -121,7 +180,7 @@ export default function FaithHubHome() {
             badge="Highlights"
             actions={[
               { label: "Play", onClick: () => navigate(routes.app.user.community) },
-              { label: "Share", onClick: () => {}, variant: "outline" },
+              { label: "Share", onClick: () => handleShareItem(item), variant: "outline" },
             ]}
           />
         ))}
@@ -141,8 +200,8 @@ export default function FaithHubHome() {
             meta="Charity • FaithHub"
             badge="Support"
             actions={[
-              { label: "Play", onClick: () => navigate(item.path) },
-              { label: "Save", onClick: () => {}, variant: "outline" },
+              { label: "Donate", onClick: () => handleDonate(item) },
+              { label: "Save", onClick: () => handleSaveItem(item), variant: "outline" },
             ]}
           />
         ))}
