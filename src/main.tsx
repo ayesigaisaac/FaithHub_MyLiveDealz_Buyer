@@ -5,6 +5,7 @@ import App from "@/App";
 import { AuthProvider } from "@/auth/AuthContext";
 import { CartProvider } from "@/cart/CartContext";
 import { ErrorBoundary } from "@/components/system/ErrorBoundary";
+import { OrderProvider } from "@/orders/OrderContext";
 import { ColorModeProvider } from "@/theme/color-mode";
 
 import "@/styles/globals.css";
@@ -19,11 +20,13 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ErrorBoundary>
       <ColorModeProvider>
-        <CartProvider>
-          <AuthProvider>
-            <App />
-          </AuthProvider>
-        </CartProvider>
+        <OrderProvider>
+          <CartProvider>
+            <AuthProvider>
+              <App />
+            </AuthProvider>
+          </CartProvider>
+        </OrderProvider>
       </ColorModeProvider>
     </ErrorBoundary>
   </React.StrictMode>

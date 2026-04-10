@@ -50,3 +50,40 @@ export function appendWalletTransaction(
   }
   return nextWallet;
 }
+
+export function processWalletPurchase(
+  role: WalletRole,
+  input: {
+    amount: number;
+    source?: WalletTransaction["source"];
+  },
+) {
+  const amount = Number(input.amount);
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return {
+      ok: false as const,
+      reason: "invalid_amount" as const,
+      wallet: getWalletByRole(role),
+    };
+  }
+
+  const current = getWalletByRole(role);
+  if (current.balance < amount) {
+    return {
+      ok: false as const,
+      reason: "insufficient_funds" as const,
+      wallet: current,
+    };
+  }
+
+  const nextWallet = appendWalletTransaction(role, {
+    type: "purchase",
+    amount,
+    source: input.source || "faithmart",
+  });
+
+  return {
+    ok: true as const,
+    wallet: nextWallet,
+  };
+}

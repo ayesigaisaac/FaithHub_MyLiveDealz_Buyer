@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Search, Sparkles } from "lucide-react";
 import { useCart } from "@/cart/CartContext";
 import ProductCard, { type MerchandiseProduct } from "@/pages/user/merchandise/components/ProductCard";
 
@@ -86,6 +86,12 @@ export default function FaithHubMerchandise() {
   const { addToCart } = useCart();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<MerchandiseCategory>("All");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsLoading(false), 450);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const filteredProducts = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -142,7 +148,7 @@ export default function FaithHubMerchandise() {
                   className={`rounded-full px-4 py-2 text-xs font-semibold transition sm:text-sm ${
                     isActive
                       ? "bg-[#03c8dc] text-white shadow-[0_8px_20px_-12px_rgba(3,200,220,0.7)]"
-                      : "border border-slate-200 bg-white text-slate-700 hover:border-[#03c8dc]/40"
+                      : "border border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-[#03c8dc]/40 hover:shadow-[0_10px_24px_-18px_rgba(15,23,42,0.4)]"
                   }`}
                 >
                   {category}
@@ -153,15 +159,40 @@ export default function FaithHubMerchandise() {
         </div>
       </header>
 
-      {filteredProducts.length ? (
+      {isLoading ? (
+        <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <article
+              key={`merch-skeleton-${index}`}
+              className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_10px_30px_-18px_rgba(15,23,42,0.18)]"
+            >
+              <div className="aspect-[4/3] animate-pulse bg-slate-200" />
+              <div className="space-y-3 p-4">
+                <div className="h-4 w-3/4 animate-pulse rounded bg-slate-200" />
+                <div className="h-3 w-1/2 animate-pulse rounded bg-slate-200" />
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <div className="h-5 w-16 animate-pulse rounded bg-slate-200" />
+                  <div className="h-9 w-24 animate-pulse rounded-xl bg-slate-200" />
+                </div>
+              </div>
+            </article>
+          ))}
+        </section>
+      ) : filteredProducts.length ? (
         <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} onAddToCart={handleAddToCart} />
           ))}
         </section>
       ) : (
-        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center text-sm text-slate-500">
-          No products matched your search and filters.
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center shadow-[0_10px_30px_-20px_rgba(15,23,42,0.24)]">
+          <div className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+            <Sparkles className="h-5 w-5" />
+          </div>
+          <div className="text-base font-semibold text-slate-800">No products found</div>
+          <p className="mt-1 text-sm text-slate-500">
+            Try a different keyword or clear your filters to discover more merchandise.
+          </p>
         </div>
       )}
     </div>
