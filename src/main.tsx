@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import App from "@/App";
 import { AuthProvider } from "@/auth/AuthContext";
+import { CartProvider } from "@/cart/CartContext";
 import { ErrorBoundary } from "@/components/system/ErrorBoundary";
 import { ColorModeProvider } from "@/theme/color-mode";
 
@@ -18,9 +19,11 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ErrorBoundary>
       <ColorModeProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <CartProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </CartProvider>
       </ColorModeProvider>
     </ErrorBoundary>
   </React.StrictMode>
