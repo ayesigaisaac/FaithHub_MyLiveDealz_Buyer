@@ -1,25 +1,24 @@
 import { AUTH_STORAGE_KEYS } from "@/constants/auth";
+import { clearJson, readJson, writeJson } from "@/data/adapters/storage";
 
-function canUseSessionStorage() {
-  return typeof window !== "undefined" && typeof window.sessionStorage !== "undefined";
+function reviveNotice(value: unknown): string | null {
+  return typeof value === "string" && value.trim() ? value : null;
+}
+
+export function setAuthNotice(reason: string) {
+  writeJson(AUTH_STORAGE_KEYS.notice, reason);
 }
 
 export function getAuthNotice() {
-  if (!canUseSessionStorage()) return null;
-  return window.sessionStorage.getItem(AUTH_STORAGE_KEYS.notice);
+  return readJson<string | null>(AUTH_STORAGE_KEYS.notice, null, reviveNotice);
 }
 
-export function setAuthNotice(value: string) {
-  if (!canUseSessionStorage()) return;
-  window.sessionStorage.setItem(AUTH_STORAGE_KEYS.notice, value);
+export function clearAuthNotice() {
+  clearJson(AUTH_STORAGE_KEYS.notice);
 }
 
 export function consumeAuthNotice() {
-  if (!canUseSessionStorage()) return null;
-  const value = window.sessionStorage.getItem(AUTH_STORAGE_KEYS.notice);
-  if (value) {
-    window.sessionStorage.removeItem(AUTH_STORAGE_KEYS.notice);
-  }
-  return value;
+  const reason = getAuthNotice();
+  clearAuthNotice();
+  return reason;
 }
-

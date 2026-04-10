@@ -1,29 +1,28 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { Role } from "@/types/roles";
-import { addAuthAuditRecord } from "@/data/authAudit";
 import {
   AUTH_NOTICE_REASONS,
   AUTH_SESSION_EXPIRY_MS,
   AUTH_STORAGE_KEYS,
   getAllRoleSessionStorageKeys,
-  getRoleSessionStorageKey,
 } from "@/constants/auth";
+import { clearJson, readJson, writeJson } from "@/data/adapters/storage";
+import { addAuthAuditRecord } from "@/data/authAudit";
+import { clearAuthNotice, setAuthNotice } from "@/auth/noticeStorage";
+import { clearRoleSession, getRoleSessionRaw, setRoleSession } from "@/auth/sessionStore";
 import { isRole } from "@/auth/roleRouting";
-import { setAuthNotice } from "@/auth/noticeStorage";
-
-export type AuthUser = {
-  id: string;
-  name: string;
-  email: string;
-  role: Role;
-  community: string;
-  status: "active" | "idle";
-};
 
 type LoginInput = {
   email: string;
-  password: string;
-  role?: Role;
+  password?: string;
+  role: Role;
+};
+
+export type AuthUser = {
+  id: string;
+  email: string;
+  name: string;
+  role: Role;
 };
 
 type AuthContextValue = {
@@ -34,355 +33,300 @@ type AuthContextValue = {
   isAuthLoading: boolean;
   sessionExpiresAt: number | null;
   login: (input: LoginInput) => Promise<AuthUser>;
-  mockLoginAsRole: (role: Role, source?: "social" | "access") => Promise<AuthUser>;
+  mockLoginAsRole: (role: Role, method?: "password" | "social") => Promise<AuthUser>;
+  setRole: (role: Role) => void;
+  switchRole: (role: Role) => void;
   logout: () => void;
   logoutAllRoles: () => void;
-  switchRole: (role: Role) => void;
-  setRole: (role: Role) => void;
-  setUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
-  hasRole: (role: Role) => boolean;
-  isAdmin: boolean;
-  isProvider: boolean;
-  isUser: boolean;
 };
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+const FALLBACK_ROLE: Role = "user";
 
-type StoredFaithHubUser = {
-  email: string;
-  role: Role;
-  expiresAt?: number;
+const defaultContext: AuthContextValue = {
+  user: null,
+  role: FALLBACK_ROLE,
+  currentRole: FALLBACK_ROLE,
+  isAuthenticated: false,
+  isAuthLoading: true,
+  sessionExpiresAt: null,
+  login: async () => {
+    throw new Error("Auth provider is not mounted.");
+  },
+  mockLoginAsRole: async () => {
+    throw new Error("Auth provider is not mounted.");
+  },
+  setRole: () => undefined,
+  switchRole: () => undefined,
+  logout: () => undefined,
+  logoutAllRoles: () => undefined,
 };
 
-function normalizeNameFromEmail(email: string) {
-  const local = email.split("@")[0] || "faithhub-user";
-  const clean = local.replace(/[^a-zA-Z0-9]+/g, " ").trim();
-  if (!clean) return "FaithHub User";
-  return clean
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+const AuthContext = createContext<AuthContextValue>(defaultContext);
+
+function resolveRoleLabel(role: Role) {
+  if (role === "admin") return "Admin";
+  if (role === "provider") return "Provider";
+  return "Member";
+}
+
+function toDisplayName(email: string, role: Role) {
+  const seed = email.split("@")[0]?.replace(/[._-]+/g, " ") || "faithhub";
+  const normalized = seed
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((segment) => segment[0]?.toUpperCase() + segment.slice(1).toLowerCase())
     .join(" ");
+
+  if (normalized) return normalized;
+  return role === "user" ? "Faith Member" : `${resolveRoleLabel(role)} User`;
 }
 
-function resolveRoleFromEmail(email: string): Role {
-  const normalized = email.toLowerCase();
-  if (normalized.includes("admin")) return "admin";
-  if (
-    normalized.includes("provider") ||
-    normalized.includes("pastor") ||
-    normalized.includes("leader")
-  ) {
-    return "provider";
-  }
-  return "user";
+function resolveRoleFromStorage() {
+  return readJson<Role>(AUTH_STORAGE_KEYS.activeRole, FALLBACK_ROLE, (value) =>
+    isRole(value) ? value : null,
+  );
 }
 
-function parseStoredUser(raw: string | null): AuthUser | null {
-  if (!raw) return null;
-  try {
-    const parsed = JSON.parse(raw) as Partial<AuthUser> | Partial<StoredFaithHubUser>;
-    if (!parsed || typeof parsed !== "object") return null;
-    if (typeof parsed.email !== "string" || !isRole(parsed.role)) {
-      return null;
-    }
-    const normalizedEmail = parsed.email.trim().toLowerCase();
-    const normalizedRole = parsed.role;
-    const legacyAuthUser = parsed as Partial<AuthUser>;
-    const withExpiry = parsed as Partial<StoredFaithHubUser>;
-    if (typeof withExpiry.expiresAt === "number" && withExpiry.expiresAt < Date.now()) {
-      setAuthNotice(AUTH_NOTICE_REASONS.sessionExpired);
-      return null;
-    }
-    return {
-      id: typeof legacyAuthUser.id === "string" ? legacyAuthUser.id : `auth-${normalizedRole}-persisted`,
-      name:
-        typeof legacyAuthUser.name === "string" && legacyAuthUser.name.trim().length > 0
-          ? legacyAuthUser.name
-          : normalizeNameFromEmail(normalizedEmail),
-      email: normalizedEmail,
-      role: normalizedRole,
-      community:
-        typeof legacyAuthUser.community === "string"
-          ? legacyAuthUser.community
-          : normalizedRole === "admin"
-          ? "FaithHub Command Center"
-          : "FaithHub Community",
-      status: legacyAuthUser.status === "idle" ? "idle" : "active",
-    };
-  } catch {
-    return null;
-  }
-}
+function reviveUser(value: unknown): AuthUser | null {
+  if (!value || typeof value !== "object") return null;
+  const parsed = value as Partial<AuthUser>;
+  if (!isRole(parsed.role)) return null;
+  if (typeof parsed.email !== "string" || typeof parsed.name !== "string") return null;
 
-function readActiveRole(): Role {
-  if (typeof window === "undefined") return "user";
-  const raw = window.localStorage.getItem(AUTH_STORAGE_KEYS.activeRole);
-  return isRole(raw) ? raw : "user";
-}
-
-function persistActiveRole(role: Role) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(AUTH_STORAGE_KEYS.activeRole, role);
-}
-
-function readStoredSession(role: Role): AuthUser | null {
-  if (typeof window === "undefined") return null;
-  return parseStoredUser(window.localStorage.getItem(getRoleSessionStorageKey(role)));
-}
-
-function persistSession(role: Role, user: AuthUser | null) {
-  if (typeof window === "undefined") return;
-  if (!user) {
-    window.localStorage.removeItem(getRoleSessionStorageKey(role));
-    return;
-  }
-  const storedUser: StoredFaithHubUser = {
-    email: user.email,
-    role,
-    expiresAt: Date.now() + AUTH_SESSION_EXPIRY_MS,
-  };
-  window.localStorage.setItem(getRoleSessionStorageKey(role), JSON.stringify(storedUser));
-}
-
-function mirrorActiveSession(user: AuthUser | null) {
-  if (typeof window === "undefined") return;
-  if (!user) {
-    window.localStorage.removeItem(AUTH_STORAGE_KEYS.activeUser);
-    return;
-  }
-  const storedUser: StoredFaithHubUser = {
-    email: user.email,
-    role: user.role,
-    expiresAt: Date.now() + AUTH_SESSION_EXPIRY_MS,
-  };
-  window.localStorage.setItem(AUTH_STORAGE_KEYS.activeUser, JSON.stringify(storedUser));
-}
-
-function consumeLegacySession(): AuthUser | null {
-  if (typeof window === "undefined") return null;
-  const current = parseStoredUser(window.localStorage.getItem(AUTH_STORAGE_KEYS.activeUser));
-  if (current) return current;
-  return parseStoredUser(window.localStorage.getItem(AUTH_STORAGE_KEYS.legacySession));
-}
-
-function clearLegacySessionKeys() {
-  if (typeof window === "undefined") return;
-  window.localStorage.removeItem(AUTH_STORAGE_KEYS.legacySession);
-}
-
-function buildMockUser(email: string, role: Role): AuthUser {
-  const normalizedEmail = email.trim().toLowerCase();
   return {
-    id: `auth-${role}-${Date.now()}`,
-    name: normalizeNameFromEmail(normalizedEmail),
-    email: normalizedEmail,
-    role,
-    community: role === "admin" ? "FaithHub Command Center" : "FaithHub Community",
-    status: "active",
+    id: parsed.id || `${parsed.role}:${parsed.email}`,
+    email: parsed.email,
+    name: parsed.name,
+    role: parsed.role,
   };
+}
+
+function loadPersistedState() {
+  const activeRole = resolveRoleFromStorage();
+  const user = readJson<AuthUser | null>(AUTH_STORAGE_KEYS.activeUser, null, reviveUser);
+  return { activeRole, user };
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [activeRole, setActiveRole] = useState<Role>("user");
+  const [{ role, user, isAuthLoading }, setState] = useState(() => {
+    const persisted = loadPersistedState();
+    return {
+      role: persisted.activeRole,
+      user: persisted.user,
+      isAuthLoading: true,
+    };
+  });
+
   const [sessionExpiresAt, setSessionExpiresAt] = useState<number | null>(null);
-  const [isAuthLoading, setIsAuthLoading] = useState(true);
 
-  const role: Role = user?.role || activeRole;
-
-  useEffect(() => {
-    const bootstrapRole = readActiveRole();
-    const roleSession = readStoredSession(bootstrapRole);
-
-    if (roleSession) {
-      const raw = window.localStorage.getItem(getRoleSessionStorageKey(bootstrapRole));
-      try {
-        const parsed = raw ? (JSON.parse(raw) as Partial<StoredFaithHubUser>) : null;
-        setSessionExpiresAt(typeof parsed?.expiresAt === "number" ? parsed.expiresAt : null);
-      } catch {
-        setSessionExpiresAt(null);
-      }
-      setActiveRole(bootstrapRole);
-      setUser(roleSession);
-      mirrorActiveSession(roleSession);
-      setIsAuthLoading(false);
-      return;
-    }
-
-    const legacySession = consumeLegacySession();
-    if (legacySession) {
-      persistSession(legacySession.role, legacySession);
-      persistActiveRole(legacySession.role);
-      setActiveRole(legacySession.role);
-      setUser(legacySession);
-      setSessionExpiresAt(Date.now() + AUTH_SESSION_EXPIRY_MS);
-      mirrorActiveSession(legacySession);
-      clearLegacySessionKeys();
-      setIsAuthLoading(false);
-      return;
-    }
-
-    setActiveRole(bootstrapRole);
-    setUser(null);
-    setSessionExpiresAt(null);
-    mirrorActiveSession(null);
-    setIsAuthLoading(false);
+  const persistRole = useCallback((nextRole: Role) => {
+    writeJson(AUTH_STORAGE_KEYS.activeRole, nextRole);
   }, []);
 
-  useEffect(() => {
-    if (isAuthLoading || !sessionExpiresAt || !user) return;
-    if (Date.now() >= sessionExpiresAt) {
-      addAuthAuditRecord({
-        action: "SESSION_EXPIRED",
-        role: activeRole,
-        email: user.email,
-        detail: "Session expired from active timer guard",
-      });
-      persistSession(activeRole, null);
-      mirrorActiveSession(null);
-      if (typeof window !== "undefined") {
-        setAuthNotice(AUTH_NOTICE_REASONS.sessionExpired);
-      }
-      setUser(null);
-      setSessionExpiresAt(null);
+  const persistUser = useCallback((nextUser: AuthUser | null) => {
+    if (!nextUser) {
+      clearJson(AUTH_STORAGE_KEYS.activeUser);
       return;
     }
-    const timeoutMs = Math.max(500, sessionExpiresAt - Date.now() + 200);
-    const timer = window.setTimeout(() => {
-      persistSession(activeRole, null);
-      mirrorActiveSession(null);
+    writeJson(AUTH_STORAGE_KEYS.activeUser, nextUser);
+  }, []);
+
+  const clearAllRoleSessions = useCallback(() => {
+    for (const key of getAllRoleSessionStorageKeys()) {
+      clearJson(key);
+    }
+  }, []);
+
+  const commitRoleAndUser = useCallback(
+    (nextRole: Role, nextUser: AuthUser | null) => {
+      setState((prev) => ({ ...prev, role: nextRole, user: nextUser }));
+      persistRole(nextRole);
+      persistUser(nextUser);
+    },
+    [persistRole, persistUser],
+  );
+
+  useEffect(() => {
+    const session = getRoleSessionRaw(role);
+
+    if (!session) {
+      setSessionExpiresAt(null);
+      setState((prev) => ({ ...prev, user: null, isAuthLoading: false }));
+      persistUser(null);
+      return;
+    }
+
+    if (session.expiresAt <= Date.now()) {
+      clearRoleSession(role);
       setAuthNotice(AUTH_NOTICE_REASONS.sessionExpired);
       addAuthAuditRecord({
         action: "SESSION_EXPIRED",
-        role: activeRole,
-        email: user.email,
-        detail: "Session expired by timeout callback",
+        role,
+        email: session.email,
+        detail: `Session expired for ${role}`,
       });
-      setUser(null);
       setSessionExpiresAt(null);
-    }, timeoutMs);
-    return () => window.clearTimeout(timer);
-  }, [activeRole, isAuthLoading, sessionExpiresAt, user]);
+      setState((prev) => ({ ...prev, user: null, isAuthLoading: false }));
+      persistUser(null);
+      return;
+    }
 
-  const value = useMemo<AuthContextValue>(() => {
-    const login = async ({ email, password, role: preferredRole }: LoginInput) => {
-      const safeEmail = email.trim();
-      if (!safeEmail || !password.trim()) {
-        throw new Error("Email and password are required for mock login.");
-      }
-      const nextRole = preferredRole || resolveRoleFromEmail(safeEmail);
-      const nextUser = buildMockUser(safeEmail, nextRole);
-      const expiresAt = Date.now() + AUTH_SESSION_EXPIRY_MS;
-      persistSession(nextRole, nextUser);
-      persistActiveRole(nextRole);
-      mirrorActiveSession(nextUser);
-      clearLegacySessionKeys();
-      setActiveRole(nextRole);
-      setSessionExpiresAt(expiresAt);
-      setUser(nextUser);
-      addAuthAuditRecord({
-        action: "LOGIN_SUCCESS",
+    const persistedUser = readJson<AuthUser | null>(AUTH_STORAGE_KEYS.activeUser, null, reviveUser);
+    const hydratedUser: AuthUser = {
+      id: persistedUser?.id || `${role}:${session.email}`,
+      email: session.email,
+      name: persistedUser?.name || session.name,
+      role,
+    };
+
+    setSessionExpiresAt(session.expiresAt);
+    setState((prev) => ({ ...prev, role, user: hydratedUser, isAuthLoading: false }));
+    persistUser(hydratedUser);
+  }, [role, persistUser]);
+
+  const loginWithRole = useCallback(
+    async ({ email, role: nextRole }: { email: string; role: Role }, method: "password" | "social") => {
+      const safeEmail = email.trim().toLowerCase();
+      const resolvedEmail = safeEmail || `${nextRole}@faithhub.app`;
+      const authUser: AuthUser = {
+        id: `${nextRole}:${resolvedEmail}`,
+        email: resolvedEmail,
+        name: toDisplayName(resolvedEmail, nextRole),
         role: nextRole,
-        email: nextUser.email,
-        detail: "Email/password login",
-      });
-      return nextUser;
-    };
+      };
 
-    const mockLoginAsRole = async (requestedRole: Role, source: "social" | "access" = "access") => {
-      const email = `${requestedRole}@faithhub.app`;
-      const nextUser = buildMockUser(email, requestedRole);
-      const expiresAt = Date.now() + AUTH_SESSION_EXPIRY_MS;
-      persistSession(requestedRole, nextUser);
-      persistActiveRole(requestedRole);
-      mirrorActiveSession(nextUser);
-      clearLegacySessionKeys();
-      setActiveRole(requestedRole);
+      const issuedAt = Date.now();
+      const expiresAt = issuedAt + AUTH_SESSION_EXPIRY_MS;
+
+      setRoleSession(nextRole, {
+        role: nextRole,
+        email: authUser.email,
+        name: authUser.name,
+        issuedAt,
+        expiresAt,
+        method,
+      });
+
+      clearAuthNotice();
       setSessionExpiresAt(expiresAt);
-      setUser(nextUser);
-      addAuthAuditRecord({
-        action: source === "social" ? "LOGIN_SOCIAL" : "LOGIN_SUCCESS",
-        role: requestedRole,
-        email: nextUser.email,
-        detail: source === "social" ? "Social sign-in" : "Mock role access sign-in",
-      });
-      return nextUser;
-    };
+      commitRoleAndUser(nextRole, authUser);
 
-    const switchRole = (nextRole: Role) => {
+      addAuthAuditRecord({
+        action: method === "social" ? "LOGIN_SOCIAL" : "LOGIN_SUCCESS",
+        role: nextRole,
+        email: authUser.email,
+        detail: `Login via ${method}`,
+      });
+
+      return authUser;
+    },
+    [commitRoleAndUser],
+  );
+
+  const login = useCallback(
+    async ({ email, role: nextRole }: LoginInput) => {
+      return loginWithRole({ email, role: nextRole }, "password");
+    },
+    [loginWithRole],
+  );
+
+  const mockLoginAsRole = useCallback(
+    async (nextRole: Role, method: "password" | "social" = "password") => {
+      const fallbackEmail =
+        nextRole === "admin"
+          ? "admin@faithhub.app"
+          : nextRole === "provider"
+          ? "provider@faithhub.app"
+          : "member@faithhub.app";
+      return loginWithRole({ email: fallbackEmail, role: nextRole }, method);
+    },
+    [loginWithRole],
+  );
+
+  const switchRole = useCallback(
+    (nextRole: Role) => {
+      if (nextRole === role) return;
+      commitRoleAndUser(nextRole, null);
+      setSessionExpiresAt(null);
+      setAuthNotice(AUTH_NOTICE_REASONS.roleLoginRequired);
       addAuthAuditRecord({
         action: "ROLE_SWITCH_REQUESTED",
         role: nextRole,
         email: user?.email,
-        detail: "Role switch requires new login",
+        detail: `Requested switch from ${role} to ${nextRole}`,
       });
-      persistActiveRole(nextRole);
-      persistSession(nextRole, null);
-      mirrorActiveSession(null);
-      setActiveRole(nextRole);
-      setUser(null);
-      setSessionExpiresAt(null);
-      setAuthNotice(AUTH_NOTICE_REASONS.roleLoginRequired);
-    };
+    },
+    [commitRoleAndUser, role, user?.email],
+  );
 
-    const hasRole = (targetRole: Role) => role === targetRole && Boolean(user);
+  const setRole = useCallback(
+    (nextRole: Role) => {
+      switchRole(nextRole);
+    },
+    [switchRole],
+  );
 
-    return {
+  const logout = useCallback(() => {
+    clearRoleSession(role);
+    addAuthAuditRecord({
+      action: "LOGOUT_ROLE",
+      role,
+      email: user?.email,
+      detail: `Role ${role} signed out`,
+    });
+
+    setAuthNotice(AUTH_NOTICE_REASONS.logout);
+    setSessionExpiresAt(null);
+    commitRoleAndUser(role, null);
+  }, [commitRoleAndUser, role, user?.email]);
+
+  const logoutAllRoles = useCallback(() => {
+    clearAllRoleSessions();
+    addAuthAuditRecord({
+      action: "LOGOUT_ALL_ROLES",
+      role,
+      email: user?.email,
+      detail: "Signed out from every role",
+    });
+
+    setAuthNotice(AUTH_NOTICE_REASONS.logout);
+    setSessionExpiresAt(null);
+    commitRoleAndUser(FALLBACK_ROLE, null);
+  }, [clearAllRoleSessions, commitRoleAndUser, role, user?.email]);
+
+  const value = useMemo<AuthContextValue>(
+    () => ({
       user,
       role,
-      currentRole: activeRole,
-      isAuthenticated: Boolean(user) && !isAuthLoading && user.role === activeRole,
+      currentRole: role,
+      isAuthenticated: Boolean(user),
       isAuthLoading,
       sessionExpiresAt,
       login,
       mockLoginAsRole,
-      logout: () => {
-        addAuthAuditRecord({
-          action: "LOGOUT_ROLE",
-          role: activeRole,
-          email: user?.email,
-          detail: "Manual logout from current role",
-        });
-        persistSession(activeRole, null);
-        mirrorActiveSession(null);
-        setAuthNotice(AUTH_NOTICE_REASONS.logout);
-        setUser(null);
-        setSessionExpiresAt(null);
-      },
-      logoutAllRoles: () => {
-        for (const key of getAllRoleSessionStorageKeys()) {
-          if (typeof window !== "undefined") {
-            window.localStorage.removeItem(key);
-          }
-        }
-        addAuthAuditRecord({
-          action: "LOGOUT_ALL_ROLES",
-          role: activeRole,
-          email: user?.email,
-          detail: "Cleared all role sessions",
-        });
-        mirrorActiveSession(null);
-        setUser(null);
-        setSessionExpiresAt(null);
-        setAuthNotice(AUTH_NOTICE_REASONS.logout);
-      },
+      setRole,
       switchRole,
-      setRole: switchRole,
-      setUser,
-      hasRole,
-      isAdmin: hasRole("admin"),
-      isProvider: hasRole("provider"),
-      isUser: hasRole("user"),
-    };
-  }, [activeRole, isAuthLoading, role, sessionExpiresAt, user]);
+      logout,
+      logoutAllRoles,
+    }),
+    [
+      isAuthLoading,
+      login,
+      logout,
+      logoutAllRoles,
+      mockLoginAsRole,
+      role,
+      sessionExpiresAt,
+      setRole,
+      switchRole,
+      user,
+    ],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used inside AuthProvider.");
-  }
-  return context;
+  return useContext(AuthContext);
 }
