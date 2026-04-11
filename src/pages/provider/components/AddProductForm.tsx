@@ -21,6 +21,8 @@ type ProductRecord = {
   category: ProductCategory;
   imageName: string;
   stockQuantity: number;
+  providerId: string;
+  providerName: string;
 };
 
 type FieldErrors = Partial<Record<keyof ProductDraft, string>>;
@@ -45,10 +47,20 @@ function isPositiveInteger(value: string) {
 }
 
 export default function AddProductForm() {
+  const currentProvider = {
+    id: "provider-1",
+    name: "FaithHub Provider Workspace",
+  };
+
   const [draft, setDraft] = useState<ProductDraft>(initialDraft);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [products, setProducts] = useState<ProductRecord[]>([]);
   const [successMessage, setSuccessMessage] = useState("");
+
+  const providerProducts = useMemo(
+    () => products.filter((product) => product.providerId === currentProvider.id),
+    [products, currentProvider.id],
+  );
 
   const canSubmit = useMemo(
     () =>
@@ -90,6 +102,8 @@ export default function AddProductForm() {
       category: draft.category as ProductCategory,
       imageName: draft.imageName.trim(),
       stockQuantity: Number(draft.stockQuantity),
+      providerId: currentProvider.id,
+      providerName: currentProvider.name,
     };
 
     setProducts((prev) => [record, ...prev]);
@@ -114,6 +128,9 @@ export default function AddProductForm() {
           <p className="mt-2 max-w-2xl text-sm text-[var(--text-secondary)]">
             Create a merchandise product for your ministry store. This form stores data locally for now.
           </p>
+          <div className="mt-3 text-sm text-[var(--text-secondary)]">
+            Provider: {currentProvider.name}
+          </div>
         </CardContent>
       </Card>
 
@@ -241,14 +258,14 @@ export default function AddProductForm() {
         </CardContent>
       </Card>
 
-      {products.length ? (
+      {providerProducts.length ? (
         <Card className="fh-surface-card rounded-2xl">
           <CardContent className="p-4 sm:p-5">
             <div className="mb-3 text-base font-semibold text-[var(--text-primary)]">
               Mock Saved Products
             </div>
             <div className="space-y-2">
-              {products.map((product) => (
+              {providerProducts.map((product) => (
                 <div
                   key={product.id}
                   className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm"
@@ -266,4 +283,3 @@ export default function AddProductForm() {
     </div>
   );
 }
-
