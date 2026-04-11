@@ -8,12 +8,35 @@ type ProviderProduct = {
   name: string;
   price: number;
   stock: number;
+  providerId: string;
+  providerName: string;
 };
 
 const seedProducts: ProviderProduct[] = [
-  { id: "prod-1", name: "Faith in Action Devotional", price: 18.99, stock: 27 },
-  { id: "prod-2", name: "FaithHub Signature Hoodie", price: 39.0, stock: 4 },
-  { id: "prod-3", name: "Prayer Journal Tote Bag", price: 16.4, stock: 14 },
+  {
+    id: "prod-1",
+    name: "Faith in Action Devotional",
+    price: 18.99,
+    stock: 27,
+    providerId: "provider-1",
+    providerName: "FaithHub Provider Workspace",
+  },
+  {
+    id: "prod-2",
+    name: "FaithHub Signature Hoodie",
+    price: 39.0,
+    stock: 4,
+    providerId: "provider-1",
+    providerName: "FaithHub Provider Workspace",
+  },
+  {
+    id: "prod-3",
+    name: "Prayer Journal Tote Bag",
+    price: 16.4,
+    stock: 14,
+    providerId: "provider-2",
+    providerName: "New Life Outreach",
+  },
 ];
 
 function currency(value: number) {
@@ -25,6 +48,11 @@ function currency(value: number) {
 }
 
 export default function FaithHubProviderProducts() {
+  const currentProvider = {
+    id: "provider-1",
+    name: "FaithHub Provider Workspace",
+  };
+
   const [products, setProducts] = useState<ProviderProduct[]>(seedProducts);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editDraft, setEditDraft] = useState<{ name: string; price: string; stock: string }>({
@@ -33,9 +61,15 @@ export default function FaithHubProviderProducts() {
     stock: "",
   });
 
+  const providerProducts = useMemo(
+    () => products.filter((product) => product.providerId === currentProvider.id),
+    [products, currentProvider.id],
+  );
+
   const inventoryValue = useMemo(
-    () => products.reduce((sum, product) => sum + product.price * product.stock, 0),
-    [products],
+    () =>
+      providerProducts.reduce((sum, product) => sum + product.price * product.stock, 0),
+    [providerProducts],
   );
 
   const startEdit = (product: ProviderProduct) => {
@@ -90,35 +124,39 @@ export default function FaithHubProviderProducts() {
           <p className="mt-2 text-sm text-[var(--text-secondary)]">
             Manage your merchandise catalog, update pricing, and keep stock levels current.
           </p>
-          <div className="mt-3 text-sm text-[var(--text-secondary)]">
-            {products.length} product{products.length === 1 ? "" : "s"} • Inventory value {currency(inventoryValue)}
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-[var(--text-secondary)]">
+            <span>Provider: {currentProvider.name}</span>
+            <span>
+              {providerProducts.length} product{providerProducts.length === 1 ? "" : "s"}
+            </span>
+            <span>Inventory value {currency(inventoryValue)}</span>
           </div>
         </CardContent>
       </Card>
 
       <Card className="fh-surface-card rounded-2xl">
         <CardContent className="p-4 sm:p-5">
-          {products.length === 0 ? (
+          {providerProducts.length === 0 ? (
             <div className="rounded-xl border border-dashed border-[var(--border)] bg-[var(--card)] p-8 text-center text-sm text-[var(--text-secondary)]">
-              No products available.
+              No products available for this provider.
             </div>
           ) : (
-            <div className="space-y-2">
-              {products.map((product) => {
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {providerProducts.map((product) => {
                 const isEditing = editingId === product.id;
                 return (
                   <div
                     key={product.id}
-                    className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3 sm:p-4"
+                    className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4"
                   >
                     {isEditing ? (
-                      <div className="grid gap-2 sm:grid-cols-4">
+                      <div className="grid gap-2">
                         <input
                           value={editDraft.name}
                           onChange={(event) =>
                             setEditDraft((prev) => ({ ...prev, name: event.target.value }))
                           }
-                          className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm sm:col-span-2"
+                          className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm"
                           placeholder="Product name"
                         />
                         <input
@@ -143,7 +181,7 @@ export default function FaithHubProviderProducts() {
                           className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm"
                           placeholder="Stock"
                         />
-                        <div className="flex gap-2 sm:col-span-4 sm:justify-end">
+                        <div className="flex flex-wrap gap-2">
                           <Button variant="outline" className="fh-user-secondary-btn" onClick={cancelEdit}>
                             Cancel
                           </Button>
@@ -153,8 +191,8 @@ export default function FaithHubProviderProducts() {
                         </div>
                       </div>
                     ) : (
-                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                        <div className="min-w-0 flex-1">
+                      <div className="flex h-full flex-col gap-3">
+                        <div className="min-w-0 flex-1 space-y-1">
                           <div className="truncate text-base font-semibold text-[var(--text-primary)]">
                             {product.name}
                           </div>
@@ -164,7 +202,7 @@ export default function FaithHubProviderProducts() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="mt-auto flex items-center gap-2">
                           <Button
                             variant="outline"
                             className="fh-user-secondary-btn"
@@ -194,4 +232,3 @@ export default function FaithHubProviderProducts() {
     </div>
   );
 }
-
