@@ -57,6 +57,7 @@ export default function LoginPage() {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
+  const [signInMode, setSignInMode] = useState<"email" | "social">("email");
   const routeRole = isRole(roleParam) ? roleParam : null;
   const roleLocked = Boolean(routeRole);
   const activeRoleMeta = roleLoginHeadings[role];
@@ -193,12 +194,26 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
-              <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
-                login with email
-              </span>
-              <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
+            <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-[#03c8dc]/20 bg-[#03c8dc]/5 p-1">
+              {([
+                { id: "email" as const, label: "Email sign-in" },
+                { id: "social" as const, label: "Social sign-in" },
+              ]).map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => setSignInMode(option.id)}
+                  className={`min-h-[34px] rounded-lg text-xs font-semibold transition ${
+                    signInMode === option.id
+                      ? "bg-white text-[#03c8dc] shadow-sm"
+                      : isDark
+                        ? "text-[#9CA3AF] hover:bg-white/5"
+                        : "text-slate-600 hover:bg-white"
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
             </div>
 
             <div className="min-h-0 flex-1 space-y-3 overflow-y-auto pr-1">
@@ -231,7 +246,8 @@ export default function LoginPage() {
                 </div>
               </section>
 
-              <form className="space-y-3" onSubmit={handleLogin}>
+              {signInMode === "email" ? (
+                <form className="space-y-3" onSubmit={handleLogin}>
                 <label className="block space-y-1.5" htmlFor="login-email">
                 <span className={`text-sm font-medium ${isDark ? "text-[#E5E7EB]" : "text-slate-700"}`}>
                   Email address
@@ -336,37 +352,32 @@ export default function LoginPage() {
                 {isSubmitting ? "Signing in..." : "Login with email"}
               </Button>
             </form>
+              ) : null}
 
-            <div className="flex items-center gap-2">
-              <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
-              <span className={`text-[11px] font-semibold uppercase tracking-[0.14em] ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
-                or continue with
-              </span>
-              <div className={`h-px flex-1 ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              {socialProviders.map((provider) => (
-                <button
-                  key={provider.id}
-                  type="button"
-                  onClick={() => handleSocialLogin(provider.id)}
-                  disabled={isSubmitting}
-                  className={`group flex min-h-[38px] w-full items-center gap-2 rounded-xl border px-2.5 py-1.5 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
-                    isDark
-                      ? "border-white/10 bg-[#020617] hover:border-[#03c8dc]/40 hover:bg-white/5"
-                      : "border-slate-200 bg-white hover:border-[#03c8dc]/35 hover:bg-slate-50"
-                  }`}
-                >
-                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-[#03c8dc]/12 transition group-hover:bg-[#03c8dc]/20">
-                    <img src={provider.logoSrc} alt={`${provider.id} logo`} className="h-4 w-4 object-contain" />
-                  </span>
-                  <span className={`text-xs font-medium ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
-                    {provider.label.replace("Continue with ", "")}
-                  </span>
-                </button>
-              ))}
-            </div>
+            {signInMode === "social" ? (
+              <div className="grid grid-cols-2 gap-2">
+                {socialProviders.map((provider) => (
+                  <button
+                    key={provider.id}
+                    type="button"
+                    onClick={() => handleSocialLogin(provider.id)}
+                    disabled={isSubmitting}
+                    className={`group flex min-h-[38px] w-full items-center gap-2 rounded-xl border px-2.5 py-1.5 text-left transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-70 ${
+                      isDark
+                        ? "border-white/10 bg-[#020617] hover:border-[#03c8dc]/40 hover:bg-white/5"
+                        : "border-slate-200 bg-white hover:border-[#03c8dc]/35 hover:bg-slate-50"
+                    }`}
+                  >
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-lg bg-[#03c8dc]/12 transition group-hover:bg-[#03c8dc]/20">
+                      <img src={provider.logoSrc} alt={`${provider.id} logo`} className="h-4 w-4 object-contain" />
+                    </span>
+                    <span className={`text-xs font-medium ${isDark ? "text-[#F9FAFB]" : "text-slate-900"}`}>
+                      {provider.label.replace("Continue with ", "")}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
 
             <p className={`text-center text-xs ${isDark ? "text-[#9CA3AF]" : "text-slate-500"}`}>
               New here?{" "}
