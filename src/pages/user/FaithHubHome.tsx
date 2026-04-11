@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/auth/AuthContext";
 import { routes } from "@/constants/routes";
 import { getHomePersonalizationSnapshot } from "@/data/homePersonalization";
+import type { PersonalizedItem } from "@/data/homePersonalization";
 import { trackEvent } from "@/data/tracker";
 import LoadingState from "@/components/system/LoadingState";
 import MediaCard from "@/pages/user/home/components/MediaCard";
@@ -14,6 +15,7 @@ export default function FaithHubHome() {
   const { user, role } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [savedContent, setSavedContent] = useState<PersonalizedItem[]>([]);
 
   const personalization = useMemo(() => getHomePersonalizationSnapshot(), []);
   const featured = personalization.liveNow[0] || personalization.recommendedContent[0];
@@ -23,6 +25,26 @@ export default function FaithHubHome() {
   useEffect(() => {
     const timer = window.setTimeout(() => setLoading(false), 350);
     return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("faithhub_saved_content");
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Array<{ id?: string; title?: string; path?: string; savedAt?: string }>;
+      const cleaned = parsed
+        .filter((item) => item && item.id && item.title && item.path)
+        .slice(0, 6)
+        .map((item) => ({
+          id: item.id as string,
+          title: item.title as string,
+          detail: item.savedAt ? `Saved ${new Date(item.savedAt).toLocaleDateString()}` : "Saved for later",
+          path: item.path as string,
+        }));
+      setSavedContent(cleaned);
+    } catch {
+      setSavedContent([]);
+    }
   }, []);
 
   const handleSaveItem = (item: { id: string; title: string; path: string }) => {
@@ -122,6 +144,29 @@ export default function FaithHubHome() {
           ))}
         </MediaRail>
       </Suspense>
+
+      {savedContent.length ? (
+        <MediaRail
+          title="Saved for later"
+          subtitle="Quick access to items you bookmarked."
+          actionLabel="View saved"
+          onAction={() => navigate(routes.app.user.series)}
+        >
+          {savedContent.map((item) => (
+            <MediaCard
+              key={item.id}
+              title={item.title}
+              subtitle={item.detail}
+              meta="Saved"
+              badge="Saved"
+              actions={[
+                { label: "Play", onClick: () => navigate(item.path) },
+                { label: "Share", onClick: () => handleShareItem(item), variant: "outline" },
+              ]}
+            />
+          ))}
+        </MediaRail>
+      ) : null}
 
       <MediaRail
         title="Live now"
