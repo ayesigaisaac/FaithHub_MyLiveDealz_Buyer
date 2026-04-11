@@ -38,6 +38,7 @@ import type {
 
 type FeedFilter = "all" | "providers" | "pinned" | "discussions";
 type TopicFilter = "all" | "prayer" | "testimony" | "announcement";
+type SortMode = "latest" | "top" | "pinned";
 
 function formatTime(value: string) {
   return new Date(value).toLocaleString(undefined, {
@@ -220,6 +221,7 @@ export default function FaithHubCommunity() {
   const [posts, setPosts] = useState<CommunityPost[]>(() => getCommunityPosts());
   const [feedFilter, setFeedFilter] = useState<FeedFilter>("all");
   const [topicFilter, setTopicFilter] = useState<TopicFilter>("all");
+  const [sortMode, setSortMode] = useState<SortMode>("latest");
   const [composerText, setComposerText] = useState("");
   const [discussionTopic, setDiscussionTopic] = useState("");
   const [pinOnPublish, setPinOnPublish] = useState(false);
@@ -253,12 +255,30 @@ export default function FaithHubCommunity() {
     return filteredPosts.filter((post) => topicFromPost(post) === topicFilter);
   }, [filteredPosts, topicFilter]);
 
+  const sortedPosts = useMemo(() => {
+    const sorted = [...topicFilteredPosts];
+    if (sortMode === "pinned") {
+      sorted.sort((a, b) => Number(b.pinned) - Number(a.pinned));
+      return sorted;
+    }
+    if (sortMode === "top") {
+      sorted.sort((a, b) => {
+        const aScore = Object.values(a.reactions).reduce((sum, value) => sum + value, 0);
+        const bScore = Object.values(b.reactions).reduce((sum, value) => sum + value, 0);
+        return bScore - aScore;
+      });
+      return sorted;
+    }
+    sorted.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+    return sorted;
+  }, [sortMode, topicFilteredPosts]);
+
   const paginatedPosts = useMemo(() => {
     const start = (page - 1) * pageSize;
-    return topicFilteredPosts.slice(start, start + pageSize);
-  }, [topicFilteredPosts, page]);
+    return sortedPosts.slice(start, start + pageSize);
+  }, [sortedPosts, page]);
 
-  const totalPages = Math.max(1, Math.ceil(topicFilteredPosts.length / pageSize));
+  const totalPages = Math.max(1, Math.ceil(sortedPosts.length / pageSize));
 
   const pinnedPosts = useMemo(() => posts.filter((post) => post.pinned), [posts]);
   const topContributors = useMemo(() => {
@@ -356,7 +376,7 @@ export default function FaithHubCommunity() {
 
   useEffect(() => {
     setPage(1);
-  }, [feedFilter, topicFilter, posts.length]);
+  }, [feedFilter, topicFilter, sortMode, posts.length]);
 
   return (
     <div className="space-y-3 sm:space-y-4">
@@ -413,6 +433,26 @@ export default function FaithHubCommunity() {
                 }`}
               >
                 {item === "all" ? "All topics" : item.charAt(0).toUpperCase() + item.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]">
+              Sort by
+            </span>
+            {(["latest", "top", "pinned"] as SortMode[]).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => setSortMode(mode)}
+                className={`rounded-full border px-2.5 py-1 text-xs font-semibold transition sm:px-3 sm:py-1.5 sm:text-sm ${
+                  sortMode === mode
+                    ? "border-[rgba(3,205,140,0.34)] bg-[rgba(3,205,140,0.16)] text-[var(--accent)]"
+                    : "border-[var(--border)] bg-[var(--card)] text-[var(--text-secondary)] hover:bg-[var(--surface)]"
+                }`}
+              >
+                {mode === "latest" ? "Latest" : mode === "top" ? "Top" : "Pinned"}
               </button>
             ))}
           </div>
@@ -545,7 +585,7 @@ export default function FaithHubCommunity() {
               post.highlighted ? "ring-1 ring-[rgba(3,205,140,0.2)]" : ""
             }`}
           >
-            <CardContent className="p-4 sm:p-5">
+            <CardContent className="p-3 sm:p-5">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)]">
                   <UserRound className="h-4 w-4 text-[var(--text-secondary)]" />
