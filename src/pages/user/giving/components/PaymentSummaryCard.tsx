@@ -51,6 +51,19 @@ export default function PaymentSummaryCard({
                 />
               </label>
 
+              <div className="flex flex-wrap gap-2">
+                {["10", "25", "50", "100"].map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    onClick={() => onAmountChange(preset)}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-[#03cd8c]/40 hover:text-[#03cd8c]"
+                  >
+                    ${preset}
+                  </button>
+                ))}
+              </div>
+
               <DonationModeToggle mode={mode} onChange={onModeChange} />
             </div>
           </div>
